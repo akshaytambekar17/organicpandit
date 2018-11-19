@@ -1,0 +1,2 @@
+support test
+<? echo "here"; ?>
