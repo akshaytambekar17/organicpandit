@@ -49,10 +49,10 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'db_organicpandit';           // organicpandit_db  root
-$db['default']['password'] = 'db_organicpandit';           // organicpandit_db  root 
-$db['default']['database'] = 'db_organicpandit';   //organicpandit_db  organicpandit_db
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['username'] = 'root';           // organicpandit_db  root
+$db['default']['password'] = 'root';           // organicpandit_db  root 
+$db['default']['database'] = 'organicpandit';   //organicpandit_db  organicpandit_db
+$db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
