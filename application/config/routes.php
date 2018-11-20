@@ -69,10 +69,10 @@ $route['ngo-register'] = "ngo_register";  //done
 $route['certification-register'] = "certification_register";  //done
 
 // update 
-
 $route['farmer-register/update/(:any)/(:any)'] = 'farmer_register/update/$1/$2';
 
-
+/************* New Implementation **************/
+$route['post-requirement'] = "PostRequirementController";  //done
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

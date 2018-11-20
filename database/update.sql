@@ -1,0 +1,1 @@
+ALTER TABLE `tbl_post_requirement` CHANGE `is_logistic` `is_logistic` INT(2) NOT NULL COMMENT '1=No, 2=Yes';

@@ -17,26 +17,27 @@ function printDie($data){
 }
 function includesHeader($data){
     $ci=& get_instance();
-    $ci->load->view($data['structure'].'/includes/header',$data);
+    $ci->load->view($data['structure'].'/web/header',$data);
     $ci->load->view($data['structure'].'/'.$data['view'],$data);
 }
 function includesHeaderSidebar($data){
     $ci=& get_instance();
-    $ci->load->view($data['structure'].'/includes/header',$data);
-    $ci->load->view($data['structure'].'/includes/sidebar',$data);
+    $ci->load->view($data['structure'].'/web/header',$data);
+    $ci->load->view($data['structure'].'/web/sidebar',$data);
     $ci->load->view($data['structure'].'/'.$data['view'],$data);
 }
 function includesHeaderFooter($data){
     $ci=& get_instance();
-    $ci->load->view($data['structure'].'/includes/header',$data);
-    $ci->load->view($data['structure'].'/'.$data['view'],$data);
-    $ci->load->view($data['structure'].'/includes/footer',$data);
+    $ci->load->view('web/header',$data);
+    $ci->load->view('includes/header',$data);
+    $ci->load->view($data['view'],$data);
+    $ci->load->view('web/footer',$data);
 }
 function includesAll($data){
     $ci=& get_instance();
-    $ci->load->view($data['structure'].'/includes/header',$data);
-    $ci->load->view($data['structure'].'/includes/sidebar',$data);
+    $ci->load->view($data['structure'].'/web/header',$data);
+    $ci->load->view($data['structure'].'/web/sidebar',$data);
     $ci->load->view($data['structure'].'/'.$data['view'],$data);
-    $ci->load->view($data['structure'].'/includes/footer',$data);
+    $ci->load->view($data['structure'].'/web/footer',$data);
 }
 

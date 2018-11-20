@@ -4,7 +4,6 @@ class MY_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        
         $this->load->database();
         $this->load->library(array('form_validation'));
         $this->load->helper(array('url', 'language','form'));
@@ -25,14 +24,7 @@ class MY_Controller extends CI_Controller {
         
     }
     public function frontendLayout($data) {
-        $data['structure'] = 'frontend';
-        
-        if(!empty($data['header'])){
-            includesHeader($data);
-        }else{
-            includesHeaderFooter($data);
-        }
-        
+        includesHeaderFooter($data);
     }
     
     function curlReq($url, $vars) {
