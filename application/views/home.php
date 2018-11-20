@@ -93,15 +93,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div> -->
         <div class="col-md-1 col-sm-1"></div>
-         <div class="col-md-5 col-sm-5">
-          <center><div class="service-box1"><img src="<?php echo base_url(); ?>assets/images/search deals.png" alt="organic world" ></div></center>
-          <center><p style="font-size:30px;color:#000000;">Search Deals</p></center>
-        </div>
+            <div class="col-md-5 col-sm-5">
+                <a href="<?= base_url()?>post-requirement"> 
+                   <center><div class="service-box1"><img src="<?php echo base_url(); ?>assets/images/search deals.png" alt="organic world" ></div></center>
+                   <center><p style="font-size:30px;color:#000000;">Search Deals</p></center>
+                </a>
+           </div>
          
-        <div class="col-md-5 col-sm-5">
-        <center><div class="service-box1"><img src="<?php echo base_url(); ?>assets/images/post deals.png" alt="organic world" ></div></center>  
-          <center><p style="font-size:30px;color:#000000;">Start Now</p></center>
-        </div>
+            <div class="col-md-5 col-sm-5">
+                <a href="<?= base_url()?>post-requirement"> 
+                    <center><div class="service-box1"><img src="<?php echo base_url(); ?>assets/images/post deals.png" alt="organic world" ></div></center>  
+                    <center><p style="font-size:30px;color:#000000;">Start Now</p></center>
+                </a>
+            </div>
         <div class="col-md-1 col-sm-1"></div>
       </div>
     </section2> 

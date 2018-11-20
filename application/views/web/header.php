@@ -39,6 +39,9 @@
         <link href="<?php echo base_url();?>assets/web/js/datatables/css/datatables.css" rel='stylesheet' type='text/css' />
         
         <link href="<?php echo base_url();?>assets/web/bower_components/select2/dist/css/select2.min.css" rel='stylesheet' type='text/css' />
+        
+        <link href="<?php echo base_url();?>assets/web/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel='stylesheet' type='text/css' />
+        
     </head>
     
 

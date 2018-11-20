@@ -6,7 +6,7 @@
     height: 42px;
     margin-top: -12px;
 }
-.error{
+.has-error{
     color: red;
 }
 .modal-box-button{
@@ -28,7 +28,9 @@
 .mt-40{
     margin-top: 40px;
 }
-
+.bg-gray{
+    margin-top: -19px;
+}
 /********Star rating css***********/
 div.stars {
   display: inline-block;

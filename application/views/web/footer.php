@@ -41,6 +41,8 @@
         
         <script src="<?= base_url() ?>assets/web/bower_components/select2/dist/js/select2.full.min.js"></script>
         
+        <script src="<?= base_url() ?>assets/web/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+        
         
         <script>
             $(function () {
@@ -55,7 +57,11 @@
                 $('.datatable-list').dataTable({
                     "aaSorting": [[0, "desc"]],
                 });
-                 $('.select2').select2();
+                $('.select2').select2();
+                $('.picker-date').datepicker({
+                    autoclose: true,
+                    startDate: new Date()
+                });
             });
         </script>
     </body>

@@ -11,33 +11,20 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  *
  * @author comc
  */
-class post_requirement_model extends CI_Model {
+class city_model extends CI_Model {
 
     //put your code here
     public function __construct() {
         parent::__construct();
     }
     
-    public function getPostRequirements() {
-        $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_post_requirement')->result_array();
+    public function getCities() {
+        //$this->db->order_by('id','DESC');
+        return $this->db->get('cities')->result_array();
     }
-    public function getPostRequirementById($id) {
-        $this->db->where('id',$id);
-        return $this->db->get('tbl_post_requirement')->row_array();
-    }
-    public function getPostBysearchKey($data) {
-        if(!empty($data['state_id']) && !empty($data['city_id'])){
-            $this->db->where('state_id',$data['state_id']);
-            $this->db->where('city_id',$data['city_id']);
-        }
-        if(!empty($data['product_id'])){
-            $this->db->where('product_id',$data['product_id']);
-        }
-        if(!empty($data['certification_id'])){
-            $this->db->where('certification_id',$data['product_id']);
-        }
-        return $this->db->get('tbl_post_requirement')->result_array();
+    public function getCitiesByStateId($state_id) {
+        $this->db->where('state_id',$state_id);
+        return $this->db->get('cities')->result_array();
     }
     
     public function add($data){

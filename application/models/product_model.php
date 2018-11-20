@@ -19,7 +19,7 @@ class product_model extends CI_Model {
     }
     
     public function getFarmerProduct() {
-        $this->db->order_by('id','DESC');
+        //$this->db->order_by('id','DESC');
         return $this->db->get('tbl_pr_farmer')->result_array();
     }
     public function getFarmerProductById($id) {

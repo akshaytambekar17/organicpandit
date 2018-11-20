@@ -103,17 +103,17 @@ $config = array(
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'required|numeric'
+                        'rules' => 'required|numeric|greater_than[1]|less_than[2000]'
                 ),
                 array(
                         'field' => 'quantity',
                         'label' => 'Quantity',
-                        'rules' => 'required|numeric'
+                        'rules' => 'required|numeric|greater_than[1]|less_than[100000]'
                 ),
                 array(
                         'field' => 'total_price',
                         'label' => 'Total Price',
-                        'rules' => 'required|numeric'
+                        'rules' => 'required|numeric|greater_than[1]'
                 ),
                 array(
                         'field' => 'delivery_address',
@@ -133,7 +133,7 @@ $config = array(
                 array(
                         'field' => 'pincode',
                         'label' => 'Pincode',
-                        'rules' => 'required|numeric'
+                        'rules' => 'required|numeric|exact_length[6]'
                 ),
                 array(
                         'field' => 'payment_terms',
@@ -150,11 +150,20 @@ $config = array(
                         'label' => 'Select Certification',
                         'rules' => 'required'
                 ),
+                
+        ),
+        'search-post-requirement-form' => array(
                 array(
-                        'field' => 'meta_keywords',
-                        'label' => 'Meta Keywords',
+                        'field' => 'state_id',
+                        'label' => 'Select State',
                         'rules' => 'required'
                 ),
+                array(
+                        'field' => 'city_id',
+                        'label' => 'Select City',
+                        'rules' => 'required'
+                ),
+                                
         )
 );
 $config['error_prefix'] = '<div class="error">';
