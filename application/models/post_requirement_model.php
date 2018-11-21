@@ -35,7 +35,7 @@ class post_requirement_model extends CI_Model {
             $this->db->where('product_id',$data['product_id']);
         }
         if(!empty($data['certification_id'])){
-            $this->db->where('certification_id',$data['product_id']);
+            $this->db->where('certification_id',$data['certification_id']);
         }
         return $this->db->get('tbl_post_requirement')->result_array();
     }

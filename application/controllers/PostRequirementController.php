@@ -48,8 +48,8 @@ class PostRequirementController extends MY_Controller {
     }
     public function searchPost()
     {
-        $data['title'] = 'Search Post Requirement';
-        $data['heading'] = 'Search Post Requirement';
+        $data['title'] = 'Search Post';
+        $data['heading'] = 'Search Post';
         $data['hide_footer'] = true;
         $data['banner'] = "farmer.jpg";
         $data['view'] = 'post-requirement/search_post';

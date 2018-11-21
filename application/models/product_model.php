@@ -24,7 +24,7 @@ class product_model extends CI_Model {
     }
     public function getFarmerProductById($id) {
         $this->db->where('id',$id);
-        return $this->db->get('tbl_post_requirement')->row_array();
+        return $this->db->get('tbl_pr_farmer')->row_array();
     }
     
     public function add($data){

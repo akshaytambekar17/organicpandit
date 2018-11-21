@@ -16,7 +16,6 @@
             </h2> 
         </div>
         <div class="container-fluid">
-            
             <div class="row">
                 <div class="col-md-12 mt-20">
                     <form class="form-horizontal" method="post" enctype="multipart/form-data" name="search-post-requirement-form" id="search-post-requirement-form" >
@@ -73,6 +72,30 @@
                     </form>
                 </div>
             </div>
+            <?php if($message = $this ->session->flashdata('Message')){?>
+                <div class="col-md-12" id="alert-messge">
+                    <div class="alert alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <?=$message ?>
+                    </div>
+                </div>
+            <?php }?> 
+            <?php if($message = $this ->session->flashdata('Error')){?>
+                <div class="col-md-12 ">
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <?=$message ?>
+                    </div>
+                </div>
+            <?php }?>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 mt-20 center">
+                    <div class="box">
+                        <input type="text" name="search" id="search" class="form-control" placeholder="Search post by Product name" onkeypress="search(this)">
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12 mt-20">
                     <div class="box box-success">
@@ -81,10 +104,32 @@
                             <?php if(!empty($search_post_list)){ 
                                     foreach($search_post_list as $value){
                             ?>
-                                <div class="box">
+                                <div class="box post-panel">
                                     <div class="box-body">
                                         <div class="col-md-3">
-                                                <?= $value['company_name'];?>
+                                            <h4>Product Name</h4>
+                                            <b class="product-name">
+                                            <?php 
+                                                $farmer_product_details = $this->Product->getFarmerProductById($value['product_id']);
+                                                echo !empty($farmer_product_details)?$farmer_product_details['pr_name']:''; 
+                                            ?>
+                                            </b>    
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h4>Quality Specification</h4>
+                                            <b><?= $value['quality_specification']; ?></b>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h4>Expected Rate : <b><?= $value['price']; ?></b> per kg</h4>
+                                            <h4>Quantity : <b><?= $value['quantity']; ?></b> kg</h4>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="col-md-6">
+                                                <h4>Total Number of Bids : 0 </h4>
+                                            </div>
+                                            <div class="col-md-6 bid-padding-block">
+                                                <a href="<?= base_url()?>bid?post_id="<?= $value['id']?> class="btn btn-danger">Bid</a>
+                                            </div>
                                         </div>
                                     
                                     </div>
@@ -131,6 +176,21 @@
                     $("#city_id").html('<option disabled selected> Select City</option>');
                     $("#city_id").append(html);
                 }
+            });
+        }
+        function search()
+        {
+            var searchterm = jQuery("#search").val().trim().toLowerCase();
+            if (searchterm.length == 0){
+                jQuery(".post-panel").show();
+                return  true;
+            }
+            jQuery(".post-panel").hide();
+            jQuery(".product-name").each(function () {
+                if (jQuery(this).text().toLowerCase().indexOf(searchterm) >= 0 ){
+                    jQuery(this).closest(".post-panel").show();
+                }
+
             });
         }
     </script>
