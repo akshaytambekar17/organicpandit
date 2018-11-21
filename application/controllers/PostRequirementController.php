@@ -6,6 +6,7 @@ class PostRequirementController extends MY_Controller {
         parent::__construct();
         $this->load->model('post_requirement_model','PostRequirement');
         $this->load->model('product_model','Product');
+        $this->load->model('bid_model','Bid');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
     }
@@ -24,6 +25,7 @@ class PostRequirementController extends MY_Controller {
                 $details = $post;
                 $details['from_date'] = date("Y-m-d", strtotime($details['from_date']));
                 $details['to_date'] = date("Y-m-d", strtotime($details['to_date']));
+                $details['user_id'] = $this->session->userdata('id');
                 $details['is_verified'] = 0;
                 $details['is_seen'] = 0;
                 $details['is_view'] = 0;
@@ -80,6 +82,12 @@ class PostRequirementController extends MY_Controller {
             }
         }
         echo json_encode($html);
+    }
+    public function getPostById(){
+        $post = $this->input->post();
+        $post_details = $this->PostRequirement->getPostRequirementById($post['post_id']);
+        $post_details['product_details'] = $this->Product->getFarmerProductById($post_details['product_id']);
+        echo json_encode($post_details);
     }
     
 }

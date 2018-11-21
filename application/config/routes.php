@@ -75,6 +75,9 @@ $route['farmer-register/update/(:any)/(:any)'] = 'farmer_register/update/$1/$2';
 $route['post-requirement'] = "PostRequirementController";  //done
 $route['post-requirement/search-post'] = "PostRequirementController/searchPost";  //done
 $route['getcities-by-state'] = "PostRequirementController/getCitiesByState";  //done
+$route['getpost-by-id'] = "PostRequirementController/getPostById";  //done
+
+$route['bid/create'] = "BidController/create";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

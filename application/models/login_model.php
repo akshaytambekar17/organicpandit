@@ -69,7 +69,7 @@ class Login_model Extends CI_Model
 		$this->db->where('username', $username);  
 		$this->db->where('password', $md_password);  
 		$query = $this->db->get($table_name);
-		$row  = $query->row()->id;
+		$row  = $query->row_array();
 		if($query->num_rows() > 0)  
 		{  
 			return $row;  

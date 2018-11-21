@@ -96,8 +96,11 @@
                     </div>
                 </div>
             </div>
+            <?php if(!$this->session->userdata('username')){ ?>
+                    <p class="has-error center">Please login to apply for bid</p>
+            <?php } ?>
             <div class="row">
-                <div class="col-md-12 mt-20">
+                <div class="col-md-12 mt-20 alert-message">
                     <div class="box box-success">
                         <div class="box-header"></div>
                         <div class="box-body">
@@ -125,10 +128,18 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="col-md-6">
-                                                <h4>Total Number of Bids : 0 </h4>
+                                                <h4>Total Number of Bids : 
+                                                    <span id="no-of-bid-<?= $value['id']?>">
+                                                    <?php 
+                                                        $bids_data = $this->Bid->getBidByPostRequirementId($value['id']);
+                                                        echo (!empty($bids_data) && count($bids_data)>0)? count($bids_data):0;
+                                                    ?> 
+                                                    </span>
+                                                </h4>
                                             </div>
                                             <div class="col-md-6 bid-padding-block">
-                                                <a href="javascript:void(0)" class="btn btn-danger" data-id="<?= $value['id']?>">Apply for Bid</a>
+                                                <?php $disabled = empty($this->session->userdata('username'))?'disabled':'';  ?>
+                                                <a href="javascript:void(0)" class="btn btn-danger <?= $disabled?>" data-id="<?= $value['id']?>" onclick="bidModal(this)">Apply for Bid</a>
                                             </div>
                                         </div>
                                     
@@ -160,21 +171,49 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Default Modal</h4>
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Applying Bid for Product <span class="modal-title-product-name"></span></h4>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <div class="text-center popup-content">  
-                        <h5> By clicking on <span>"YES"</span>, Product will be deleted permanently. Do you wish to proceed?</h5><br><br>
-                        <input  type="hidden" name="id_modal" id="id_modal" value=""> 
-                        <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
-                        <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
+                    <h5>Product Name : <span class="modal-title-product-name"></span></h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Valid From : <span id="modal-valid-from"></span></h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Valid To : <span id="modal-valid-to"></span></h5>
+                        </div>
                     </div>
+                    <h5>Total price : <span id="modal-total-price"></span></h5>
+                    <br>
+                    <h4>Bid Details</h4>
+                    <div class="form-group ">
+                        <label>Amount</label>
+                        <input type="text" name="amount" class="form-control" id="amount" placeholder="Amount" >
+                        <span class="has-error error-bid-modal"></span>
+                    </div>
+                    <input type="hidden" name="post_requirement_id" id="post_requirement_id">
+                    <input type="hidden" name="product_name_modal" id="product_name_modal">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-success" onclick="confirmationModal(this)">Apply Bid</button>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div class="modal fade confirmation-popup" id="ConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="text-center popup-content">  
+                        <h5> By clicking on <span>"YES"</span>, Your bid will place for product <b><span id="confiramtion-product-name"></span></b>. Do you wish to proceed?</h5><br><br>
+<!--                        <input  type="hidden" name="confirmation_post_requirement_id" id="confirmation_post_requirement_id"> 
+                        <input  type="hidden" name="confirmation_amount" id="confirmation_amount"> -->
+                        <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
+                        <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
+                    </div>
                 </div>
             </div>
         </div>  
@@ -189,6 +228,35 @@
             if(state_id != ''){
                 getCitiesByState(state_id);
             }
+            $("#confirm_btn").on('click',function(){
+                var post_id = $("#post_requirement_id").val();
+                var amount = $("#amount").val();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url(); ?>" + "bid/create",
+                    data: { 'post_requirement_id' : post_id,'amount' : amount },
+                    dataType: "json",
+                    success: function(result){
+                        $('#ConfirmationModal').modal('hide');
+                        $('#bid-modal').modal('hide');
+                        if(result['success'] == true){
+                            $('html, body').animate({ scrollTop: 0 }, 'slow');
+                            $('.alert-message').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  Your bid has been successfully placed...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            $('.alert').fadeIn().delay(3000).fadeOut(function () {
+                                $(this).remove();
+                            });
+                            $("#no-of-bid-"+post_id).text(result['data']);
+                        }else{
+                            $('html, body').animate({ scrollTop: 0 }, 'slow');
+                            $('.alert-message').parent().before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i>  Someting went wrong. Please try again...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            $('.alert').fadeIn().delay(3000).fadeOut(function () {
+                                $(this).remove();
+                            });
+                        }
+                        
+                    }
+                });
+            });
         });
         function getCitiesByState(state_id){
             $.ajax({
@@ -217,6 +285,35 @@
                 }
 
             });
+        }
+        function bidModal(ths){
+            var post_id = $(ths).data('id');
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "getpost-by-id",
+                data: { 'post_id' : post_id },
+                dataType: "json",
+                success: function(result){
+                    console.log(result);
+                    $(".modal-title-product-name").text(result['product_details']['pr_name']);
+                    $("#modal-valid-from").text(result['from_date']);
+                    $("#modal-valid-to").text(result['to_date']);
+                    $("#modal-total-price").text(result['total_price']);
+                    $("#product_name_modal").val(result['product_details']['pr_name']);
+                    $("#post_requirement_id").val(result['id']);
+                    $('#bid-modal').modal('show');
+                }
+            });
+        }
+        function confirmationModal(ths){
+            var amount = $("#amount").val();
+            if(amount == ''){
+                $(".error-bid-modal").text('Please enter the amount');
+            }else{
+                $(".error-bid-modal").text('');
+                $("#confiramtion-product-name").text($("#product_name_modal").val());
+                $('#ConfirmationModal').modal('show');
+            }
         }
     </script>
     

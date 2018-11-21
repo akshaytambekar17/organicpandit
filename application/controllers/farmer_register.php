@@ -1,132 +1,106 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Farmer_register extends CI_Controller {
 
+    function __construct() {
+        parent:: __construct();
+        $this->load->model('farmer_model');
+    }
 
-	function __construct(){
-		parent:: __construct();
-		$this->load->model('farmer_model');
-   
-	}
-
-	public function index()
-	{
+    public function index() {
 
 
-    $data['states'] =  $this->farmer_model->get_state();
-    $data['agencies'] =  $this->farmer_model->get_agency();
-    $this->load->view('farmer-register', $data);
-  }
+        $data['states'] = $this->farmer_model->get_state();
+        $data['agencies'] = $this->farmer_model->get_agency();
+        $this->load->view('farmer-register', $data);
+    }
+
+    // get cities
+    public function get_city() {
 
 
- // get cities
-  public function get_city(){
+        $this->farmer_model->all_city();
+    }
+
+    public function get_username() {
 
 
-   $this->farmer_model->all_city(); 
+        $this->farmer_model->username();
+    }
 
- }
- 
- public function get_username(){
+    public function create_farmer() {
 
+        if (isset($_FILES["profile"]["name"])) {
 
-   $this->farmer_model->username(); 
+            echo $profile = $_FILES["profile"]["name"];
+            echo $certify_img = $_FILES["certify_img"]["name"];
+            echo $video = $_FILES["video"]["name"];
 
- }
- 
+            if ($_FILES["profile"]["name"]) {
 
- public function create_farmer(){
+                $config['upload_path'] = './upload/profile/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $this->load->library('upload', $config);
 
-  if(isset($_FILES["profile"]["name"])){
+                if (!$this->upload->do_upload('profile')) {
+                    echo $this->upload->display_errors();
+                } else {
+                    $data = $this->upload->data();
+                    $profile = $data["file_name"];
+                }
+            }
 
-    echo $profile = $_FILES["profile"]["name"];
-    echo $certify_img = $_FILES["certify_img"]["name"];
-    echo $video = $_FILES["video"]["name"];
+            if ($_FILES["certify_img"]["name"]) {
 
-    if($_FILES["profile"]["name"]) 
-    {  
-
-      $config['upload_path'] = './upload/profile/';  
-      $config['allowed_types'] = 'jpg|jpeg|png|gif';  
-      $this->load->library('upload', $config); 
-
-      if(!$this->upload->do_upload('profile'))  
-      {  
-       echo $this->upload->display_errors();  
-     }  
-     else  
-     {  
-       $data = $this->upload->data();   
-       $profile = $data["file_name"];    
-
-
-     }  
-
-   }
-
-   if($_FILES["certify_img"]["name"]) 
-   {  
-
-    $config2['upload_path'] = './upload/certificate/';  
-    $config2['allowed_types'] = 'jpg|jpeg|png|gif';  
+                $config2['upload_path'] = './upload/certificate/';
+                $config2['allowed_types'] = 'jpg|jpeg|png|gif';
 
 
 
                 // Alternately you can set
-    $this->upload->initialize($config2);
+                $this->upload->initialize($config2);
 
-    $this->load->library('upload', $config2); 
+                $this->load->library('upload', $config2);
 
-    if(!$this->upload->do_upload('certify_img'))  
-    {  
-     echo $this->upload->display_errors();  
-   }  
-   else  
-   {  
-     $data = $this->upload->data(); 
+                if (!$this->upload->do_upload('certify_img')) {
+                    echo $this->upload->display_errors();
+                } else {
+                    $data = $this->upload->data();
 
 
-     $certify_img = $data["file_name"];    
+                    $certify_img = $data["file_name"];
+                }
+            }
 
-   }  
+            if ($_FILES["video"]["name"]) {
 
- }  
-
- if($_FILES["video"]["name"]) 
- {  
-
-  $config3['upload_path'] = './upload/video/'; 
-  $config3['allowed_types'] = '*';
+                $config3['upload_path'] = './upload/video/';
+                $config3['allowed_types'] = '*';
 
 
 
                 // Alternately you can set
-  $this->upload->initialize($config3);
+                $this->upload->initialize($config3);
 
-  $this->load->library('upload', $config3); 
+                $this->load->library('upload', $config3);
 
-  if(!$this->upload->do_upload('video'))  
-  {  
-   echo $this->upload->display_errors();  
- }  
- else  
- {  
-   $data = $this->upload->data(); 
+                if (!$this->upload->do_upload('video')) {
+                    echo $this->upload->display_errors();
+                } else {
+                    $data = $this->upload->data();
 
 
-   $video = $data["file_name"];    
+                    $video = $data["file_name"];
+                }
+            }
 
- }  
 
-}           
- 
-    
 
-$this->farmer_model->insert_farmer($profile, $certify_img, $video); 
-} 
+            $this->farmer_model->insert_farmer($profile, $certify_img, $video);
+        }
+    }
 
-}
 // insert farmer close
-
 }
