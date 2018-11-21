@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2018 at 08:05 AM
+-- Generation Time: Nov 21, 2018 at 09:18 AM
 -- Server version: 5.7.23-0ubuntu0.16.04.1
 -- PHP Version: 7.2.10-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -7629,16 +7629,24 @@ CREATE TABLE `tbl_post_requirement` (
   `city_id` int(5) NOT NULL,
   `pincode` int(7) NOT NULL,
   `payment_terms` varchar(255) NOT NULL,
-  `is_logistic` int(2) NOT NULL,
-  `certification_id` int(10) NOT NULL,
+  `is_logistic` int(2) NOT NULL COMMENT '1=No, 2=Yes',
+  `certification_id` varchar(150) NOT NULL,
   `other_details` varchar(255) NOT NULL,
-  `is_verified` int(2) NOT NULL COMMENT '1= Verified, 2= Not Verified',
+  `is_verified` int(2) NOT NULL COMMENT '1= Verified, 0= Not Verified',
   `is_seen` int(2) NOT NULL,
   `is_view` int(11) NOT NULL,
   `is_deleted` int(11) NOT NULL COMMENT '1= Not Deleted, 0= Deleted',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_post_requirement`
+--
+
+INSERT INTO `tbl_post_requirement` (`id`, `product_id`, `company_name`, `quality_specification`, `from_date`, `to_date`, `price`, `quantity`, `total_price`, `delivery_address`, `state_id`, `city_id`, `pincode`, `payment_terms`, `is_logistic`, `certification_id`, `other_details`, `is_verified`, `is_seen`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 4, 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 0, 0, 0, 0, '2018-11-20 21:47:29', '2018-11-20 21:47:29'),
+(2, 4, 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 0, 0, 0, 0, '2018-11-20 21:58:36', '2018-11-20 21:58:36');
 
 -- --------------------------------------------------------
 
@@ -9002,7 +9010,7 @@ ALTER TABLE `tbl_packaging`
 -- AUTO_INCREMENT for table `tbl_post_requirement`
 --
 ALTER TABLE `tbl_post_requirement`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_processor`
 --
