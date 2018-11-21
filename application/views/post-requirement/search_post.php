@@ -128,12 +128,13 @@
                                                 <h4>Total Number of Bids : 0 </h4>
                                             </div>
                                             <div class="col-md-6 bid-padding-block">
-                                                <a href="<?= base_url()?>bid?post_id="<?= $value['id']?> class="btn btn-danger">Bid</a>
+                                                <a href="javascript:void(0)" class="btn btn-danger" data-id="<?= $value['id']?>">Apply for Bid</a>
                                             </div>
                                         </div>
                                     
                                     </div>
                                 </div>
+                            
                             <?php } }else{ ?>
                                     <div class="box">
                                         <div class="box-body">
@@ -154,6 +155,30 @@
         </div>
     </div>
     <!-- modal -->
+    <div class="modal fade bid-popup" id="bid-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Default Modal</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="text-center popup-content">  
+                        <h5> By clicking on <span>"YES"</span>, Product will be deleted permanently. Do you wish to proceed?</h5><br><br>
+                        <input  type="hidden" name="id_modal" id="id_modal" value=""> 
+                        <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
+                        <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>  
+    </div>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#state_id").on('change',function(){
