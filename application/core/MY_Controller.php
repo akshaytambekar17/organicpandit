@@ -11,7 +11,6 @@ class MY_Controller extends CI_Controller {
 
     public function backendLayout($data) {
         $data['structure'] = 'backend';
-        
         if(!empty($data['header'])){
             includesHeader($data);
         }else if(!empty($data['headerSidebar'])){

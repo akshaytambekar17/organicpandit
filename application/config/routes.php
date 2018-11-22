@@ -79,5 +79,13 @@ $route['getpost-by-id'] = "PostRequirementController/getPostById";  //done
 
 $route['bid/create'] = "BidController/create";
 
+/************* New Implementation Admin Panel **************/
+
+$route['admin'] = "backend/UserController/login";
+$route['admin/dashboard'] = "backend/DashboardController";
+$route['admin/post-requirement'] = "backend/PostRequirementController";
+$route['admin/bid'] = "backend/BidController";
+$route['admin/user'] = "backend/UserController";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
