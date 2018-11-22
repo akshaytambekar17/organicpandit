@@ -7,6 +7,11 @@ class MY_Controller extends CI_Controller {
         $this->load->database();
         $this->load->library(array('form_validation'));
         $this->load->helper(array('url', 'language','form'));
+        $this->load->model('login_model','Login');
+        $this->load->model('bid_model','Bid');
+        $this->load->model('post_requirement_model','PostRequirement');
+        $this->load->model('product_model','Product');
+        $this->load->model('user_model','User');
     }
 
     public function backendLayout($data) {

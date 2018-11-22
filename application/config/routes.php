@@ -85,6 +85,8 @@ $route['admin'] = "backend/UserController/login";
 $route['admin/dashboard'] = "backend/DashboardController";
 $route['admin/post-requirement'] = "backend/PostRequirementController";
 $route['admin/bid'] = "backend/BidController";
+$route['admin/bid/delete'] = "backend/BidController/delete";
+
 $route['admin/user'] = "backend/UserController";
 
 /* End of file routes.php */
