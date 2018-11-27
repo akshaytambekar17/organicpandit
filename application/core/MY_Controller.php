@@ -115,5 +115,15 @@ class MY_Controller extends CI_Controller {
         }
         return $result;
     }
+//    public function UserSession(){
+//        if($this->session->userdata('user_data')){
+//            $result['success'] = true;
+//            $result['userData'] = $this->session->userdata('user_data');
+//        }else{
+//            $result['success'] = false;
+//            $result['userData'] = "Please login to continue";
+//        }
+//        return $result;
+//    }
     
 }

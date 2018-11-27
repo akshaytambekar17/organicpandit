@@ -1,3 +1,8 @@
+<?php 
+    $session = UserSession();
+    $userSession = $session['userData'];
+    
+?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
 
@@ -253,7 +258,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="<?= base_url()?>logout" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="<?= base_url()?>admin/logout" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -299,27 +304,36 @@
                     <li>
                         <a href="<?= base_url()?>admin/bid">
                             <i class="fa fa-th"></i> <span>Bids</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-blue"><?= count($this->Bid->getBidByNotView())?></small>
-                            </span>
+                            <?php if($userSession['username'] == 'admin'){ ?>    
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-blue">
+                                        <?= count($this->Bid->getBidByNotView())?>
+                                    </small>
+                                </span>
+                            <?php } ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?= base_url()?>admin/post-requirement">
                             <i class="fa fa-laptop"></i> <span>Post Requirements</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-yellow"><?= count($this->PostRequirement->getPostRequirementByNotView())?></small>
-                            </span>
+                            <?php if($userSession['username'] == 'admin'){ ?>    
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-yellow">
+                                        <?= count($this->PostRequirement->getPostRequirementByNotView())?></small>
+                                </span>
+                            <?php } ?>
                         </a>
                     </li>
-                    <li>
-                        <a href="<?= base_url()?>admin/user">
-                            <i class="ion ion-person-add"></i> <span>User Registration</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">2</small>
-                            </span>
-                        </a>
-                    </li>
+                    <?php if($userSession['username'] == 'admin'){ ?>    
+                        <li>
+                            <a href="<?= base_url()?>admin/user">
+                                <i class="ion ion-person-add"></i> <span>User Registration</span>
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-green">2</small>
+                                </span>
+                            </a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </section>
             <!-- /.sidebar -->

@@ -62,8 +62,8 @@ class UserController extends MY_Controller {
     }
 
     public function logout() {
-        $this->session->unset_userdata('name');
-        return redirect('admin');
+        $this->session->unset_userdata('user_data');
+        return redirect('home');
     }
 
 }

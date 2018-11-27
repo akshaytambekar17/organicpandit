@@ -32,6 +32,7 @@ class Login extends CI_Controller {
             
             $this->session->set_userdata('user_data', $result);
             //$this->session->set_userdata($result);
+            print('success');
         } else {
             $this->session->set_flashdata('error', 'Invalid Username and Password');
             print('fail');
