@@ -26,6 +26,17 @@ class post_requirement_model extends CI_Model {
         $this->db->where('id',$id);
         return $this->db->get('tbl_post_requirement')->row_array();
     }
+    public function getPostRequirementByNotView() {
+        $this->db->where('is_view',0);
+        return $this->db->get('tbl_post_requirement')->result_array();
+    }
+    public function getProductNameByPostRequirementId($id) {
+        $this->db->select("pr.id as post_requirement_id,pr.*,pf.*");
+        $this->db->from('tbl_post_requirement pr');
+        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->where('pr.id',$id);
+        return $this->db->get()->row_array();
+    }
     public function getPostBysearchKey($data) {
         if(!empty($data['state_id']) && !empty($data['city_id'])){
             $this->db->where('state_id',$data['state_id']);

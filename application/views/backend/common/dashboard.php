@@ -20,14 +20,13 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>150</h3>
-
+                        <h3><?= count($bid_list)?></h3>
                         <p>Bids</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-th"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url()?>admin/bid" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -35,13 +34,13 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3><?= count($post_requirement_list)?></h3>
                         <p>Post Requirements</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-laptop"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url()?>admin/post-requirement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-xs-6">

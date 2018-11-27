@@ -31,6 +31,8 @@ class DashboardController extends MY_Controller {
             $data['heading'] = 'Organic Pandit';
             $data['backend'] = true;
             $data['view'] = 'common/dashboard';
+            $data['bid_list'] = $this->Bid->getBids();
+            $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
             $data['user_details'] = $this->session->userdata('user_data');
             $this->backendLayout($data);
         }

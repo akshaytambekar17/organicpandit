@@ -1,10 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CategoryController extends MY_Controller {
+class BidController extends MY_Controller {
     function __construct() {
         parent::__construct();
-        $this->load->model('CategoryModel','Category');
     }
     /**
      * Index Page for this controller.
@@ -23,77 +22,45 @@ class CategoryController extends MY_Controller {
      */
     public function index()
     {
-        $data['title']='Category';
-        $data['heading']='Categories List';
-        $data['view'] = 'Category/list';
-        $data['category_list'] = $this->Category->getCategories();
+        $data['title']='Bid';
+        $data['heading']='Bid List';
+        $data['backend'] = true;
+        $data['view'] = 'bid/list';
+        $this->Bid->updateIsView();
+        $data['bid_list'] = $this->Bid->getBids();
         $this->backendLayout($data);
     }
-    public function add(){
+    public function create(){
 
         if($this->input->post()){
             $post = $this->input->post();
-
-            if($this->form_validation->run('category') == TRUE){
-                if(!empty($_FILES['image']['name'])){
-                    $config['upload_path']          = './assets/images/category-images/';
-                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                    $config['max_size']             = 2048;
-                    $config['max_width']            = 0;
-                    $config['max_height']           = 0;
-
-                    $this->load->library('upload', $config);
-                    if($this->upload->do_upload('image')){
-                        $uploadData = $this->upload->data();
-                        $image_name = $uploadData['file_name'];
-                        $error = '';
-                    }else{
-                        $error = $this->upload->display_errors();
-                        $image_name = '';
-                    }
+            $details = $post;
+            $details['user_id'] = $this->session->userdata('id');
+            $details['is_seen'] = 0;
+            $details['is_view'] = 0;
+            $details['is_deleted'] = 0;
+            $details['updated_at'] = date('Y-m-d H:i:s');
+            $details['created_at'] = date('Y-m-d H:i:s');
+            $data = $this->Bid->insert($details);
+            if($data){
+                $bids = $this->Bid->getBidByPostRequirementId($post['post_requirement_id']);
+                if(!empty($bids) && count($bids)>0){
+                    $result['success'] = true;
+                    $result['data'] = count($bids);
                 }else{
-                    $error = '';
-                    $image_name = ''; 
+                    $result['success'] = true;
+                    $result['data'] = 0;
                 }
-                if(empty($error)){
-                    $details = $post;
-                    $details['image'] = $image_name;
-                    $details['updated_at'] = date('Y-m-d H:i:s');
-                    $details['created_at'] = date('Y-m-d H:i:s');
-                    $result = $this->Category->add($details);
-                    if ($result) {
-                        $this->session->set_flashdata('Message', 'Category Added Succesfully');
-                        return redirect('category', 'refresh');
-                    } else {
-                        $this->session->set_flashdata('Error', 'Failed to add category');
-                        $data['category_list'] = $this->Category->getCategories();
-                        $data['title']='Category';
-                        $data['heading']='Add Category';
-                        $data['view'] = 'Category/form_data';
-                        $this->backendLayout($data);
-                    }
-                }else{
-                    $this->session->set_flashdata('Error',$error);
-                    $data['category_list'] = $this->Category->getCategories();
-                    $data['title']='Category';
-                    $data['heading']='Add Category';
-                    $data['view'] = 'Category/form_data';
-                    $this->backendLayout($data);
-                }
+                
             }else{
-                $data['category_list'] = $this->Category->getCategories();
-                $data['title']='Category';
-                $data['heading']='Add Category';
-                $data['view'] = 'Category/form_data';
-                $this->backendLayout($data);
+                $result['success'] = false;
+                $result['data'] = 0;
             }
         }else{
-            $data['category_list'] = $this->Category->getCategories();
-            $data['title']='Category';
-            $data['heading']='Add Category';
-            $data['view'] = 'Category/form_data';
-            $this->backendLayout($data);
+            $result['success'] = false;
+            $result['data'] = 0;
         }
+        echo json_encode($result);
     }
     public function update(){
         $get = $this->input->get();
@@ -168,7 +135,7 @@ class CategoryController extends MY_Controller {
     }
     public function delete(){
         $post = $this->input->post();
-        $result = $this->Category->delete($post['id']);
+        $result = $this->Bid->delete($post['id']);
         if($result){
             echo true;
         }else{

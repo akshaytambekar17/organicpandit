@@ -11,20 +11,20 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  *
  * @author comc
  */
-class bid_model extends CI_Model {
+class user_model extends CI_Model {
 
     //put your code here
     public function __construct() {
         parent::__construct();
     }
     
-    public function getBids() {
+    public function getUserFarmers() {
         $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_bid')->result_array();
+        return $this->db->get('tbl_farmer')->result_array();
     }
-    public function getBidById($id) {
+    public function getUserFarmerById($id) {
         $this->db->where('id',$id);
-        return $this->db->get('tbl_bid')->row_array();
+        return $this->db->get('tbl_farmer')->row_array();
     }
     public function getBidByPostRequirementId($id) {
         $this->db->where('post_requirement_id',$id);

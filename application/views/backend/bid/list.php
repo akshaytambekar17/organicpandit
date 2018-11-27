@@ -3,8 +3,8 @@
     <section class="content-header">
         <h1><?= !empty($heading)?$heading:'Heading'?></h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active"><a href="#">Category</a></li>
+            <li><a href="<?= base_url()?>admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active"><a href="#">Bids</a></li>
         </ol>
     </section>
     <section class="content">
@@ -29,9 +29,9 @@
                 <div class="box">
                     <div class="box-header">
 <!--                        <h3 class="box-title">Data Table With Full Features</h3>-->
-                        <div class="pull-right">
+<!--                        <div class="pull-right">
                             <a href="<?= base_url()?>category/add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</a>
-                        </div>
+                        </div>-->
                     </div>
                   <!-- /.box-header -->
                     <div class="box-body">
@@ -40,32 +40,34 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <th>Category Name</th>
-                                        <th>Description</th>
-                                        <th>Status</th>
+                                        <th>Fullname</th>
+                                        <th>Product name</th>
+                                        <th>Bid amount</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if (!empty($category_list)) {
-                                        foreach ($category_list as $key => $value) {
+                                    if (!empty($bid_list)) {
+                                        foreach ($bid_list as $key => $value) {
                                 ?>
                                             <tr class="gradeX" id="order-<?= $value['id'] ?>">
                                                 <td class="hidden"><?= $value['id']; ?></td>
-                                                <td><?= $value['name']; ?></td>
-                                                <td><?= $value['description']; ?></td>
-                                                <td><?php
-                                                        if($value['status'] == 2){ 
-                                                            echo "Active";
-                                                        }else{
-                                                            echo "Not Active";
-                                                        }
+                                                <td>
+                                                    <?php
+                                                        $userDetails = $this->User->getUserFarmerById($value['user_id']); 
+                                                        echo $userDetails['fullname'];
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= site_url('category/update?id='.$value['id'])?>" class="btn btn-success view-category" data-id="<?= $value['id'] ?>" name="view-category">Edit</a>
-                                                    <a href="javascript:void(0)" class="btn btn-danger delete-category" data-id="<?= $value['id'] ?>" name="delete-category" onclick="categoryDelete(this)">Delete</a><br>
+                                                    <?php
+                                                        $post_details = $this->PostRequirement->getProductNameByPostRequirementId($value['post_requirement_id']); 
+                                                        echo $post_details['pr_name'];
+                                                    ?>
+                                                </td>
+                                                <td><?= $value['amount']; ?></td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="btn btn-danger delete-bid" data-id="<?= $value['id'] ?>" name="delete-bid" onclick="bidDelete(this)">Delete</a><br>
                                                 </td>
                                             </tr>
                                             <?php
@@ -91,7 +93,7 @@
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <div class="text-center popup-content">  
-                    <h5> By clicking on <span>"YES"</span>, Category will be deleted permanently. Do you wish to proceed?</h5><br><br>
+                    <h5> By clicking on <span>"YES"</span>, This bid will be deleted permanently. Do you wish to proceed?</h5><br><br>
                     <input  type="hidden" name="id_modal" id="id_modal" value=""> 
                     <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
                     <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
@@ -106,13 +108,13 @@
             var id=$("#id_modal").val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>" + "category/delete",
+                url: "<?php echo base_url(); ?>" + "admin/bid/delete",
                 data: { 'id' : id },
                 success: function(result){
                     $('#deleteConfirmationModal').modal('hide');
                     if(result){
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.alert-box-msg').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  Category has been deleted successfully...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert-box-msg').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  Bid has been deleted successfully...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });
@@ -130,7 +132,7 @@
             });
         });
     });
-    function categoryDelete(ths){
+    function bidDelete(ths){
         var id = $(ths).data('id');
         $("#id_modal").val(id);
         $('#deleteConfirmationModal').modal('show');
