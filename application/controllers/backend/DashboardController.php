@@ -21,7 +21,8 @@ class DashboardController extends MY_Controller {
         function __construct() {
             parent::__construct();
             if (!$this->session->userdata('user_data')) {
-                redirect('admin', 'refresh');
+                //redirect('admin', 'refresh');
+                redirect('home', 'refresh');
             }
         }
 	public function index()
