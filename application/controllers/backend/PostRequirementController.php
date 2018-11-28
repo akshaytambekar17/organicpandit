@@ -30,8 +30,12 @@ class PostRequirementController extends MY_Controller {
         $data['backend'] = true;
         $data['view'] = 'post-requirement/list';
         $data['user_data'] = $userSession;
-        $this->PostRequirement->updateIsView();
-        $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetails();
+        if($userSession['username'] == 'adminmaster'){
+            $this->PostRequirement->updateIsView();
+            $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetails();
+        }else{
+            $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetailsByUserId($userSession['id']);
+        }
         $this->backendLayout($data);
     }
     public function create(){

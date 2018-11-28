@@ -47,7 +47,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>23</h3>
+                        <h3><?= count($user_list)?></h3>
                         <p>User Registrations</p>
                     </div>
                     <div class="icon">

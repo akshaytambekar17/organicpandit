@@ -14,13 +14,15 @@ class PostRequirementController extends MY_Controller {
         $data['view'] = 'post-requirement/form_data';
         $data['farmer_product_list'] = $this->Product->getFarmerProduct();
         $data['state_list'] = $this->State->getStates();
+        $userSession = $this->session->userdata('user_data');
+        $data['userSession'] = $userSession;
         if($this->input->post()){
             $post = $this->input->post();
             if($this->form_validation->run('post-requirement-form') == TRUE){
                 $details = $post;
                 $details['from_date'] = date("Y-m-d", strtotime($details['from_date']));
                 $details['to_date'] = date("Y-m-d", strtotime($details['to_date']));
-                $details['user_id'] = $this->session->userdata('id');
+                $details['user_id'] = $userSession['id'];
                 $details['is_verified'] = 0;
                 $details['is_seen'] = 0;
                 $details['is_view'] = 0;
@@ -53,6 +55,8 @@ class PostRequirementController extends MY_Controller {
         $data['view'] = 'post-requirement/search_post';
         $data['farmer_product_list'] = $this->Product->getFarmerProduct();
         $data['state_list'] = $this->State->getStates();
+        $userSession = $this->session->userdata('user_data');
+        $data['userSession'] = $userSession;
         if($this->input->post()){
             $post = $this->input->post();
             if($this->form_validation->run('search-post-requirement-form') == TRUE){

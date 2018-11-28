@@ -61,7 +61,7 @@ class user_model extends CI_Model {
 
     public function delete($id) {
         $this->db->where('id',$id);
-        $this->db->delete('tbl_bid'); 
+        $this->db->delete('tbl_farmer'); 
         if($this->db->affected_rows()){
             return true;
         }else{

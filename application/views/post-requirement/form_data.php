@@ -33,7 +33,7 @@
     <!--                        <h3 class="box-title">Data Table With Full Features</h3>-->
                         </div>
                         <form class="form-horizontal" method="post" enctype="multipart/form-data" name="post-requirement-form" id="post-requirement-form" >
-                            <?php if(!$this->session->userdata('username')){ ?>
+                            <?php if(empty($userSession)){ ?>
                                     <p class="has-error center">Please login to create your post</p>
                             <?php } ?>
                             <div class="box-body">
@@ -159,7 +159,7 @@
                                     <input type="hidden" name="id" value="<?= $product_details['id']?>">
                             <?php } ?>
                             <div class="box-footer center">
-                                <button type="submit" class="btn btn-success" id="submit" <?= empty($this->session->userdata('username'))?'disabled':''?>><?= !empty($product_details)?'Update':'Create'?> Post</button>
+                                <button type="submit" class="btn btn-success" id="submit" <?= empty($userSession)?'disabled':''?>><?= !empty($product_details)?'Update':'Create'?> Post</button>
                                 <a href="<?php echo base_url(); ?>" class="btn btn-warning">Cancel</a>
                             </div>
                         </form>

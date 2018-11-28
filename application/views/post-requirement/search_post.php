@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            <?php if(!$this->session->userdata('username')){ ?>
+            <?php if(empty($userSession)){ ?>
                     <p class="has-error center">Please login to apply for bid</p>
             <?php } ?>
             <div class="row">
@@ -138,7 +138,7 @@
                                                 </h4>
                                             </div>
                                             <div class="col-md-6 bid-padding-block">
-                                                <?php $disabled = empty($this->session->userdata('username'))?'disabled':'';  ?>
+                                                <?php $disabled = empty($userSession)?'disabled':'';  ?>
                                                 <a href="javascript:void(0)" class="btn btn-danger <?= $disabled?>" data-id="<?= $value['id']?>" onclick="bidModal(this)">Apply for Bid</a>
                                             </div>
                                         </div>
@@ -175,22 +175,46 @@
                     <h4 class="modal-title">Applying Bid for Product <span class="modal-title-product-name"></span></h4>
                 </div>
                 <div class="modal-body">
-                    <h5>Product Name : <span class="modal-title-product-name"></span></h5>
+                    <h5><b>Product Name :</b> <span class="modal-title-product-name"></span></h5>
+                    <h5><b>Quality Specification :</b> <span class="modal-quality"></span></h5>
                     <div class="row">
                         <div class="col-md-6">
-                            <h5>Valid From : <span id="modal-valid-from"></span></h5>
+                            <h5><b>Valid From :</b> <span id="modal-valid-from"></span></h5>
                         </div>
                         <div class="col-md-6">
-                            <h5>Valid To : <span id="modal-valid-to"></span></h5>
+                            <h5><b>Valid To :</b> <span id="modal-valid-to"></span></h5>
                         </div>
                     </div>
-                    <h5>Total price : <span id="modal-total-price"></span></h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><b>Expected Rate :</b> <span id="modal-rate"></span></h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><b>Quantity :</b> <span id="modal-quantity"></span></h5>
+                        </div>
+                    </div>
+                    <h5><b>Total price :</b> <span id="modal-total-price"></span></h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><b>Address :</b> <span id="modal-address"></span></h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><b>Payment Terms :</b> <span id="modal-payment-terms"></span></h5>
+                        </div>
+                    </div>
+                    <h5><b>Certification :</b> <span id="modal-certification"></span></h5>
+                    <h5><b>Other Details :</b> <span id="modal-other-details"></span></h5>
                     <br>
                     <h4>Bid Details</h4>
                     <div class="form-group ">
                         <label>Amount</label>
                         <input type="text" name="amount" class="form-control" id="amount" placeholder="Amount" >
                         <span class="has-error error-bid-modal"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label>Comment</label>
+                        <input type="text" name="comment" class="form-control" id="comment" placeholder="Comment" >
+                        <span class="has-error error-bid-modal-comment"></span>
                     </div>
                     <input type="hidden" name="post_requirement_id" id="post_requirement_id">
                     <input type="hidden" name="product_name_modal" id="product_name_modal">
@@ -231,10 +255,11 @@
             $("#confirm_btn").on('click',function(){
                 var post_id = $("#post_requirement_id").val();
                 var amount = $("#amount").val();
+                var comment = $("#comment").val();
                 $.ajax({
                     type: "POST",
                     url: "<?php echo base_url(); ?>" + "bid/create",
-                    data: { 'post_requirement_id' : post_id,'amount' : amount },
+                    data: { 'post_requirement_id' : post_id,'amount' : amount,'comment' : comment },
                     dataType: "json",
                     success: function(result){
                         $('#ConfirmationModal').modal('hide');
@@ -299,6 +324,13 @@
                     $("#modal-valid-from").text(result['from_date']);
                     $("#modal-valid-to").text(result['to_date']);
                     $("#modal-total-price").text(result['total_price']);
+                    $("#modal-quality").text(result['quality_sepcification']);
+                    $("#modal-rate").text(result['price']);
+                    $("#modal-quantity").text(result['quantity']);
+                    $("#modal-address").text(result['delivery_address']);
+                    $("#modal-payment-terms").text(result['payment_terms']);
+                    $("#modal-certification").text(result['certification_id']);
+                    $("#modal-other-details").text(result['other_details']);
                     $("#product_name_modal").val(result['product_details']['pr_name']);
                     $("#post_requirement_id").val(result['id']);
                     $('#bid-modal').modal('show');

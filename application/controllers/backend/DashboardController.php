@@ -33,13 +33,14 @@ class DashboardController extends MY_Controller {
             $data['heading'] = 'Organic Pandit';
             $data['backend'] = true;
             $data['view'] = 'common/dashboard';
-            if($userSession['username'] == 'admin'){
-                $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
-                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['id']);
-            }else{
+            if($userSession['username'] == 'adminmaster'){
                 $data['bid_list'] = $this->Bid->getBids();
                 $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
+            }else{
+                $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
+                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['id']);
             }
+            $data['user_list'] = $this->User->getUserFarmers();
             $data['user_details'] = $userSession;
             $this->backendLayout($data);
         }

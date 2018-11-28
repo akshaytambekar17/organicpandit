@@ -26,11 +26,12 @@ class BidController extends MY_Controller {
         
     }
     public function create(){
-
+        $userSession = $this->session->userdata('user_data');
+        $userSession;
         if($this->input->post()){
             $post = $this->input->post();
             $details = $post;
-            $details['user_id'] = $this->session->userdata('id');
+            $details['user_id'] = $userSession['id'];
             $details['is_seen'] = 0;
             $details['is_view'] = 0;
             $details['is_deleted'] = 0;

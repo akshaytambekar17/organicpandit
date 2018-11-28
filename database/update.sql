@@ -7,3 +7,5 @@ ALTER TABLE `tbl_post_requirement` CHANGE `is_verified` `is_verified` INT(2) NOT
 ALTER TABLE `tbl_post_requirement` ADD `user_id` INT(11) NOT NULL AFTER `product_id`, ADD INDEX `fk_user_id` (`user_id`);
 
 ALTER TABLE `tbl_post_requirement` ADD `post_code` VARCHAR(100) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `tbl_bid` ADD `comment` VARCHAR(255) NOT NULL AFTER `amount`;

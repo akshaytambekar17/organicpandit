@@ -19,7 +19,7 @@
 
         <?php 
         $user_data = $this->session->all_userdata();
-       // print_r($user_data);
+        $user_data = $user_data['user_data'];
         if (!empty($user_data['usertype'])) 
         { 
           $usertype =  $user_data['usertype'];

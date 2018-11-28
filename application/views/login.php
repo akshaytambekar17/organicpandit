@@ -155,7 +155,7 @@ $(document).ready(function(){
                   showCancelButton: false,
                   timer: 2000
                 });
-                     window.location.href = "<?php echo base_url();?>admin/dashboard";
+                     window.location.href = "<?php echo base_url();?>home";
                        }
                    }  
                }); 

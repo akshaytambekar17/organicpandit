@@ -4,7 +4,7 @@
         <h1><?= !empty($heading)?$heading:'Heading'?></h1>
         <ol class="breadcrumb">
             <li><a href="<?= base_url()?>admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="#">Bids</a></li>
+            <li class="active"><a href="#">Users</a></li>
         </ol>
     </section>
     <section class="content">
@@ -41,10 +41,8 @@
                                     <tr>
                                         <th class="hidden">Id</th>
                                         <th>Fullname</th>
-                                        <th>Post Code</th>
-                                        <th>Product name</th>
-                                        <th>Bid amount</th>
-                                        <th>Comment</th>
+                                        <th>Username</th>
+                                        <th>Certification</th>
                                         <?php if($user_data['username'] == 'adminmaster'){ ?>
                                             <th>Action</th>
                                         <?php }?>
@@ -52,25 +50,18 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if (!empty($bid_list)) {
-                                        foreach ($bid_list as $key => $value) {
-                                            $post_details = $this->PostRequirement->getProductNameByPostRequirementId($value['post_requirement_id']); 
+                                    if (!empty($user_list)) {
+                                        foreach ($user_list as $key => $value) {
+                                            
                                 ?>
                                             <tr class="gradeX" id="order-<?= $value['id'] ?>">
                                                 <td class="hidden"><?= $value['id']; ?></td>
-                                                <td>
-                                                    <?php
-                                                        $postDetails = $this->PostRequirement->getPostRequirementById($value['post_requirement_id']); 
-                                                        echo $postDetails['fullname'];
-                                                    ?>
-                                                </td>
-                                                <td><?= !empty($post_details['post_code'])?$post_details['post_code']:'Not availabel';?></td>
-                                                <td><?= !empty($post_details['pr_name'])?$post_details['pr_name']:'Not availabel';?></td>
-                                                <td><?= $value['amount']; ?></td>
-                                                <td><?= $value['comment']; ?></td>
+                                                <td><?= $value['fullname'];?></td>
+                                                <td><?= $value['username'];?></td>
+                                                <td><?= $value['certification'];?></td>
                                                 <?php if($user_data['username'] == 'adminmaster'){ ?>
                                                     <td>
-                                                        <a href="javascript:void(0)" class="btn btn-danger delete-bid" data-id="<?= $value['id'] ?>" name="delete-bid" onclick="bidDelete(this)">Delete</a><br>
+                                                        <a href="javascript:void(0)" class="btn btn-danger delete-user" data-id="<?= $value['id'] ?>" name="delete-user" onclick="userDelete(this)">Delete</a><br>
                                                     </td>
                                                 <?php } ?>
                                             </tr>
@@ -97,7 +88,7 @@
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <div class="text-center popup-content">  
-                    <h5> By clicking on <span>"YES"</span>, This bid will be deleted permanently. Do you wish to proceed?</h5><br><br>
+                    <h5> By clicking on <span>"YES"</span>, This user will be deleted permanently. Do you wish to proceed?</h5><br><br>
                     <input  type="hidden" name="id_modal" id="id_modal" value=""> 
                     <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
                     <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
@@ -112,13 +103,13 @@
             var id=$("#id_modal").val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>" + "admin/bid/delete",
+                url: "<?php echo base_url(); ?>" + "admin/user/delete",
                 data: { 'id' : id },
                 success: function(result){
                     $('#deleteConfirmationModal').modal('hide');
                     if(result){
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.alert-box-msg').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  Bid has been deleted successfully...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert-box-msg').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  User has been deleted successfully...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });
@@ -136,7 +127,7 @@
             });
         });
     });
-    function bidDelete(ths){
+    function userDelete(ths){
         var id = $(ths).data('id');
         $("#id_modal").val(id);
         $('#deleteConfirmationModal').modal('show');

@@ -22,12 +22,20 @@ class BidController extends MY_Controller {
      */
     public function index()
     {
+        $session = UserSession();
+        $userSession = $session['userData'];
         $data['title']='Bid';
         $data['heading']='Bid List';
         $data['backend'] = true;
         $data['view'] = 'bid/list';
-        $this->Bid->updateIsView();
-        $data['bid_list'] = $this->Bid->getBids();
+        $data['user_data'] = $userSession;
+        if($userSession['username'] == 'adminmaster'){
+            $this->Bid->updateIsView();
+            $data['bid_list'] = $this->Bid->getBids();
+        }else{
+            $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
+        }
+        
         $this->backendLayout($data);
     }
     public function create(){

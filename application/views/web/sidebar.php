@@ -3,7 +3,7 @@
     $userSession = $session['userData'];
     
 ?>
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<body class="hold-transition skin-purple sidebar-mini fixed">
     <div class="wrapper">
 
         <header class="main-header">
@@ -11,9 +11,9 @@
             <!-- Logo -->
             <a href="index2.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b><?= !empty($user_details)?ucfirst($user_details['username']):'Admin' ?></b></span>
+                <span class="logo-mini"><b><?= !empty($userSession)?ucfirst($userSession['username']):'Admin' ?></b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b><?= !empty($user_details)?ucfirst($user_details['username']):'Admin' ?></b></span>
+                <span class="logo-lg"><b><?= !empty($userSession)?ucfirst($userSession['username']):'Admin' ?></b></span>
             </a>
 
             <!-- Header Navbar: style can be found in header.less -->
@@ -115,30 +115,29 @@
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                                page and may cause design problems
+                                                <i class="fa fa-th text-yellow"></i> 2 new Bid 
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-red"></i> 5 new members joined
+                                                <i class="fa fa-laptop text-red"></i> 3 new Post Requirement
                                             </a>
                                         </li>
-                                        <li>
+<!--                                        <li>
                                             <a href="#">
                                                 <i class="fa fa-shopping-cart text-green"></i> 25 sales made
                                             </a>
-                                        </li>
-                                        <li>
+                                        </li>-->
+<!--                                        <li>
                                             <a href="#">
                                                 <i class="fa fa-user text-red"></i> You changed your username
                                             </a>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </li>
 <!--                                <li class="footer"><a href="#">View all</a></li>-->
@@ -226,7 +225,7 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs"><?= !empty($user_details)?ucfirst($user_details['username']):'Admin' ?></span>
+                                <span class="hidden-xs"><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
@@ -234,7 +233,7 @@
                                     <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                     <p>
-                                        <?= !empty($user_details)?ucfirst($user_details['username']):'Admin' ?> - Administrator
+                                        <?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?> - Administrator
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -282,7 +281,7 @@
                         <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p><?= !empty($user_details)?ucfirst($user_details['username']):'Admin' ?></p>
+                        <p><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -309,7 +308,7 @@
                     <li>
                         <a href="<?= base_url()?>admin/bid">
                             <i class="fa fa-th"></i> <span>Bids</span>
-                            <?php if($userSession['username'] == 'admin'){ ?>    
+                            <?php if($userSession['username'] == 'adminmaster'){ ?>    
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-blue">
                                         <?= count($this->Bid->getBidByNotView())?>
@@ -321,7 +320,7 @@
                     <li>
                         <a href="<?= base_url()?>admin/post-requirement">
                             <i class="fa fa-laptop"></i> <span>Post Requirements</span>
-                            <?php if($userSession['username'] == 'admin'){ ?>    
+                            <?php if($userSession['username'] == 'adminmaster'){ ?>    
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-yellow">
                                         <?= count($this->PostRequirement->getPostRequirementByNotView())?></small>
@@ -329,7 +328,7 @@
                             <?php } ?>
                         </a>
                     </li>
-                    <?php if($userSession['username'] == 'admin'){ ?>    
+                    <?php //if($userSession['username'] == 'adminmaster'){ ?>    
                         <li>
                             <a href="<?= base_url()?>admin/user">
                                 <i class="ion ion-person-add"></i> <span>User Registration</span>
@@ -338,7 +337,7 @@
                                 </span>
                             </a>
                         </li>
-                    <?php } ?>
+                    <?php //} ?>
                 </ul>
             </section>
             <!-- /.sidebar -->

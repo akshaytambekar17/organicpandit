@@ -24,7 +24,15 @@ class UserController extends MY_Controller {
         $this->load->model('login_model','Login');
     }
     public function index() {
-        $this->load->view('welcome_message');
+        $session = UserSession();
+        $userSession = $session['userData'];
+        $data['title'] = 'User Registration';
+        $data['heading'] = 'User Registration';
+        $data['backend'] = true;
+        $data['view'] = 'user/list';
+        $data['user_data'] = $userSession;
+        $data['user_list'] = $this->User->getUserFarmers();
+        $this->backendLayout($data);
     }
 
     public function login() {
@@ -65,5 +73,13 @@ class UserController extends MY_Controller {
         $this->session->unset_userdata('user_data');
         return redirect('home');
     }
-
+    public function delete(){
+        $post = $this->input->post();
+        $result = $this->User->delete($post['id']);
+        if($result){
+            echo true;
+        }else{
+            echo false;
+        }
+   }
 }
