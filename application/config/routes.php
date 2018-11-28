@@ -83,7 +83,11 @@ $route['bid/create'] = "BidController/create";
 
 $route['admin'] = "backend/UserController/login";
 $route['admin/dashboard'] = "backend/DashboardController";
+
 $route['admin/post-requirement'] = "backend/PostRequirementController";
+$route['admin/post-requirement/update'] = "backend/PostRequirementController/update";
+$route['admin/post-requirement/delete'] = "backend/PostRequirementController/delete";
+
 $route['admin/bid'] = "backend/BidController";
 $route['admin/bid/delete'] = "backend/BidController/delete";
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class BidController extends MY_Controller {
+class PostRequirementController extends MY_Controller {
     function __construct() {
         parent::__construct();
     }
@@ -22,12 +22,12 @@ class BidController extends MY_Controller {
      */
     public function index()
     {
-        $data['title']='Bid';
-        $data['heading']='Bid List';
+        $data['title'] = 'Post Data';
+        $data['heading']='Post List';
         $data['backend'] = true;
-        $data['view'] = 'bid/list';
-        $this->Bid->updateIsView();
-        $data['bid_list'] = $this->Bid->getBids();
+        $data['view'] = 'post-requirement/list';
+        $this->PostRequirement->updateIsView();
+        $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetails();
         $this->backendLayout($data);
     }
     public function create(){
@@ -66,76 +66,35 @@ class BidController extends MY_Controller {
         $get = $this->input->get();
         if($this->input->post()){
             $post = $this->input->post();
-            if($this->form_validation->run('category') == TRUE){
-                $details = $post;
-                if(!empty($_FILES['image']['name'])){
-                    $config['upload_path']          = './assets/images/category-images/';
-                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                    $config['max_size']             = 2048;
-                    $config['max_width']            = 0;
-                    $config['max_height']           = 0;
-
-                    $this->load->library('upload', $config);
-                    if($this->upload->do_upload('image')){
-                        $uploadData = $this->upload->data();
-                        $image_name = $uploadData['file_name'];
-                        $error = '';
-                    }else{
-                        $error = $this->upload->display_errors();
-                        $image_name = '';
-                    }
-                }else{
-                    $error = '';
-                    $image_name = !empty($post['image_hidden'])?$post['image_hidden']:''; 
-                }
-                if(empty($error)){
-                    unset($details['image_hidden']);
-                    $details['image'] = $image_name;
-                    $details['updated_at'] = date('Y-m-d H:i:s');
-                    $result = $this->Category->update($details);
-                    if ($result) {
-                        $this->session->set_flashdata('Message', 'Category updated Succesfully');
-                        return redirect('category', 'refresh');
-                    } else {
-                        $this->session->set_flashdata('Error', 'Failed to update category');
-                        $category_details = $this->Category->getCategoryById($post['id']);
-                        $data['category_list'] = $this->Category->getCategories();
-                        $data['title'] = $category_details['name'] ;
-                        $data['heading'] ='Update Category '.$category_details['name'];
-                        $data['view'] = 'Category/form_data';
-                        $data['category_details'] = $category_details;
-                        $this->backendLayout($data);
-                        $this->backendLayout($data);
-                    }
-                }else{
-                    $this->session->set_flashdata('Error',$error);
-                    $category_details = $this->Category->getCategoryById($post['id']);
-                    $data['category_list'] = $this->Category->getCategories();
-                    $data['title'] = $category_details['name'] ;
-                    $data['heading'] ='Update Category '.$category_details['name'];
-                    $data['view'] = 'Category/form_data';
-                    $data['category_details'] = $category_details;
-                    $this->backendLayout($data);
-                }
-            }else{
-                $data['title']='Category';
-                $data['heading']='Add Category';
-                $data['view'] = 'Category/form_data';
+            $details = $post;
+            $details['updated_at'] = date('Y-m-d H:i:s');
+            $result = $this->PostRequirement->update($details);
+            if ($result) {
+                $this->session->set_flashdata('Message', 'Post '.$post['post_code'].' has been updated Succesfully');
+                return redirect('admin/post-requirement', 'refresh');
+            } else {
+                $this->session->set_flashdata('Error', 'Failed to update post '.$post['post_code']);
+                $post_details = $this->PostRequirement->getPostRequirementById($post['id']);
+                $data['title'] = $post_details['post_code'] ;
+                $data['heading'] ='Update Post '.$post_details['post_code'];
+                $data['view'] = 'post-requirement/update-details';
+                $data['backend'] = true;
+                $data['post_details'] = $post_details;
                 $this->backendLayout($data);
             }
         }else{
-            $category_details = $this->Category->getCategoryById($get['id']);
-            $data['category_list'] = $this->Category->getCategories();
-            $data['title'] = $category_details['name'] ;
-            $data['heading'] ='Update Category '.$category_details['name'];
-            $data['view'] = 'Category/form_data';
-            $data['category_details'] = $category_details;
+            $post_details = $this->PostRequirement->getPostRequirementById($get['id']);
+            $data['title'] = $post_details['post_code'] ;
+            $data['heading'] ='Update Post '.$post_details['post_code'];
+            $data['view'] = 'post-requirement/update-details';
+            $data['backend'] = true;
+            $data['post_details'] = $post_details;
             $this->backendLayout($data);
         }
     }
     public function delete(){
         $post = $this->input->post();
-        $result = $this->Bid->delete($post['id']);
+        $result = $this->PostRequirement->delete($post['id']);
         if($result){
             echo true;
         }else{

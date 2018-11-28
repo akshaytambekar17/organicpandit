@@ -297,6 +297,11 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li>
+                        <a href="<?= base_url()?>admin/dashboard">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= base_url()?>admin/bid">
                             <i class="fa fa-th"></i> <span>Bids</span>
                             <span class="pull-right-container">

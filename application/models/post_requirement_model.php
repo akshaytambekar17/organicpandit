@@ -22,9 +22,19 @@ class post_requirement_model extends CI_Model {
         $this->db->order_by('id','DESC');
         return $this->db->get('tbl_post_requirement')->result_array();
     }
+    public function getPostRequirementsWithProductDetails() {
+        $this->db->select("pr.id as post_requirement_id,pr.*,pf.*");
+        $this->db->from('tbl_post_requirement pr');
+        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->order_by('pr.id','DESC');
+        return $this->db->get()->result_array();
+    }
     public function getPostRequirementById($id) {
-        $this->db->where('id',$id);
-        return $this->db->get('tbl_post_requirement')->row_array();
+        $this->db->select("pr.*,pf.pr_name as product_name");
+        $this->db->from('tbl_post_requirement pr');
+        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->where('pr.id',$id);
+        return $this->db->get()->row_array();
     }
     public function getPostRequirementByNotView() {
         $this->db->where('is_view',0);
@@ -48,12 +58,18 @@ class post_requirement_model extends CI_Model {
         if(!empty($data['certification_id'])){
             $this->db->where('certification_id',$data['certification_id']);
         }
+        $this->db->where('is_verified',1);
         return $this->db->get('tbl_post_requirement')->result_array();
     }
     
     public function add($data){
         $this->db->insert('tbl_post_requirement', $data);
         $last_id = $this->db->insert_id();
+        $postCode = "POST".$data['product_id'].$data['user_id'].$last_id;
+        $updateData = array('post_code' => $postCode,
+                            'id' => $last_id
+                        );
+        $this->update($updateData);
         return $last_id;
     }
     public function update($updateData){
@@ -65,7 +81,15 @@ class post_requirement_model extends CI_Model {
             return false;
         }
     }
-
+    public function updateIsView(){
+        $updateData = array('is_view' => 1);
+        $this->db->update('tbl_post_requirement',$updateData);
+        if($this->db->affected_rows()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function delete($id) {
         $this->db->where('id',$id);
         $this->db->delete('tbl_post_requirement'); 

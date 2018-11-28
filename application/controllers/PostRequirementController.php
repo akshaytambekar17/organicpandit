@@ -4,11 +4,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class PostRequirementController extends MY_Controller {
     function __construct() {
         parent::__construct();
-        $this->load->model('post_requirement_model','PostRequirement');
-        $this->load->model('product_model','Product');
-        $this->load->model('bid_model','Bid');
-        $this->load->model('state_model','State');
-        $this->load->model('city_model','City');
     }
     
     public function index()
@@ -30,6 +25,7 @@ class PostRequirementController extends MY_Controller {
                 $details['is_seen'] = 0;
                 $details['is_view'] = 0;
                 $details['is_deleted'] = 0;
+                $details['post_code'] = '';
                 $details['updated_at'] = date('Y-m-d H:i:s');
                 $details['created_at'] = date('Y-m-d H:i:s');
                 $result = $this->PostRequirement->add($details);

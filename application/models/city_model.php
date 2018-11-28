@@ -26,6 +26,10 @@ class city_model extends CI_Model {
         $this->db->where('state_id',$state_id);
         return $this->db->get('cities')->result_array();
     }
+    public function getCityById($id) {
+        $this->db->where('id',$id);
+        return $this->db->get('cities')->row_array();
+    }
     
     public function add($data){
         $this->db->insert('tbl_post_requirement', $data);

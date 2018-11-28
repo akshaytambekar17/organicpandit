@@ -5,3 +5,5 @@ ALTER TABLE `tbl_post_requirement` CHANGE `certification_id` `certification_id` 
 ALTER TABLE `tbl_post_requirement` CHANGE `is_verified` `is_verified` INT(2) NOT NULL COMMENT '1= Verified, 0= Not Verified';
 
 ALTER TABLE `tbl_post_requirement` ADD `user_id` INT(11) NOT NULL AFTER `product_id`, ADD INDEX `fk_user_id` (`user_id`);
+
+ALTER TABLE `tbl_post_requirement` ADD `post_code` VARCHAR(100) NOT NULL AFTER `user_id`;

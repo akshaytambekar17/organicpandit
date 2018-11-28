@@ -4,7 +4,7 @@
         <h1><?= !empty($heading)?$heading:'Heading'?></h1>
         <ol class="breadcrumb">
             <li><a href="<?= base_url()?>admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="#">Bids</a></li>
+            <li class="active"><a href="#"><?= $title?></a></li>
         </ol>
     </section>
     <section class="content">
@@ -42,30 +42,39 @@
                                         <th class="hidden">Id</th>
                                         <th>Fullname</th>
                                         <th>Post Code</th>
+                                        <th>Company name</th>
                                         <th>Product name</th>
-                                        <th>Bid amount</th>
+                                        <th>From date</th>
+                                        <th>To date</th>
+                                        <th>Total Price</th>
+                                        <th>Verified</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if (!empty($bid_list)) {
-                                        foreach ($bid_list as $key => $value) {
-                                            $post_details = $this->PostRequirement->getProductNameByPostRequirementId($value['post_requirement_id']); 
+                                    if (!empty($post_list)) {
+                                        foreach ($post_list as $key => $value) {
                                 ?>
                                             <tr class="gradeX" id="order-<?= $value['id'] ?>">
-                                                <td class="hidden"><?= $value['id']; ?></td>
+                                                <td class="hidden"><?= $value['post_requirement_id']; ?></td>
                                                 <td>
                                                     <?php
                                                         $userDetails = $this->User->getUserFarmerById($value['user_id']); 
                                                         echo $userDetails['fullname'];
                                                     ?>
                                                 </td>
-                                                <td><?= !empty($post_details['post_code'])?$post_details['post_code']:'Not availabel';?></td>
-                                                <td><?= !empty($post_details['pr_name'])?$post_details['pr_name']:'Not availabel';?></td>
-                                                <td><?= $value['amount']; ?></td>
+                                                <td><?= $value['post_code']?></td>
+                                                <td><?= $value['company_name']?></td>
+                                                <td><?= $value['pr_name']?></td>
+                                                <td><?= $value['from_date']?></td>
+                                                <td><?= $value['to_date']?></td>
+                                                <td><?= $value['total_price']; ?></td>
+                                                <td><?= $value['is_verified'] == 1?'Yes':'No';?>
+                                                </td>
                                                 <td>
-                                                    <a href="javascript:void(0)" class="btn btn-danger delete-bid" data-id="<?= $value['id'] ?>" name="delete-bid" onclick="bidDelete(this)">Delete</a><br>
+                                                    <a href="<?= base_url()?>admin/post-requirement/update?id=<?= $value['post_requirement_id']?>" class="btn btn-success view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post">Update</a>
+                                                    <a href="javascript:void(0)" class="btn btn-danger delete-post" data-id="<?= $value['post_requirement_id'] ?>" data-postcode="<?= $value['post_code']?>"  name="delete-post" onclick="postDelete(this)">Delete</a><br>
                                                 </td>
                                             </tr>
                                             <?php
@@ -91,7 +100,7 @@
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <div class="text-center popup-content">  
-                    <h5> By clicking on <span>"YES"</span>, This bid will be deleted permanently. Do you wish to proceed?</h5><br><br>
+                    <h5> By clicking on <span>"YES"</span>, The post code <span id="post-code-span"></span> will be deleted permanently. Do you wish to proceed?</h5><br><br>
                     <input  type="hidden" name="id_modal" id="id_modal" value=""> 
                     <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
                     <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
@@ -106,13 +115,13 @@
             var id=$("#id_modal").val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>" + "admin/bid/delete",
+                url: "<?php echo base_url(); ?>" + "admin/post-requirement/delete",
                 data: { 'id' : id },
                 success: function(result){
                     $('#deleteConfirmationModal').modal('hide');
                     if(result){
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.alert-box-msg').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  Bid has been deleted successfully...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert-box-msg').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  The post has been deleted successfully...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });
@@ -130,9 +139,11 @@
             });
         });
     });
-    function bidDelete(ths){
+    function postDelete(ths){
         var id = $(ths).data('id');
+        var postcode = $(ths).data('postcode');
         $("#id_modal").val(id);
+        $("#post-code-span").text(postcode);
         $('#deleteConfirmationModal').modal('show');
     }
 </script>

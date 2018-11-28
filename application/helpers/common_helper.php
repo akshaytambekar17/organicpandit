@@ -32,8 +32,8 @@ function includesHeaderFooter($data){
     if(!empty($data['backend'])){
         $ci->load->view($data['structure'].'/'.$data['view'],$data);
     }else{
-        $ci->load->view($data['view'],$data);
         $ci->load->view('includes/header',$data);
+        $ci->load->view($data['view'],$data);
     }
     $ci->load->view('web/footer',$data);
 }
