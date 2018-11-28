@@ -44,4 +44,14 @@ function includesAll($data){
     $ci->load->view($data['structure'].'/'.$data['view'],$data);
     $ci->load->view('/web/footer',$data);
 }
-
+function UserSession(){
+    $ci = & get_instance();
+    if($ci->session->userdata('user_data')){
+        $result['success'] = true;
+        $result['userData'] = $ci->session->userdata('user_data');
+    }else{
+        $result['success'] = false;
+        $result['userData'] = "Please login to continue";
+    }
+    return $result;
+}

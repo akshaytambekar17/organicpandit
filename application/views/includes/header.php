@@ -120,7 +120,7 @@
                                     <span class="accImg"><?php echo $username[0]; ?></span> 
                                     <p><?php echo $username; ?></p>
                                  <!--   <a class="btn btn-xs btn-success" href="<?php echo base_url(); ?>account/<?php echo $usertype . '/' . $username; ?>">My Account</a> -->
-                                    <a class="btn btn-xs btn-success" href="<?php echo base_url(); ?>dashboardview">My Account</a>
+                                    <a class="btn btn-xs btn-success" href="<?php echo base_url(); ?>admin/dashboard">My Account</a>
                                     <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>account/logout">Logout</a> 
                                 </div>
                             </li>

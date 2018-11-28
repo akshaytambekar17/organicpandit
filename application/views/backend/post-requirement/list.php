@@ -48,7 +48,11 @@
                                         <th>To date</th>
                                         <th>Total Price</th>
                                         <th>Verified</th>
-                                        <th>Action</th>
+                                        <?php if($user_data['username'] == 'admin'){ ?>
+                                            <th>Action</th>
+                                        <?php }else{ ?>
+                                            <th>Total Bids</th>
+                                        <?php }?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,10 +76,19 @@
                                                 <td><?= $value['total_price']; ?></td>
                                                 <td><?= $value['is_verified'] == 1?'Yes':'No';?>
                                                 </td>
-                                                <td>
-                                                    <a href="<?= base_url()?>admin/post-requirement/update?id=<?= $value['post_requirement_id']?>" class="btn btn-success view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post">Update</a>
-                                                    <a href="javascript:void(0)" class="btn btn-danger delete-post" data-id="<?= $value['post_requirement_id'] ?>" data-postcode="<?= $value['post_code']?>"  name="delete-post" onclick="postDelete(this)">Delete</a><br>
-                                                </td>
+                                                <?php if($user_data['username'] == 'admin'){ ?>
+                                                    <td>
+                                                        <a href="<?= base_url()?>admin/post-requirement/update?id=<?= $value['post_requirement_id']?>" class="btn btn-success view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post">Update</a>
+                                                        <a href="javascript:void(0)" class="btn btn-danger delete-post" data-id="<?= $value['post_requirement_id'] ?>" data-postcode="<?= $value['post_code']?>"  name="delete-post" onclick="postDelete(this)">Delete</a><br>
+                                                    </td>
+                                                <?php }else{ ?>
+                                                    <td>
+                                                        <?php
+                                                            $bids = $this->Bid->getBidByPostRequirementId($value['id']);
+                                                            echo count($bids);
+                                                        ?>
+                                                    </td>
+                                                <?php }?>
                                             </tr>
                                             <?php
                                         }

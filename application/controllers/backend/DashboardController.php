@@ -21,18 +21,26 @@ class DashboardController extends MY_Controller {
         function __construct() {
             parent::__construct();
             if (!$this->session->userdata('user_data')) {
-                redirect('admin', 'refresh');
+                //redirect('admin', 'refresh');
+                redirect('home', 'refresh');
             }
         }
 	public function index()
 	{
+            $session = UserSession();
+            $userSession = $session['userData'];
             $data['title'] = 'Dashboard'; 
             $data['heading'] = 'Organic Pandit';
             $data['backend'] = true;
             $data['view'] = 'common/dashboard';
-            $data['bid_list'] = $this->Bid->getBids();
-            $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
-            $data['user_details'] = $this->session->userdata('user_data');
+            if($userSession['username'] == 'admin'){
+                $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
+                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['id']);
+            }else{
+                $data['bid_list'] = $this->Bid->getBids();
+                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
+            }
+            $data['user_details'] = $userSession;
             $this->backendLayout($data);
         }
 }

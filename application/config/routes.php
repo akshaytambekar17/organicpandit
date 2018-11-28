@@ -82,6 +82,7 @@ $route['bid/create'] = "BidController/create";
 /************* New Implementation Admin Panel **************/
 
 $route['admin'] = "backend/UserController/login";
+$route['admin/logout'] = "backend/UserController/logout";
 $route['admin/dashboard'] = "backend/DashboardController";
 
 $route['admin/post-requirement'] = "backend/PostRequirementController";

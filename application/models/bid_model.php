@@ -34,6 +34,10 @@ class bid_model extends CI_Model {
         $this->db->where('is_view',0);
         return $this->db->get('tbl_bid')->result_array();
     }
+    public function getBidByUserId($user_id) {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('tbl_bid')->result_array();
+    }
     
     public function insert($data){
         $this->db->insert('tbl_bid', $data);

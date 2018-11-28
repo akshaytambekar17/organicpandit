@@ -22,16 +22,20 @@ class PostRequirementController extends MY_Controller {
      */
     public function index()
     {
+        
+        $session = UserSession();
+        $userSession = $session['userData'];
         $data['title'] = 'Post Data';
         $data['heading']='Post List';
         $data['backend'] = true;
         $data['view'] = 'post-requirement/list';
+        $data['user_data'] = $userSession;
         $this->PostRequirement->updateIsView();
         $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetails();
         $this->backendLayout($data);
     }
     public function create(){
-
+        
         if($this->input->post()){
             $post = $this->input->post();
             $details = $post;
