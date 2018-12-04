@@ -328,16 +328,26 @@
                             <?php } ?>
                         </a>
                     </li>
-                    <?php //if($userSession['username'] == 'adminmaster'){ ?>    
-                        <li>
-                            <a href="<?= base_url()?>admin/user">
-                                <i class="ion ion-person-add"></i> <span>User Registration</span>
-                                <span class="pull-right-container">
-                                    <small class="label pull-right bg-green">2</small>
-                                </span>
-                            </a>
-                        </li>
-                    <?php //} ?>
+                    <?php if($userSession['username'] == 'adminmaster'){ ?>    
+                            <li>
+                                <a href="<?= base_url()?>admin/product">
+                                    <i class="fa fa-cubes"></i> <span>Product</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url()?>admin/user-type">
+                                    <i class="fa fa-users"></i> <span>User Type</span>
+                                </a>
+                            </li>
+                    <?php } ?>
+                    <li>
+                        <a href="<?= base_url()?>admin/user">
+                            <i class="ion ion-person-add"></i> <span>User Registration</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-green">2</small>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->

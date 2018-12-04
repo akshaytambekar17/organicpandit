@@ -68,4 +68,8 @@ class user_model extends CI_Model {
             return false;
         }
     }
+    public function getCertificationAgency() {
+        //$this->db->order_by('id','DESC');
+        return $this->db->get('tbl_certification')->result_array();
+    }
 }

@@ -36,6 +36,8 @@ class DashboardController extends MY_Controller {
             if($userSession['username'] == 'adminmaster'){
                 $data['bid_list'] = $this->Bid->getBids();
                 $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
+                $data['product_list'] = $this->Product->getProducts();
+                $data['user_type_list'] = $this->UserType->getUserTypes();
             }else{
                 $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
                 $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['id']);

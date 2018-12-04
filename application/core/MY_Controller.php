@@ -12,6 +12,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('post_requirement_model','PostRequirement');
         $this->load->model('product_model','Product');
         $this->load->model('user_model','User');
+        $this->load->model('user_type_model','UserType');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
     }

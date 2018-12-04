@@ -29,7 +29,7 @@
                 <div class="box">
                     <div class="box-header">
                         <div class="pull-right">
-                            <a href="<?= base_url()?>product/add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
+                            <a href="<?= base_url()?>admin/product/add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a>
                         </div>
                     </div>
                   <!-- /.box-header -->
@@ -39,10 +39,12 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
+<!--                                        <th>User Type</th>-->
                                         <th>Product Name</th>
                                         <th>Description</th>
+<!--                                        <th>Quality</th>
                                         <th>Quantity</th>
-                                        <th>Price</th>
+                                        <th>Price</th>-->
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -54,10 +56,12 @@
                                 ?>
                                             <tr class="gradeX" id="order-<?= $value['id'] ?>">
                                                 <td class="hidden"><?= $value['id']; ?></td>
+<!--                                                <td><?= $value['user_type_name']; ?></td>-->
                                                 <td><?= $value['name']; ?></td>
                                                 <td><?= $value['description']; ?></td>
+<!--                                                <td><?= $value['quality']; ?></td>
                                                 <td><?= $value['quantity']; ?></td>
-                                                <td><?= $value['price']; ?></td>
+                                                <td><?= $value['price']; ?></td>-->
                                                 <td><?php
                                                         if($value['status'] == 2){ 
                                                             echo "Active";
@@ -67,7 +71,7 @@
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= site_url('product/update?id='.$value['id'])?>" class="btn btn-success view-product" data-id="<?= $value['id'] ?>" name="view-product">Edit</a>
+                                                    <a href="<?= site_url('admin/product/update?id='.$value['id'])?>" class="btn btn-primary view-product" data-id="<?= $value['id'] ?>" name="view-product">Edit</a>
                                                     <a href="javascript:void(0)" class="btn btn-danger delete-product" data-id="<?= $value['id'] ?>" name="delete-product" onclick="productDelete(this)">Delete</a><br>
                                                 </td>
                                             </tr>
@@ -109,7 +113,7 @@
             var id=$("#id_modal").val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>" + "product/delete",
+                url: "<?php echo base_url(); ?>" + "admin/product/delete",
                 data: { 'id' : id },
                 success: function(result){
                     $('#deleteConfirmationModal').modal('hide');

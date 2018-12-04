@@ -79,6 +79,10 @@ $route['getpost-by-id'] = "PostRequirementController/getPostById";  //done
 
 $route['bid/create'] = "BidController/create";
 
+$route['signup'] = "UserController/signup";
+$route['registration'] = "UserController/registration";
+
+
 /************* New Implementation Admin Panel **************/
 
 $route['admin'] = "backend/UserController/login";
@@ -88,6 +92,16 @@ $route['admin/dashboard'] = "backend/DashboardController";
 $route['admin/post-requirement'] = "backend/PostRequirementController";
 $route['admin/post-requirement/update'] = "backend/PostRequirementController/update";
 $route['admin/post-requirement/delete'] = "backend/PostRequirementController/delete";
+
+$route['admin/product'] = "backend/ProductController";
+$route['admin/product/add'] = "backend/ProductController/add";
+$route['admin/product/update'] = "backend/ProductController/update";
+$route['admin/product/delete'] = "backend/ProductController/delete";
+
+$route['admin/user-type'] = "backend/UserTypeController";
+$route['admin/user-type/add'] = "backend/UserTypeController/add";
+$route['admin/user-type/update'] = "backend/UserTypeController/update";
+$route['admin/user-type/delete'] = "backend/UserTypeController/delete";
 
 $route['admin/bid'] = "backend/BidController";
 $route['admin/bid/delete'] = "backend/BidController/delete";

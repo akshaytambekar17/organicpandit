@@ -43,6 +43,34 @@
                     <a href="<?= base_url()?>admin/post-requirement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <?php if($user_details['username'] == 'adminmaster'){ ?>
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red-gradient">
+                        <div class="inner">
+                            <h3><?= count($product_list)?></h3>
+                            <p>Products</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-cubes"></i>
+                        </div>
+                        <a href="<?= base_url()?>admin/product/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua-gradient">
+                        <div class="inner">
+                            <h3><?= count($user_type_list)?></h3>
+                            <p>User Type</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <a href="<?= base_url()?>admin/user-type/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            <?php } ?>
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -56,6 +84,7 @@
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            
             <!-- ./col -->
 <!--            <div class="col-lg-3 col-xs-6">
                  small box 

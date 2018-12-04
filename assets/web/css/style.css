@@ -38,6 +38,12 @@ a.disabled {
 .bid-padding-block{
     padding: 18px 45px;
 }
+.label-required::after {
+    content: "*";
+    font-size: 14px;
+    font-family: initial;
+    color: red;
+}
 /********Star rating css***********/
 div.stars {
   display: inline-block;

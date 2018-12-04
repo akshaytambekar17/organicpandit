@@ -176,7 +176,71 @@ $config = array(
                         'rules' => 'required'
                 ),
                                 
-        )
+        ),
+        'products-form' => array(
+//                    array(
+//                            'field' => 'user_type_id',
+//                            'label' => 'User Type',
+//                            'rules' => 'required'
+//                    ),
+                    array(
+                            'field' => 'name',
+                            'label' => 'Product name',
+                            'rules' => 'required'
+                    ),
+                    array(
+                            'field' => 'description',
+                            'label' => 'Description',
+                            'rules' => 'required'
+                    ),
+//                    array(
+//                            'field' => 'from_date',
+//                            'label' => 'From Date',
+//                            'rules' => 'required'
+//                    ),
+//                    array(
+//                            'field' => 'to_date',
+//                            'label' => 'To Date',
+//                            'rules' => 'required'
+//                    ),
+//                    array(
+//                            'field' => 'quantity',
+//                            'label' => 'Quantity',
+//                            'rules' => 'required|numeric'
+//                    ),
+//                    array(
+//                            'field' => 'price',
+//                            'label' => 'Price',
+//                            'rules' => 'required|numeric'
+//                    ),
+//                    array(
+//                            'field' => 'quality',
+//                            'label' => 'Quality',
+//                            'rules' => 'required'
+//                    ),
+                    array(
+                            'field' => 'status',
+                            'label' => 'Status',
+                            'rules' => 'required'
+                    )
+            ),
+            'user-type-form' => array(
+                    array(
+                            'field' => 'name',
+                            'label' => 'Name',
+                            'rules' => 'required'
+                    ),
+                    array(
+                            'field' => 'description',
+                            'label' => 'Description',
+                            'rules' => 'required'
+                    ),
+                    array(
+                            'field' => 'status',
+                            'label' => 'Status',
+                            'rules' => 'required'
+                    )
+            )
 );
 $config['error_prefix'] = '<div class="error">';
 $config['error_suffix'] = '</div>';

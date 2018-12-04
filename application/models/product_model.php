@@ -18,6 +18,17 @@ class product_model extends CI_Model {
         parent::__construct();
     }
     
+    public function getProducts() {
+        $this->db->select("p.*,ut.name as user_type_name");
+        $this->db->from('tbl_product p');
+        $this->db->join('tbl_user_type ut','ut.id = p.user_type_id');
+        $this->db->order_by('p.id','DESC');
+        return $this->db->get()->result_array();
+    }
+    public function getProductById($id) {
+        $this->db->where('id',$id);
+        return $this->db->get('tbl_product')->row_array();
+    }
     public function getFarmerProduct() {
         //$this->db->order_by('id','DESC');
         return $this->db->get('tbl_pr_farmer')->result_array();
@@ -28,13 +39,13 @@ class product_model extends CI_Model {
     }
     
     public function add($data){
-        $this->db->insert('tbl_post_requirement', $data);
+        $this->db->insert('tbl_product', $data);
         $last_id = $this->db->insert_id();
         return $last_id;
     }
     public function update($updateData){
         $this->db->where('id',$updateData['id']);
-        $this->db->update('tbl_post_requirement',$updateData);
+        $this->db->update('tbl_product',$updateData);
         if($this->db->affected_rows()){
             return true;
         }else{
@@ -44,7 +55,7 @@ class product_model extends CI_Model {
 
     public function delete($id) {
         $this->db->where('id',$id);
-        $this->db->delete('tbl_post_requirement'); 
+        $this->db->delete('tbl_product'); 
         if($this->db->affected_rows()){
             return true;
         }else{
