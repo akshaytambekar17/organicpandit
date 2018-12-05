@@ -11,7 +11,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  *
  * @author comc
  */
-class user_model extends CI_Model {
+class user_bank_model extends CI_Model {
 
     //put your code here
     public function __construct() {
@@ -36,13 +36,13 @@ class user_model extends CI_Model {
     }
     
     public function insert($data){
-        $this->db->insert('tbl_users', $data);
+        $this->db->insert('tbl_users_bank_details', $data);
         $last_id = $this->db->insert_id();
         return $last_id;
     }
     public function update($updateData){
         $this->db->where('id',$updateData['id']);
-        $this->db->update('tbl_users',$updateData);
+        $this->db->update('tbl_users_bank_details',$updateData);
         if($this->db->affected_rows()){
             return true;
         }else{
@@ -51,7 +51,7 @@ class user_model extends CI_Model {
     }
     public function updateIsView(){
         $updateData = array('is_view' => 1);
-        $this->db->update('tbl_users',$updateData);
+        $this->db->update('tbl_bid',$updateData);
         if($this->db->affected_rows()){
             return true;
         }else{
@@ -61,7 +61,7 @@ class user_model extends CI_Model {
 
     public function delete($id) {
         $this->db->where('id',$id);
-        $this->db->delete('tbl_users'); 
+        $this->db->delete('tbl_users_bank_details'); 
         if($this->db->affected_rows()){
             return true;
         }else{

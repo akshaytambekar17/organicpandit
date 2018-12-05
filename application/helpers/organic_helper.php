@@ -45,3 +45,44 @@ function getTotalFarmer(){
             );
     return $data;
 }
+function ViewRegistration($userTypeDetails){
+    $ci=& get_instance();
+    $data['user_type_details'] = $userTypeDetails;
+    if($userTypeDetails['id'] == 1){
+        return $ci->load->view('user/registration_farmer',$data);
+    }else if($userTypeDetails['id'] == 2){
+        return $ci->load->view('user/registration_fpo',$data);
+    }else if($userTypeDetails['id'] == 3){
+        return $ci->load->view('user/registration_trader',$data);
+    }else if($userTypeDetails['id'] == 4){
+        return $ci->load->view('user/registration_processor',$data);
+    }else if($userTypeDetails['id'] == 5){
+        return $ci->load->view('user/registration_buyer',$data);
+    }else if($userTypeDetails['id'] == 6){
+        return $ci->load->view('user/registration_organic_consultant',$data);
+    }else if($userTypeDetails['id'] == 7){
+        return $ci->load->view('user/registration_organic_input',$data);
+    }else if($userTypeDetails['id'] == 8){
+        return $ci->load->view('user/registration_packing_company',$data);
+    }else if($userTypeDetails['id'] == 9){
+        return $ci->load->view('user/registration_logistic_company',$data);
+    }else if($userTypeDetails['id'] == 10){
+        return $ci->load->view('user/registration_farm_equipment',$data);
+    }else if($userTypeDetails['id'] == 11){
+        return $ci->load->view('user/registration_exhibitor',$data);
+    }else if($userTypeDetails['id'] == 12){
+        return $ci->load->view('user/registration_shops',$data);
+    }else if($userTypeDetails['id'] == 13){
+        return $ci->load->view('user/registration_labs',$data);
+    }else if($userTypeDetails['id'] == 14){
+        return $ci->load->view('user/registration_government_agencies',$data);
+    }else if($userTypeDetails['id'] == 15){
+        return $ci->load->view('user/registration_institutions',$data);
+    }else if($userTypeDetails['id'] == 17){
+        return $ci->load->view('user/registration_restaurant',$data);
+    }else if($userTypeDetails['id'] == 18){
+        return $ci->load->view('user/registration_ngo',$data);
+    }else{
+        return $ci->load->view('user/registration_certification_agencies',$data);
+    }
+}

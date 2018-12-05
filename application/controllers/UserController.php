@@ -43,11 +43,6 @@ class UserController extends MY_Controller {
         }
         $get = $this->input->get();
         $user_type_details = $this->UserType->getUserTypeById($get['id']);
-        if($user_type_details['id'] == 2){
-            $data['name'] = 'FPO Name';
-        }else{
-            $data['name'] = 'Full Name';
-        }
         $data['user_type_details'] = $user_type_details;
         $data['state_list'] = $this->State->getStates();
         $data['agencies_list'] = $this->User->getCertificationAgency();
@@ -56,7 +51,219 @@ class UserController extends MY_Controller {
         $data['hide_footer'] = true;
         $data['view'] = 'user/registration_form';
         $data['userSession'] = $userSession;
-        $this->frontendLayout($data);
+        if($this->input->post()){
+            $post = $this->input->post();
+            
+            $this->form_validation->set_rules('fullname', 'Fullname', 'trim|required');
+            $this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[tbl_users.username]');
+            $this->form_validation->set_rules('email_id', 'Email Id', 'trim|required');
+            $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]|matches[confirm_password]');
+            $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[5]');
+            $this->form_validation->set_rules('mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]');
+            $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
+            if(empty($_FILES['profile_image']['name'])){
+                $this->form_validation->set_rules('profile_image', 'Profile Image', 'trim|required');
+            }
+            $this->form_validation->set_rules('state_id', 'State', 'trim|required');
+            $this->form_validation->set_rules('city_id', 'City', 'trim|required');
+            $this->form_validation->set_rules('address', 'Address', 'trim|required');
+            $this->form_validation->set_rules('is_test_report', 'Test Report', 'trim|required');
+            $this->form_validation->set_rules('is_visit_farm', 'Fullname', 'trim|required');
+            $this->form_validation->set_rules('story', 'Fullname', 'trim|required');
+            $this->form_validation->set_rules('pancard_number', 'Pan Card Number', 'trim|required');
+            $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required');
+            if($post['user_type_id'] != 1){
+                $this->form_validation->set_rules('gst_number', 'GST Number', 'trim|required');
+            }
+            $this->form_validation->set_rules('certification_id', 'Certification', 'trim|required');
+            if($post['user_type_id'] == 1){
+//                $this->form_validation->set_rules('Product[name][]', 'Product Name', 'trim|required');
+//                $this->form_validation->set_rules('Product[description][]', 'Description', 'trim|required');
+//                $this->form_validation->set_rules('Product[from_date][]', 'From Date', 'trim|required');
+//                $this->form_validation->set_rules('Product[to_date][]', 'To Date', 'trim|required');
+//                $this->form_validation->set_rules('Product[quantity_id][]', 'Quantity', 'trim|required');
+//                $this->form_validation->set_rules('Product[quality][]', 'Quality', 'trim|required');
+//                $this->form_validation->set_rules('Product[price][]', 'Price', 'trim|required');
+//                if(empty($_FILES['Product[images][]']['name'])){
+//                    $this->form_validation->set_rules('Product[images][]', 'Images', 'trim|required');
+//                }
+            }
+            if($this->form_validation->run() == TRUE){
+                $details = $post;
+                if(!empty($_FILES['profile_image']['name'])){
+                    $config['upload_path']          = './assets/images/profile/';
+                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
+                    $config['max_size']             = 2048;
+                    
+                    $this->load->library('upload', $config);
+                    if($this->upload->do_upload('profile_image')){
+                        $uploadData = $this->upload->data();
+                        $profile_image = $uploadData['file_name'];
+                        $error = '';
+                    }else{
+                        $error = $this->upload->display_errors();
+                        $profile_image = '';
+                    }
+                }else{
+                    $profile_image = '';
+                    $error = '';
+                }
+                
+//                if(!empty($_FILES['certification_image']['name'])){
+//                    $config['upload_path']          = './assets/images/other_images/';
+//                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
+//                    $config['max_size']             = 2048;
+//                    
+//                    $this->load->library('upload', $config);
+//                    if($this->upload->do_upload('certification_image')){
+//                        $uploadData = $this->upload->data();
+//                        $certification_image = $uploadData['file_name'];
+//                        $error = '';
+//                    }else{
+//                        $error = $this->upload->display_errors();
+//                        $certification_image = '';
+//                    }
+//                }else{
+//                    $certification_image = '';
+//                    $error = '';
+//                }
+                if(!empty($_FILES['company_image']['name'])){
+                    $config['upload_path']          = './assets/images/other_images/';
+                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
+                    $config['max_size']             = 2048;
+                    
+                    $this->load->library('upload', $config);
+                    if($this->upload->do_upload('company_image')){
+                        $uploadData = $this->upload->data();
+                        $company_image = $uploadData['file_name'];
+                        $error = '';
+                    }else{
+                        $error = $this->upload->display_errors();
+                        $company_image = '';
+                    }
+                }else{
+                    $company_image = '';
+                    $error = '';
+                }
+                if(!empty($_FILES['video']['name'])){
+                    $config['upload_path']          = './assets/images/video/';
+                    $config['allowed_types']        = 'mp4';
+                    $config['max_size']             = 102400;
+                    $this->load->library('upload', $config);
+                    if($this->upload->do_upload('video')){
+                        $uploadData = $this->upload->data();
+                        $video = $uploadData['file_name'];
+                        $error = '';
+                    }else{
+                        $error = $this->upload->display_errors();
+                        $video = '';
+                    }
+                }else{
+                    $image_name = '';
+                    $video = '';
+                }
+                if(!empty($_FILES['product_images']['name'])){
+                    $count = count($_FILES['product_images']['name']);
+                    $files = $_FILES;
+                    for($i=0; $i<$count; $i++){
+                        if(!empty($files['product_images']['name'][$i])){
+                            $_FILES['product_images']['name'] = $files['product_images']['name'][$i];
+                            $_FILES['product_images']['type'] = $files['product_images']['type'][$i];
+                            $_FILES['product_images']['tmp_name'] = $files['product_images']['tmp_name'][$i];
+                            $_FILES['product_images']['error'] = $files['product_images']['error'][$i];
+                            $_FILES['product_images']['size'] = $files['product_images']['size'][$i];
+                            $config4['upload_path'] = './assets/images/product_images/';
+                            $config4['allowed_types'] = 'gif|jpg|png|jpeg';
+                            $this->load->library('upload', $config4);
+                            $this->upload->initialize($config4);
+                            if($this->upload->do_upload('product_images')){
+                                $uploadData = $this->upload->data();
+                                $product_images[] = $uploadData['file_name'];
+                                $errors[] = '';
+                            }else{
+                                $errors[] = $this->upload->display_errors();
+                                $product_images[] = '';
+                            }
+                        }
+                    }
+                }else{
+                    $errors[] = '';
+                    $product_images[] = '';
+                }
+                
+                if(empty($error) && count(array_filter($errors)) == 0){
+                    unset($details['confirm_password']);
+                    unset($details['Bank']);
+                    unset($details['Product']);
+                    //$details['landline_no'] = !empty($post['landline_no'])?$post['landline_no']:'';
+                    $details['landline_no'] = 0;
+                    $details['profile_image'] = $profile_image;
+                    $details['company_image'] = $company_image;
+                    $details['certification_image'] = '';
+                    $details['video'] = $video;
+                    $details['product_catalogue'] = '';
+                    $details['resume'] = '';
+                    $details['status'] = 2;
+                    $details['is_deleted'] = 0;
+                    $details['is_verified'] = 1;
+                    $details['created_at'] = date('Y-m-d H:i:s');
+                    $details['updated_at'] = date('Y-m-d H:i:s');
+                    
+                    $user_id = $this->User->insert($details);
+                    $i = 0;
+                    $j = 1;
+                    $post_product = array_filter(array_map('array_filter', $post['Product'])); 
+                    $count = count($post_product);
+                    for($x=1;$x<=count($post_product['name']);$x++){
+                        foreach($post_product as $key_product => $val_product){
+                            foreach($val_product as $key => $val){
+                                if($key == $i && !empty($val)){
+                                    $product_data[$key_product] = $val;
+                                    if(!empty($product_images)){
+                                        foreach($product_image as $key_image => $val_image){
+                                            if($key_image == $i){
+                                                $product_data['images'] = $val_image;   
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if($count == $j){
+                                $product_data['user_id'] = $user_id;
+                                $product_result = $this->UserProduct->insert($product_data);
+                                //$products_details[] = $product_data;
+                                $i++;
+                                $j = 1;
+                                $product_data = array();
+                            }else{
+                                $j++;
+                            }
+                        }
+                    }
+                    $bank_details = $post['Bank'];
+                    $bank_details['user_id'] = $user_id;
+                    $result_bank = $this->UserBank->insert($bank_details);
+                    $this->session->set_flashdata('Message', 'Registration Successfully. Please login to continue');
+                    redirect('registration?id='.$post['user_type_id']);
+                }else{
+                    prints($errors);
+                    printDie($error);
+                    if(!empty($error)){
+                        $this->session->set_flashdata('Error',$error);
+                    }else if(!empty($errors)){
+                        $this->session->set_flashdata('Error',$errors[0]);
+                    }else{
+                        $this->session->set_flashdata('Error','Something Went Wrong');
+                    }
+                    $this->frontendLayout($data);
+                }
+            }else{
+                //printDie(validation_errors());
+                $this->frontendLayout($data);
+            }
+        }else{
+            $this->frontendLayout($data);
+        }
     }
     public function searchPost()
     {

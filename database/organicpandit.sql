@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2018 at 09:18 AM
+-- Generation Time: Dec 05, 2018 at 07:27 PM
 -- Server version: 5.7.23-0ubuntu0.16.04.1
 -- PHP Version: 7.2.10-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -6200,12 +6200,24 @@ CREATE TABLE `tbl_bid` (
   `post_requirement_id` bigint(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL,
   `is_seen` int(2) NOT NULL,
   `is_view` int(11) NOT NULL,
   `is_deleted` int(2) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_bid`
+--
+
+INSERT INTO `tbl_bid` (`id`, `post_requirement_id`, `user_id`, `amount`, `comment`, `is_seen`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 1100, '', 0, 1, 0, '2018-11-21 22:11:59', '2018-11-21 22:11:59'),
+(2, 3, 2, 100, '', 0, 1, 0, '2018-11-21 22:17:00', '2018-11-21 22:17:00'),
+(3, 2, 2, 1000, '', 0, 1, 0, '2018-11-21 22:26:24', '2018-11-21 22:26:24'),
+(4, 2, 2, 1000, '', 0, 1, 0, '2018-11-21 22:26:32', '2018-11-21 22:26:32'),
+(5, 1, 2, 1000, 'Nothing comment', 0, 1, 0, '2018-11-28 16:19:04', '2018-11-28 16:19:04');
 
 -- --------------------------------------------------------
 
@@ -6856,7 +6868,7 @@ CREATE TABLE `tbl_farmer` (
 INSERT INTO `tbl_farmer` (`id`, `fullname`, `username`, `password`, `email`, `landline`, `mobile`, `state`, `city`, `address`, `pancard`, `aadharcard`, `story`, `profile`, `certification`, `certify_img`, `visitq`, `test_report`, `video`, `acc_bank`, `acc_name`, `acc_no`, `ifsc_code`, `date`, `agency`, `cert_no`, `no`, `is_verify`) VALUES
 (2, 'Sambhaji Dhavan', 'sammy01', '5d45e91dd814317cbe517a793e0403ee', 'sambhaji@merakisan.com', '09607570002', '9607570002', '22', '2763', '201/ Anubhuti building,Bavdhan', 'AXKPD1091M', '257099143887', 'XYZ', '255846Koala.jpg', 'pgs', '457557Lighthouse.jpg', 'Yes', 'No', '933819Chrysanthemum.jpg', 'rtfg', 'ghg', '243', '15665', '2018-04-28 05:09:19', '', '', '', 0),
 (3, 'aditi V', 'adii2244', '521bb553ed0bd3a9a561c197bc654809', 'aditi.randave@gmail.com', '123456987', '7020614532', '22', '2763', 'merakisan office', 'cxzpr4922C', '750127471470', 'I\'m Graphic Designer in merakisan', 'Chrysanthemum.jpg', 'npop', '', 'Yes', 'Yes', '', 'nhgn', 'dgfd', 'ghhf', 'gdf', '2018-04-28 05:13:39', '', '', '', 1),
-(4, 'Jitendra Alase', 'onlyofresh', '47c006b4d2720e9cf74fe1b18b652f7f', 'jeetendra.alase@gmail.com', '24', '7218698999', '22', '2763', 'Gajanan nagar pimple gurav pune', 'ACQPA5616C', '436455594156', 'Storng backend planning & consistant supply of Certified Organic Produce', '724877Desert.jpg', 'npop', '673017Hydrangeas.jpg', 'No', 'No', '576696Chrysanthemum.jpg', 'ghj', 'nbn', 'ghjg', 'hg', '2018-04-28 05:16:18', '', '', '', 0),
+(4, 'Jitendra Alase', 'testuser', '5d45e91dd814317cbe517a793e0403ee', 'jeetendra.alase@gmail.com', '24', '7218698999', '22', '2763', 'Gajanan nagar pimple gurav pune', 'ACQPA5616C', '436455594156', 'Storng backend planning & consistant supply of Certified Organic Produce', '724877Desert.jpg', 'npop', '673017Hydrangeas.jpg', 'No', 'No', '576696Chrysanthemum.jpg', 'ghj', 'nbn', 'ghjg', 'hg', '2018-04-28 05:16:18', '', '', '', 0),
 (5, 'KABIR SHAIKH', 'KABIR', '1ef794a1ad2ef8a4887d7fd06176355b', 'kabir@merakisan.com', '466+563', '9168912807', '22', '2763', '201, anubuti building bavdhan pune', 'CIXPK3488F', '52346.33.251', 'xyz', '669079Chrysanthemum.jpg', 'npop', '934443Hydrangeas.jpg', 'Yes', 'Yes', '179105Chrysanthemum.jpg', 'cdsfsf', '2242', '35645', '453512kj', '2018-04-28 05:22:55', '', '', '', 0),
 (6, 'Amit sathe ', 'Amit', 'aa353661578c120494306fa6894ed4b4', 'amit@merakisan.com', '', '9689884342', '22', '2763', '201 , Anubhuti, Bavdhan', 'AVOPS5215L', '', 'XYZ', 'MeraKisan_Organic_NOP.PNG', 'nop', 'MeraKisan_Organic_NOP1.PNG', 'Yes', 'Yes', '', 'kotak ', 'Amit', '', '', '2018-04-28 05:23:30', '', '', '', 0),
 (7, 'ALOK', 'alok', 'bad220c335d0c1f53548f6acdb17e265', 'alokprnc@gmil.com', '', '9163743456', '5', '493', 'jukgkuyfkuy', 'jkgcmhgcm', 'jk.v.hj,c,jh', '~!@#$%^&*()_+`1234567890-=,./<>?;\':"[]\\{}|/*/*', 'ALOK_MISHRA_170165697.jpg', 'both', 'ALOK_MISHRA_170165697.jpg', 'Yes', 'Yes', '', 'hfxgx.cukgg.y,cmhgc.khx.jjyhx,jghx,jgx,jgc.hc,jgc,hgx', 'liuufluttkxkfxkuxkjdzfkgc.jhc.khv.khv/kh', ',yhdmfx,jych.kychdxmgfx,jc.jkhxc,jgcx.jhv', 'kufdkutms,yhvjmts,kug.iy,dmfxmjhc,jgsmhfzxj,c,xmt,hgc,xmgfcmhgxngfzmfhx', '2018-04-28 07:30:14', '', '', '', 0),
@@ -7617,6 +7629,8 @@ INSERT INTO `tbl_packaging` (`id`, `fullname`, `ceo`, `comapny_name`, `username`
 CREATE TABLE `tbl_post_requirement` (
   `id` bigint(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_code` varchar(100) NOT NULL,
   `company_name` varchar(200) NOT NULL,
   `quality_specification` text NOT NULL,
   `from_date` date NOT NULL,
@@ -7644,9 +7658,10 @@ CREATE TABLE `tbl_post_requirement` (
 -- Dumping data for table `tbl_post_requirement`
 --
 
-INSERT INTO `tbl_post_requirement` (`id`, `product_id`, `company_name`, `quality_specification`, `from_date`, `to_date`, `price`, `quantity`, `total_price`, `delivery_address`, `state_id`, `city_id`, `pincode`, `payment_terms`, `is_logistic`, `certification_id`, `other_details`, `is_verified`, `is_seen`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 4, 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 0, 0, 0, 0, '2018-11-20 21:47:29', '2018-11-20 21:47:29'),
-(2, 4, 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 0, 0, 0, 0, '2018-11-20 21:58:36', '2018-11-20 21:58:36');
+INSERT INTO `tbl_post_requirement` (`id`, `product_id`, `user_id`, `post_code`, `company_name`, `quality_specification`, `from_date`, `to_date`, `price`, `quantity`, `total_price`, `delivery_address`, `state_id`, `city_id`, `pincode`, `payment_terms`, `is_logistic`, `certification_id`, `other_details`, `is_verified`, `is_seen`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 4, 2, 'POST421', 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 1, 0, 1, 0, '2018-11-20 21:47:29', '2018-11-23 09:15:53'),
+(2, 4, 2, 'POST422', 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 0, 0, 1, 0, '2018-11-20 21:58:36', '2018-11-20 21:58:36'),
+(3, 6, 2, 'POST623', 'Improx', 'Fresh rice', '2018-11-22', '2018-11-23', 100, 23, 123, 'Pune', 22, 2652, 416007, 'Cash', 1, 'nop', 'Nothing', 0, 0, 1, 0, '2018-11-21 20:09:57', '2018-11-21 20:09:57');
 
 -- --------------------------------------------------------
 
@@ -7695,6 +7710,36 @@ INSERT INTO `tbl_processor` (`id`, `fullname`, `ceo`, `username`, `password`, `e
 (3, 'diptesh', 'jkhj', 'admin', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', '87945518234', '7083560343', '16', '1367', 'hjlj', '', '', 'ghjgj', 'Hydrangeas6.jpg', 'npop', 'Desert5.jpg', 'Yes', 'Yes', '', '', '', '', '', '2018-10-17 07:56:18', '5', '6556564644', '8YTDSKH9OVG'),
 (4, 'diptesh', 'jkhj', 'admin1', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', '87945518234', '7083560343', '1', '2', 'ol', '565635', '6626222', 'ki', 'Lighthouse1.jpg', 'npop', 'Lighthouse1.jpg', 'Yes', 'Yes', 'Wildlife.wmv', '6246456', 'hgvgybhjunjlk', '51454784787887', 'ERE474751515', '2018-10-19 06:43:02', '17', '6556564644', '6HBLAICUYWK'),
 (5, 'diptesh', 'jkhj', 'admin12', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', '87945518234', '7083560343', '1', '2', 'fgvjnh', '565635', '6626222', 'hjhk', '11.png', 'nop', '11.png', 'Yes', 'Yes', 'Wildlife2.wmv', '624645658954714650423', 'hgvgybhjunjlk', '51454784787887', 'ERE474751515', '2018-10-19 06:58:50', '21', '6556564644', 'EK8AUFRGWH2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_product`
+--
+
+CREATE TABLE `tbl_product` (
+  `id` int(11) NOT NULL,
+  `user_type_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `from_date` datetime NOT NULL,
+  `to_date` datetime NOT NULL,
+  `quality` varchar(255) NOT NULL,
+  `price` float(10,2) NOT NULL,
+  `quantity` int(7) NOT NULL,
+  `images` varchar(255) NOT NULL,
+  `status` int(3) NOT NULL COMMENT '1=NotActive, 2=Active',
+  `is_deleted` int(3) NOT NULL COMMENT '0=Not Deleted, 1= Deleted',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_product`
+--
+
+INSERT INTO `tbl_product` (`id`, `user_type_id`, `name`, `description`, `from_date`, `to_date`, `quality`, `price`, `quantity`, `images`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(2, 1, 'Toor Dal', 'Toor Dal', '2018-11-30 00:00:00', '2018-11-30 00:00:00', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19');
 
 -- --------------------------------------------------------
 
@@ -8167,7 +8212,7 @@ CREATE TABLE `tbl_pr_farmer` (
 
 INSERT INTO `tbl_pr_farmer` (`id`, `pr_id`, `pr_name`, `pr_desc`, `pr_avlFrom`, `pr_avlTo`, `pr_qty`, `pr_quality`, `pr_price`, `pr_image`, `pr_date`) VALUES
 (3, 2, 'Toor Daal', 'Toor dal', '2018-04-05', '2018-04-10', '500kg to 1 ton', 'very Good', '100', '72527-1.png', '2018-04-28 05:09:19'),
-(4, 3, 'apple ', 'xyz', '2018-04-19', '2018-05-24', '1 ton to 3 ton', '1', '98', '555621Lighthouse.jpg', '2018-04-28 05:13:39'),
+(4, 3, 'apple', 'xyz', '2018-04-19', '2018-05-24', '1 ton to 3 ton', '1', '98', '555621Lighthouse.jpg', '2018-04-28 05:13:39'),
 (5, 4, 'local seasonal fresh vegetables  & fruits', 'All vegetables  & fruits', '2018-05-02', '2018-06-30', '500kg to 1 ton', 'best ', 'rs 60 per kg', '', '2018-04-28 05:16:18'),
 (6, 5, 'RICE', 'RICE', '2018-04-01', '2018-04-30', '500kg to 1 ton', 'GOOD', '102', '', '2018-04-28 05:22:55'),
 (7, 6, 'Toor dal', 'pulses ', '2018-04-28', '2018-05-05', '500kg to 1 ton', '1 ton', '760kg', '', '2018-04-28 05:23:30'),
@@ -8445,7 +8490,8 @@ CREATE TABLE `tbl_registration` (
 INSERT INTO `tbl_registration` (`register_id`, `username`, `password`, `emailid`, `city_id`) VALUES
 (11, 'admin', '12345', 'xyz@gmail.com', 0),
 (15, 'abc', 'abc', 'abc@gmail.com', 0),
-(18, 'sonam', 'sonam', 'sonam@gmail.com', 0);
+(18, 'sonam', 'sonam', 'sonam@gmail.com', 0),
+(19, 'adminmaster', '0c1ab0ff570e22bce89e59dc899e29fb', 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -8586,7 +8632,181 @@ INSERT INTO `tbl_trader` (`id`, `fullname`, `ceo`, `username`, `password`, `emai
 (33, 'diptesh', 'fghh', 'admin5', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', '87945518', '7083560343', '14', '1206', 'hgj', '4353', '879485612', 'hjh', '124.png', 'npop', '122.png', 'Yes', 'Yes', 'Wildlife.wmv', 'dcsxf', 'fgh', '14827568985011', 'gfh', '2018-10-06 09:10:32', '23', '35663', 'U85WVAZ273E'),
 (34, 'jhgjg', 'jkhj', 'admindsfs', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', 'fdgf', '7083560343', '16', '1351', 'gfhg', '565635', '6626222', 'jhkujk', '125.png', 'npop', '123.png', 'Yes', 'Yes', 'Wildlife.wmv', '624645658954714650423', 'hgvgybhjunjlk', '51454784787887', 'ERE474751515', '2018-10-06 10:27:06', '5', '6556564644', '4KG3S2RJEBC'),
 (35, 'diptesh', 'jkhj', 'admin56', '827ccb0eea8a706c4c34a16891f84e7b', 'ram@gmail.com', '87945518234', '7083560343', '1', '2', 'ghfh', '565635', '6626222', 'jghj', 'IMG-20181010-WA00012.jpg', 'npop', 'IMG-20181010-WA00012.jpg', 'Yes', 'Yes', '', '', '', '', '', '2018-10-17 07:24:56', '23', '', '2BFMVPSTUJ4'),
-(36, 'diptesh', 'jkhj', 'admin1', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', '87945518234', '7083560343', '1', '2', 'jhj', '565635', '6626222', 'juy', 'Lighthouse.jpg', 'npop', 'Lighthouse.jpg', 'Yes', 'Yes', '', '', '', '', '', '2018-10-19 06:26:54', '5', '', 'YVA7EL4KDS0');
+(36, 'diptesh', 'jkhj', 'admin1', '827ccb0eea8a706c4c34a16891f84e7b', 'dipsmajik.96@gmail.com', '87945518234', '7083560343', '1', '2', 'jhj', '565635', '6626222', 'juy', 'Lighthouse.jpg', 'npop', 'Lighthouse.jpg', 'Yes', 'Yes', '', '', '', '', '', '2018-10-19 06:26:54', '5', '', 'YVA7EL4KDS0'),
+(37, 'Akshay', 'AKSHAY', 'akshay', '2de1b2d6a6738df78c5f9733853bd170', 'ak@f.f', '', '12457', '22', '2763', 'Pune', '', '', 'Pune Story', 'xzim_s1.png.pagespeed_.ic_.EA6-JU0EU9_.png', 'npop', 'TCHENNAI1.jpg', 'No', 'No', '', '', '', '', '', '2018-12-03 08:35:22', '10', '', 'M2ROJG97NU3'),
+(38, 'Akshay', 'AKSHAY', 'akshay', '2de1b2d6a6738df78c5f9733853bd170', 'ak@f.f', '', '12457', '22', '2763', 'Pune', '', '', 'Pune Story', 'xzim_s1.pagespeed_.ic_.EA6-JU0EU9_1.png', 'npop', 'TCHENNAI11.jpg', 'No', 'No', '', '', '', '', '', '2018-12-03 08:36:17', '10', '', 'ISX9VGENAUH');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users`
+--
+
+CREATE TABLE `tbl_users` (
+  `user_id` int(11) NOT NULL,
+  `user_type_id` int(11) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `ceo_name` varchar(255) DEFAULT NULL,
+  `organization_name` varchar(255) DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email_id` varchar(100) NOT NULL,
+  `mobile_no` bigint(12) NOT NULL,
+  `landline_no` bigint(12) DEFAULT '0',
+  `state_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `story` varchar(255) NOT NULL,
+  `agency_id` int(11) NOT NULL,
+  `certification_number` varchar(100) DEFAULT NULL,
+  `certification_id` int(11) DEFAULT '0',
+  `total_famer` int(10) NOT NULL DEFAULT '0',
+  `website` varchar(100) DEFAULT NULL,
+  `type_of_buyer` int(5) NOT NULL DEFAULT '0',
+  `gst_number` varchar(100) DEFAULT NULL,
+  `aadhar_number` varchar(100) NOT NULL,
+  `pancard_number` varchar(100) DEFAULT NULL,
+  `profile_image` varchar(255) NOT NULL,
+  `company_image` varchar(255) DEFAULT NULL,
+  `certification_image` varchar(255) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL,
+  `product_catalogue` varchar(255) DEFAULT NULL,
+  `resume` varchar(255) DEFAULT NULL,
+  `is_visit_farm` int(3) NOT NULL COMMENT '1= Yes, 0= No',
+  `is_test_report` int(3) NOT NULL COMMENT '1= Yes, 0= No',
+  `is_verified` int(3) NOT NULL COMMENT '1=Not Verified, 2=Verified',
+  `status` int(3) NOT NULL COMMENT '1=Disabled, 2=Enabled',
+  `is_view` int(3) NOT NULL COMMENT '1=View, 0= Not View',
+  `is_deleted` int(3) NOT NULL COMMENT '1=Deleted, 0=Not Deleted',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_users`
+--
+
+INSERT INTO `tbl_users` (`user_id`, `user_type_id`, `fullname`, `ceo_name`, `organization_name`, `username`, `password`, `email_id`, `mobile_no`, `landline_no`, `state_id`, `city_id`, `address`, `story`, `agency_id`, `certification_number`, `certification_id`, `total_famer`, `website`, `type_of_buyer`, `gst_number`, `aadhar_number`, `pancard_number`, `profile_image`, `company_image`, `certification_image`, `video`, `product_catalogue`, `resume`, `is_visit_farm`, `is_test_report`, `is_verified`, `status`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Akshay Tambekar', NULL, NULL, 'akshay01', '123456', 'akshay@g.co', 123456789, 0, 22, 2763, 'Kolhapur', 'Story', 5, '12345', 4, 0, NULL, 0, '', '123123asd', '1234df', 'debate_web_team17.jpg', '', '', '', '', '', 1, 1, 1, 2, 0, 0, '2018-12-05 19:19:51', '2018-12-05 19:19:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users_bank_details`
+--
+
+CREATE TABLE `tbl_users_bank_details` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `account_holder_name` varchar(150) NOT NULL,
+  `bank_name` varchar(150) NOT NULL,
+  `account_no` varchar(150) NOT NULL,
+  `ifsc_code` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_users_bank_details`
+--
+
+INSERT INTO `tbl_users_bank_details` (`id`, `user_id`, `account_holder_name`, `bank_name`, `account_no`, `ifsc_code`) VALUES
+(1, 1, 'Akshay', 'Axis Bank', '123', 'IGF23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users_gallery`
+--
+
+CREATE TABLE `tbl_users_gallery` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `profile_image` varchar(255) NOT NULL,
+  `company_image` varchar(255) NOT NULL,
+  `certification_image` varchar(255) NOT NULL,
+  `video` varchar(255) NOT NULL,
+  `product_catalogue` varchar(255) NOT NULL,
+  `resume` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users_identity`
+--
+
+CREATE TABLE `tbl_users_identity` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `gst_number` varchar(100) NOT NULL,
+  `aadhar_number` varchar(100) NOT NULL,
+  `pancard_number` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users_products`
+--
+
+CREATE TABLE `tbl_users_products` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `quantity_id` int(5) NOT NULL,
+  `quality` varchar(255) NOT NULL,
+  `price` float(10,2) NOT NULL,
+  `images` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_users_products`
+--
+
+INSERT INTO `tbl_users_products` (`id`, `user_id`, `name`, `description`, `from_date`, `to_date`, `quantity_id`, `quality`, `price`, `images`) VALUES
+(1, 1, 'Jowari', 'Jowari Desc', '0000-00-00', '0000-00-00', 1, 'Very Nice', 90.00, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_type`
+--
+
+CREATE TABLE `tbl_user_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(3) NOT NULL COMMENT '1=Not Active, 2=Active',
+  `images` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user_type`
+--
+
+INSERT INTO `tbl_user_type` (`id`, `name`, `description`, `status`, `images`, `created_at`, `updated_at`) VALUES
+(1, 'Farmer', 'Get Certified Organic Farmers to fulfil all your food & raw material needs.', 2, 'farmer.png', '2018-11-29 17:55:11', '2018-11-29 17:55:11'),
+(2, 'FPO', 'Connect with \'Farmer Producer Organizations\' a collective group of certified organic small and marginal farmers to increase productivity of raw food requirements.', 2, 'fpo(1).png', '2018-11-29 17:55:11', '2018-11-29 17:55:11'),
+(3, 'Trader', 'Find merchants in organic field with a broad portfolio and unique capabilities for sourcing and selling organic products.', 2, 'traders.png', '2018-11-29 17:55:11', '2018-11-29 17:55:11'),
+(4, 'Processor', 'Get Processors, the one who oversees processing and handling of organic food.\nOperations is a major aspect of a Processor.', 2, 'processor.png', '2018-11-29 17:55:11', '2018-11-29 17:55:11'),
+(5, 'Buyer', 'Now find buyers interested in an array of certified organic products.', 2, 'buyeR.png', '2018-11-29 17:55:11', '2018-11-29 17:55:11'),
+(6, 'Organic Consultant', 'Find Specialists in all areas of organic production, implementation, organic certifications & international organic standards.', 2, 'organic co.png', '2018-11-29 17:55:11', '2018-11-29 17:55:11'),
+(7, 'Organic Input Company', 'Now get Organic Certified Inputs such as fertilizers, soil conditioners, plant protection products, disinfectants and more used for organic farming.', 2, 'organic input.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(8, 'Packaging Company', 'Find Packagers with the art and technology of enclosing or protecting organic products for distribution, storage, sale, and use.', 2, 'packaging.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(9, 'Logistic Company', 'Find logisticians who analyze and co-ordinate the organic supply chain - the system that moves a certified organic product from supplier to consumer.', 2, 'logistic.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(10, 'Farm Equipment Company', 'Get farm equipment suppliers who deal in machines, tools, or equipment needed to do the organic agricultural tasks right.', 2, 'farm equ.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(11, 'Exhibitors', 'Find exhibitors who display organic products of interest at various exhibitions.', 2, 'exhibitors(1).png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(12, 'Shops', 'Find various shops and retailers who sell certified organic products for a healthy living.', 2, 'shops.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(13, 'Labs', 'Find labs who do scientific or technological research, experiments, and measurement of organic products.', 2, 'labs.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(14, 'Government Agencies', 'Find a number of government organizations and agencies who offer various services and solutions in organic field.', 2, 'government age.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(15, 'Institutions', 'Find various institutions with educational, professional or social purpose of organic field.', 2, 'institution.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(16, 'Certification Agencies', 'Get certification agencies who expertize in the policies and standards of certification process of organic products.', 2, 'certification.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(17, 'Restaurants', 'Find restaurants and hotels who need certified organic products to serve healthy dishes to their beloved customers.', 2, 'resturant.png', '2018-12-03 18:02:44', '2018-12-03 18:02:44'),
+(18, 'NGO', 'Find \'Non-Profit Organizations\' that operate with a purpose to address the public about organic products, promoting a healthy nation.', 2, 'ngo(1).png', '2018-12-03 18:02:44', '2018-12-03 18:02:44');
 
 -- --------------------------------------------------------
 
@@ -8803,13 +9023,21 @@ ALTER TABLE `tbl_packaging`
 -- Indexes for table `tbl_post_requirement`
 --
 ALTER TABLE `tbl_post_requirement`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_id` (`user_id`);
 
 --
 -- Indexes for table `tbl_processor`
 --
 ALTER TABLE `tbl_processor`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_product`
+--
+ALTER TABLE `tbl_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_type_id` (`user_type_id`);
 
 --
 -- Indexes for table `tbl_pr_buyer`
@@ -8866,6 +9094,48 @@ ALTER TABLE `tbl_trader`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `fk_user_type_id_user` (`user_type_id`);
+
+--
+-- Indexes for table `tbl_users_bank_details`
+--
+ALTER TABLE `tbl_users_bank_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_id_bank` (`user_id`);
+
+--
+-- Indexes for table `tbl_users_gallery`
+--
+ALTER TABLE `tbl_users_gallery`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_id_gallery` (`user_id`);
+
+--
+-- Indexes for table `tbl_users_identity`
+--
+ALTER TABLE `tbl_users_identity`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_id_identity` (`user_id`);
+
+--
+-- Indexes for table `tbl_users_products`
+--
+ALTER TABLE `tbl_users_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_id_product` (`user_id`);
+
+--
+-- Indexes for table `tbl_user_type`
+--
+ALTER TABLE `tbl_user_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_verification`
 --
 ALTER TABLE `tbl_verification`
@@ -8915,7 +9185,7 @@ ALTER TABLE `tbl_agency`
 -- AUTO_INCREMENT for table `tbl_bid`
 --
 ALTER TABLE `tbl_bid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tbl_buyer`
 --
@@ -9010,12 +9280,17 @@ ALTER TABLE `tbl_packaging`
 -- AUTO_INCREMENT for table `tbl_post_requirement`
 --
 ALTER TABLE `tbl_post_requirement`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tbl_processor`
 --
 ALTER TABLE `tbl_processor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tbl_product`
+--
+ALTER TABLE `tbl_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_pr_buyer`
 --
@@ -9045,7 +9320,7 @@ ALTER TABLE `tbl_pr_trader`
 -- AUTO_INCREMENT for table `tbl_registration`
 --
 ALTER TABLE `tbl_registration`
-  MODIFY `register_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `register_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tbl_restaurant`
 --
@@ -9060,7 +9335,37 @@ ALTER TABLE `tbl_shops`
 -- AUTO_INCREMENT for table `tbl_trader`
 --
 ALTER TABLE `tbl_trader`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+--
+-- AUTO_INCREMENT for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tbl_users_bank_details`
+--
+ALTER TABLE `tbl_users_bank_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tbl_users_gallery`
+--
+ALTER TABLE `tbl_users_gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tbl_users_identity`
+--
+ALTER TABLE `tbl_users_identity`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tbl_users_products`
+--
+ALTER TABLE `tbl_users_products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tbl_user_type`
+--
+ALTER TABLE `tbl_user_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tbl_verification`
 --
@@ -9071,6 +9376,34 @@ ALTER TABLE `tbl_verification`
 --
 ALTER TABLE `tbl_verify`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_users_bank_details`
+--
+ALTER TABLE `tbl_users_bank_details`
+  ADD CONSTRAINT `fk_user_id_bank` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `tbl_users_gallery`
+--
+ALTER TABLE `tbl_users_gallery`
+  ADD CONSTRAINT `fk_user_id_gallery` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `tbl_users_identity`
+--
+ALTER TABLE `tbl_users_identity`
+  ADD CONSTRAINT `fk_user_id_identity` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `tbl_users_products`
+--
+ALTER TABLE `tbl_users_products`
+  ADD CONSTRAINT `fk_user_id_product` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
