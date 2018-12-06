@@ -161,7 +161,15 @@ class Login_model Extends CI_Model {
         $this->db->where('password',md5($data['password']));
         return $this->db->get('tbl_registration')->row_array();
     }
+    public function getUsersByEmailIdPassword($data) {
+        $this->db->where('username',$data['username']);
+        $this->db->where('password',md5($data['password']));
+        $result = $this->db->get('tbl_users')->row_array();
+        if(!empty($result)){
+            return $result;
+        }else{
+            return false;
+        }
+    }
 
 }
-
-?>

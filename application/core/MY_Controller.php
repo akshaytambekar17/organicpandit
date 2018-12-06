@@ -17,6 +17,17 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_type_model','UserType');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
+        $this->load->model('notifications_model','Notifications');
+        
+        define('REGISTRATION', 1);
+        define('POST', 2);
+        define('VERIFY_REGISTRATION', 3);
+        define('VERIFY_POST', 4);
+        define('NOTIFY_SMS', 1);
+        define('NOTIFY_EMAIL', 2);
+        define('NOTIFY_PUSH', 3);
+        define('NOTIFY_WEB', 4);
+        
     }
 
     public function backendLayout($data) {

@@ -28,7 +28,7 @@
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="password">Password</label>
                     <input type="password" name="password"  class="form-control" id="password" placeholder="Password" value="<?= set_value('password') ?>">
-                    <span class="has-error"><?php echo form_error('username'); ?></span>
+                    <span class="has-error"><?php echo form_error('password'); ?></span>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="confirm-password">Confirm Password</label>
@@ -102,8 +102,8 @@
                     <label class="control-label label-required" for="is_visit_farm">Can we visit your farm</label>
                     <select class="form-control select2" name="is_visit_farm" id="is_visit_farm">
                         <option disabled="disabled" selected="selected">Select Options</option>
-                        <option value="1" <?= set_select('is_visit_farm', 1); ?> >Yes</option>
-                        <option value="0" <?= set_select('is_visit_farm', 0); ?>>No</option>
+                        <option value="2" <?= set_select('is_visit_farm', 2); ?> >Yes</option>
+                        <option value="1" <?= set_select('is_visit_farm', 1); ?>>No</option>
                     </select>
                     <span class="has-error"><?php echo form_error('is_visit_farm'); ?></span>
                 </div>
@@ -111,8 +111,8 @@
                     <label class="control-label label-required" for="is_test_report">Can you provide test report</label>
                     <select class="form-control select2" name="is_test_report" id="is_test_report">
                         <option disabled="disabled" selected="selected">Select Options</option>
-                        <option value="1" <?= set_select('is_test_report', 1); ?> >Yes</option>
-                        <option value="0" <?= set_select('is_test_report', 0); ?>>No</option>
+                        <option value="2" <?= set_select('is_test_report', 2); ?> >Yes</option>
+                        <option value="1" <?= set_select('is_test_report', 1); ?>>No</option>
                     </select>
                     <span class="has-error"><?php echo form_error('is_test_report'); ?></span>
                     <br><br>
@@ -161,46 +161,46 @@
                     <div class="form-group pr-group box-body">
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="name">Product Name</label>
-                            <input type="text" name="name[]" class="form-control" id="name" placeholder="Product Name" value="<?= set_value('name[]') ?>">
+                            <input type="text" name="Product[name][]" class="form-control" id="name" placeholder="Product Name" value="<?= set_value('Product[name][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="description">Description</label>
-                            <input type="text" name="description[]" class="form-control" id="description" placeholder="Product Description" value="<?= set_value('description[]') ?>">
+                            <input type="text" name="Product[description][]" class="form-control" id="description" placeholder="Product Description" value="<?= set_value('Product[description][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="from_date">From Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" name="from_date[]" class="form-control picker-date pull-right" id="from_date" placeholder="From Date" value="<?= set_value('from_date[]') ?>">
+                                <input type="text" name="Product[from_date][]" class="form-control picker-date pull-right" id="from_date" placeholder="From Date" value="<?= set_value('Product[from_date][]') ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="to_date">To Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" name="to_date[]" class="form-control picker-date pull-right" id="to_date" placeholder="To Date" value="<?= set_value('to_date') ?>">
+                                <input type="text" name="Product[to_date][]" class="form-control picker-date pull-right" id="to_date" placeholder="To Date" value="<?= set_value('Product[to_date][]') ?>">
                             </div>        
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="quantity_id">Select Quantity</label>
-                            <select class="form-control" name="quantity_id[]" >
+                            <select class="form-control" name="Product[quantity_id][]" >
                                 <option disabled="disabled" selected="selected">Select Quantity</option>
                                 <?php foreach (getQuantities() as $key => $value) { ?>
-                                    <option value="<?= $key ?>" <?= set_select('quantity_id[]', $key); ?>><?= $value ?> </option>
+                                    <option value="<?= $key ?>" <?= set_select('Product[quantity_id][]', $key); ?>><?= $value ?> </option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="quality">Qualitity</label>
-                            <input type="text" name="quality[]" class="form-control" id="quality" placeholder="Quality" value="<?= set_value('quality[]') ?>">
+                            <input type="text" name="Product[quality][]" class="form-control" id="quality" placeholder="Quality" value="<?= set_value('Product[quality][]') ?>">
                         </div>
                         <div class="form-group col-md-2">
                             <label class="control-label label-required" for="price">Price</label>
-                            <input type="text" name="price[]" class="form-control" id="price" placeholder="Price" value="<?= set_value('price[]') ?>">
+                            <input type="text" name="Product[price][]" class="form-control" id="price" placeholder="Price" value="<?= set_value('Product[price][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="images">Product Images</label>
-                            <input type="file" name="images" class="form-control" id="images">
+                            <input type="file" name="product_images[]" class="form-control" id="images">
                         </div>
                         <div class="form-group col-md-1">
                             <label class="control-label">Add</label>
@@ -211,50 +211,76 @@
                     <div class=" form-group product-group box-body hide" id="optionTemplate">
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="name">Product Name</label>
-                            <input type="text" name="name[]" class="form-control" id="name" placeholder="Product Name" value="<?= set_value('name[]') ?>">
+                            <input type="text" name="Product[name][]" class="form-control" id="name" placeholder="Product Name" value="<?= set_value('Product[name][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="description">Description</label>
-                            <input type="text" name="description[]" class="form-control" id="description" placeholder="Product Description" value="<?= set_value('description[]') ?>">
+                            <input type="text" name="Product[description][]" class="form-control" id="description" placeholder="Product Description" value="<?= set_value('Product[description][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="from_date">From Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" name="from_date[]" class="form-control picker-date pull-right" id="from_date" placeholder="From Date" value="<?= set_value('from_date[]') ?>">
+                                <input type="text" name="Product[from_date][]" class="form-control picker-date pull-right" id="from_date" placeholder="From Date" value="<?= set_value('Product[from_date][]') ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="to_date">To Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="text" name="to_date[]" class="form-control picker-date pull-right" id="to_date" placeholder="To Date" value="<?= set_value('to_date') ?>">
+                                <input type="text" name="Product[to_date][]" class="form-control picker-date pull-right" id="to_date" placeholder="To Date" value="<?= set_value('Product[to_date][]') ?>">
                             </div>        
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="quantity_id">Select Quantity</label>
-                            <select class="form-control" name="quantity_id[]" >
+                            <select class="form-control" name="Product[quantity_id][]" >
                                 <option disabled="disabled" selected="selected">Select Quantity</option>
                                 <?php foreach (getQuantities() as $key => $value) { ?>
-                                    <option value="<?= $key ?>" <?= set_select('quantity_id[]', $key); ?>><?= $value ?></option>
+                                    <option value="<?= $key ?>" <?= set_select('Product[quantity_id][]', $key); ?>><?= $value ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="quality">Qualitity</label>
-                            <input type="text" name="quality[]" class="form-control" id="quality" placeholder="Quality" value="<?= set_value('quality[]') ?>">
+                            <input type="text" name="Product[quality][]" class="form-control" id="quality" placeholder="Quality" value="<?= set_value('Product[quality][]') ?>">
                         </div>
                         <div class="form-group col-md-2">
                             <label class="control-label label-required" for="price">Price</label>
-                            <input type="text" name="price[]" class="form-control" id="price" placeholder="Price" value="<?= set_value('price[]') ?>">
+                            <input type="text" name="Product[price][]" class="form-control" id="price" placeholder="Price" value="<?= set_value('Product[price][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label label-required" for="images">Product Images</label>
-                            <input type="file" name="images" class="form-control" id="images">
+                            <input type="file" name="product_images[]" class="form-control" id="images">
                         </div>
                         <div class="form-group col-md-1">
                             <label class="control-label">Remove</label>
                             <button type="button" class="btn btn-danger" onclick="removeButton(this)"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[name][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[description][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[from_date][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[to_date][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('quantity_id[]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[quality][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[price][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <span class="has-error"><?php echo form_error('Product[images][]'); ?></span>
                         </div>
                     </div>
                 </div>

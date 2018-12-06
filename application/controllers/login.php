@@ -6,32 +6,34 @@ class Login extends CI_Controller {
 
     public function __Construct() {
         parent::__Construct();
+        $this->load->model('user_type_model','UserType');
+        $this->load->model('login_model');
     }
 
     public function index() {
-        $this->load->view('login');
+        $userSession = $this->session->userdata('user_data');
+        if(!empty($userSession)){
+            redirect('home');
+        }
+        $data['user_type_list'] = $this->UserType->getUserTypes();
+        $this->load->view('login',$data);
     }
 
     function login_validation() {
         $this->load->library('form_validation');
-
-        //true  
-        $usertype = $this->input->post('usertype');
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        //model function  
-        $this->load->model('login_model');
-        $id = $this->login_model->can_login($usertype, $username, $password);
-        if ($result = $this->login_model->can_login($usertype, $username, $password)) {
-            $result['usertype'] = $usertype;
+        $post =$this->input->post();
+        $data = array('user_type_id' => $post['user_type_id'],
+                      'username' => $post['username'],
+                      'password' => $post['password']
+                    );
+        $result = $this->login_model->getUsersByEmailIdPassword($data);
+        if($result){
             $session_data = array(
-                'usertype' => $usertype,
-                'username' => $username,
-                'id' => $id,
+                'usertype' => $result['user_type_id'],
+                'username' => $result['username'],
+                'id' => $result['user_id'],
             );
-            
             $this->session->set_userdata('user_data', $result);
-            //$this->session->set_userdata($result);
             print('success');
         } else {
             $this->session->set_flashdata('error', 'Invalid Username and Password');
