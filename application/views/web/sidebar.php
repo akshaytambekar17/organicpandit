@@ -106,26 +106,29 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">10</span>
+                                <span class="label label-warning"><?= count(getNotifications())?></span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
+                            <ul class="dropdown-menu" style="width: 358px;">
+                                <li class="header">You have <?= count(getNotifications())?> notifications</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
+                                        <?php foreach(getNotifications() as $value){ ?>
+                                            <li>
+                                                <a href="<?= base_url()?>admin/user">
+                                                        <i class="fa fa-users text-aqua"></i> 
+                                                        <?= $value['message']?>
+                                                </a>
+                                            </li>
+                                        <?php } ?>    
                                         <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined
+                                            <a href="<?= base_url()?>admin/bid">
+                                                <i class="fa fa-th text-yellow"></i> <?= count(getBidNotifications())?> new Bid 
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                <i class="fa fa-th text-yellow"></i> 2 new Bid 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-laptop text-red"></i> 3 new Post Requirement
+                                            <a href="<?= base_url()?>admin/post-requirement">
+                                                <i class="fa fa-laptop text-red"></i> <?= count(getPostNotifications())?> new Post Requirement
                                             </a>
                                         </li>
 <!--                                        <li>
@@ -224,13 +227,22 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <?php if(!empty($userSession['profile_image'])){ ?>
+                                    <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="user-image" alt="User Image">
+                                <?php }else{ ?>
+                                    <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <?php } ?>    
                                 <span class="hidden-xs"><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <?php if(!empty($userSession['profile_image'])){ ?>
+                                        <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="img-circle" alt="User Image">
+                                    <?php }else{ ?>
+                                        <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <?php } ?>    
+<!--                                    <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
                                     <p>
                                         <?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?> - Administrator
@@ -278,7 +290,12 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <?php if(!empty($userSession['profile_image'])){ ?>
+                            <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="img-circle" alt="User Image">
+                        <?php }else{ ?>
+                            <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <?php } ?>    
+<!--                        <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
                     </div>
                     <div class="pull-left info">
                         <p><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></p>
@@ -344,7 +361,7 @@
                         <a href="<?= base_url()?>admin/user">
                             <i class="ion ion-person-add"></i> <span>User Registration</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-green">2</small>
+                                <small class="label pull-right bg-green"><?= count($this->User->getUsers())?></small>
                             </span>
                         </a>
                     </li>

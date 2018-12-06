@@ -60,8 +60,10 @@
                                                 <td class="hidden"><?= $value['id']; ?></td>
                                                 <td>
                                                     <?php
-                                                        $postDetails = $this->PostRequirement->getPostRequirementById($value['post_requirement_id']); 
-                                                        echo $postDetails['fullname'];
+                                                        $userDetails = $this->User->getUserById($value['user_id']); 
+                                                        echo $userDetails['fullname'];
+//                                                        $postDetails = $this->PostRequirement->getPostRequirementById($value['post_requirement_id']); 
+//                                                        echo $postDetails['fullname'];
                                                     ?>
                                                 </td>
                                                 <td><?= !empty($post_details['post_code'])?$post_details['post_code']:'Not availabel';?></td>

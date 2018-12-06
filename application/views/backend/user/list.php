@@ -40,9 +40,11 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
+                                        <th>User Type</th>
                                         <th>Fullname</th>
                                         <th>Username</th>
-                                        <th>Certification</th>
+                                        <th>Email Id</th>
+                                        <th>Mobile number</th>
                                         <?php if($user_data['username'] == 'adminmaster'){ ?>
                                             <th>Action</th>
                                         <?php }?>
@@ -54,18 +56,21 @@
                                         foreach ($user_list as $key => $value) {
                                             
                                 ?>
-                                            <tr class="gradeX" id="order-<?= $value['id'] ?>">
-                                                <td class="hidden"><?= $value['id']; ?></td>
+                                            <tr class="gradeX" id="order-<?= $value['user_id'] ?>">
+                                                <td class="hidden"><?= $value['user_id']; ?></td>
+                                                <td><?= $value['user_type_name'];?></td>
                                                 <td><?= $value['fullname'];?></td>
                                                 <td><?= $value['username'];?></td>
-                                                <td><?= $value['certification'];?></td>
+                                                <td><?= $value['email_id'];?></td>
+                                                <td><?= $value['mobile_no'];?></td>
                                                 <?php if($user_data['username'] == 'adminmaster'){ ?>
                                                     <td>
-                                                        <a href="javascript:void(0)" class="btn btn-danger delete-user" data-id="<?= $value['id'] ?>" name="delete-user" onclick="userDelete(this)">Delete</a><br>
+                                                        <a href="<?= site_url('admin/user/view?id='.$value['user_id'])?>" class="btn btn-primary view-product" data-id="<?= $value['user_id'] ?>" name="view-product">View </a>
+                                                        <a href="javascript:void(0)" class="btn btn-danger delete-user" data-user_id="<?= $value['user_id'] ?>" name="delete-user" onclick="userDelete(this)">Delete</a><br>
                                                     </td>
                                                 <?php } ?>
                                             </tr>
-                                            <?php
+                                <?php
                                         }
                                     }
                                 ?>
@@ -100,11 +105,11 @@
 <script>
     $(document).ready(function () {
         $("#confirm_btn").on('click',function(){
-            var id=$("#id_modal").val();
+            var user_id = $("#id_modal").val();
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>" + "admin/user/delete",
-                data: { 'id' : id },
+                data: { 'user_id' : user_id },
                 success: function(result){
                     $('#deleteConfirmationModal').modal('hide');
                     if(result){
@@ -113,6 +118,9 @@
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });
+                        setTimeout(function(){ 
+                            location.reload();
+                        }, 3000);
                     }else{
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         $('.alert-box-msg').parent().before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i>  Someting went wrong. Please try again...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -120,15 +128,13 @@
                             $(this).remove();
                         });
                     }
-                    setTimeout(function(){ 
-                        location.reload();
-                    }, 3000);
+                    
                 }
             });
         });
     });
     function userDelete(ths){
-        var id = $(ths).data('id');
+        var id = $(ths).data('user_id');
         $("#id_modal").val(id);
         $('#deleteConfirmationModal').modal('show');
     }

@@ -18,13 +18,13 @@ class user_product_model extends CI_Model {
         parent::__construct();
     }
     
-    public function getUserFarmers() {
+    public function getUserProducts() {
         $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_farmer')->result_array();
+        return $this->db->get('tbl_users_products')->result_array();
     }
-    public function getUserFarmerById($id) {
-        $this->db->where('id',$id);
-        return $this->db->get('tbl_farmer')->row_array();
+    public function getUserProductByUserId($user_id) {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('tbl_users_products')->result_array();
     }
     public function getBidByPostRequirementId($id) {
         $this->db->where('post_requirement_id',$id);

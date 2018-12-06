@@ -18,6 +18,20 @@ class user_model extends CI_Model {
         parent::__construct();
     }
     
+    public function getUsers() {
+        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->order_by('u.user_id','DESC');
+        return $this->db->get()->result_array();
+    }
+    public function getUserById($id) {
+        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where('user_id',$id);
+        return $this->db->get()->row_array();
+    }
     public function getUserFarmers() {
         $this->db->order_by('id','DESC');
         return $this->db->get('tbl_farmer')->result_array();
@@ -41,7 +55,7 @@ class user_model extends CI_Model {
         return $last_id;
     }
     public function update($updateData){
-        $this->db->where('id',$updateData['id']);
+        $this->db->where('user_id',$updateData['user_id']);
         $this->db->update('tbl_users',$updateData);
         if($this->db->affected_rows()){
             return true;
@@ -60,7 +74,7 @@ class user_model extends CI_Model {
     }
 
     public function delete($id) {
-        $this->db->where('id',$id);
+        $this->db->where('user_id',$id);
         $this->db->delete('tbl_users'); 
         if($this->db->affected_rows()){
             return true;

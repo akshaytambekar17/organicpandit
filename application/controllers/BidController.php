@@ -27,11 +27,11 @@ class BidController extends MY_Controller {
     }
     public function create(){
         $userSession = $this->session->userdata('user_data');
-        $userSession;
+        $user_id = $userSession['user_id'];
         if($this->input->post()){
             $post = $this->input->post();
             $details = $post;
-            $details['user_id'] = $userSession['id'];
+            $details['user_id'] = $user_id;
             $details['is_seen'] = 0;
             $details['is_view'] = 0;
             $details['is_deleted'] = 0;
@@ -41,6 +41,15 @@ class BidController extends MY_Controller {
             if($data){
                 $bids = $this->Bid->getBidByPostRequirementId($post['post_requirement_id']);
                 if(!empty($bids) && count($bids)>0){
+                    $userDetails = $this->User->getUserById($user_id);
+                    $data_notify = array(
+                                        'user_id' => $user_id,
+                                        'user_type_id' => $userDetails['user_type_id'],
+                                        'notification_type' => BID,
+                                        'notify_type' => NOTIFY_WEB,
+                                        'message' => 'New Bid has been placed by '.$userDetails['fullname'],
+                                    );
+                    $result_notification = $this->Notifications->insert($data_notify);
                     $result['success'] = true;
                     $result['data'] = count($bids);
                 }else{

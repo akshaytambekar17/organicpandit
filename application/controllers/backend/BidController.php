@@ -33,7 +33,7 @@ class BidController extends MY_Controller {
             $this->Bid->updateIsView();
             $data['bid_list'] = $this->Bid->getBids();
         }else{
-            $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
+            $data['bid_list'] = $this->Bid->getBidByUserId($userSession['user_id']);
         }
         
         $this->backendLayout($data);
@@ -41,9 +41,11 @@ class BidController extends MY_Controller {
     public function create(){
 
         if($this->input->post()){
+            $session = UserSession();
+            $userSession = $session['userData'];
             $post = $this->input->post();
             $details = $post;
-            $details['user_id'] = $this->session->userdata('id');
+            $details['user_id'] = $userSession['user_id'];
             $details['is_seen'] = 0;
             $details['is_view'] = 0;
             $details['is_deleted'] = 0;

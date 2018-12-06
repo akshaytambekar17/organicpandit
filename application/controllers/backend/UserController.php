@@ -31,7 +31,7 @@ class UserController extends MY_Controller {
         $data['backend'] = true;
         $data['view'] = 'user/list';
         $data['user_data'] = $userSession;
-        $data['user_list'] = $this->User->getUserFarmers();
+        $data['user_list'] = $this->User->getUsers();
         $this->backendLayout($data);
     }
 
@@ -64,6 +64,52 @@ class UserController extends MY_Controller {
             $this->backendLayout($data);
         }
     }
+    public function view(){
+        $get = $this->input->get();
+        if($this->input->post()){
+            $post = $this->input->post();
+            $details = $post;
+            $details['updated_at'] = date('Y-m-d H:i:s');
+            $result = $this->User->update($details);
+            if ($result) {
+                if($post['is_verified'] == 2){
+                    $verified = "Approve user";
+                }else{
+                    $verified = "Reject user";
+                }
+                $user_type_details = $this->UserType->getUserTypeById($post['user_type_id']);
+                $data_notify = array(
+                                    'user_id' => $post['user_id'],
+                                    'user_type_id' => $post['user_type_id'],
+                                    'notification_type' => VERIFY_REGISTRATION,
+                                    'notify_type' => NOTIFY_WEB,
+                                    'message' => 'Admin '.$verified.' '.$post['fullname'],
+                                );
+                $result_notification = $this->Notifications->insert($data_notify);
+                $this->session->set_flashdata('Message', 'User '.$post['fullname'].' has been updated Succesfully');
+                return redirect('admin/user', 'refresh');
+            } else {
+                $this->session->set_flashdata('Error', 'Failed to update product');
+                $user_details = $this->User->getUserById($post['user_id']);
+                $data['backend'] = true;
+                $data['user_details'] = $user_details;
+                $data['title'] = $user_details['fullname'] ;
+                $data['heading'] = $user_details['fullname'];
+                $data['view'] = 'user/view';
+                $this->backendLayout($data);
+            }
+                
+            
+        }else{
+            $user_details = $this->User->getUserById($get['id']);
+            $data['backend'] = true;
+            $data['user_details'] = $user_details;
+            $data['title'] = $user_details['fullname'] ;
+            $data['heading'] = $user_details['fullname'];
+            $data['view'] = 'user/view';
+            $this->backendLayout($data);
+        }
+    }
 
     public function home() {
         $this->load->view('frontend/home');
@@ -75,7 +121,7 @@ class UserController extends MY_Controller {
     }
     public function delete(){
         $post = $this->input->post();
-        $result = $this->User->delete($post['id']);
+        $result = $this->User->delete($post['user_id']);
         if($result){
             echo true;
         }else{

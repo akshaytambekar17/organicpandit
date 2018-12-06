@@ -23,7 +23,7 @@
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="password">Password</label>
                     <input type="password" name="password"  class="form-control" id="password" placeholder="Password" value="<?= set_value('password') ?>">
-                    <span class="has-error"><?php echo form_error('username'); ?></span>
+                    <span class="has-error"><?php echo form_error('password'); ?></span>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="confirm-password">Confirm Password</label>
@@ -36,7 +36,7 @@
                     <span class="has-error"><?php echo form_error('mobile_no'); ?></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label class="control-label label-required" for="landline_no">Landline number</label>
+                    <label class="control-label" for="landline_no">Landline number</label>
                     <input type="text" name="landline_no"  class="form-control" id="landline_no" placeholder="Landline number" value="<?= set_value('landline_no') ?>">
                     <span class="has-error"><?php echo form_error('landline_no'); ?></span>
                 </div>
@@ -101,7 +101,7 @@
                     <span class="has-error"><?php echo form_error('profile_image'); ?></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label class="control-label label-required" for="company_image">Choose Company Image</label>
+                    <label class="control-label" for="company_image">Choose Company Image</label>
                     <input type="file" name="company_image" class="form-control" id="company_image">
                     <span class="has-error"><?php echo form_error('company_image'); ?></span>
                 </div>

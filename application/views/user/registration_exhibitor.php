@@ -33,7 +33,7 @@
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="password">Password</label>
                     <input type="password" name="password"  class="form-control" id="password" placeholder="Password" value="<?= set_value('password') ?>">
-                    <span class="has-error"><?php echo form_error('username'); ?></span>
+                    <span class="has-error"><?php echo form_error('password'); ?></span>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="confirm-password">Confirm Password</label>
@@ -49,6 +49,7 @@
                     <label class="control-label label-required" for="landline_no">Landline number</label>
                     <input type="text" name="landline_no"  class="form-control" id="landline_no" placeholder="Landline number" value="<?= set_value('landline_no') ?>">
                     <span class="has-error"><?php echo form_error('landline_no'); ?></span>
+                    <br><br>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="gst_number">GST Number</label>
@@ -64,6 +65,7 @@
                     <label>Website</label>
                     <input type="text" name="website" class="form-control" id="website" placeholder="Website" value="<?= set_value('website')?>">
                     <span class="has-error"><?php echo form_error('website'); ?></span>
+                    <br><br>
                 </div>
                 
 <!--                <div class="form-group col-md-4">
@@ -99,6 +101,7 @@
                     <label class="control-label label-required" for="address">Address</label>
                     <input type="text" name="address"  class="form-control" id="address" placeholder="Address" value="<?= set_value('address') ?>">
                     <span class="has-error"><?php echo form_error('address'); ?></span>
+                    <br>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="story">Story</label>
@@ -114,6 +117,7 @@
                     <label class="control-label label-required" for="company_image">Choose Company Image</label>
                     <input type="file" name="company_image" class="form-control" id="company_image">
                     <span class="has-error"><?php echo form_error('company_image'); ?></span>
+                    <br><br>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="control-label" for="video">Choose Video</label>

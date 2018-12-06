@@ -59,11 +59,11 @@
                                     if (!empty($post_list)) {
                                         foreach ($post_list as $key => $value) {
                                 ?>
-                                            <tr class="gradeX" id="order-<?= $value['id'] ?>">
+                                            <tr class="gradeX" id="order-<?= $value['post_requirement_id'] ?>">
                                                 <td class="hidden"><?= $value['post_requirement_id']; ?></td>
                                                 <td>
                                                     <?php
-                                                        $userDetails = $this->User->getUserFarmerById($value['user_id']); 
+                                                        $userDetails = $this->User->getUserById($value['user_id']); 
                                                         echo $userDetails['fullname'];
                                                     ?>
                                                 </td>
@@ -76,7 +76,7 @@
                                                 <td><?= $value['is_verified'] == 1?'Yes':'No';?></td>
                                                 <td>
                                                     <?php
-                                                        $bids = $this->Bid->getBidByPostRequirementId($value['id']);
+                                                        $bids = $this->Bid->getBidByPostRequirementId($value['post_requirement_id']);
                                                         echo count($bids);
                                                     ?>
                                                 </td>

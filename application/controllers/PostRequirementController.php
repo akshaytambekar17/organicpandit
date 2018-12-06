@@ -19,10 +19,11 @@ class PostRequirementController extends MY_Controller {
         if($this->input->post()){
             $post = $this->input->post();
             if($this->form_validation->run('post-requirement-form') == TRUE){
+                $user_id = $userSession['user_id'];
                 $details = $post;
                 $details['from_date'] = date("Y-m-d", strtotime($details['from_date']));
                 $details['to_date'] = date("Y-m-d", strtotime($details['to_date']));
-                $details['user_id'] = $userSession['id'];
+                $details['user_id'] = $user_id;
                 $details['is_verified'] = 0;
                 $details['is_seen'] = 0;
                 $details['is_view'] = 0;
@@ -31,6 +32,15 @@ class PostRequirementController extends MY_Controller {
                 $details['updated_at'] = date('Y-m-d H:i:s');
                 $details['created_at'] = date('Y-m-d H:i:s');
                 $result = $this->PostRequirement->add($details);
+                $userDetails = $this->User->getUserById($user_id);
+                $data_notify = array(
+                                        'user_id' => $user_id,
+                                        'user_type_id' => $userDetails['user_type_id'],
+                                        'notification_type' => POST,
+                                        'notify_type' => NOTIFY_WEB,
+                                        'message' => 'New Post has been added by '.$userDetails['fullname'],
+                                    );
+                $result_notification = $this->Notifications->insert($data_notify);
                 if ($result) {
                     $this->session->set_flashdata('Message', 'Your Post has been created successfully and sent to support for verfication.Please stay with us');
                     return redirect('post-requirement', 'refresh');
@@ -86,6 +96,8 @@ class PostRequirementController extends MY_Controller {
     public function getPostById(){
         $post = $this->input->post();
         $post_details = $this->PostRequirement->getPostRequirementById($post['post_id']);
+        $certification_result = getCertifications();
+        $post_details['certification_id'] = $certification_result[$post_details['certification_id']];
         $post_details['product_details'] = $this->Product->getFarmerProductById($post_details['product_id']);
         echo json_encode($post_details);
     }

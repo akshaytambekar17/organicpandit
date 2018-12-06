@@ -34,16 +34,18 @@ class PostRequirementController extends MY_Controller {
             $this->PostRequirement->updateIsView();
             $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetails();
         }else{
-            $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetailsByUserId($userSession['id']);
+            $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetailsByUserId($userSession['user_id']);
         }
         $this->backendLayout($data);
     }
     public function create(){
         
         if($this->input->post()){
+            $session = UserSession();
+            $userSession = $session['userData'];
             $post = $this->input->post();
             $details = $post;
-            $details['user_id'] = $this->session->userdata('id');
+            $details['user_id'] = $userSession['user_id'];
             $details['is_seen'] = 0;
             $details['is_view'] = 0;
             $details['is_deleted'] = 0;

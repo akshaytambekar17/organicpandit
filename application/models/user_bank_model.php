@@ -18,13 +18,13 @@ class user_bank_model extends CI_Model {
         parent::__construct();
     }
     
-    public function getUserFarmers() {
+    public function getUsersBank() {
         $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_farmer')->result_array();
+        return $this->db->get('tbl_users_bank_details')->result_array();
     }
-    public function getUserFarmerById($id) {
-        $this->db->where('id',$id);
-        return $this->db->get('tbl_farmer')->row_array();
+    public function getUserBankByUserId($user_id) {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('tbl_users_bank_details')->row_array();
     }
     public function getBidByPostRequirementId($id) {
         $this->db->where('post_requirement_id',$id);

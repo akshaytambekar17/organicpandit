@@ -6,13 +6,27 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
  * and open the template in the editor.
  */
 
-//function includesAll($data){
-//    $ci=& get_instance();
-//    $ci->load->view('/web/header',$data);
-//    $ci->load->view('/web/sidebar',$data);
-//    $ci->load->view($data['structure'].'/'.$data['view'],$data);
-//    $ci->load->view('/web/footer',$data);
-//}
+function getNotifications(){
+    $ci=& get_instance();
+    $ci->load->model('notifications_model','Notifications');
+    $result = $ci->Notifications->getNotifications();
+    return $result;
+    
+}
+function getBidNotifications(){
+    $ci=& get_instance();
+    $ci->load->model('notifications_model','Notifications');
+    $result = $ci->Notifications->getPosthNotifications();
+    return $result;
+    
+}
+function getPostNotifications(){
+    $ci=& get_instance();
+    $ci->load->model('notifications_model','Notifications');
+    $result = $ci->Notifications->getBidNotifications();
+    return $result;
+    
+}
 function getQuantities(){
     $data = array( 1 => '500kg to 1 ton',
                    2 => '1 ton to 3 ton',

@@ -107,6 +107,8 @@ $route['admin/bid'] = "backend/BidController";
 $route['admin/bid/delete'] = "backend/BidController/delete";
 
 $route['admin/user'] = "backend/UserController";
+$route['admin/user/delete'] = "backend/UserController/delete";
+$route['admin/user/view'] = "backend/UserController/view";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

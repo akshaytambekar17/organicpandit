@@ -39,10 +39,10 @@ class DashboardController extends MY_Controller {
                 $data['product_list'] = $this->Product->getProducts();
                 $data['user_type_list'] = $this->UserType->getUserTypes();
             }else{
-                $data['bid_list'] = $this->Bid->getBidByUserId($userSession['id']);
-                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['id']);
+                $data['bid_list'] = $this->Bid->getBidByUserId($userSession['user_id']);
+                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['user_id']);
             }
-            $data['user_list'] = $this->User->getUserFarmers();
+            $data['user_list'] = $this->User->getUsers();
             $data['user_details'] = $userSession;
             $this->backendLayout($data);
         }

@@ -38,6 +38,14 @@ class notifications_model extends CI_Model {
         $this->db->where('user_id',$user_id);
         return $this->db->get('tbl_notifications')->result_array();
     }
+    public function getPosthNotifications() {
+        $this->db->where('notification_type',POST);
+        return $this->db->get('tbl_notifications')->result_array();
+    }
+    public function getBidNotifications() {
+        $this->db->where('notification_type',BID);
+        return $this->db->get('tbl_notifications')->result_array();
+    }
     
     public function insert($data){
         $this->db->insert('tbl_notifications', $data);

@@ -53,10 +53,11 @@ class UserController extends MY_Controller {
         $data['userSession'] = $userSession;
         if($this->input->post()){
             $post = $this->input->post();
+                
             if($post['user_type_id'] == 2){
                 $fullname_title = 'FPO Name';
             }else{
-                $fullname_title = 'fullname';
+                $fullname_title = 'Fullname';
             }
             $this->form_validation->set_rules('fullname', $fullname_title, 'trim|required');
             $this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[tbl_users.username]');
@@ -65,34 +66,46 @@ class UserController extends MY_Controller {
             $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]|matches[confirm_password]');
             $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[5]');
             $this->form_validation->set_rules('mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]');
-            $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
+            
             if(empty($_FILES['profile_image']['name'])){
                 $this->form_validation->set_rules('profile_image', 'Profile Image', 'trim|required');
             }
             $this->form_validation->set_rules('state_id', 'State', 'trim|required');
             $this->form_validation->set_rules('city_id', 'City', 'trim|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|required');
-            $this->form_validation->set_rules('is_test_report', 'Test Report', 'trim|required');
-            $this->form_validation->set_rules('is_visit_farm', 'Visit Farm', 'trim|required');
             $this->form_validation->set_rules('story', 'Story', 'trim|required');
             $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required|numeric|exact_length[12]');
             
-            $this->form_validation->set_rules('certification_number', 'Certification Number', 'trim');
             $this->form_validation->set_rules('landline_no', 'Landline Number', 'trim');
+            $this->form_validation->set_rules('website', 'Website', 'trim');
+            
+            if($post['user_type_id'] == 1 || $post['user_type_id'] == 2 || $post['user_type_id'] == 3 || $post['user_type_id'] == 4){
+                $this->form_validation->set_rules('is_visit_farm', 'Visit Farm', 'trim|required');
+            }
             
             if($post['user_type_id'] == 1){
                 $this->form_validation->set_rules('pancard_number', 'Pan Card Number', 'trim|required');
             }else{
                 $this->form_validation->set_rules('gst_number', 'GST Number', 'trim|required');
             }
-            if($post['user_type_id'] != 1){
-                $this->form_validation->set_rules('ceo_name', 'CEO Name', 'trim|required|is_unique[tbl_users.username]');
+            if($post['user_type_id'] != 1 && $post['user_type_id'] != 6 ){
+                $this->form_validation->set_rules('ceo_name', 'CEO Name', 'trim|required');
+            }
+            if($post['user_type_id'] != 1 && $post['user_type_id'] != 2 && $post['user_type_id'] != 3 && $post['user_type_id'] != 4 && $post['user_type_id'] != 5 && $post['user_type_id'] != 6){
+                $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim|required');
             }
             if($post['user_type_id'] == 2){
                 $this->form_validation->set_rules('total_farmer', 'Number of Farmer', 'trim|required');
             }
-            $this->form_validation->set_rules('certification_id', 'Certification', 'trim|required');
+            if($post['user_type_id'] == 5){
+                $this->form_validation->set_rules('type_of_buyer', 'Type of Buyer', 'trim|required');
+            }
+            
             if($post['user_type_id'] == 1 || $post['user_type_id'] == 2 || $post['user_type_id'] == 3 || $post['user_type_id'] == 4 || $post['user_type_id'] == 5){
+                $this->form_validation->set_rules('certification_id', 'Certification', 'trim|required');
+                $this->form_validation->set_rules('certification_number', 'Certification Number', 'trim');
+                $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
+                $this->form_validation->set_rules('is_test_report', 'Test Report', 'trim|required');
                 $this->form_validation->set_rules('Product[name][]', 'Product Name', 'trim');
                 $this->form_validation->set_rules('Product[description][]', 'Description', 'trim');
                 $this->form_validation->set_rules('Product[from_date][]', 'From Date', 'trim');
@@ -111,7 +124,7 @@ class UserController extends MY_Controller {
             if($this->form_validation->run() == TRUE){
                 $details = $post;
                 if(!empty($_FILES['profile_image']['name'])){
-                    $config['upload_path']          = './assets/images/profile/';
+                    $config['upload_path']          = './assets/images/gallery/';
                     $config['allowed_types']        = 'gif|jpg|png|jpeg';
                     $config['max_size']             = 2048;
                     
@@ -129,11 +142,11 @@ class UserController extends MY_Controller {
                     $error = '';
                 }
                 if(!empty($_FILES['certification_image']['name'])){
-                    $config['upload_path']          = './assets/images/other_images/';
-                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                    $config['max_size']             = 2048;
+                    $config1['upload_path']          = './assets/images/gallery/';
+                    $config1['allowed_types']        = 'gif|jpg|png|jpeg';
+                    $config1['max_size']             = 2048;
 
-                    $this->load->library('upload', $config);
+                    $this->load->library('upload', $config1);
                     if($this->upload->do_upload('certification_image')){
                         $uploadData = $this->upload->data();
                         $certification_image = $uploadData['file_name'];
@@ -146,12 +159,28 @@ class UserController extends MY_Controller {
                     $certification_image = '';
                     $error = '';
                 }
+                if(!empty($_FILES['video']['name'])){
+                    $config_video['upload_path']          = './assets/images/gallery/';
+                    $config_video['allowed_types']        = '*';
+                    $config_video['max_size']             = 102400;
+                    $this->load->library('upload', $config_video);
+                    if($this->upload->do_upload('video')){
+                        $uploadData = $this->upload->data();
+                        $video = $uploadData['file_name'];
+                        $error = '';
+                    }else{
+                        $error = $this->upload->display_errors();
+                        $video = '';
+                    }
+                }else{
+                    $error = '';
+                    $video = '';
+                }
                 if(!empty($_FILES['company_image']['name'])){
-                    $config['upload_path']          = './assets/images/other_images/';
-                    $config['allowed_types']        = 'gif|jpg|png|jpeg';
-                    $config['max_size']             = 2048;
-                    
-                    $this->load->library('upload', $config);
+                    $config_company['upload_path']          = './assets/images/gallery/';
+                    $config_company['allowed_types']        = 'gif|jpg|png|jpeg';
+                    $config_company['max_size']             = 2048;
+                    $this->load->library('upload', $config_company);
                     if($this->upload->do_upload('company_image')){
                         $uploadData = $this->upload->data();
                         $company_image = $uploadData['file_name'];
@@ -164,22 +193,42 @@ class UserController extends MY_Controller {
                     $company_image = '';
                     $error = '';
                 }
-                if(!empty($_FILES['video']['name'])){
-                    $config['upload_path']          = './assets/images/video/';
-                    $config['allowed_types']        = 'mp4';
-                    $config['max_size']             = 2048;
-                    $this->load->library('upload', $config);
-                    if($this->upload->do_upload('video')){
+
+                if(!empty($_FILES['resume']['name'])){
+                    $config_resume['upload_path']          = './assets/images/gallery/';
+                    $config_resume['allowed_types']        = 'docx|pdf|csv|xls|xlsx';
+                    $config_resume['max_size']             = 102400;
+
+                    $this->load->library('upload', $config_resume);
+                    if($this->upload->do_upload('resume')){
                         $uploadData = $this->upload->data();
-                        $video = $uploadData['file_name'];
+                        $resume = $uploadData['file_name'];
                         $error = '';
                     }else{
                         $error = $this->upload->display_errors();
-                        $video = '';
+                        $resume = '';
                     }
                 }else{
-                    $image_name = '';
-                    $video = '';
+                    $resume = '';
+                    $error = '';
+                }
+                if(!empty($_FILES['product_catalogue']['name'])){
+                    $config_catalogue['upload_path']          = './assets/images/gallery/';
+                    $config_catalogue['allowed_types']        = 'docx|pdf|csv|xls|xlsx';
+                    $config_catalogue['max_size']             = 102400;
+
+                    $this->load->library('upload', $config_catalogue);
+                    if($this->upload->do_upload('product_catalogue')){
+                        $uploadData = $this->upload->data();
+                        $product_catalogue = $uploadData['file_name'];
+                        $error = '';
+                    }else{
+                        $error = $this->upload->display_errors();
+                        $product_catalogue = '';
+                    }
+                }else{
+                    $product_catalogue = '';
+                    $error = '';
                 }
                 if(!empty($_FILES['product_images']['name'])){
                     $count = count($_FILES['product_images']['name']);
@@ -210,7 +259,7 @@ class UserController extends MY_Controller {
                     $product_images[] = '';
                 }
                 
-                if(empty($error) && count(array_filter($errors)) == 0){
+                //if(empty($error)){
                     unset($details['confirm_password']);
                     unset($details['Bank']);
                     unset($details['Product']);
@@ -219,8 +268,8 @@ class UserController extends MY_Controller {
                     $details['company_image'] = $company_image;
                     $details['certification_image'] = $certification_image;
                     $details['video'] = $video;
-                    $details['product_catalogue'] = '';
-                    $details['resume'] = '';
+                    $details['product_catalogue'] = $product_catalogue;
+                    $details['resume'] = $resume;
                     $details['status'] = 2;
                     $details['is_deleted'] = 0;
                     $details['is_verified'] = 1;
@@ -228,34 +277,36 @@ class UserController extends MY_Controller {
                     $details['updated_at'] = date('Y-m-d H:i:s');
                     
                     $user_id = $this->User->insert($details);
-                    $i = 0;
-                    $j = 1;
-                    $post_product = array_filter(array_map('array_filter', $post['Product'])); 
-                    $count = count($post_product);
-                    for($x=1;$x<=count($post_product['name']);$x++){
-                        foreach($post_product as $key_product => $val_product){
-                            foreach($val_product as $key => $val){
-                                if($key == $i && !empty($val)){
-                                    $product_data[$key_product] = $val;
-                                    if(!empty($product_images)){
-                                        foreach($product_images as $key_image => $val_image){
-                                            if($key_image == $i){
-                                                $product_data['images'] = $val_image;   
+                    if(!empty($post['Product'])){
+                        $i = 0;
+                        $j = 1;
+                        $post_product = array_filter(array_map('array_filter', $post['Product'])); 
+                        $count = count($post_product);
+                        for($x=1;$x<=count($post_product['name']);$x++){
+                            foreach($post_product as $key_product => $val_product){
+                                foreach($val_product as $key => $val){
+                                    if($key == $i && !empty($val)){
+                                        $product_data[$key_product] = $val;
+                                        if(!empty($product_images)){
+                                            foreach($product_images as $key_image => $val_image){
+                                                if($key_image == $i){
+                                                    $product_data['images'] = $val_image;   
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            if($count == $j){
-                                $product_data['from_date'] = date("Y-m-d", strtotime($product_data['from_date']));
-                                $product_data['to_date'] = date("Y-m-d", strtotime($product_data['to_date']));
-                                $product_data['user_id'] = $user_id;
-                                $product_result = $this->UserProduct->insert($product_data);
-                                $i++;
-                                $j = 1;
-                                $product_data = array();
-                            }else{
-                                $j++;
+                                if($count == $j){
+                                    $product_data['from_date'] = date("Y-m-d", strtotime($product_data['from_date']));
+                                    $product_data['to_date'] = date("Y-m-d", strtotime($product_data['to_date']));
+                                    $product_data['user_id'] = $user_id;
+                                    $product_result = $this->UserProduct->insert($product_data);
+                                    $i++;
+                                    $j = 1;
+                                    $product_data = array();
+                                }else{
+                                    $j++;
+                                }
                             }
                         }
                     }
@@ -275,16 +326,17 @@ class UserController extends MY_Controller {
                     $this->session->set_flashdata('Message', 'Registration Successfully. Please login to continue');
                     //redirect('registration?id='.$post['user_type_id']);
                     redirect('login');
-                }else{
-                    if(!empty($error)){
-                        $this->session->set_flashdata('Error',"".$error."");
-                    }else if(!empty($errors)){
-                        $this->session->set_flashdata('Error', "".$errors[0]."");
-                    }else{
-                        $this->session->set_flashdata('Error','Something Went Wrong');
-                    }
-                    $this->frontendLayout($data);
-                }
+//                //}else{
+//                    printDie($error);
+//                    if(!empty($error)){
+//                        $this->session->set_flashdata('Error',"'".$error."'");
+//                    }else if(!empty($errors)){
+//                        $this->session->set_flashdata('Error', "'".$errors[0]."'");
+//                    }else{
+//                        $this->session->set_flashdata('Error','Something Went Wrong');
+//                    }
+//                    $this->frontendLayout($data);
+//                }
             }else{
                 $this->frontendLayout($data);
             }

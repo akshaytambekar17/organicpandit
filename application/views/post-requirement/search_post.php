@@ -55,12 +55,9 @@
                                         <label>Select Certification</label>
                                         <select class="form-control select2" name="certification_id" id="is_logistic">
                                             <option disabled="disabled" selected="selected">Select Certification</option>
-                                            <option value="npop">NPOP</option>
-                                            <option value="nop">NOP</option>
-                                            <option value="pgs">PGS</option>
-                                            <option value="acos">ACOS</option>
-                                            <option value="eu">EU</option>
-                                            <option value="both">Both NPOP &amp; NOP</option>
+                                            <?php foreach (getCertifications() as $key => $value) { ?>
+                                                <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -176,7 +173,7 @@
                 </div>
                 <div class="modal-body">
                     <h5><b>Product Name :</b> <span class="modal-title-product-name"></span></h5>
-                    <h5><b>Quality Specification :</b> <span class="modal-quality"></span></h5>
+                    <h5><b>Quality Specification :</b> <span id="modal-quality"></span></h5>
                     <div class="row">
                         <div class="col-md-6">
                             <h5><b>Valid From :</b> <span id="modal-valid-from"></span></h5>
@@ -324,7 +321,7 @@
                     $("#modal-valid-from").text(result['from_date']);
                     $("#modal-valid-to").text(result['to_date']);
                     $("#modal-total-price").text(result['total_price']);
-                    $("#modal-quality").text(result['quality_sepcification']);
+                    $("#modal-quality").text(result['quality_specification']);
                     $("#modal-rate").text(result['price']);
                     $("#modal-quantity").text(result['quantity']);
                     $("#modal-address").text(result['delivery_address']);

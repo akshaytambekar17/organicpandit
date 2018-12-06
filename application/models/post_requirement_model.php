@@ -38,10 +38,10 @@ class post_requirement_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     public function getPostRequirementById($id) {
-        $this->db->select("pr.*,pf.pr_name as product_name,f.fullname");
+        $this->db->select("pr.*,pf.pr_name as product_name,u.fullname");
         $this->db->from('tbl_post_requirement pr');
         $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
-        $this->db->join('tbl_farmer f','f.id = pr.user_id');
+        $this->db->join('tbl_users u','u.user_id = pr.user_id');
         $this->db->where('pr.id',$id);
         return $this->db->get()->row_array();
     }

@@ -87,10 +87,16 @@ max-height: 70px;
     padding: 10px 25px;
     
 }
-.accImg{
-    padding: 12px 17px;
+.img-circle{
     border-radius: 50%;
-    background: #315931;
+    width: 100%;
+    max-width: 73px;
+    height: auto;
+}
+.accImg{
+/*    padding: 12px 17px;*/
+    border-radius: 50%;
+/*    background: #315931;*/
     display: inline-block;
     margin: 5px;
     color: #fff;

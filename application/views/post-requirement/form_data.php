@@ -137,14 +137,11 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>Select Certification</label>
-                                    <select class="form-control select2" name="certification_id" id="is_logistic">
+                                    <select class="form-control select2" name="certification_id" id="certification_id">
                                         <option disabled="disabled" selected="selected">Select Certification</option>
-                                        <option value="npop">NPOP</option>
-                                        <option value="nop">NOP</option>
-                                        <option value="pgs">PGS</option>
-                                        <option value="acos">ACOS</option>
-                                        <option value="eu">EU</option>
-                                        <option value="both">Both NPOP &amp; NOP</option>
+                                        <?php foreach (getCertifications() as $key => $value) { ?>
+                                            <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
+                                        <?php } ?>
                                     </select>
                                     <span class="has-error"><?php echo form_error('certification_id'); ?></span>
                                 </div>
