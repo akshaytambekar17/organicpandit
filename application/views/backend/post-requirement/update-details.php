@@ -100,8 +100,8 @@
                                 <label>Verified</label>
                                 <select class="form-control select2" name="is_verified">
                                   <option disabled="disabled" selected="selected">Select Option</option>
-                                  <option value="1" <?= !empty($post_details['is_verified'])?($post_details['is_verified'] == 1)?'selected="selected"':'':set_select('is_verified',1);?>>Yes</option>
-                                  <option value="0" <?= !empty($post_details['is_verified'])?($post_details['is_verified'] == 0)?'selected="selected"':'':set_select('is_verified',0);?> >No</option>
+                                  <option value="2" <?= !empty($post_details['is_verified'])?($post_details['is_verified'] == 2)?'selected="selected"':'':set_select('is_verified',2);?>>Yes</option>
+                                  <option value="1" <?= !empty($post_details['is_verified'])?($post_details['is_verified'] == 1)?'selected="selected"':'':set_select('is_verified',1);?> >No</option>
                                 </select>
                                 <span class="has-error"><?php echo form_error('is_verified'); ?></span>
                             </div>

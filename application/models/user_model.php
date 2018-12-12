@@ -48,7 +48,18 @@ class user_model extends CI_Model {
         $this->db->where('is_view',0);
         return $this->db->get('tbl_bid')->result_array();
     }
-    
+    public function getUserBysearchKey($data) {
+        if(!empty($data['state_id']) && !empty($data['city_id'])){
+            $this->db->where('state_id',$data['state_id']);
+            $this->db->where('city_id',$data['city_id']);
+        }
+        if(!empty($data['certification_id'])){
+            $this->db->where('certification_id',$data['certification_id']);
+        }
+        $this->db->where('user_type_id',$data['user_type_id']);
+        //$this->db->where('is_verified',2);
+        return $this->db->get('tbl_users')->result_array();
+    }
     public function insert($data){
         $this->db->insert('tbl_users', $data);
         $last_id = $this->db->insert_id();

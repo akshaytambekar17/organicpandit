@@ -67,7 +67,7 @@
                                                     ?>
                                                 </td>
                                                 <td><?= !empty($post_details['post_code'])?$post_details['post_code']:'Not availabel';?></td>
-                                                <td><?= !empty($post_details['pr_name'])?$post_details['pr_name']:'Not availabel';?></td>
+                                                <td><?= !empty($post_details['name'])?$post_details['name']:'Not availabel';?></td>
                                                 <td><?= $value['amount']; ?></td>
                                                 <td><?= $value['comment']; ?></td>
                                                 <?php if($user_data['username'] == 'adminmaster'){ ?>

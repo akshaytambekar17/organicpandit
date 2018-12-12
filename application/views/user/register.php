@@ -41,7 +41,11 @@
                         <center>
                             <?php foreach($user_type_list as $value){ ?>
                                 <div class="col20 col-md-2 col-sm-4">
-                                    <a href="<?= base_url()?>registration?id=<?= $value['id']?>">
+                                    <?php if($value['id'] == 16){ ?>
+                                        <a href="<?= base_url()?>registration-certification-agency?id=<?= $value['id']?>">
+                                    <?php }else{ ?>
+                                        <a href="<?= base_url()?>registration?id=<?= $value['id']?>">
+                                    <?php } ?>
                                         <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/<?= $value['images']?>" alt="<?= $value['name']?>" ></div>
                                         <p class="partner-head"><?= $value['name']?></p>
                                     </a>
@@ -170,10 +174,8 @@
                         </center>  
                     </div>
 
-                <!-- footer -->
-                <?php $this->load->view('includes/footer');?>    
                 </div>
             </section>
         </div>
-    </body>
-</html>
+    
+

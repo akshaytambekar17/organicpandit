@@ -69,21 +69,24 @@
                                                 </td>
                                                 <td><?= $value['post_code']?></td>
                                                 <td><?= $value['company_name']?></td>
-                                                <td><?= $value['pr_name']?></td>
+                                                <td><?= $value['name']?></td>
                                                 <td><?= $value['from_date']?></td>
                                                 <td><?= $value['to_date']?></td>
                                                 <td><?= $value['total_price']; ?></td>
-                                                <td><?= $value['is_verified'] == 1?'Yes':'No';?></td>
+                                                <td><?= $value['is_verified'] == 2?'Yes':'No';?></td>
                                                 <td>
-                                                    <?php
-                                                        $bids = $this->Bid->getBidByPostRequirementId($value['post_requirement_id']);
-                                                        echo count($bids);
+                                                    <?php $bids = $this->Bid->getBidByPostRequirementId($value['post_requirement_id']); 
+                                                        if(!empty($bids) && count($bids)>0){
                                                     ?>
+                                                        <a href="<?= base_url()?>admin/post-requirement/bid-list?post_id=<?= $value['post_requirement_id']?>" class="view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post" title="Show Bids"><?= count($bids)?></a>
+                                                    <?php  }else{ ?>    
+                                                         <a href="javascript:void(0)" class="view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post" title="Show Bids">0</a>   
+                                                    <?php  }?>    
                                                 </td>
-                                                <?php if($user_data['username'] == 'adminmaster'){ ?>
+                                                <?php if($user_data['username'] == ADMINUSERNAME){ ?>
                                                     <td>
-                                                        <a href="<?= base_url()?>admin/post-requirement/update?id=<?= $value['post_requirement_id']?>" class="btn btn-success view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post">Update</a>
-                                                        <a href="javascript:void(0)" class="btn btn-danger delete-post" data-id="<?= $value['post_requirement_id'] ?>" data-postcode="<?= $value['post_code']?>"  name="delete-post" onclick="postDelete(this)">Delete</a><br>
+                                                        <a href="<?= base_url()?>admin/post-requirement/update?id=<?= $value['post_requirement_id']?>" class="view-post" data-id="<?= $value['post_requirement_id'] ?>" name="view-post"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                        <a href="javascript:void(0)" class="delete-post" data-id="<?= $value['post_requirement_id'] ?>" data-postcode="<?= $value['post_code']?>"  name="delete-post" onclick="postDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a><br>
                                                     </td>
                                                 <?php }?>
                                             </tr>

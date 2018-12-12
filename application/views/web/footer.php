@@ -59,10 +59,19 @@
                 });
                 $('.select2').select2();
                 $('.picker-date').datepicker({
+                    //format : 'dd/mm/yyyy',
                     autoclose: true,
                     startDate: new Date()
                 });
             });
+            function validateEmail(email) {
+                var email_format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                if(email_format.test(email)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
         </script>
     </body>
 </html>

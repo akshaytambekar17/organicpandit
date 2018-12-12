@@ -25,6 +25,11 @@ class product_model extends CI_Model {
         $this->db->order_by('p.id','DESC');
         return $this->db->get()->result_array();
     }
+    public function getActiveProducts() {
+        $this->db->where('status',2);
+        $this->db->order_by('id','DESC');
+        return $this->db->get('tbl_product')->result_array();
+    }
     public function getProductById($id) {
         $this->db->where('id',$id);
         return $this->db->get('tbl_product')->row_array();

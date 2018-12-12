@@ -45,8 +45,9 @@
                                         <th>Username</th>
                                         <th>Email Id</th>
                                         <th>Mobile number</th>
-                                        <?php if($user_data['username'] == 'adminmaster'){ ?>
-                                            <th>Action</th>
+                                        <th>Verified</th>
+                                        <?php if($user_data['username'] == ADMINUSERNAME || $user_data['user_type_id'] == 16 ){ ?>
+                                                <th>Action</th>
                                         <?php }?>
                                     </tr>
                                 </thead>
@@ -63,12 +64,22 @@
                                                 <td><?= $value['username'];?></td>
                                                 <td><?= $value['email_id'];?></td>
                                                 <td><?= $value['mobile_no'];?></td>
-                                                <?php if($user_data['username'] == 'adminmaster'){ ?>
-                                                    <td>
-                                                        <a href="<?= site_url('admin/user/view?id='.$value['user_id'])?>" class="btn btn-primary view-product" data-id="<?= $value['user_id'] ?>" name="view-product">View </a>
-                                                        <a href="javascript:void(0)" class="btn btn-danger delete-user" data-user_id="<?= $value['user_id'] ?>" name="delete-user" onclick="userDelete(this)">Delete</a><br>
+                                                <td><?= ($value['is_verified'] == 2)?'Verified':'Not Verified';?></td>
+                                                <?php if(!empty($user_data['user_type_id']) && $user_data['user_type_id'] == 16 ){ ?>
+                                                    <td style="text-align: center">
+                                                        <?php if($user_data['user_id'] == $value['agency_id']){ ?>
+                                                            <a href="<?= site_url('admin/user/view?id='.$value['user_id'])?>" class="view-product" data-id="<?= $value['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i> </a>
+                                                        <?php } ?>        
                                                     </td>
-                                                <?php } ?>
+                                                <?php }
+                                                    if($user_data['username'] == ADMINUSERNAME){ 
+                                                ?>
+                                                        <td>
+                                                            <a href="<?= site_url('admin/user/update-profile?id='.$value['user_id'].'&user_type_id='.$value['user_type_id'])?>" class="view-product" data-id="<?= $value['user_id'] ?>" name="view-product"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                                            <a href="<?= site_url('admin/user/view?id='.$value['user_id'])?>" class="view-product" data-id="<?= $value['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                            <a href="javascript:void(0)" class="delete-user" data-user_id="<?= $value['user_id'] ?>" name="delete-user" onclick="userDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a><br>
+                                                        </td>
+                                                <?php } ?>    
                                             </tr>
                                 <?php
                                         }

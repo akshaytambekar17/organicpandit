@@ -54,38 +54,6 @@ $config = array(
                         'rules' => 'required'
                 )
         ),
-        'category' => array(
-                array(
-                        'field' => 'name',
-                        'label' => 'Category name',
-                        'rules' => 'required'
-                ),
-                array(
-                        'field' => 'description',
-                        'label' => 'Description',
-                        'rules' => 'required'
-                ),
-                array(
-                        'field' => 'meta_title',
-                        'label' => 'Meta Title',
-                        'rules' => 'required'
-                ),
-                array(
-                        'field' => 'meta_description',
-                        'label' => 'Meta Description',
-                        'rules' => 'required'
-                ),
-                array(
-                        'field' => 'meta_keywords',
-                        'label' => 'Meta Keywords',
-                        'rules' => 'required'
-                ),
-                array(
-                        'field' => 'status',
-                        'label' => 'Status',
-                        'rules' => 'required'
-                )
-        ),
         'post-requirement-form' => array(
                 array(
                         'field' => 'company_name',
@@ -177,6 +145,19 @@ $config = array(
                 ),
                                 
         ),
+        'search-user-form' => array(
+                array(
+                        'field' => 'state_id',
+                        'label' => 'Select State',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'city_id',
+                        'label' => 'Select City',
+                        'rules' => 'required'
+                ),
+                                
+        ),
         'products-form' => array(
 //                    array(
 //                            'field' => 'user_type_id',
@@ -240,6 +221,18 @@ $config = array(
                             'label' => 'Status',
                             'rules' => 'required'
                     )
+            ),
+            'change-password-form' => array(
+                    array(
+                            'field' => 'password',
+                            'label' => 'Password',
+                            'rules' => 'required|min_length[5]|matches[confirm_password]'
+                    ),
+                    array(
+                            'field' => 'confirm_password',
+                            'label' => 'Confirm Password',
+                            'rules' => 'required|min_length[5]'
+                    ),
             )
 );
 $config['error_prefix'] = '<div class="error">';

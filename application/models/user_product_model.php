@@ -68,6 +68,15 @@ class user_product_model extends CI_Model {
             return false;
         }
     }
+    public function deleteByUserId($user_id) {
+        $this->db->where('user_id',$user_id);
+        $this->db->delete('tbl_users_products'); 
+        if($this->db->affected_rows()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function getCertificationAgency() {
         //$this->db->order_by('id','DESC');
         return $this->db->get('tbl_certification')->result_array();

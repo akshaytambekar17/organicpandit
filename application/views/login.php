@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
 
             </div>
-            <?php echo $this->load->view('includes/footer'); ?>
+            <?php //echo $this->load->view('includes/footer'); ?>
         </section>
 
         <!-- js -->

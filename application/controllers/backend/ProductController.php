@@ -45,13 +45,14 @@ class ProductController extends MY_Controller {
                 $error = '';
                 if(empty($error)){
                     $details = $post;
-//                    $details['images'] = $image_name;
-//                    $details['from_date'] = date("Y-m-d", strtotime($details['from_date']));
-//                    $details['to_date'] = date("Y-m-d", strtotime($details['to_date']));
+                    $details['user_type_id'] = 1;
+                    $details['from_date'] = date('Y-m-d H:i:s');
+                    $details['to_date'] = date('Y-m-d H:i:s');
+                    $details['price'] = 10.00;
+                    $details['quantity'] = 100;
                     $details['is_deleted'] = 0;
                     $details['updated_at'] = date('Y-m-d H:i:s');
                     $details['created_at'] = date('Y-m-d H:i:s');
-                    //printDie($details);
                     $product_id = $this->Product->add($details);
                     if ($product_id) {
                         $this->session->set_flashdata('Message', 'Product Added Succesfully');

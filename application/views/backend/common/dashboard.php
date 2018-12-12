@@ -11,9 +11,42 @@
             <li class="active">Dashboard</li>
         </ol>
     </section>
-
+    
+        <!-- Small boxes (Stat box) -->
+    
     <!-- Main content -->
     <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Info Boxes Style 2 -->
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Deals Worth</span>
+                        <span class="info-box-number"><?= $total_worth['total_price']?></span>
+
+<!--                        <div class="progress">
+                            <div class="progress-bar" style="width: 50%"></div>
+                        </div>-->
+<!--                        <span class="progress-description">
+                            
+                        </span>-->
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <?php if($user_details['username'] != ADMINUSERNAME && $user_details['is_verified'] == 1){ ?>
+                    <div class="callout callout-danger">
+<!--                        <h4>You are not Verified.Please stay with us</h4>-->
+                        <p>You are not Verified.Please stay with us</p>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-3 col-xs-6">
@@ -43,7 +76,7 @@
                     <a href="<?= base_url()?>admin/post-requirement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <?php if($user_details['username'] == 'adminmaster'){ ?>
+            <?php if(!empty($user_details['username']) && $user_details['username'] == ADMINUSERNAME){ ?>
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-red-gradient">
@@ -70,6 +103,19 @@
                         <a href="<?= base_url()?>admin/user-type/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red-gradient">
+                        <div class="inner">
+                            <h3><?= count($certification_agencies_list)?></h3>
+                            <p>Register Certification Agencies</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-certificate"></i>
+                        </div>
+                        <a href="<?= base_url()?>admin/certification-agency/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
             <?php } ?>
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -81,7 +127,7 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url()?>admin/user" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             

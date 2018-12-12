@@ -38,11 +38,24 @@ a.disabled {
 .bid-padding-block{
     padding: 18px 45px;
 }
+.user-padding-block{
+    padding: 18px 0px;
+}
+.user-verified-image{
+    margin: 0px 20px;
+    height: 45px;
+}
 .label-required::after {
     content: "*";
     font-size: 14px;
     font-family: initial;
     color: red;
+}
+
+.address-icon{
+    font-size: 32px;
+    text-align: center;
+    display: block;
 }
 /********Star rating css***********/
 div.stars {

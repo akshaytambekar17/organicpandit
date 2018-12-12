@@ -30,7 +30,7 @@ class PostRequirementController extends MY_Controller {
         $data['backend'] = true;
         $data['view'] = 'post-requirement/list';
         $data['user_data'] = $userSession;
-        if($userSession['username'] == 'adminmaster'){
+        if($userSession['username'] == ADMINUSERNAME){
             $this->PostRequirement->updateIsView();
             $data['post_list'] = $this->PostRequirement->getPostRequirementsWithProductDetails();
         }else{
@@ -74,12 +74,28 @@ class PostRequirementController extends MY_Controller {
     }
     public function update(){
         $get = $this->input->get();
+        $post_details = $this->PostRequirement->getPostRequirementById($get['id']);
         if($this->input->post()){
             $post = $this->input->post();
             $details = $post;
             $details['updated_at'] = date('Y-m-d H:i:s');
             $result = $this->PostRequirement->update($details);
+            $post_details = $this->PostRequirement->getPostRequirementById($post['id']);
             if ($result) {
+                if($post['is_verified'] == 2){
+                    $verified = "Approve post of";
+                }else{
+                    $verified = "Reject post of";
+                }
+                $userDetails = $this->User->getUserById($post_details['user_id']);
+                $data_notify = array(
+                                        'user_id' => $userDetails['user_id'],
+                                        'user_type_id' => $userDetails['user_type_id'],
+                                        'notification_type' => VERIFY_POST,
+                                        'notify_type' => NOTIFY_WEB,
+                                        'message' => 'Admin '.''.$verified.' '.$userDetails['fullname'],
+                                    );
+                $result_notification = $this->Notifications->insert($data_notify);
                 $this->session->set_flashdata('Message', 'Post '.$post['post_code'].' has been updated Succesfully');
                 return redirect('admin/post-requirement', 'refresh');
             } else {
@@ -93,7 +109,6 @@ class PostRequirementController extends MY_Controller {
                 $this->backendLayout($data);
             }
         }else{
-            $post_details = $this->PostRequirement->getPostRequirementById($get['id']);
             $data['title'] = $post_details['post_code'] ;
             $data['heading'] ='Update Post '.$post_details['post_code'];
             $data['view'] = 'post-requirement/update-details';
@@ -111,4 +126,20 @@ class PostRequirementController extends MY_Controller {
             echo false;
         }
    }
+   public function bidList()
+    {
+        $session = UserSession();
+        $userSession = $session['userData'];
+        $get = $this->input->get();
+        $bid_list = $this->Bid->getBidByPostRequirementId($get['post_id']);
+        $post_details = $this->PostRequirement->getProductNameByPostRequirementId($get['post_id']); 
+        $data['title'] = "Bid List of Post -".$post_details['post_code'];
+        $data['heading'] = "Bid List of Post -".$post_details['post_code'];
+        $data['backend'] = true;
+        $data['view'] = 'post-requirement/bid_list';
+        $data['user_data'] = $userSession;
+        $data['bid_list'] = $bid_list;
+        $data['post_details'] = $post_details;
+        $this->backendLayout($data);
+    }
 }

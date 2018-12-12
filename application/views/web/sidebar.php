@@ -1,7 +1,6 @@
 <?php 
     $session = UserSession();
     $userSession = $session['userData'];
-    
 ?>
 <body class="hold-transition skin-purple sidebar-mini fixed">
     <div class="wrapper">
@@ -245,11 +244,11 @@
 <!--                                    <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
                                     <p>
-                                        <?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?> - Administrator
+                                        <?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?> - <?= $userSession ['username'] == ADMINUSERNAME?'Administrator':'User' ?>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
-                                <li class="user-body">
+<!--                                <li class="user-body">
                                     <div class="row">
                                         <div class="col-xs-4 text-center">
                                             <a href="#">Followers</a>
@@ -261,15 +260,21 @@
                                             <a href="#">Friends</a>
                                         </div>
                                     </div>
-                                    <!-- /.row -->
-                                </li>
+                                     /.row 
+                                </li>-->
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
+                                    <?php if($userSession['username'] != ADMINUSERNAME ){ ?>
+                                        <div class="pull-left">
+                                            <?php if($userSession['user_type_id'] == 16 ){ ?>
+                                                <a href="<?= base_url()?>admin/certification-agency/update?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
+                                            <?php }else{ ?>    
+                                                <a href="<?= base_url()?>admin/user/update-profile?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
+                                            <?php } ?>    
+                                        </div>
+                                    <?php } ?>
                                     <div class="pull-right">
-                                        <a href="<?= base_url()?>admin/logout" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="<?= base_url()?>admin/logout" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i>  Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -318,6 +323,11 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
                     <li>
+                        <a href="<?= base_url()?>">
+                            <i class="fa fa-home"></i> <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= base_url()?>admin/dashboard">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         </a>
@@ -356,6 +366,14 @@
                                     <i class="fa fa-users"></i> <span>User Type</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?= base_url()?>admin/certification-agency">
+                                    <i class="fa fa-certificate"></i> <span>Certification Agencies</span>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-red"><?= count($this->CertificationAgency->getCertificationAgencies())?></small>
+                                    </span>
+                                </a>
+                            </li>
                     <?php } ?>
                     <li>
                         <a href="<?= base_url()?>admin/user">
@@ -365,6 +383,25 @@
                             </span>
                         </a>
                     </li>
+                    <?php if($userSession['username'] != ADMINUSERNAME ){ ?>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-edit"></i> <span>Profile</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <?php if($userSession['user_type_id'] == 16 ){ ?>
+                                        <li><a href="<?= base_url()?>admin/certification-agency/update?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>"><i class="fa fa-pencil"></i>  Edit Profile</a></li>
+                                <?php }else{ ?>                
+                                        <li><a href="<?= base_url()?>admin/user/update-profile?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>"><i class="fa fa-pencil"></i> Edit Profile</a></li>
+                                <?php }?>        
+                                <li><a href="<?= base_url()?>change-password"><i class="fa fa-unlock-alt"></i> Change Password</a></li>
+
+                            </ul>
+                        </li>
+                    <?php } ?>
                 </ul>
             </section>
             <!-- /.sidebar -->

@@ -49,6 +49,15 @@ class user_bank_model extends CI_Model {
             return false;
         }
     }
+    public function updateByUserId($updateData){
+        $this->db->where('user_id',$updateData['user_id']);
+        $this->db->update('tbl_users_bank_details',$updateData);
+        if($this->db->affected_rows()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function updateIsView(){
         $updateData = array('is_view' => 1);
         $this->db->update('tbl_bid',$updateData);

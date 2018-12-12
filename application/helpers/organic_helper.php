@@ -59,6 +59,54 @@ function getTotalFarmer(){
             );
     return $data;
 }
+function getCropCategory(){
+    $data = array( 
+                   1 => 'Vegetables',
+                   2 => 'Fruits',
+                   3 => 'Dry Fruits',
+                   4 => 'Spices',
+                   5 => 'Rice',
+                   6 => 'Other',
+            );
+    return $data;
+}
+function getSoilElement(){
+    $data = array( 
+                   1 => 'Nitrogen',
+                   2 => 'Phosphorus(P)',
+                   3 => 'Potassium(K)',
+                   4 => 'pH',
+            );
+    return $data;
+}
+function getSoilPercentage(){
+    $data = array( 
+                   1 => 'Very High',
+                   2 => 'High',
+                   3 => 'Medium',
+                   4 => 'Low',
+                   5 => 'Very Low',
+            );
+    return $data;
+}
+function getMicroElement(){
+    $data = array( 
+                   1 => 'Boron',
+                   2 => 'Copper',
+                   3 => 'Iron',
+                   4 => 'Manganese',
+                   5 => 'Sulphur',
+                   6 => 'Zinc',
+            );
+    return $data;
+}
+function getMicroPercentage(){
+    $data = array( 
+                   1 => 'Sufficient',
+                   2 => 'Deficient',
+            );
+    return $data;
+}
 function ViewRegistration($userTypeDetails){
     $ci=& get_instance();
     $data['user_type_details'] = $userTypeDetails;
@@ -98,5 +146,48 @@ function ViewRegistration($userTypeDetails){
         return $ci->load->view('user/registration_ngo',$data);
     }else{
         return $ci->load->view('user/registration_certification_agencies',$data);
+    }
+}
+function ViewProfile($userTypeDetails,$user_details,$user_product_details){
+    $ci=& get_instance();
+    $data['user_type_details'] = $userTypeDetails;
+    $data['user_details'] = $user_details;
+    $data['user_product_details'] = $user_product_details;
+    if($userTypeDetails['id'] == 1){
+        return $ci->load->view('backend/user/profile_farmer',$data);
+    }else if($userTypeDetails['id'] == 2){
+        return $ci->load->view('backend/user/profile_fpo',$data);
+    }else if($userTypeDetails['id'] == 3){
+        return $ci->load->view('backend/user/profile_trader',$data);
+    }else if($userTypeDetails['id'] == 4){
+        return $ci->load->view('backend/user/profile_processor',$data);
+    }else if($userTypeDetails['id'] == 5){
+        return $ci->load->view('backend/user/profile_buyer',$data);
+    }else if($userTypeDetails['id'] == 6){
+        return $ci->load->view('backend/user/profile_organic_consultant',$data);
+    }else if($userTypeDetails['id'] == 7){
+        return $ci->load->view('backend/user/profile_organic_input',$data);
+    }else if($userTypeDetails['id'] == 8){
+        return $ci->load->view('backend/user/profile_packing_company',$data);
+    }else if($userTypeDetails['id'] == 9){
+        return $ci->load->view('backend/user/profile_logistic_company',$data);
+    }else if($userTypeDetails['id'] == 10){
+        return $ci->load->view('backend/user/profile_farm_equipment',$data);
+    }else if($userTypeDetails['id'] == 11){
+        return $ci->load->view('backend/user/profile_exhibitor',$data);
+    }else if($userTypeDetails['id'] == 12){
+        return $ci->load->view('backend/user/profile_shops',$data);
+    }else if($userTypeDetails['id'] == 13){
+        return $ci->load->view('backend/user/profile_labs',$data);
+    }else if($userTypeDetails['id'] == 14){
+        return $ci->load->view('backend/user/profile_government_agencies',$data);
+    }else if($userTypeDetails['id'] == 15){
+        return $ci->load->view('backend/user/profile_institutions',$data);
+    }else if($userTypeDetails['id'] == 17){
+        return $ci->load->view('backend/user/profile_restaurant',$data);
+    }else if($userTypeDetails['id'] == 18){
+        return $ci->load->view('backend/user/profile_ngo',$data);
+    }else{
+        return $ci->load->view('backend/user/profile_certification_agencies',$data);
     }
 }

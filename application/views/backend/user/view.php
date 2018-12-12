@@ -164,7 +164,7 @@
                                         <label>Product Catalogue File</label>
                                         <h4>
                                             <?php if(!empty($user_details['product_catalogue'])){ ?>
-                                                <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['product_catalogue']?>"><?= $user_details['product_catalogue']?></a>
+                                            <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['product_catalogue']?>" download><h5>Download <?= $user_details['product_catalogue']?></h5></a>
                                             <?php }else{ ?>
                                                     NA
                                             <?php } ?>    
@@ -175,7 +175,18 @@
                                         <label>Resume File</label>
                                         <h4>
                                             <?php if(!empty($user_details['resume'])){ ?>
-                                                <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['resume']?>"><?= $user_details['product_catalogue']?></a>
+                                            <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['resume']?>" download ><h5>Download <?= $user_details['resume']?></h5></a>
+                                            <?php }else{ ?>
+                                                    NA
+                                            <?php } ?>    
+
+                                        </h4>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Video File</label>
+                                        <h4>
+                                            <?php if(!empty($user_details['video'])){ ?>
+                                            <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['video']?>" download ><h5>Download <?= $user_details['video']?></h5></a>
                                             <?php }else{ ?>
                                                     NA
                                             <?php } ?>    
@@ -280,17 +291,19 @@
                                         <span class="has-error"><?php echo form_error('is_verified'); ?></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label>Status </label>
-                                        <select class="form-control select2" name="status">
-                                          <option disabled="disabled" selected="selected">Select Status</option>
-                                          <option value="2" <?= !empty($user_details['status'])?($user_details['status'] == 2)?'selected="selected"':'':set_select('status',2);?>>Enabled</option>
-                                          <option value="1" <?= !empty($user_details['status'])?($user_details['status'] == 1)?'selected="selected"':'':set_select('status',1);?> >Disabled</option>
-                                        </select>
-                                        <span class="has-error"><?php echo form_error('status'); ?></span>
+                                <?php if($user_data['username'] == ADMINUSERNAME){ ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>Status </label>
+                                            <select class="form-control select2" name="status">
+                                              <option disabled="disabled" selected="selected">Select Status</option>
+                                              <option value="2" <?= !empty($user_details['status'])?($user_details['status'] == 2)?'selected="selected"':'':set_select('status',2);?>>Enabled</option>
+                                              <option value="1" <?= !empty($user_details['status'])?($user_details['status'] == 1)?'selected="selected"':'':set_select('status',1);?> >Disabled</option>
+                                            </select>
+                                            <span class="has-error"><?php echo form_error('status'); ?></span>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                                 
                             </div>
                         </div>

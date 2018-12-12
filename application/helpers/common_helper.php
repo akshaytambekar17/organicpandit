@@ -33,9 +33,25 @@ function includesHeaderFooter($data){
         $ci->load->view($data['structure'].'/'.$data['view'],$data);
     }else{
         $ci->load->view('includes/header',$data);
+        //$ci->load->view('frontend/menubar',$data);
         $ci->load->view($data['view'],$data);
+        $ci->load->view('frontend/footer',$data);
     }
     $ci->load->view('web/footer',$data);
+}
+function includesFrontendFooter($data){
+    $ci=& get_instance();
+    $ci->load->view($data['view'],$data);
+    $ci->load->view('frontend/footer',$data);
+}
+function includesHeaderFooterHome($data){
+    
+    $ci=& get_instance();
+    $ci->load->view('frontend/header',$data);
+    $ci->load->view('frontend/menubar',$data);
+    $ci->load->view($data['view'],$data);
+    $ci->load->view('frontend/footer',$data);
+    
 }
 function includesAll($data){
     $ci=& get_instance();

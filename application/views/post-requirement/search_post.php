@@ -46,8 +46,8 @@
                                         <label>Select Product</label>
                                         <select class="form-control select2" name="product_id">
                                             <option disabled="disabled" selected="selected" >Select Product</option>
-                                            <?php foreach($farmer_product_list  as $value){ ?>
-                                                    <option value="<?= $value['id']?>" <?= set_select('product_id',$value['id'],false);?>><?= $value['pr_name']?></option>
+                                            <?php foreach($product_list  as $value){ ?>
+                                                    <option value="<?= $value['id']?>" <?= set_select('product_id',$value['id'],false);?>><?= $value['name']?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -95,7 +95,11 @@
             </div>
             <?php if(empty($userSession)){ ?>
                     <p class="has-error center">Please login to apply for bid</p>
-            <?php } ?>
+            <?php }else{ 
+                    if($user_details['is_verified'] == 1){
+            ?>
+                        <p class="has-error center">Your are not verified to make Bid</p>
+            <?php  } }?>
             <div class="row">
                 <div class="col-md-12 mt-20 alert-message">
                     <div class="box box-success">
@@ -110,8 +114,8 @@
                                             <h4>Product Name</h4>
                                             <b class="product-name">
                                             <?php 
-                                                $farmer_product_details = $this->Product->getFarmerProductById($value['product_id']);
-                                                echo !empty($farmer_product_details)?$farmer_product_details['pr_name']:''; 
+                                                $product_details = $this->Product->getProductById($value['product_id']);
+                                                echo !empty($product_details)?$product_details['name']:''; 
                                             ?>
                                             </b>    
                                         </div>
@@ -135,7 +139,7 @@
                                                 </h4>
                                             </div>
                                             <div class="col-md-6 bid-padding-block">
-                                                <?php $disabled = empty($userSession)?'disabled':'';  ?>
+                                                <?php $disabled = !empty($user_details)?($user_details['is_verified'] == 2)?'':'disabled':'disabled'; ?>
                                                 <a href="javascript:void(0)" class="btn btn-danger <?= $disabled?>" data-id="<?= $value['id']?>" onclick="bidModal(this)">Apply for Bid</a>
                                             </div>
                                         </div>

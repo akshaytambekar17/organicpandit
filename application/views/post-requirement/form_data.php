@@ -35,7 +35,11 @@
                         <form class="form-horizontal" method="post" enctype="multipart/form-data" name="post-requirement-form" id="post-requirement-form" >
                             <?php if(empty($userSession)){ ?>
                                     <p class="has-error center">Please login to create your post</p>
-                            <?php } ?>
+                            <?php }else{ 
+                                    if($user_details['is_verified'] == 1){
+                            ?>
+                                        <p class="has-error center">Your are not verified to create Post</p>
+                            <?php  } }?>
                             <div class="box-body">
                                 <div class="form-group col-md-12">
                                     <label>Company Name</label>
@@ -46,8 +50,8 @@
                                     <label>Select Product</label>
                                     <select class="form-control select2" name="product_id">
                                         <option disabled="disabled" selected="selected" >Select Product</option>
-                                        <?php foreach($farmer_product_list  as $value){ ?>
-                                                <option value="<?= $value['id']?>" <?= set_select('product_id',$value['id'],false);?>><?= $value['pr_name']?></option>
+                                        <?php foreach($product_list  as $value){ ?>
+                                                <option value="<?= $value['id']?>" <?= set_select('product_id',$value['id'],false);?>><?= $value['name']?></option>
                                         <?php } ?>
                                     </select>
                                     <span class="has-error"><?php echo form_error('product_id'); ?></span>
@@ -156,7 +160,8 @@
                                     <input type="hidden" name="id" value="<?= $product_details['id']?>">
                             <?php } ?>
                             <div class="box-footer center">
-                                <button type="submit" class="btn btn-success" id="submit" <?= empty($userSession)?'disabled':''?>><?= !empty($product_details)?'Update':'Create'?> Post</button>
+                                <?php $disabled = !empty($user_details)?($user_details['is_verified'] == 2)?'':'disabled':'disabled'; ?>
+                                <button type="submit" class="btn btn-success" id="submit" <?= $disabled?>><?= !empty($product_details)?'Update':'Create'?> Post</button>
                                 <a href="<?php echo base_url(); ?>" class="btn btn-warning">Cancel</a>
                             </div>
                         </form>

@@ -23,24 +23,24 @@ class post_requirement_model extends CI_Model {
         return $this->db->get('tbl_post_requirement')->result_array();
     }
     public function getPostRequirementsWithProductDetails() {
-        $this->db->select("pr.id as post_requirement_id,pr.*,pf.*");
+        $this->db->select("pr.id as post_requirement_id,pr.*,p.*");
         $this->db->from('tbl_post_requirement pr');
-        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->join('tbl_product p','p.id = pr.product_id');
         $this->db->order_by('pr.id','DESC');
         return $this->db->get()->result_array();
     }
     public function getPostRequirementsWithProductDetailsByUserId($user_id) {
         $this->db->select("pr.id as post_requirement_id,pr.*,pf.*");
         $this->db->from('tbl_post_requirement pr');
-        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->join('tbl_product pf','pf.id = pr.product_id');
         $this->db->where('pr.user_id',$user_id);
         $this->db->order_by('pr.id','DESC');
         return $this->db->get()->result_array();
     }
     public function getPostRequirementById($id) {
-        $this->db->select("pr.*,pf.pr_name as product_name,u.fullname");
+        $this->db->select("pr.*,pf.name as product_name,u.fullname");
         $this->db->from('tbl_post_requirement pr');
-        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->join('tbl_product pf','pf.id = pr.product_id');
         $this->db->join('tbl_users u','u.user_id = pr.user_id');
         $this->db->where('pr.id',$id);
         return $this->db->get()->row_array();
@@ -49,6 +49,10 @@ class post_requirement_model extends CI_Model {
         $this->db->where('user_id',$user_id);
         return $this->db->get('tbl_post_requirement')->row_array();
     }
+    public function getAllPostRequirementByUserId($user_id) {
+        $this->db->where('user_id',$user_id);
+        return $this->db->get('tbl_post_requirement')->result_array();
+    }
     public function getPostRequirementByNotView() {
         $this->db->where('is_view',0);
         return $this->db->get('tbl_post_requirement')->result_array();
@@ -56,7 +60,7 @@ class post_requirement_model extends CI_Model {
     public function getProductNameByPostRequirementId($id) {
         $this->db->select("pr.id as post_requirement_id,pr.*,pf.*");
         $this->db->from('tbl_post_requirement pr');
-        $this->db->join('tbl_pr_farmer pf','pf.id = pr.product_id');
+        $this->db->join('tbl_product pf','pf.id = pr.product_id');
         $this->db->where('pr.id',$id);
         return $this->db->get()->row_array();
     }
@@ -71,8 +75,15 @@ class post_requirement_model extends CI_Model {
         if(!empty($data['certification_id'])){
             $this->db->where('certification_id',$data['certification_id']);
         }
-        $this->db->where('is_verified',1);
+        $this->db->where('is_verified',2);
         return $this->db->get('tbl_post_requirement')->result_array();
+    }
+    
+    public function getTotalWorth(){
+        $this->db->select_sum('total_price');
+        $this->db->from('tbl_post_requirement');
+        $this->db->where('is_verified',2);
+        return $this->db->get()->row_array();
     }
     
     public function add($data){
@@ -112,4 +123,5 @@ class post_requirement_model extends CI_Model {
             return false;
         }
     }
+    
 }

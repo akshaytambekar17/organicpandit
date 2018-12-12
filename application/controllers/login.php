@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends MY_Controller {
 
     public function __Construct() {
         parent::__Construct();
@@ -15,8 +15,15 @@ class Login extends CI_Controller {
         if(!empty($userSession)){
             redirect('home');
         }
+        
+        $data['title'] = 'Registration';
+        $data['heading'] = 'Register With Us';
+        $data['hide_footer'] = true;
+        $data['view'] = 'login';
         $data['user_type_list'] = $this->UserType->getUserTypes();
-        $this->load->view('login',$data);
+        $data['userSession'] = $userSession;
+        $this->frontendFooterLayout($data);
+        //$this->load->view('login',$data);
     }
 
     function login_validation() {

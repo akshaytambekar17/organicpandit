@@ -8,6 +8,7 @@ class MY_Controller extends CI_Controller {
         $this->load->library(array('form_validation'));
         $this->load->helper(array('url', 'language','form'));
         $this->load->model('login_model','Login');
+        $this->load->model('crop_model','Crop');
         $this->load->model('bid_model','Bid');
         $this->load->model('post_requirement_model','PostRequirement');
         $this->load->model('product_model','Product');
@@ -15,11 +16,16 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_product_model','UserProduct');
         $this->load->model('user_bank_model','UserBank');
         $this->load->model('user_type_model','UserType');
+        $this->load->model('user_soil_model','UserSoil');
+        $this->load->model('user_micro_nutrient_model','UserMicroNutrient');
+        $this->load->model('user_crop_model','UserCrop');
+        $this->load->model('user_input_organic_model','UserInputOrganic');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
         $this->load->model('notifications_model','Notifications');
         $this->load->model('certification_agency_model','CertificationAgency');
         
+        define('ADMINUSERNAME', 'adminmaster');
         define('REGISTRATION', 1);
         define('POST', 2);
         define('BID', 3);
@@ -47,6 +53,12 @@ class MY_Controller extends CI_Controller {
     }
     public function frontendLayout($data) {
         includesHeaderFooter($data);
+    }
+    public function frontendFooterLayout($data) {
+        includesFrontendFooter($data);
+    }
+    public function frontendLayoutHome($data) {
+        includesHeaderFooterHome($data);
     }
     
     function curlReq($url, $vars) {

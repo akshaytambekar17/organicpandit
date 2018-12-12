@@ -72,6 +72,11 @@ $route['certification-register'] = "certification_register";  //done
 $route['farmer-register/update/(:any)/(:any)'] = 'farmer_register/update/$1/$2';
 
 /************* New Implementation **************/
+
+$route['user/home'] = "UserController/home";  //done
+$route['search-user'] = "UserController/searchUser";  //done
+$route['get-user-by-id'] = "UserController/getUserById";  //done
+
 $route['post-requirement'] = "PostRequirementController";  //done
 $route['post-requirement/search-post'] = "PostRequirementController/searchPost";  //done
 $route['getcities-by-state'] = "PostRequirementController/getCitiesByState";  //done
@@ -81,6 +86,9 @@ $route['bid/create'] = "BidController/create";
 
 $route['signup'] = "UserController/signup";
 $route['registration'] = "UserController/registration";
+$route['registration-certification-agency'] = "UserController/registrationCertificationAgency";
+
+
 
 
 /************* New Implementation Admin Panel **************/
@@ -88,10 +96,12 @@ $route['registration'] = "UserController/registration";
 $route['admin'] = "backend/UserController/login";
 $route['admin/logout'] = "backend/UserController/logout";
 $route['admin/dashboard'] = "backend/DashboardController";
+$route['change-password'] = "backend/UserController/changePassword";
 
 $route['admin/post-requirement'] = "backend/PostRequirementController";
 $route['admin/post-requirement/update'] = "backend/PostRequirementController/update";
 $route['admin/post-requirement/delete'] = "backend/PostRequirementController/delete";
+$route['admin/post-requirement/bid-list'] = "backend/PostRequirementController/bidList";
 
 $route['admin/product'] = "backend/ProductController";
 $route['admin/product/add'] = "backend/ProductController/add";
@@ -109,6 +119,12 @@ $route['admin/bid/delete'] = "backend/BidController/delete";
 $route['admin/user'] = "backend/UserController";
 $route['admin/user/delete'] = "backend/UserController/delete";
 $route['admin/user/view'] = "backend/UserController/view";
+$route['admin/user/update-profile'] = "backend/UserController/updateProfile";
+
+$route['admin/certification-agency'] = "backend/CertificationAgencyController";
+$route['admin/certification-agency/delete'] = "backend/CertificationAgencyController/delete";
+$route['admin/certification-agency/update'] = "backend/CertificationAgencyController/update";
+$route['admin/certification-agency/view'] = "backend/CertificationAgencyController/view";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -13,9 +13,15 @@ class PostRequirementController extends MY_Controller {
         $data['hide_footer'] = true;
         $data['view'] = 'post-requirement/form_data';
         $data['farmer_product_list'] = $this->Product->getFarmerProduct();
+        $data['product_list'] = $this->Product->getActiveProducts();
         $data['state_list'] = $this->State->getStates();
         $userSession = $this->session->userdata('user_data');
         $data['userSession'] = $userSession;
+        if(!empty($userSession)){
+            $data['user_details'] = $this->User->getUserById($userSession['user_id']);
+        }else{
+            $data['user_details'] = '';
+        }
         if($this->input->post()){
             $post = $this->input->post();
             if($this->form_validation->run('post-requirement-form') == TRUE){
@@ -24,7 +30,7 @@ class PostRequirementController extends MY_Controller {
                 $details['from_date'] = date("Y-m-d", strtotime($details['from_date']));
                 $details['to_date'] = date("Y-m-d", strtotime($details['to_date']));
                 $details['user_id'] = $user_id;
-                $details['is_verified'] = 0;
+                $details['is_verified'] = 1;
                 $details['is_seen'] = 0;
                 $details['is_view'] = 0;
                 $details['is_deleted'] = 0;
@@ -64,9 +70,15 @@ class PostRequirementController extends MY_Controller {
         $data['banner'] = "farmer.jpg";
         $data['view'] = 'post-requirement/search_post';
         $data['farmer_product_list'] = $this->Product->getFarmerProduct();
+        $data['product_list'] = $this->Product->getProducts();
         $data['state_list'] = $this->State->getStates();
         $userSession = $this->session->userdata('user_data');
         $data['userSession'] = $userSession;
+        if(!empty($userSession)){
+            $data['user_details'] = $this->User->getUserById($userSession['user_id']);
+        }else{
+            $data['user_details'] = '';
+        }
         if($this->input->post()){
             $post = $this->input->post();
             if($this->form_validation->run('search-post-requirement-form') == TRUE){
@@ -84,10 +96,20 @@ class PostRequirementController extends MY_Controller {
     public function getCitiesByState(){
         $post = $this->input->post();
         $cities = $this->City->getCitiesBystateId($post['state_id']);
+        if(!empty($post['city_id_hidden'])){
+            $city_id_hidden = $post['city_id_hidden'];
+        }else{
+            $city_id_hidden = '';
+        }
         $html = array();
         if(!empty($cities)){
             foreach($cities as $value){
-                $data2 = ' <option value="' . $value['id'] . '" ' . set_select('city_id',$value['id']) . ' > ' . $value['name'] . '</option>';
+                if(!empty($city_id_hidden)){
+                    $selected = $city_id_hidden == $value['id']?'selected="selected"':'';
+                }else{
+                    $selected = '';
+                }
+                $data2 = ' <option value="' . $value['id'] . '" ' . set_select('city_id',$value['id']) .' '.$selected.' > ' . $value['name'] . '</option>';
                 $html[] = $data2; 
             }
         }

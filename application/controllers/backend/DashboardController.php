@@ -38,12 +38,22 @@ class DashboardController extends MY_Controller {
                 $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
                 $data['product_list'] = $this->Product->getProducts();
                 $data['user_type_list'] = $this->UserType->getUserTypes();
+                $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgencies();
             }else{
                 $data['bid_list'] = $this->Bid->getBidByUserId($userSession['user_id']);
-                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirementByUserId($userSession['user_id']);
+                $data['post_requirement_list'] = $this->PostRequirement->getAllPostRequirementByUserId($userSession['user_id']);
             }
+            $data['total_worth'] = $this->PostRequirement->getTotalWorth();
             $data['user_list'] = $this->User->getUsers();
-            $data['user_details'] = $userSession;
+            if($userSession['username'] == ADMINUSERNAME){
+                $data['user_details'] = $userSession;
+            }else{
+                if($userSession['user_type_id'] == 16){
+                    $data['user_details'] = $this->CertificationAgency->getCertificationAgencyById($userSession['user_id']);
+                }else{
+                    $data['user_details'] = $this->User->getUserById($userSession['user_id']);
+                }
+            }
             $this->backendLayout($data);
         }
 }
