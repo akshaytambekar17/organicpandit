@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2018 at 12:32 AM
+-- Generation Time: Dec 05, 2018 at 07:27 PM
 -- Server version: 5.7.23-0ubuntu0.16.04.1
 -- PHP Version: 7.2.10-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -6213,7 +6213,11 @@ CREATE TABLE `tbl_bid` (
 --
 
 INSERT INTO `tbl_bid` (`id`, `post_requirement_id`, `user_id`, `amount`, `comment`, `is_seen`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(6, 4, 8, 2000, 'New Biding', 0, 1, 0, '2018-12-06 15:50:31', '2018-12-06 15:50:31');
+(1, 1, 2, 1100, '', 0, 1, 0, '2018-11-21 22:11:59', '2018-11-21 22:11:59'),
+(2, 3, 2, 100, '', 0, 1, 0, '2018-11-21 22:17:00', '2018-11-21 22:17:00'),
+(3, 2, 2, 1000, '', 0, 1, 0, '2018-11-21 22:26:24', '2018-11-21 22:26:24'),
+(4, 2, 2, 1000, '', 0, 1, 0, '2018-11-21 22:26:32', '2018-11-21 22:26:32'),
+(5, 1, 2, 1000, 'Nothing comment', 0, 1, 0, '2018-11-28 16:19:04', '2018-11-28 16:19:04');
 
 -- --------------------------------------------------------
 
@@ -6737,252 +6741,6 @@ INSERT INTO `tbl_certification` (`id`, `agency_name`, `username`, `password`, `c
 (27, 'Uttar Pradesh State Organic Certification Agency', 'admin30', 'c6f057b86584942e415435ffb1fa93d4', 'VISHAL', 'UP', 'UP@GMAIL.COM', '', '', '15665648799', '', 'WWW.UP.COM', 'TH256'),
 (28, 'Uttarakhand State Organic Certification Agency (USOCA)', 'admin31', 'c6f057b86584942e415435ffb1fa93d4', 'KARAM', 'UTTRAKHAND', 'UTKD@GMAIL.COM', '', '', '8965324887', '', 'WWW.UKD.COM', 'UK456'),
 (29, 'Vedic Organic Certification Agency', 'admin33', 'c6f057b86584942e415435ffb1fa93d4', 'RAMRAJ', 'MAHARASHTRA', 'VEDIC@GMAIL.COM', '', '', '9865325465', '', 'WWW.VEDIC.COM', 'ASD78956');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_certification_agency`
---
-
-CREATE TABLE `tbl_certification_agency` (
-  `user_id` int(11) NOT NULL,
-  `user_type_id` int(3) NOT NULL,
-  `agency_id` int(5) NOT NULL,
-  `fullname` varchar(255) DEFAULT NULL,
-  `username` varchar(250) NOT NULL,
-  `password` varchar(250) NOT NULL,
-  `contact_person` varchar(250) NOT NULL,
-  `address` text NOT NULL,
-  `email1` varchar(250) NOT NULL,
-  `email2` varchar(250) DEFAULT NULL,
-  `landline` bigint(12) NOT NULL DEFAULT '0',
-  `mobile1` bigint(12) NOT NULL,
-  `mobile2` bigint(12) NOT NULL DEFAULT '0',
-  `website` varchar(50) NOT NULL,
-  `licence_no` varchar(50) NOT NULL,
-  `is_verified` int(3) NOT NULL COMMENT '2= Verified, 1= Not Verified',
-  `status` int(3) NOT NULL COMMENT '2=Enabled, 1= Disabled',
-  `is_view` int(3) NOT NULL COMMENT '1=View, 0=Not View',
-  `is_deleted` int(3) NOT NULL COMMENT '1=Deleted, 0=Not Deleted',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_certification_agency`
---
-
-INSERT INTO `tbl_certification_agency` (`user_id`, `user_type_id`, `agency_id`, `fullname`, `username`, `password`, `contact_person`, `address`, `email1`, `email2`, `landline`, `mobile1`, `mobile2`, `website`, `licence_no`, `is_verified`, `status`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(3, 16, 1, 'Bureau person', 'bureau', 'e10adc3949ba59abbe56e057f20f883e', 'Bureau person', 'Mumbai', 'bureau@gmail.com', '', 0, 1234567890, 1234567890, 'bureau.com', 'XZY123', 2, 2, 0, 0, '2018-12-07 14:48:28', '2018-12-11 15:49:53'),
-(2, 16, 7, 'SGS India Akshay', 'sgsindia', 'e10adc3949ba59abbe56e057f20f883e', 'SGS India Akshay', 'Mumbai', 'test@gmail.com', '', 0, 123456789, 0, 'test.com', '1234', 2, 2, 0, 0, '2018-12-07 00:28:30', '2018-12-07 10:31:17'),
-(4, 16, 4, 'India', 'india', 'e10adc3949ba59abbe56e057f20f883e', 'India', 'Delhi', 'india@gmail.com', '', 0, 1234567890, 0, 'india.com', 'INDIA12345', 2, 2, 0, 0, '2018-12-08 08:00:31', '2018-12-11 15:55:20');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_crops`
---
-
-CREATE TABLE `tbl_crops` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `crop_category_id` int(11) NOT NULL,
-  `status` int(3) NOT NULL COMMENT '1=Not Active, 2=Active',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_crops`
---
-
-INSERT INTO `tbl_crops` (`id`, `name`, `crop_category_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Amaranth Leaves', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(2, 'Ashgourd', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(3, 'Artichoke', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(4, 'Brinjal', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(5, 'Green Beans - Runner', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(6, 'Bell Pepper/Capsicum', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(7, 'Bitter Gourd', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(8, 'Bottle Gourd', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(9, 'Horse bean-Papdi Val', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(10, 'Cabbage', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(11, 'Carrot', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(12, 'Cauliflower', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(13, 'Coriander leaves', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(14, 'Cluster Beans-Gavar', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(15, 'Colacassia', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(16, 'Corn - Maize', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(17, 'Cow Peas-Chawli', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(18, 'Cucumber', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(19, 'Curry leaves', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(20, 'dill - shepu - suva leaves', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(21, 'Double Beans', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(22, 'Drumstick - moringa', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(23, 'Field Beans', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(24, 'Garlic', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(25, 'Green Chili', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(26, 'Green Peas - fresh peas', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(27, 'Knolkol', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(28, 'Lady Finger - Okra', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(29, 'Long Beans - Cowpea', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(30, 'Mushroom', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(31, 'Onion', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(32, 'Potato', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(33, 'Pumpkin', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(34, 'Radish', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(35, 'Tomato', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(36, 'Spinach', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(37, 'Chilli', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(38, 'Mint leaves', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(39, 'Lemon', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(40, 'Ginger', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(41, 'Garlic', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(42, 'FenugreekLeaf', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(43, 'Green cardamom', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(44, 'Long Pepper', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(45, 'Mint', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(46, 'Mustard Seed', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(47, 'Brown mustard Seed', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(48, 'Nigella Seed', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(49, 'Nutmeg', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(50, 'Mace', 1, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(51, 'Apple', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(52, 'Apricot', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(53, 'Avocado', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(54, 'Cherry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(55, 'Dragon Fruit', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(56, 'Lychee', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(57, 'Mango', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(58, 'Olive', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(59, 'Papaya', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(60, 'Mango', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(61, 'Peach', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(62, 'Pear', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(63, 'Plum', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(64, 'Clementine', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(65, 'Grapefruit', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(66, 'Kumquat', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(67, 'Lemon', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(68, 'Lime', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(69, 'Mandarin Orange', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(70, 'Minneola Tangelo', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(71, 'Orange', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(72, 'Pomelo', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(73, 'Tangerine', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(74, 'Ugli', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(75, 'Cantaloupe', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(76, 'Honeydew', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(77, 'Squash', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(78, 'Watermelon', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(79, 'Breadfruit', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(80, 'Jackfruit', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(81, 'Pineapple', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(82, 'Acai Berry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(83, 'Barberries', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(84, 'Bearberries', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(85, 'Blackberries', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(86, 'Blueberries', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(87, 'Boysenberries', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(88, 'Cranberry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(89, 'Elderberry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(90, 'Gooseberry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(91, 'Grapes', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(92, 'Juniper Berry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(93, 'Kiwi', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(94, 'Raspberry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(95, 'Strawberry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(96, 'Banana', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(97, 'Blackcurrant', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(98, 'Coconut', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(99, 'Goji Berry', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(100, 'Passion Fruit', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(101, 'Mango', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(102, 'Pomogranate', 2, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(103, 'Almonds', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(104, 'Brazil Nut', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(105, 'Cashew', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(106, 'Date', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(107, 'Chestnuts', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(108, 'Fig', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(109, 'Hazelnut', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(110, 'Macadamia Nut', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(111, 'Prune', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(112, 'Pistachio', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(113, 'Raisin', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(114, 'Walnut', 3, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(115, 'Fennel seed[2]', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(116, 'Asafoetida', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(117, 'Red Chilli', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(118, 'Black cardamom', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(119, 'White Pepper', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(120, 'Black Pepper', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(121, 'Peppercorns', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(122, 'Black Cumin', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(123, 'Charoli', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(124, ' Bay Leaf', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(125, 'CinnamonBuds', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(126, 'Cinnamon', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(127, 'Cloves', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(128, 'CorianderPowder', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(129, 'CorianderSeed', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(130, 'Cumin Seed', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(131, 'Poppy Seed', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(132, 'Saffron', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(133, 'Sesame Seed', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(134, 'Star Anise', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(135, 'Tamarind', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(136, 'Carom/thymol seed', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(137, 'Turmeric', 4, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(138, 'Red Rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(139, 'Brown Rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(140, 'Sonamasori Rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(141, 'Indrayani Rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(142, 'Ambemohar Rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(143, 'White basmati rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(144, 'Brown basmati rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(145, 'Black Rice', 5, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(146, 'Chickpeas', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(147, 'Kidney Beans', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(148, 'Soyabeans', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(149, 'Green Moong', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(150, 'Black Beans(Urad Beans)', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(151, 'Amaranth', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(152, 'Muesli', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(153, 'Jowar', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(154, 'Brown Rice', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(155, 'Barnyard Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(156, 'Tapioca', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(157, 'Semolina', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(158, 'Finger Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(159, 'Wheat', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(160, 'Rice', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(161, 'Red Lentil', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(162, 'Red Kidney Beans, Dry Red Beans', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(163, 'Pigeon Pea, Red Gram, Yellow Lentils', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(164, 'Peas', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(165, 'Pearl Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(166, 'Peanuts, Groundnuts', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(167, 'Long Grain Rice', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(168, 'Jowar Millet, Sorghum', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(169, 'Horse Gram', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(170, 'Green Gram', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(171, 'Turkish Gram, Mung Beans', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(172, 'Sesame Seeds', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(173, 'Flax Seed', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(174, 'Finger Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(175, 'Chickpeas (white)', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(176, 'Chickpeas (green)', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(177, 'Chickpeas (brown)', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(178, 'Cow Peas', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(179, ' Turkish gram', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(180, 'Pigen peas', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(181, 'Foxtail Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(182, 'Little Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(183, 'Kodo Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(184, 'Barnyard Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(185, 'Proso Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17'),
-(186, 'Browntop Millet', 6, 2, '2018-12-12 16:52:17', '2018-12-12 16:52:17');
 
 -- --------------------------------------------------------
 
@@ -7626,73 +7384,6 @@ INSERT INTO `tbl_notification` (`id`, `user_id`, `user_name`, `full_name`, `user
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_notifications`
---
-
-CREATE TABLE `tbl_notifications` (
-  `id` bigint(12) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `certification_agency_id` int(5) NOT NULL DEFAULT '0',
-  `user_type_id` int(5) NOT NULL,
-  `notification_type` int(5) NOT NULL,
-  `notify_type` int(5) NOT NULL,
-  `message` varchar(255) NOT NULL,
-  `is_view` int(3) NOT NULL DEFAULT '0' COMMENT '1=View, 0=Not View',
-  `is_seen` int(3) NOT NULL DEFAULT '0' COMMENT '1=Seen, 0= Not Seen',
-  `is_deleted` int(3) NOT NULL DEFAULT '0' COMMENT '1=Deleted, 0=Not Deleted',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_notifications`
---
-
-INSERT INTO `tbl_notifications` (`id`, `user_id`, `certification_agency_id`, `user_type_id`, `notification_type`, `notify_type`, `message`, `is_view`, `is_seen`, `is_deleted`, `created_at`) VALUES
-(1, 6, 0, 3, 1, 4, 'New Trader has been register', 0, 0, 0, '2018-12-06 09:27:42'),
-(2, 7, 0, 4, 1, 4, 'New Processor Onkar has been register', 0, 0, 0, '2018-12-06 10:20:05'),
-(3, 8, 0, 5, 1, 4, 'New Buyer Neha has been register', 0, 0, 0, '2018-12-06 12:45:13'),
-(4, 9, 0, 6, 1, 4, 'New Organic Consultant Swapnil has been register', 0, 0, 0, '2018-12-06 13:57:41'),
-(5, 10, 0, 7, 1, 4, 'New Organic Input Company XYZ has been register', 0, 0, 0, '2018-12-06 14:27:13'),
-(6, 7, 0, 4, 2, 4, 'New Post has been added by Onkar', 0, 0, 0, '2018-12-06 15:29:11'),
-(7, 8, 0, 5, 3, 4, 'New Bid has been placed by Neha', 0, 0, 0, '2018-12-06 15:50:31'),
-(8, 6, 0, 3, 4, 4, 'Admin Approve user Ashish', 0, 0, 0, '2018-12-06 19:22:33'),
-(9, 1, 0, 16, 1, 4, 'New Certification Agency Bureau Veritas (India) Pvt. Limited has been register', 0, 0, 0, '2018-12-07 00:18:55'),
-(10, 2, 0, 16, 1, 4, 'New Certification Agency SGS India Pvt. Ltd. has been register', 0, 0, 0, '2018-12-07 00:28:30'),
-(11, 0, 2, 16, 4, 4, 'Admin Approve Certification Agency SGS India Pvt. Ltd.', 0, 0, 0, '2018-12-07 10:31:17'),
-(12, 11, 0, 1, 1, 4, 'New Farmer test has been register', 0, 0, 0, '2018-12-07 12:09:59'),
-(13, 11, 0, 1, 4, 4, 'Admin Approve user test', 0, 0, 0, '2018-12-07 12:10:45'),
-(14, 11, 0, 1, 4, 4, 'Admin Reject user test', 0, 0, 0, '2018-12-07 12:16:06'),
-(15, 11, 0, 1, 4, 4, 'Admin Approve user test', 0, 0, 0, '2018-12-07 12:20:40'),
-(16, 11, 0, 1, 4, 4, 'Admin Reject user test', 0, 0, 0, '2018-12-07 12:21:15'),
-(17, 11, 2, 16, 4, 4, 'Certification Agency Approve user', 0, 0, 0, '2018-12-07 12:22:06'),
-(18, 11, 2, 16, 4, 4, 'Certification Agency Reject user test', 0, 0, 0, '2018-12-07 12:25:45'),
-(19, 3, 0, 16, 1, 4, 'New Certification Agency Bureau Veritas (India) Pvt. Limited has been register', 0, 0, 0, '2018-12-07 14:48:29'),
-(20, 4, 0, 16, 1, 4, 'New Certification Agency Indian Organic Certification Agency (INDOCERT) has been register', 0, 0, 0, '2018-12-08 08:00:31'),
-(21, 12, 0, 1, 1, 4, 'New Farmer Sachin has been register', 0, 0, 0, '2018-12-08 08:15:30'),
-(22, 12, 4, 16, 4, 4, 'Certification Agency Approve user Sachin', 0, 0, 0, '2018-12-08 08:21:55'),
-(23, 0, 4, 16, 4, 4, 'Admin Approve Certification Agency Indian Organic Certification Agency (INDOCERT)', 0, 0, 0, '2018-12-08 08:31:25'),
-(24, 12, 4, 16, 4, 4, 'Certification Agency Reject user Sachin', 0, 0, 0, '2018-12-08 08:32:01'),
-(25, 12, 4, 16, 4, 4, 'Certification Agency Approve user Sachin', 0, 0, 0, '2018-12-08 10:14:01'),
-(26, 12, 0, 1, 2, 4, 'New Post has been added by Sachin', 0, 0, 0, '2018-12-08 10:15:26'),
-(27, 12, 0, 1, 5, 4, 'Admin Reject post of Sachin', 0, 0, 0, '2018-12-08 10:31:19'),
-(28, 12, 0, 1, 5, 4, 'Admin Approve post of Sachin', 0, 0, 0, '2018-12-08 10:31:33'),
-(29, 12, 0, 1, 4, 4, 'Admin Reject user Sachin', 0, 0, 0, '2018-12-08 12:33:23'),
-(30, 12, 0, 1, 4, 4, 'Admin Reject user Sachin', 0, 0, 0, '2018-12-08 12:39:54'),
-(31, 12, 0, 1, 4, 4, 'Admin Approve user Sachin Surve', 0, 0, 0, '2018-12-10 17:28:19'),
-(32, 5, 0, 2, 4, 4, 'Admin Approve user FPO Akshay', 0, 0, 0, '2018-12-10 18:40:07'),
-(33, 13, 0, 8, 1, 4, 'New Packaging Company Test packaging has been register', 0, 0, 0, '2018-12-11 13:14:57'),
-(34, 14, 0, 9, 1, 4, 'New Logistic Company Logistic Company has been register', 0, 0, 0, '2018-12-11 13:25:52'),
-(35, 0, 3, 16, 4, 4, 'Admin Approve Certification Agency Bureau Veritas (India) Pvt. Limited', 0, 0, 0, '2018-12-11 15:49:53'),
-(36, 7, 0, 4, 4, 4, 'Admin Approve user Onkar', 0, 0, 0, '2018-12-11 16:23:57'),
-(37, 15, 0, 1, 1, 4, 'New Farmer test product has been register', 0, 0, 0, '2018-12-11 18:35:28'),
-(38, 17, 0, 1, 1, 4, 'New Farmer Akshay Tambekar has been register', 0, 0, 0, '2018-12-11 18:42:39'),
-(39, 18, 0, 5, 1, 4, 'New Buyer Akshay buyer has been register', 0, 0, 0, '2018-12-11 18:47:40'),
-(40, 19, 0, 1, 1, 4, 'New Farmer Akshay has been register', 0, 0, 0, '2018-12-12 23:43:15'),
-(41, 20, 0, 2, 1, 4, 'New FPO FPO Akshay has been register', 0, 0, 0, '2018-12-13 00:09:34');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_notify`
 --
 
@@ -7955,7 +7646,7 @@ CREATE TABLE `tbl_post_requirement` (
   `is_logistic` int(2) NOT NULL COMMENT '1=No, 2=Yes',
   `certification_id` varchar(150) NOT NULL,
   `other_details` varchar(255) NOT NULL,
-  `is_verified` int(2) NOT NULL COMMENT '2= Verified, 1= Not Verified',
+  `is_verified` int(2) NOT NULL COMMENT '1= Verified, 0= Not Verified',
   `is_seen` int(2) NOT NULL,
   `is_view` int(11) NOT NULL,
   `is_deleted` int(11) NOT NULL COMMENT '1= Not Deleted, 0= Deleted',
@@ -7968,8 +7659,9 @@ CREATE TABLE `tbl_post_requirement` (
 --
 
 INSERT INTO `tbl_post_requirement` (`id`, `product_id`, `user_id`, `post_code`, `company_name`, `quality_specification`, `from_date`, `to_date`, `price`, `quantity`, `total_price`, `delivery_address`, `state_id`, `city_id`, `pincode`, `payment_terms`, `is_logistic`, `certification_id`, `other_details`, `is_verified`, `is_seen`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(4, 6, 7, 'POST674', 'Improx', 'Fresh with red color', '2018-12-14', '2018-12-27', 230, 20, 4600, 'Pune', 22, 2763, 411008, 'Cash', 1, '6', 'Other Details', 2, 0, 1, 0, '2018-12-06 15:29:11', '2018-12-06 15:36:04'),
-(5, 132, 12, 'POST132125', 'Sachin Organization', 'Good Quality', '2018-12-15', '2018-12-29', 120, 100, 12000, 'Kolhapur', 22, 2763, 416007, 'Cash', 1, '5', 'Other Details', 2, 0, 1, 0, '2018-12-08 10:15:26', '2018-12-08 10:31:33');
+(1, 4, 2, 'POST421', 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 1, 0, 1, 0, '2018-11-20 21:47:29', '2018-11-23 09:15:53'),
+(2, 4, 2, 'POST422', 'XYZ Company', 'Fresh with red color', '2018-11-20', '2018-11-21', 1200, 10, 1210, 'Pune', 22, 2763, 411008, 'Cash', 1, 'pgs', 'Other Details', 0, 0, 1, 0, '2018-11-20 21:58:36', '2018-11-20 21:58:36'),
+(3, 6, 2, 'POST623', 'Improx', 'Fresh rice', '2018-11-22', '2018-11-23', 100, 23, 123, 'Pune', 22, 2652, 416007, 'Cash', 1, 'nop', 'Nothing', 0, 0, 1, 0, '2018-11-21 20:09:57', '2018-11-21 20:09:57');
 
 -- --------------------------------------------------------
 
@@ -8032,10 +7724,10 @@ CREATE TABLE `tbl_product` (
   `description` text NOT NULL,
   `from_date` datetime NOT NULL,
   `to_date` datetime NOT NULL,
-  `quality` varchar(255) DEFAULT NULL,
+  `quality` varchar(255) NOT NULL,
   `price` float(10,2) NOT NULL,
   `quantity` int(7) NOT NULL,
-  `images` varchar(255) DEFAULT NULL,
+  `images` varchar(255) NOT NULL,
   `status` int(3) NOT NULL COMMENT '1=NotActive, 2=Active',
   `is_deleted` int(3) NOT NULL COMMENT '0=Not Deleted, 1= Deleted',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -8047,141 +7739,7 @@ CREATE TABLE `tbl_product` (
 --
 
 INSERT INTO `tbl_product` (`id`, `user_type_id`, `name`, `description`, `from_date`, `to_date`, `quality`, `price`, `quantity`, `images`, `status`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Channa (whole)/bengal gram (whole)', 'Channa (whole)/bengal gram (whole)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(2, 1, 'Channa dal/split bengal gram', 'Channa dal/split bengal gram', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(3, 1, 'Cowpea', 'Cowpea', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(4, 1, 'Green peas', 'Green peas', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(5, 1, 'Kabuli chana/chickpea', 'Kabuli chana/chickpea', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(6, 1, 'Masoor (whole)/red lentil (whole)', 'Masoor (whole)/red lentil (whole)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(7, 1, 'Masoor dal/split red lentil ', 'Masoor dal/split red lentil ', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(8, 1, 'Matki/moth/turkish gram', 'Matki/moth/turkish gram', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(9, 1, 'Mix dal', 'Mix dal', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(10, 1, 'Moong Whole /green gram whole', 'Moong Whole /green gram whole', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(11, 1, 'Moong dal (chilka)/split green gram (with skin)', 'Moong dal (chilka)/split green gram (with skin)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(12, 1, 'Moong dal/split green gram (skinless)', 'Moong dal/split green gram (skinless)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(13, 1, 'Rajma chitra/red kidney beans (chitra)', 'Rajma chitra/red kidney beans (chitra)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(14, 1, 'Rajma sharmili/red kidney beans (sharmili)JAMMU', 'Rajma sharmili/red kidney beans (sharmili)JAMMU', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(15, 1, 'Red rajma/red kidney beans', 'Red rajma/red kidney beans', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(16, 1, 'Toor dal/arhar dal/split pigeon pea (unpolished)', 'Toor dal/arhar dal/split pigeon pea (unpolished)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(17, 1, 'Urad dal (chilka)/split black gram (with skin)', 'Urad dal (chilka)/split black gram (with skin)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(18, 1, 'Urad dal (white)/split black gram (skinless)', 'Urad dal (white)/split black gram (skinless)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(19, 1, 'Urad whole (white)/black gram whole (white)', 'Urad whole (white)/black gram whole (white)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(20, 1, 'Urad/black gram (whole)', 'Urad/black gram (whole)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(21, 1, 'White peas', 'White peas', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(22, 1, 'Groundnut', 'Groundnut', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(23, 1, 'Soyabean', 'Soyabean', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(24, 1, 'Indrayani rice (white)', 'Indrayani rice (white)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(25, 1, 'Ambe mohar rice (white)', 'Ambe mohar rice (white)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(26, 1, 'Premium Basmati rice (white)', 'Premium Basmati rice (white)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(27, 1, 'Premium Basmati Rice(Brown)', 'Premium Basmati Rice(Brown)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(28, 1, 'Sona masoori rice (brown)', 'Sona masoori rice (brown)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(29, 1, 'Sona masoori rice (white)', 'Sona masoori rice (white)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(30, 1, 'Idli rice', 'Idli rice', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(31, 1, 'Red Rice', 'Red Rice', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(32, 1, 'Brown Rice', 'Brown Rice', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(33, 1, 'Black rice', 'Black rice', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(34, 1, 'Wheat poha/wheat flax', 'Wheat poha/wheat flax', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(35, 1, 'White poha/beaten rice', 'White poha/beaten rice', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(36, 1, 'Corn Flax', 'Corn Flax', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(37, 1, 'Red poha', 'Red poha', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(38, 1, 'Wheat (sharbati)', 'Wheat (sharbati)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(39, 1, 'Wheat Lokwan', 'Wheat Lokwan', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(40, 1, 'Wheat (khapli)', 'Wheat (khapli)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(41, 1, 'Wheat daliya', 'Wheat daliya', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(42, 1, 'Wheat rawa', 'Wheat rawa', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(43, 1, 'Wheat flour ', 'Wheat flour ', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(44, 1, 'Besan/gram flour', 'Besan/gram flour', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(45, 1, 'Rice flour', 'Rice flour', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(46, 1, 'Multi grain atta (7 grain)', 'Multi grain atta (7 grain)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(47, 1, 'Jowar atta/soreghum bicolony flour', 'Jowar atta/soreghum bicolony flour', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(48, 1, 'Bajra Flour', 'Bajra Flour', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(49, 1, 'Ragi atta/finger millet flour', 'Ragi atta/finger millet flour', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(50, 1, 'Bajra/pearl millet', 'Bajra/pearl millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(51, 1, 'Jowar/soreghum bicolony', 'Jowar/soreghum bicolony', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(52, 1, 'Ragi whole/finger millet', 'Ragi whole/finger millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(53, 1, 'Kodo millet', 'Kodo millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(54, 1, 'Little millet', 'Little millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(55, 1, 'Proso millet', 'Proso millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(56, 1, 'Foxtail  Millet', 'Foxtail  Millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(57, 1, 'Barnyard millet', 'Barnyard millet', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(58, 1, 'Jaggery powder', 'Jaggery powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(59, 1, 'Jaggery block', 'Jaggery block', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(60, 1, 'Sugar (white & sulphurless)', 'Sugar (white & sulphurless)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(61, 1, 'Sugar Brown', 'Sugar Brown', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(62, 1, 'Sugar raw', 'Sugar raw', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(63, 1, 'Himalayan pink salt(Half inch Crystal)', 'Himalayan pink salt(Half inch Crystal)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(64, 1, 'Himalayan pink salt(Powder)', 'Himalayan pink salt(Powder)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(65, 1, 'Rock salt (white powder) *', 'Rock salt (white powder) *', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(66, 1, 'Black Salt', 'Black Salt', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(67, 1, 'Chilli powder', 'Chilli powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(68, 1, 'Chilli whole', 'Chilli whole', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(69, 1, 'Red chilli flakes', 'Red chilli flakes', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(70, 1, 'Turmeric Whole', 'Turmeric Whole', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(71, 1, 'Turmeric powder', 'Turmeric powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(72, 1, ' Sesame Seed White', ' Sesame Seed White', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(73, 1, ' Sesame Seed Black', ' Sesame Seed Black', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(74, 1, 'coriander seeds/Dhania', 'coriander seeds/Dhania', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(75, 1, 'Coriander powder', 'Coriander powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(76, 1, 'Cardamom (green)', 'Cardamom (green)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(77, 1, 'Cardamom (black)', 'Cardamom (black)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(78, 1, 'Black pepper whole', 'Black pepper whole', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(79, 1, 'Black pepper powder', 'Black pepper powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(80, 1, 'White pepper', 'White pepper', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(81, 1, 'Cloves whole', 'Cloves whole', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(82, 1, 'Cinnamon sticks bark', 'Cinnamon sticks bark', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(83, 1, 'Cinnamon sticks quills', 'Cinnamon sticks quills', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(84, 1, 'Cinnamon powder', 'Cinnamon powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(85, 1, 'Jeera/cumin', 'Jeera/cumin', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(86, 1, 'Jeera powder/cumin powder', 'Jeera powder/cumin powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(87, 1, 'Methi/fenugreek', 'Methi/fenugreek', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(88, 1, 'Methi powder/fenugreek powder', 'Methi powder/fenugreek powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(89, 1, 'Rai (small)/mustard (small)', 'Rai (small)/mustard (small)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(90, 1, 'Rai (big)/mustard (big)', 'Rai (big)/mustard (big)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(91, 1, 'Rai (yellow)/mustard (yellow)', 'Rai (yellow)/mustard (yellow)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(92, 1, 'Mace', 'Mace', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(93, 1, 'Javitri powder/mace whole powder', 'Javitri powder/mace whole powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(94, 1, 'Kasoori methi/dried fenugreek leaves', 'Kasoori methi/dried fenugreek leaves', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(95, 1, 'Jaiphal/nutmeg', 'Jaiphal/nutmeg', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(96, 1, 'Sauf/fennel seed', 'Sauf/fennel seed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(97, 1, 'Sauf powder/fennel seed powder', 'Sauf powder/fennel seed powder', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(98, 1, 'Tej patta/bay leaf', 'Tej patta/bay leaf', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(99, 1, 'jinger Slice', 'jinger Slice', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(100, 1, 'Ajwain/carom seeds', 'Ajwain/carom seeds', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(101, 1, 'Cashew ', 'Cashew ', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(102, 1, 'Raisins', 'Raisins', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(103, 1, ' Almond', ' Almond', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(104, 1, 'Walnut', 'Walnut', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(105, 1, 'Dates', 'Dates', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(106, 1, 'Pista', 'Pista', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(107, 1, 'Mustured Oil(Yellow)', 'Mustured Oil(Yellow)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(108, 1, 'Mustured Oil(Black)', 'Mustured Oil(Black)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(109, 1, 'Sunflower oil', 'Sunflower oil', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(110, 1, 'Ground nut oil', 'Ground nut oil', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(111, 1, 'Seasme oil(Black)', 'Seasme oil(Black)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(112, 1, 'Seasme oil(White)', 'Seasme oil(White)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(113, 1, 'Cocount oil', 'Cocount oil', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(114, 1, 'Caster oil', 'Caster oil', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(115, 1, 'Vargin coconut oil', 'Vargin coconut oil', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(116, 1, 'Chia Seed', 'Chia Seed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(117, 1, 'Watermelon seed', 'Watermelon seed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(118, 1, 'Sunflower seed', 'Sunflower seed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(119, 1, 'Pumpkin seed', 'Pumpkin seed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(120, 1, 'Muskmelon seed', 'Muskmelon seed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(121, 1, 'flax seeds/Javas', 'flax seeds/Javas', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(122, 1, 'Amaranth Seed(Rajgira)', 'Amaranth Seed(Rajgira)', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(123, 1, 'Quinoa (white) Processed', 'Quinoa (white) Processed', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(124, 1, 'Garam Masala', 'Garam Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(125, 1, 'Kichan king masal', 'Kichan king masal', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(126, 1, 'Pasta Masala', 'Pasta Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(127, 1, 'Chola masala', 'Chola masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(128, 1, 'Pav Bhaji Masala', 'Pav Bhaji Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(129, 1, 'Sambhar Masala', 'Sambhar Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(130, 1, 'Chicken Masala', 'Chicken Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(131, 1, 'rajama Masala', 'rajama Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(132, 1, 'Jaljira Masala', 'Jaljira Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(133, 1, 'chana Masala', 'chana Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(134, 1, 'Sabji Masala', 'Sabji Masala', '2018-11-30 00:00:01', '2018-11-30 00:00:01', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19'),
-(135, 1, 'Tomaotes', 'Tomaotes', '2018-12-11 17:55:57', '2018-12-11 17:55:57', NULL, 10.00, 100, NULL, 2, 0, '2018-12-11 17:55:57', '2018-12-11 17:55:57');
+(2, 1, 'Toor Dal', 'Toor Dal', '2018-11-30 00:00:00', '2018-11-30 00:00:00', 'good fresh quality toor dal', 10.00, 10, 'admin.png', 2, 0, '2018-11-29 18:33:52', '2018-11-30 13:39:19');
 
 -- --------------------------------------------------------
 
@@ -9099,14 +8657,14 @@ CREATE TABLE `tbl_users` (
   `city_id` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `story` varchar(255) NOT NULL,
-  `agency_id` int(11) NOT NULL DEFAULT '0',
+  `agency_id` int(11) NOT NULL,
   `certification_number` varchar(100) DEFAULT NULL,
   `certification_id` int(11) DEFAULT '0',
-  `total_farmer` int(10) DEFAULT '0',
+  `total_famer` int(10) NOT NULL DEFAULT '0',
   `website` varchar(100) DEFAULT NULL,
-  `type_of_buyer` varchar(100) DEFAULT NULL,
+  `type_of_buyer` int(5) NOT NULL DEFAULT '0',
   `gst_number` varchar(100) DEFAULT NULL,
-  `aadhar_number` varchar(100) DEFAULT NULL,
+  `aadhar_number` varchar(100) NOT NULL,
   `pancard_number` varchar(100) DEFAULT NULL,
   `profile_image` varchar(255) NOT NULL,
   `company_image` varchar(255) DEFAULT NULL,
@@ -9114,11 +8672,11 @@ CREATE TABLE `tbl_users` (
   `video` varchar(255) DEFAULT NULL,
   `product_catalogue` varchar(255) DEFAULT NULL,
   `resume` varchar(255) DEFAULT NULL,
-  `is_visit_farm` int(3) NOT NULL DEFAULT '0' COMMENT '2= Yes, 1= No',
-  `is_test_report` int(3) NOT NULL DEFAULT '0' COMMENT '2= Yes, 1= No',
+  `is_visit_farm` int(3) NOT NULL COMMENT '1= Yes, 0= No',
+  `is_test_report` int(3) NOT NULL COMMENT '1= Yes, 0= No',
   `is_verified` int(3) NOT NULL COMMENT '1=Not Verified, 2=Verified',
   `status` int(3) NOT NULL COMMENT '1=Disabled, 2=Enabled',
-  `is_view` int(3) NOT NULL DEFAULT '0' COMMENT '1=View, 0= Not View',
+  `is_view` int(3) NOT NULL COMMENT '1=View, 0= Not View',
   `is_deleted` int(3) NOT NULL COMMENT '1=Deleted, 0=Not Deleted',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -9128,22 +8686,8 @@ CREATE TABLE `tbl_users` (
 -- Dumping data for table `tbl_users`
 --
 
-INSERT INTO `tbl_users` (`user_id`, `user_type_id`, `fullname`, `ceo_name`, `organization_name`, `username`, `password`, `email_id`, `mobile_no`, `landline_no`, `state_id`, `city_id`, `address`, `story`, `agency_id`, `certification_number`, `certification_id`, `total_farmer`, `website`, `type_of_buyer`, `gst_number`, `aadhar_number`, `pancard_number`, `profile_image`, `company_image`, `certification_image`, `video`, `product_catalogue`, `resume`, `is_visit_farm`, `is_test_report`, `is_verified`, `status`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(5, 2, 'FPO Akshay', 'Akshay', NULL, 'akshay17', '123456', 'akshay@gmail.com', 1234567898, 0, 22, 2674, 'Pune', 'FPO Story', 4, '12345324324', 4, 4, NULL, '0', 'asdf23', '123456789123', NULL, 'cool-stylish_boy_dp1.jpg', '', '11193411_476438849198798_5887552846638446556_n.jpg', '20150927_150438.mp4', '', '', 2, 2, 2, 2, 0, 0, '2018-12-06 08:08:44', '2018-12-10 18:47:21'),
-(6, 3, 'Ashish', 'Ashish', NULL, 'ashish01', '123456', 'ashish@gmail.com', 1234567890, 0, 22, 2763, 'Pune', 'Trader Story', 2, '12345', 4, 0, NULL, '0', 'asdf23', '012345678912', NULL, '12106925_911323445589070_6910639015940630356_n22.jpg', '', '10888583_433016910186038_6590240147765757037_n.jpg', '', '', '', 2, 1, 2, 2, 0, 0, '2018-12-06 09:27:42', '2018-12-06 19:22:33'),
-(7, 4, 'Onkar', 'Onkar', NULL, 'onkar04', 'e10adc3949ba59abbe56e057f20f883e', 'onkar@gmail.com', 1234567898, 123465, 22, 2763, 'Pune', 'Onkar Story', 2, '12345324324', 6, 0, NULL, '0', 'asdf23', '012345678912', NULL, 'index.png', '', '20150927_141226.jpg', '20150927_1253331.mp4', '', '', 2, 2, 2, 2, 0, 0, '2018-12-06 10:20:05', '2018-12-11 16:23:57'),
-(8, 5, 'Neha', 'Neha', NULL, 'neha25', 'e10adc3949ba59abbe56e057f20f883e', 'neha@gmail.com', 1234567890, 201234567, 22, 2763, 'Pune', 'Neha Story', 4, '12345324324', 2, 0, 'neha.com', 'Exporter', 'GST12345', '012345678912', NULL, 'IMG-20151125-WA0011.jpg', '20150927_145118.jpg', '20150927_142632.jpg', '20150927_1253332.mp4', '', '', 0, 2, 1, 2, 0, 0, '2018-12-06 12:45:13', '2018-12-10 19:59:53'),
-(9, 6, 'Swapnil Pawar', NULL, NULL, 'swapnil', 'e10adc3949ba59abbe56e057f20f883e', 'swap@gmail.com', 1234567897, 201234567, 22, 2763, 'Pune', 'Consultant Story', 0, NULL, 0, 0, 'swapnil.com', NULL, 'GST12345', '012345678912', NULL, 'PicsArt_03-10-01.51_.13_3.jpg', '11108954_868351326541931_445547800208572608_n3.jpg', '', '20150917_2104201.mp4', '', 'Quotation.docx', 0, 0, 1, 2, 0, 0, '2018-12-06 13:57:41', '2018-12-11 12:36:24'),
-(10, 7, 'XYZ', 'XYZ', 'XYZ', 'xyz', 'e10adc3949ba59abbe56e057f20f883e', 'xzy@gmail.com', 1234567894, 0, 22, 2763, 'Pune', 'Pune', 0, NULL, 0, 0, 'xyz.com', NULL, 'GST12345', '012345678912', NULL, '9449_683014471796257_1150488502826373701_n.jpg', '1511301_1450706888483769_710782915_n.jpg', '', 'MOV_0014.mp4', 'Entertainment.xlsx', '', 0, 0, 1, 2, 0, 0, '2018-12-06 14:27:13', '2018-12-11 13:04:22'),
-(11, 1, 'test', NULL, NULL, 'test', 'e10adc3949ba59abbe56e057f20f883e', 'test@123', 1234567899, 0, 22, 2763, 'pune', 'test story', 2, '', 3, 0, NULL, NULL, NULL, '012345678912', '1234df', 'admin1.png', '', '', '', '', '', 2, 2, 1, 2, 0, 0, '2018-12-07 12:09:59', '2018-12-10 18:09:54'),
-(12, 1, 'Sachin Surve', NULL, NULL, 'sachin', 'e10adc3949ba59abbe56e057f20f883e', 'sachin@gmail.com', 9876540321, 0, 22, 2652, 'Kolhapur City', 'Sachin Story', 4, '12345324324', 5, 0, NULL, NULL, NULL, '012345678912', '1234dfsd', '12002796_1076802112330576_3489469531637425992_n.jpg', '', '11096596_1595331904081824_1255630931728867717_n.jpg', '20150917_210420.mp4', '', '', 2, 2, 2, 2, 0, 0, '2018-12-08 08:15:30', '2018-12-10 18:46:22'),
-(13, 8, 'Test packaging', 'Test packaging', 'packaging company', 'packaging', 'e10adc3949ba59abbe56e057f20f883e', 'packaging@gmail.com', 8901234567, 0, 22, 2652, 'shahupuri', 'packaging story', 0, NULL, 0, 0, 'packaging.com', NULL, 'GST09876', '123456789122', NULL, '9449_683014471796257_1150488502826373701_n1.jpg', '1510788_849399555102347_6662177401208533864_n.jpg', '', 'MOV_0017.mp4', 'completing_the_guest_house1.xlsx', '', 0, 0, 1, 2, 0, 0, '2018-12-11 13:14:57', '2018-12-11 13:28:47'),
-(14, 9, 'Logistic Company', 'Logistic Company', 'Logistic Organization', 'logistic', 'e10adc3949ba59abbe56e057f20f883e', 'logistic@gmail.com', 8901234567, 0, 22, 2763, 'Chinchwad', 'Logistic story', 0, NULL, 0, 0, 'logistic.com', NULL, 'GST09876', '123456789122', NULL, '1904082_617468101654866_686207632_a.jpg', '1011035_674621469242704_1778786240_n.jpg', '', '00000.MTS', 'Tamil_nadu_league_squad_updated.xlsx', '', 0, 0, 1, 2, 0, 0, '2018-12-11 13:25:51', '2018-12-11 15:08:12'),
-(15, 1, 'test product', NULL, NULL, 'testproduct', 'e10adc3949ba59abbe56e057f20f883e', 'testproduct@gmail.com', 7789956402, 201234567, 22, 2763, 'Pimpri,Pune', 'Story', 3, '12345324324', 2, 0, NULL, NULL, NULL, '123456789122', '1234df', '9449_683014471796257_1150488502826373701_n3.jpg', '', '1468780_248629101966867_1270535784_n1.jpg', '', '', '', 2, 2, 1, 2, 0, 0, '2018-12-11 18:35:28', '2018-12-11 18:35:28'),
-(17, 1, 'Akshay Tambekar', NULL, NULL, 'sammy01', 'e10adc3949ba59abbe56e057f20f883e', 'ash@gmail.com', 7789956402, 201234567, 22, 2763, 'Pimpri,Pune', 'Story', 3, '', 4, 0, NULL, NULL, NULL, '312345678912', '1234df', '935130_590711227664632_279216805_n2.jpg', '', '', '', '', '', 2, 2, 1, 2, 0, 0, '2018-12-11 18:42:39', '2018-12-11 19:12:41'),
-(18, 5, 'Akshay buyer', 'Akshay Buyer', NULL, 'akshaybuyer', 'e10adc3949ba59abbe56e057f20f883e', 'akshay@gk.com', 7789956402, 201234567, 22, 2652, 'Kolhapur', 'Story', 2, '12345324324', 4, 0, 'india.com', 'Consumer', 'GST09876', '312345678912', NULL, '1012264_586517314768619_2080664441_n.jpg', '1392718_538643636223916_1300664408_n.jpg', '1175239_638991186169969_2461109768918267771_n.jpg', '', '', '', 0, 2, 1, 2, 0, 0, '2018-12-11 18:47:40', '2018-12-11 18:47:40'),
-(19, 1, 'Akshay', NULL, NULL, 'akshay', 'e10adc3949ba59abbe56e057f20f883e', 'akshay@gmail.com', 7789956402, 201234567, 22, 2652, 'Kolhapur', 'Story akshay', 2, '', 2, 0, NULL, NULL, NULL, '123456789122', '1234df', '141.JPG', '', '', '', '', '', 2, 1, 1, 2, 0, 0, '2018-12-12 23:43:14', '2018-12-12 23:43:14'),
-(20, 2, 'FPO Akshay', 'CEO Akshay', NULL, 'akshayfpo', 'e10adc3949ba59abbe56e057f20f883e', 'aki@gm.com', 1234567891, 201234567, 22, 2763, 'Pimpri,Pune', 'FPO Story', 3, '', 3, 3, NULL, NULL, '', NULL, '1234df', '20010502_0911541.jpg', '', '', '', '', '', 2, 1, 1, 2, 0, 0, '2018-12-13 00:09:34', '2018-12-13 00:09:34');
+INSERT INTO `tbl_users` (`user_id`, `user_type_id`, `fullname`, `ceo_name`, `organization_name`, `username`, `password`, `email_id`, `mobile_no`, `landline_no`, `state_id`, `city_id`, `address`, `story`, `agency_id`, `certification_number`, `certification_id`, `total_famer`, `website`, `type_of_buyer`, `gst_number`, `aadhar_number`, `pancard_number`, `profile_image`, `company_image`, `certification_image`, `video`, `product_catalogue`, `resume`, `is_visit_farm`, `is_test_report`, `is_verified`, `status`, `is_view`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Akshay Tambekar', NULL, NULL, 'akshay01', '123456', 'akshay@g.co', 123456789, 0, 22, 2763, 'Kolhapur', 'Story', 5, '12345', 4, 0, NULL, 0, '', '123123asd', '1234df', 'debate_web_team17.jpg', '', '', '', '', '', 1, 1, 1, 2, 0, 0, '2018-12-05 19:19:51', '2018-12-05 19:19:51');
 
 -- --------------------------------------------------------
 
@@ -9165,48 +8709,7 @@ CREATE TABLE `tbl_users_bank_details` (
 --
 
 INSERT INTO `tbl_users_bank_details` (`id`, `user_id`, `account_holder_name`, `bank_name`, `account_no`, `ifsc_code`) VALUES
-(2, 5, 'FPO', 'ICICIC', '12345', 'ICIC23'),
-(3, 6, 'Ashish', 'Axis Bank', '12345455', '443fd'),
-(4, 7, 'Onkar', 'HDFC', '12345455', 'HDFC23'),
-(5, 8, 'Neha', 'Axis Bank', '1235678', 'AXIS23'),
-(6, 9, 'Swapnil', 'SBI', '12345455', 'SBIN5550'),
-(7, 10, 'XYZ', 'Yes', '12345455', 'IGF23'),
-(8, 11, 'Akshay', 'Axis Bank', '12345455', 'IGF23'),
-(9, 12, 'Sachin Surve', 'IDBI', '12345455', 'AXISIFSC'),
-(10, 13, 'packaging', 'Bank of Mysore', '', ''),
-(11, 14, '', 'Axis Bank', '', ''),
-(12, 15, 'Akshay', 'Bank of Mysore', '', ''),
-(13, 17, '', 'Axis Bank', '', ''),
-(14, 18, '', 'Bank of Mysore', '', ''),
-(15, 19, 'Akshay', 'HDFC', '123', ''),
-(16, 20, 'akshay', 'HDFC', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_users_crop`
---
-
-CREATE TABLE `tbl_users_crop` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `user_type_id` int(11) NOT NULL,
-  `crop_id` int(11) NOT NULL,
-  `area` int(11) NOT NULL,
-  `date_sown` date NOT NULL,
-  `date_harvest` date NOT NULL,
-  `date_inspection` date NOT NULL,
-  `crop_condition` varchar(255) NOT NULL,
-  `other_details` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_users_crop`
---
-
-INSERT INTO `tbl_users_crop` (`id`, `user_id`, `user_type_id`, `crop_id`, `area`, `date_sown`, `date_harvest`, `date_inspection`, `crop_condition`, `other_details`) VALUES
-(1, 19, 1, 4, 29, '1970-01-01', '1970-01-01', '1970-01-01', 'Good Conition', 'other details'),
-(2, 20, 2, 10, 34, '2018-12-28', '2018-12-28', '2019-01-04', 'Good Conition', 'other details');
+(1, 1, 'Akshay', 'Axis Bank', '123', 'IGF23');
 
 -- --------------------------------------------------------
 
@@ -9242,62 +8745,12 @@ CREATE TABLE `tbl_users_identity` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_users_input_organic`
---
-
-CREATE TABLE `tbl_users_input_organic` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `user_type_id` int(11) NOT NULL,
-  `input_date` date NOT NULL,
-  `input_name` varchar(200) NOT NULL,
-  `supplier_name` varchar(200) NOT NULL,
-  `total_area` int(11) NOT NULL,
-  `other_details` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_users_input_organic`
---
-
-INSERT INTO `tbl_users_input_organic` (`id`, `user_id`, `user_type_id`, `input_date`, `input_name`, `supplier_name`, `total_area`, `other_details`) VALUES
-(1, 19, 1, '1970-01-01', 'Input akshay', 'supplier akshay', 12, 'Other Details'),
-(2, 20, 2, '2018-12-28', 'akshay', 'supplier akshay', 1230, 'Other Details');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_users_micro_nutrient`
---
-
-CREATE TABLE `tbl_users_micro_nutrient` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `user_type_id` int(11) NOT NULL,
-  `element` int(5) NOT NULL,
-  `percentage` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_users_micro_nutrient`
---
-
-INSERT INTO `tbl_users_micro_nutrient` (`id`, `user_id`, `user_type_id`, `element`, `percentage`) VALUES
-(1, 19, 1, 2, 1),
-(2, 19, 1, 2, 1),
-(3, 20, 2, 1, 2),
-(4, 20, 2, 4, 1);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_users_products`
 --
 
 CREATE TABLE `tbl_users_products` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `description` text NOT NULL,
   `from_date` date NOT NULL,
@@ -9305,58 +8758,15 @@ CREATE TABLE `tbl_users_products` (
   `quantity_id` int(5) NOT NULL,
   `quality` varchar(255) NOT NULL,
   `price` float(10,2) NOT NULL,
-  `images` varchar(255) DEFAULT NULL
+  `images` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_users_products`
 --
 
-INSERT INTO `tbl_users_products` (`id`, `user_id`, `product_id`, `name`, `description`, `from_date`, `to_date`, `quantity_id`, `quality`, `price`, `images`) VALUES
-(7, 6, 130, 'Chicken Masala', 'dala desc', '2018-12-20', '2018-12-27', 2, 'Very Nice', 200.00, '11108954_868351326541931_445547800208572608_n2.jpg'),
-(24, 11, 130, 'Chicken Masala', 'test product desc', '2018-12-28', '2018-12-29', 2, 'Good', 200.00, 'debate_web_team1.jpg'),
-(30, 12, 130, 'Chicken Masala', 'Toor Dal Desc ', '2018-12-27', '2018-12-29', 2, 'In good quality with red color', 280.00, 'alone-boy-love--whatsapp-dp-profiledp-6355388242774967971.jpg'),
-(31, 12, 130, 'Chicken Masala', 'In good Quality', '2018-12-21', '2018-12-29', 6, 'Good', 110.00, '10897933_775719692498974_7201751649983799110_n.jpg'),
-(32, 12, 130, 'Chicken Masala', 'New Dal Description', '2019-01-08', '2019-01-10', 2, 'Dal high qualti', 100.00, '10155812_782220818503696_5521946652378596791_n.jpg'),
-(33, 5, 130, 'Chicken Masala', 'Toor Dal Desc', '2018-12-20', '2018-12-20', 2, 'Good', 200.00, '10888583_433016910186038_6590240147765757037_n1.jpg'),
-(34, 5, 130, 'Chicken Masala', 'Jowari Desc', '2018-12-27', '2018-12-15', 2, 'Nice', 30.00, '11108954_868351326541931_445547800208572608_n1.jpg'),
-(35, 7, 130, 'Chicken Masala', 'Jowari Desc', '2018-12-26', '2018-12-28', 2, 'Very Nice', 700.00, '20150927_144947.jpg'),
-(36, 7, 130, 'Chicken Masala', 'Chapati desc', '2019-01-03', '2019-01-04', 4, 'Good', 300.00, '11076206_1555504918070416_6857739435053069616_n.jpg'),
-(37, 8, 130, 'Chicken Masala', 'Toor Dal Desc', '2018-12-20', '2018-12-27', 3, 'Very Nice', 200.00, '2002_chhatrapati-shivaji-wallpaper-hd-11.jpg'),
-(38, 8, 130, 'Chicken Masala', 'XYZ desc', '2018-12-27', '2019-01-04', 3, 'ZYX quality', 433.00, '1551483_679063228834212_1578194417899287552_n.jpg'),
-(41, 18, 2, 'Channa dal/split bengal gram', 'Channal dala', '2018-12-27', '2018-12-27', 2, 'Dal high qualti', 450.00, '1451387_256206814542429_145480091_n.jpg'),
-(42, 18, 117, 'Watermelon seed', 'Watermelon seed', '2018-12-25', '2019-01-17', 3, 'Very Nice', 239.00, '1509143_563353377079641_186631191_a.jpg'),
-(43, 17, 134, 'Sabji Masala', 'Toor Dal Desc', '2018-12-25', '2018-12-26', 1, 'Very Nice', 100.00, ''),
-(44, 17, 131, 'rajama Masala', 'Jowari Desc', '2018-12-25', '2018-12-26', 2, 'bad', 200.00, ''),
-(45, 17, 127, 'Chola masala', 'chola masala', '2018-12-26', '2018-12-28', 2, 'Dal high qualti', 90.00, 'DSC04142.JPG'),
-(46, 19, 121, 'flax seeds/Javas', 'javas desc', '1970-01-01', '1970-01-01', 2, 'Very Nice', 200.00, 'Copy_of_KOP25-291.JPG'),
-(47, 19, 128, 'Pav Bhaji Masala', 'Channal dala', '2018-12-27', '2018-12-27', 2, 'Good', 200.00, '20010502_0913141.jpg'),
-(48, 20, 109, 'Sunflower oil', 'Sunflower oil', '2018-12-26', '2018-12-28', 2, 'Very Nice', 200.00, '229088_ph1.jpg');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_users_soil_details`
---
-
-CREATE TABLE `tbl_users_soil_details` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `user_type_id` int(11) NOT NULL,
-  `element` int(5) NOT NULL,
-  `percentage` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_users_soil_details`
---
-
-INSERT INTO `tbl_users_soil_details` (`id`, `user_id`, `user_type_id`, `element`, `percentage`) VALUES
-(1, 19, 1, 3, 2),
-(2, 19, 1, 3, 2),
-(3, 19, 1, 3, 2),
-(4, 20, 2, 1, 1),
-(5, 20, 2, 2, 1);
+INSERT INTO `tbl_users_products` (`id`, `user_id`, `name`, `description`, `from_date`, `to_date`, `quantity_id`, `quality`, `price`, `images`) VALUES
+(1, 1, 'Jowari', 'Jowari Desc', '0000-00-00', '0000-00-00', 1, 'Very Nice', 90.00, '');
 
 -- --------------------------------------------------------
 
@@ -9514,19 +8924,6 @@ ALTER TABLE `tbl_certification`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_certification_agency`
---
-ALTER TABLE `tbl_certification_agency`
-  ADD PRIMARY KEY (`user_id`),
-  ADD KEY `agency_id` (`agency_id`);
-
---
--- Indexes for table `tbl_crops`
---
-ALTER TABLE `tbl_crops`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tbl_equipment`
 --
 ALTER TABLE `tbl_equipment`
@@ -9584,12 +8981,6 @@ ALTER TABLE `tbl_ngo`
 -- Indexes for table `tbl_notification`
 --
 ALTER TABLE `tbl_notification`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_notifications`
---
-ALTER TABLE `tbl_notifications`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -9718,14 +9109,6 @@ ALTER TABLE `tbl_users_bank_details`
   ADD KEY `fk_user_id_bank` (`user_id`);
 
 --
--- Indexes for table `tbl_users_crop`
---
-ALTER TABLE `tbl_users_crop`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id_crop` (`user_id`),
-  ADD KEY `fk_user_type_id_crop` (`user_type_id`);
-
---
 -- Indexes for table `tbl_users_gallery`
 --
 ALTER TABLE `tbl_users_gallery`
@@ -9740,36 +9123,11 @@ ALTER TABLE `tbl_users_identity`
   ADD KEY `fk_user_id_identity` (`user_id`);
 
 --
--- Indexes for table `tbl_users_input_organic`
---
-ALTER TABLE `tbl_users_input_organic`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id_input` (`user_id`),
-  ADD KEY `fk_user_type_id_input` (`user_type_id`);
-
---
--- Indexes for table `tbl_users_micro_nutrient`
---
-ALTER TABLE `tbl_users_micro_nutrient`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id_micro` (`user_id`) USING BTREE,
-  ADD KEY `fk_user_type_id_micro` (`user_type_id`) USING BTREE;
-
---
 -- Indexes for table `tbl_users_products`
 --
 ALTER TABLE `tbl_users_products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id_product` (`user_id`),
-  ADD KEY `fk_product_id` (`product_id`);
-
---
--- Indexes for table `tbl_users_soil_details`
---
-ALTER TABLE `tbl_users_soil_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id_soil` (`user_id`),
-  ADD KEY `fk_user_type_id_soil` (`user_type_id`);
+  ADD KEY `fk_user_id_product` (`user_id`);
 
 --
 -- Indexes for table `tbl_user_type`
@@ -9827,7 +9185,7 @@ ALTER TABLE `tbl_agency`
 -- AUTO_INCREMENT for table `tbl_bid`
 --
 ALTER TABLE `tbl_bid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tbl_buyer`
 --
@@ -9838,16 +9196,6 @@ ALTER TABLE `tbl_buyer`
 --
 ALTER TABLE `tbl_certification`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
---
--- AUTO_INCREMENT for table `tbl_certification_agency`
---
-ALTER TABLE `tbl_certification_agency`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tbl_crops`
---
-ALTER TABLE `tbl_crops`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 --
 -- AUTO_INCREMENT for table `tbl_equipment`
 --
@@ -9899,11 +9247,6 @@ ALTER TABLE `tbl_ngo`
 ALTER TABLE `tbl_notification`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 --
--- AUTO_INCREMENT for table `tbl_notifications`
---
-ALTER TABLE `tbl_notifications`
-  MODIFY `id` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
---
 -- AUTO_INCREMENT for table `tbl_notify`
 --
 ALTER TABLE `tbl_notify`
@@ -9937,7 +9280,7 @@ ALTER TABLE `tbl_packaging`
 -- AUTO_INCREMENT for table `tbl_post_requirement`
 --
 ALTER TABLE `tbl_post_requirement`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tbl_processor`
 --
@@ -9947,7 +9290,7 @@ ALTER TABLE `tbl_processor`
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_pr_buyer`
 --
@@ -9997,17 +9340,12 @@ ALTER TABLE `tbl_trader`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_users_bank_details`
 --
 ALTER TABLE `tbl_users_bank_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT for table `tbl_users_crop`
---
-ALTER TABLE `tbl_users_crop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_users_gallery`
 --
@@ -10019,25 +9357,10 @@ ALTER TABLE `tbl_users_gallery`
 ALTER TABLE `tbl_users_identity`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `tbl_users_input_organic`
---
-ALTER TABLE `tbl_users_input_organic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `tbl_users_micro_nutrient`
---
-ALTER TABLE `tbl_users_micro_nutrient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
 -- AUTO_INCREMENT for table `tbl_users_products`
 --
 ALTER TABLE `tbl_users_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
---
--- AUTO_INCREMENT for table `tbl_users_soil_details`
---
-ALTER TABLE `tbl_users_soil_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_user_type`
 --
@@ -10064,12 +9387,6 @@ ALTER TABLE `tbl_users_bank_details`
   ADD CONSTRAINT `fk_user_id_bank` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `tbl_users_crop`
---
-ALTER TABLE `tbl_users_crop`
-  ADD CONSTRAINT `fk_user_id_crop` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
 -- Constraints for table `tbl_users_gallery`
 --
 ALTER TABLE `tbl_users_gallery`
@@ -10082,28 +9399,10 @@ ALTER TABLE `tbl_users_identity`
   ADD CONSTRAINT `fk_user_id_identity` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `tbl_users_input_organic`
---
-ALTER TABLE `tbl_users_input_organic`
-  ADD CONSTRAINT `fk_user_id_input` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Constraints for table `tbl_users_micro_nutrient`
---
-ALTER TABLE `tbl_users_micro_nutrient`
-  ADD CONSTRAINT `fk_user_id_micro` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
 -- Constraints for table `tbl_users_products`
 --
 ALTER TABLE `tbl_users_products`
   ADD CONSTRAINT `fk_user_id_product` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Constraints for table `tbl_users_soil_details`
---
-ALTER TABLE `tbl_users_soil_details`
-  ADD CONSTRAINT `fk_user_id_soil` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
