@@ -22,9 +22,9 @@ class user_input_organic_model extends CI_Model {
         $this->db->order_by('id','DESC');
         return $this->db->get('tbl_users_input_organic')->result_array();
     }
-    public function getUserInputOrganicByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
-        return $this->db->get('tbl_users_input_organic')->row_array();
+    public function getUserInputOrganicByUserId( $userId ) {
+        $this->db->where('user_id',$userId);
+        return $this->db->get('tbl_users_input_organic')->result_array();
     }
     public function getUserInputOrganicById($id) {
         $this->db->where('id',$id);
@@ -62,8 +62,8 @@ class user_input_organic_model extends CI_Model {
             return false;
         }
     }
-    public function deleteByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
+    public function deleteByUserId($userId) {
+        $this->db->where('user_id',$userId);
         $this->db->delete('tbl_users_input_organic'); 
         if($this->db->affected_rows()){
             return true;

@@ -167,6 +167,7 @@ class Login_model Extends CI_Model {
             $this->db->where('password',md5($data['password']));
             $result = $this->db->get('tbl_certification_agency')->row_array();
         }else{
+            $this->db->where('user_type_id',$data['user_type_id']);
             $this->db->where('username',$data['username']);
             $this->db->where('password',md5($data['password']));
             $result = $this->db->get('tbl_users')->row_array();

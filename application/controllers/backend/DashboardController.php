@@ -20,9 +20,14 @@ class DashboardController extends MY_Controller {
 	 */
         function __construct() {
             parent::__construct();
-            if (!$this->session->userdata('user_data')) {
-                //redirect('admin', 'refresh');
-                redirect('home', 'refresh');
+            $session = UserSession();
+            if ( empty( $session['success'] ) ) {
+                redirect('admin', 'refresh');
+            }else {
+                $userSession = $session['userData'];
+//                if( ADMINUSERNAME != $userSession['username'] ){
+//                    redirect('home', 'refresh');
+//                }
             }
         }
 	public function index()
@@ -39,12 +44,14 @@ class DashboardController extends MY_Controller {
                 $data['product_list'] = $this->Product->getProducts();
                 $data['user_type_list'] = $this->UserType->getUserTypes();
                 $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgencies();
+                $data['user_list'] = $this->User->getUsers();
             }else{
                 $data['bid_list'] = $this->Bid->getBidByUserId($userSession['user_id']);
                 $data['post_requirement_list'] = $this->PostRequirement->getAllPostRequirementByUserId($userSession['user_id']);
+                $data['user_list'] = $this->User->getUserByPartnerUserId( $userSession['user_id'] );
             }
             $data['total_worth'] = $this->PostRequirement->getTotalWorth();
-            $data['user_list'] = $this->User->getUsers();
+            
             if($userSession['username'] == ADMINUSERNAME){
                 $data['user_details'] = $userSession;
             }else{

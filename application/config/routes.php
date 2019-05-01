@@ -58,7 +58,7 @@ $route['trader-register'] = "trader_register";	//done
 $route['org-consultant-register'] = "org_consultant_register"; //done
 $route['org-input-register'] = "org_input_register";  //done
 $route['packing-company-register'] = "packing_company_register";   //done
-$route['farm-equip-register'] = "farm_equip_register";	//done
+$route['farm-equip-register'] = "farm_equip_register";	//donere
 $route['exhibitor-register'] = "exhibitor_register";	//done
 $route['org-labs-register'] = "org_labs_register"; 		//done
 $route['org-shops-register'] = "org_shops_register";   //done
@@ -68,19 +68,24 @@ $route['org-restaurant-register'] = "org_restaurant_register";  //done
 $route['ngo-register'] = "ngo_register";  //done
 $route['certification-register'] = "certification_register";  //done
 
-// update 
+// update
 $route['farmer-register/update/(:any)/(:any)'] = 'farmer_register/update/$1/$2';
 
 /************* New Implementation **************/
 
 $route['user/home'] = "UserController/home";  //done
 $route['search-user'] = "UserController/searchUser";  //done
+$route['search-certification-agency'] = "UserController/searchCertificationAgency";  //done
 $route['get-user-by-id'] = "UserController/getUserById";  //done
+$route['organic-input-ecommerce-details'] = "UserController/organicInputEcommerceDetails";  //done
+$route['fetch-organic-input-ecommerce-details'] = "UserController/fetchOrganicInputEcommerceDetails";  //done
+$route['filter-fetch-organic-input-ecommerce-details'] = "UserController/filterFetchOrganicInputEcommerceDetails";  //done
 
 $route['post-requirement'] = "PostRequirementController";  //done
 $route['post-requirement/search-post'] = "PostRequirementController/searchPost";  //done
 $route['getcities-by-state'] = "PostRequirementController/getCitiesByState";  //done
 $route['getpost-by-id'] = "PostRequirementController/getPostById";  //done
+$route['get-partner-user-details'] = "UserController/getPartnerUserDetails";  //done
 
 $route['bid/create'] = "BidController/create";
 
@@ -88,7 +93,7 @@ $route['signup'] = "UserController/signup";
 $route['registration'] = "UserController/registration";
 $route['registration-certification-agency'] = "UserController/registrationCertificationAgency";
 
-
+$route['search-enquiry'] = "UserController/searchEnquiry";
 
 
 /************* New Implementation Admin Panel **************/
@@ -108,6 +113,12 @@ $route['admin/product/add'] = "backend/ProductController/add";
 $route['admin/product/update'] = "backend/ProductController/update";
 $route['admin/product/delete'] = "backend/ProductController/delete";
 
+$route['admin/product-category'] = "backend/ProductCategoryController";
+$route['admin/product-category/add'] = "backend/ProductCategoryController/add";
+$route['admin/product-category/update'] = "backend/ProductCategoryController/update";
+$route['admin/product-category/delete'] = "backend/ProductCategoryController/delete";
+
+
 $route['admin/user-type'] = "backend/UserTypeController";
 $route['admin/user-type/add'] = "backend/UserTypeController/add";
 $route['admin/user-type/update'] = "backend/UserTypeController/update";
@@ -125,6 +136,23 @@ $route['admin/certification-agency'] = "backend/CertificationAgencyController";
 $route['admin/certification-agency/delete'] = "backend/CertificationAgencyController/delete";
 $route['admin/certification-agency/update'] = "backend/CertificationAgencyController/update";
 $route['admin/certification-agency/view'] = "backend/CertificationAgencyController/view";
+
+$route['admin/organic-setting'] = "backend/OrganicSettingController";
+$route['admin/organic-setting/delete'] = "backend/OrganicSettingController/delete";
+$route['admin/organic-setting/update'] = "backend/OrganicSettingController/update";
+$route['admin/organic-setting/add'] = "backend/OrganicSettingController/add";
+
+
+$route['admin/user-registration-dashboard'] = "backend/UserController/userRegistrationDashborad";
+
+/************* api routes *************/
+$route['api/user/login'] = "api/UserController/login";
+$route['api/user/fetch-user-type-list'] = "api/UserController/getUserTypeList";
+$route['api/user/registration'] = "api/UserController/registration";
+
+
+
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

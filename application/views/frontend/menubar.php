@@ -26,15 +26,15 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <?php if(empty($user_data)){ ?>
-                            <li class="wow fadeInRight <?= (empty($this->uri->segment(3))||$this->uri->segment(3) == 'home') ? 'active':''?>" data-wow-delay="0.10s"><a href="<?= base_url() ?>">Home</a></li>
-                            <li><a href="<?= base_url() ?>about" class="wow fadeInRight <?= (!empty($this->uri->segment(3))&&$this->uri->segment(3)) == 'about' ? 'active':''?>" data-wow-delay="0.20s" >About Us</a></li>
-                            <li><a href="<?= base_url() ?>signup" class="wow fadeInRight <?= (!empty($this->uri->segment(3))&&$this->uri->segment(3)) == 'signup' ? 'active':''?>" data-wow-delay="0.30s">Register</a></li> 
-                            <li><a href="<?= base_url() ?>contact" class="wow fadeInRight <?= (!empty($this->uri->segment(3))&& $this->uri->segment(3)) == 'contact' ? 'active':''?>" data-wow-delay="0.40s">Contact us</a></li> 
-                            <li><a href="<?= base_url() ?>login" class="wow fadeInRight <?= (!empty($this->uri->segment(3))&& $this->uri->segment(3)) == 'login' ? 'active':''?>" data-wow-delay="0.50s" >Login</a></li> 
+                            <li class="wow fadeInRight <?= (empty($this->uri->segment(1))||$this->uri->segment(1) == 'home') ? 'active':''?>" data-wow-delay="0.10s"><a href="<?= base_url() ?>">Home</a></li>
+                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'about' ? 'active':''?>" data-wow-delay="0.20s" ><a href="<?= base_url() ?>about">About Us</a></li>
+                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'signup' ? 'active':''?>" data-wow-delay="0.30s"><a href="<?= base_url() ?>signup">Register</a></li> 
+                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'contact' ? 'active':''?>" data-wow-delay="0.40s"><a href="<?= base_url() ?>contact">Contact us</a></li> 
+                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'login' ? 'active':''?>" data-wow-delay="0.50s"><a href="<?= base_url() ?>login">Login</a></li> 
                         <?php }else{ ?>
-                            <li class="wow fadeInRight <?= (empty($this->uri->segment(3))||$this->uri->segment(3) == 'home') ? 'active':''?>" data-wow-delay="0.10s"><a href="<?= base_url() ?>">Home</a></li>
-                            <li><a href="<?= base_url() ?>about" class="wow fadeInRight <?= (!empty($this->uri->segment(3))&&$this->uri->segment(3)) == 'about' ? 'active':''?>" data-wow-delay="0.20s" >About Us</a></li>
-                            <li><a href="<?= base_url() ?>contact" class="wow fadeInRight <?= (!empty($this->uri->segment(3))&&$this->uri->segment(3)) == 'contact' ? 'active':''?>" data-wow-delay="0.30s">Contact</a></li> 
+                            <li class="wow fadeInRight <?= (empty($this->uri->segment(1))||$this->uri->segment(1) == 'home') ? 'active':''?>" data-wow-delay="0.10s"><a href="<?= base_url() ?>">Home</a></li>
+                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'about' ? 'active':''?>" data-wow-delay="0.20s" ><a href="<?= base_url() ?>about">About Us</a></li>
+                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'contact' ? 'active':''?>" data-wow-delay="0.40s"><a href="<?= base_url() ?>contact">Contact us</a></li> 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <?php echo $user_data['fullname']; ?>
@@ -62,15 +62,17 @@
                 </div>
             </div>
         </nav>
-        <div class="hero-image"> 
-            <div class="hero-slider owl-carousel">
-                <div class="item">
-                    <img src="<?= base_url() ?>assets/design/img/main.jpg" class="img-responsive">
+        <?php if(empty($homeSlider)){ ?>
+            <div class="hero-image"> 
+                <div class="hero-slider owl-carousel">
+                    <div class="item">
+                        <img src="<?= base_url() ?>assets/design/img/main.jpg" class="img-responsive">
+                    </div>
+                    <div class="item">
+                            <img src="<?= base_url() ?>assets/design/img/slider-2.jpg" class="img-responsive">
+                    </div>
                 </div>
-                <!-- <div class="item">
-                        <img src="<?= base_url() ?>assets/design/img/main-2.jpg" class="img-responsive">
-                </div> -->
             </div>
-        </div>
+        <?php } ?>
     </header>
   

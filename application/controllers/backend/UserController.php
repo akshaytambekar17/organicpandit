@@ -25,20 +25,39 @@ class UserController extends MY_Controller {
     }
     public function index() {
         $session = UserSession();
+        if ( empty( $session['success'] ) ) {
+            redirect('admin', 'refresh');
+        }else {
+            $userSession = $session['userData'];
+//            if( ADMINUSERNAME != $userSession['username'] ){
+//                redirect('home', 'refresh');
+//            }
+        }
         $userSession = $session['userData'];
+        if( ADMINUSERNAME == $userSession['username'] ){
+            $data['user_list'] = $this->User->getUsers();
+        }else{
+            $data['user_list'] = $this->User->getUserByPartnerUserId( $userSession['user_id'] );
+        }
         $data['title'] = 'User Registration';
         $data['heading'] = 'User Registration';
         $data['backend'] = true;
         $data['view'] = 'user/list';
         $data['user_data'] = $userSession;
-        $data['user_list'] = $this->User->getUsers();
         $this->backendLayout($data);
     }
 
     public function login() {
-        if ($this->session->userdata('user_data')) {
-            redirect('dashboard', 'refresh');
+        $session = UserSession();
+        if ( $session['success'] ) {
+            redirect('admin/dashboard', 'refresh');
+        }else {
+            $userSession = $session['userData'];
+//            if( ADMINUSERNAME != $userSession['username'] ){
+//                redirect('home', 'refresh');
+//            }
         }
+        
         $data['title'] = 'Login';
         $data['heading'] = 'Organic Pandit';
         $data['hide_footer'] = true;
@@ -65,8 +84,16 @@ class UserController extends MY_Controller {
         }
     }
     public function view(){
-        $get = $this->input->get();
         $session = UserSession();
+        if ( empty( $session['success'] ) ) {
+            redirect('admin', 'refresh');
+        }else {
+            $userSession = $session['userData'];
+//            if( ADMINUSERNAME != $userSession['username'] ){
+//                redirect('home', 'refresh');
+//            }
+        }
+        $get = $this->input->get();
         $userSession = $session['userData'];
         if($this->input->post()){
             $post = $this->input->post();
@@ -107,9 +134,21 @@ class UserController extends MY_Controller {
             } else {
                 $this->session->set_flashdata('Error', 'Failed to update product');
                 $user_details = $this->User->getUserById($post['user_id']);
+                $partnerUserTypeDetails = $this->UserType->getUserTypeById( $user_details['partner_type_id'] );
+                $partnerUserDetails = $this->User->getUserById( $user_details['partner_user_id'] );
+                $user_crop_details = $this->UserCrop->getUserCropByUserId($post['user_id']);
+                $user_soil_details = $this->UserSoil->getUserSoilByUserId($post['user_id']);
+                $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($post['user_id']);
+                $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($post['user_id']);
                 $data['user_data'] = $userSession;
                 $data['backend'] = true;
                 $data['user_details'] = $user_details;
+                $data['partnerUserTypeName'] = $partnerUserTypeDetails['name'];
+                $data['partnerUserName'] = $partnerUserDetails['fullname'];
+                $data['user_crop_details'] = $user_crop_details;
+                $data['user_soil_details'] = $user_soil_details;
+                $data['user_micro_details'] = $user_micro_details;
+                $data['user_input_details'] = $user_input_details;
                 $data['title'] = $user_details['fullname'] ;
                 $data['heading'] = $user_details['fullname'];
                 $data['view'] = 'user/view';
@@ -119,9 +158,21 @@ class UserController extends MY_Controller {
             
         }else{
             $user_details = $this->User->getUserById($get['id']);
+            $user_crop_details = $this->UserCrop->getUserCropByUserId($get['id']);
+            $user_soil_details = $this->UserSoil->getUserSoilByUserId($get['id']);
+            $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($get['id']);
+            $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($get['id']);
+            $partnerUserTypeDetails = $this->UserType->getUserTypeById( $user_details['partner_type_id'] );
+            $partnerUserDetails = $this->User->getUserById( $user_details['partner_user_id'] );
             $data['user_data'] = $userSession;
             $data['backend'] = true;
             $data['user_details'] = $user_details;
+            $data['partnerUserTypeName'] = $partnerUserTypeDetails['name'];
+            $data['partnerUserName'] = $partnerUserDetails['fullname'];
+            $data['user_crop_details'] = $user_crop_details;
+            $data['user_soil_details'] = $user_soil_details;
+            $data['user_micro_details'] = $user_micro_details;
+            $data['user_input_details'] = $user_input_details;
             $data['title'] = $user_details['fullname'] ;
             $data['heading'] = $user_details['fullname'];
             $data['view'] = 'user/view';
@@ -142,13 +193,21 @@ class UserController extends MY_Controller {
             }
             $this->form_validation->set_rules('fullname', $fullname_title, 'trim|required');
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
-            //$this->form_validation->set_message('is_unique', 'The Username already exists.');
+            $this->form_validation->set_message('is_unique', 'The Username already exists.');
             $this->form_validation->set_rules('email_id', 'Email Id', 'trim|required');
             $this->form_validation->set_rules('mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]');
             $this->form_validation->set_rules('state_id', 'State', 'trim|required');
             $this->form_validation->set_rules('city_id', 'City', 'trim|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|required');
             $this->form_validation->set_rules('story', 'Story', 'trim|required');
+            
+            if( ADMINUSERNAME == $userSession['username'] ){
+                if( !empty( $post['password'] ) ) {
+                    $this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]|matches[confirm_password]');
+                    $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[5]');
+                }
+            }
+            
             if($post['user_type_id'] != 2 ){
                 $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required|numeric|exact_length[12]');
             }
@@ -333,7 +392,10 @@ class UserController extends MY_Controller {
                     $errors[] = '';
                 }
                 if(empty($error)){
+                    $user_id = $post['user_id'];
                     unset($details['product_count']);
+                    unset($details['crop_count']);
+                    unset($details['soil_count']);
                     unset($details['city_id_hidden']);
                     unset($details['profile_image_hidden']);
                     unset($details['certification_image_hidden']);
@@ -344,6 +406,16 @@ class UserController extends MY_Controller {
                     unset($details['product_images_hidden']);
                     unset($details['Bank']);
                     unset($details['Product']);
+                    unset($details['Crop']);
+                    unset($details['Soil']);
+                    unset($details['Micro']);
+                    unset($details['Input']);
+                    unset($details['confirm_password']);
+                    if( !empty( $details['password'] ) ) {
+                        $details['password'] = md5($details['password']);
+                    } else {
+                        unset($details['password']);
+                    }
                     $details['landline_no'] = !empty($details['landline_no'])?$details['landline_no']:0;
                     $details['profile_image'] = $profile_image;
                     $details['company_image'] = $company_image;
@@ -374,8 +446,8 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if($count == $j){
-                                    $product_data['from_date'] = date("Y-m-d", strtotime($product_data['from_date']));
-                                    $product_data['to_date'] = date("Y-m-d", strtotime($product_data['to_date']));
+                                    $product_data['from_date'] = date( "Y-m-d", strtotime( str_replace( '/', '-', $product_data['from_date'] ) ) );
+                                    $product_data['to_date'] = date( "Y-m-d", strtotime( str_replace( '/', '-', $product_data['to_date'] ) ) );
                                     $product_data['user_id'] = $post['user_id'];
                                     $product_search_details = $this->Product->getProductById($product_data['product_id']);
                                     $product_data['name'] = $product_search_details['name'];
@@ -392,6 +464,122 @@ class UserController extends MY_Controller {
                     $bank_details = $post['Bank'];
                     $bank_details['user_id'] = $post['user_id'];
                     $result_bank = $this->UserBank->updateByUserId($bank_details);
+                    if(!empty($post['Crop'])){
+                        $this->UserCrop->deleteByUserId($post['user_id']);
+                        $i = 0;
+                        $j = 1;
+                        $post_crop = array_filter(array_map('array_filter', $post['Crop'])); 
+                        $count = count($post_crop);
+                        for($x=1;$x<=count($post_crop['crop_id']);$x++){
+                            foreach($post_crop as $key_crop => $val_crop){
+                                foreach($val_crop as $key => $val){
+                                    if($key == $i && !empty($val)){
+                                        $crop_details[$key_crop] = $val;
+                                    }
+                                }
+                                if($count == $j){
+                                    
+                                    $crop_details['user_id'] = $user_id;
+                                    $crop_details['user_type_id'] = $post['user_type_id'];
+                                    $crop_details['date_sown'] = !empty( $crop_details['date_sown'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_sown'] ) ) ) : '';
+                                    $crop_details['date_harvest'] = !empty( $crop_details['date_harvest'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_harvest'] ) ) ) : '';
+                                    $crop_details['date_inspection'] = !empty( $crop_details['date_inspection'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_inspection'] ) ) ) : '';
+                                    
+                                    $result_crop = $this->UserCrop->insert($crop_details);
+                                    $i++;
+                                    $j = 1;
+                                    $crop_details = array();
+                                }else{
+                                    $j++;
+                                }
+                            }
+                        }
+                    }
+                    if(!empty($post['Soil'])){
+                        $this->UserSoil->deleteByUserId($post['user_id']);
+                        $i = 0;
+                        $j = 1;
+                        $post_soil = array_filter(array_map('array_filter', $post['Soil'])); 
+                        $count = count($post_soil);
+                        for($x=1;$x<=max(count($post_soil['element']),count($post_soil['percentage']));$x++){
+                            foreach($post_soil as $key_soil => $val_soil){
+                                foreach($val_soil as $key => $val){
+                                    if($key == $i && !empty($val)){
+                                        $soil_data[$key_soil] = $val;
+                                    }
+                                }
+                                if($count == $j){
+                                    $soil_data['user_id'] = $user_id;
+                                    $soil_data['user_type_id'] = $post['user_type_id'];
+                                    $soil_result = $this->UserSoil->insert($soil_data);
+                                    $i++;
+                                    $j = 1;
+                                    $soil_data = array();
+                                }else{
+                                    $j++;
+                                }
+                            }
+                        }
+                    }
+                    if(!empty($post['Micro'])){
+                        $this->UserMicroNutrient->deleteByUserId($post['user_id']);
+                        $i = 0;
+                        $j = 1;
+                        $post_micro = array_filter(array_map('array_filter', $post['Micro'])); 
+                        $count = count($post_micro);
+                        for($x=1;$x<=max(count($post_micro['element']),count($post_micro['percentage']));$x++){
+                            foreach($post_micro as $key_micro => $val_micro){
+                                foreach($val_micro as $key => $val){
+                                    if($key == $i && !empty($val)){
+                                        $micro_data[$key_micro] = $val;
+                                    }
+                                }
+                                if($count == $j){
+                                    $micro_data['user_id'] = $user_id;
+                                    $micro_data['user_type_id'] = $post['user_type_id'];
+                                    $micro_result = $this->UserMicroNutrient->insert($micro_data);
+                                    $i++;
+                                    $j = 1;
+                                    $micro_data = array();
+                                }else{
+                                    $j++;
+                                }
+                            }
+                        }
+                    }
+                    if( !empty($post['Input'] ) ) {
+                        $this->UserInputOrganic->deleteByUserId($post['user_id']);
+                        $i = 0;
+                        $j = 1;
+                        $postInputOrganic = array_filter( array_map( 'array_filter', $post['Input'] ) );
+                        $count = count( $postInputOrganic );
+                        for ( $x = 1; $x <= count( $postInputOrganic['input_date'] ); $x++ ) {
+                            foreach( $postInputOrganic as $keyInput => $valInput ) {
+                                foreach( $valInput as $key => $val ) {
+                                    if( $key == $i && !empty( $val ) ) {
+                                        $inputData[$keyInput] = $val;
+                                    }
+                                }
+                                if ($count == $j) {
+                                    $inputData['user_id'] = $user_id;
+                                    $inputData['user_type_id'] = $post['user_type_id'];
+                                    $inputData['input_date'] = !empty( $inputData['input_date'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $inputData['input_date'] ) ) ) : '0000-00-00';
+                                    $this->UserInputOrganic->insert( $inputData );
+                                    $i++;
+                                    $j = 1;
+                                    $inputData = array();
+                                } else {
+                                    $j++;
+                                }
+                            }
+                        }
+//                        $input_details = $post['Input'];
+//                        $input_details['user_id'] = $user_id;
+//                        $input_details['user_type_id'] = $post['user_type_id'];
+//                        $input_details['input_date'] = !empty($input_details['input_date']) ? date('Y-m-d', strtotime($input_details['input_date'])) : '0000-00-00';
+                        
+                    }
+                    
                     if($userSession['username'] == ADMINUSERNAME){
                         $this->session->set_flashdata('Message', $details['fullname']. ' profile has been updated successfully.');
                         redirect('admin/user');
@@ -426,25 +614,59 @@ class UserController extends MY_Controller {
         }else{
             $user_product_details = '';
         }
+        
+        $user_crop_details = $this->UserCrop->getUserCropByUserId($user_id);
+        $user_soil_details = $this->UserSoil->getUserSoilByUserId($user_id);
+        $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($user_id);
+        $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($user_id);
+       
         $user_bank_details = $this->UserBank->getUserBankByUserId($user_id);
         $user_type_details = $this->UserType->getUserTypeById($user_type_id);
+        $data['userInputOrganicList'] = $this->UserInputOrganic->getUserInputOrganicByUserId( $user_id );
+        $data['userTypeList'] = $this->UserType->getUserTypes();
         $data['product_list'] = $this->Product->getActiveProducts();
         $data['user_type_list'] = $this->UserType->getUserTypes();
         $data['state_list'] = $this->State->getStates();
-        $data['agencies_list'] = $this->CertificationAgency->getAgencies();
+        $data['agencies_list'] = $this->Agency->getAgencies();
         $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+        $data['crop_list'] = $this->Crop->getActiveCrops();
         $data['user_data'] = $userSession;
         $data['backend'] = true;
         $data['user_details'] = $user_details;
         $data['user_product_details'] = $user_product_details;
         $data['user_bank_details'] = $user_bank_details;
         $data['user_type_details'] = $user_type_details;
+        $data['user_crop_details'] = $user_crop_details;
+        $data['user_soil_details'] = $user_soil_details;
+        $data['user_micro_details'] = $user_micro_details;
         $data['user_session'] = $userSession;
         $data['title'] = $user_details['fullname'] ;
         $data['heading'] = $user_details['fullname'];
         $data['view'] = 'user/profile_form';
         return $data;
     }
+    
+    public function userRegistrationDashborad() {
+        $session = UserSession();
+        if ( empty( $session['success'] ) ) {
+            redirect('home', 'refresh');
+        }
+        
+        $userSession = $session['userData'];
+        if( ADMINUSERNAME == $userSession['username'] ){
+            $data['userList'] = $this->User->getUsers();
+        }else{
+            $data['userList'] = $this->User->getUserByPartnerUserId( $userSession['user_id'] );
+        }
+        $data['userTypeList'] = $this->UserType->getUserTypes();
+        $data['title'] = 'User Registration';
+        $data['heading'] = 'User Registration';
+        $data['backend'] = true;
+        $data['view'] = 'common/user-registration-dashboard';
+        $data['userSessionData'] = $userSession;
+        $this->backendLayout($data);
+    }
+    
     public function changePassword() {
         if (!$this->session->userdata('user_data')) {
             redirect('home', 'refresh');

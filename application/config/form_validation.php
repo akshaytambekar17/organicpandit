@@ -159,11 +159,11 @@ $config = array(
                                 
         ),
         'products-form' => array(
-//                    array(
-//                            'field' => 'user_type_id',
-//                            'label' => 'User Type',
-//                            'rules' => 'required'
-//                    ),
+                    array(
+                            'field' => 'product_category_id',
+                            'label' => 'Category',
+                            'rules' => 'required'
+                    ),
                     array(
                             'field' => 'name',
                             'label' => 'Product name',
@@ -205,6 +205,21 @@ $config = array(
                             'rules' => 'required'
                     )
             ),
+    
+            'product-category-form' => array(
+                    
+                    array(
+                            'field' => 'name',
+                            'label' => 'Category Name',
+                            'rules' => 'required'
+                    ),
+                    array(
+                            'field' => 'status',
+                            'label' => 'Status',
+                            'rules' => 'required'
+                    )
+            ),
+    
             'user-type-form' => array(
                     array(
                             'field' => 'name',
@@ -232,6 +247,45 @@ $config = array(
                             'field' => 'confirm_password',
                             'label' => 'Confirm Password',
                             'rules' => 'required|min_length[5]'
+                    ),
+            ),
+            'contact-us' => array(
+                    array(
+                            'field' => 'name',
+                            'label' => 'Name',
+                            'rules' => 'required|alpha'
+                    ),
+                    array(
+                            'field' => 'email_id',
+                            'label' => 'Email Id',
+                            'rules' => 'required|valid_email'
+                    ),
+                    array(
+                            'field' => 'mobile_no',
+                            'label' => 'Mobile number',
+                            'rules' => 'required|numeric|exact_length[10]'
+                    ),
+                    array(
+                            'field' => 'query',
+                            'label' => 'Message',
+                            'rules' => 'required'
+                    ),
+            ),
+            'setting-form' => array(
+                    array(
+                            'field' => 'title',
+                            'label' => 'Title',
+                            'rules' => 'required'
+                    ),
+                    array(
+                            'field' => 'key',
+                            'label' => 'key',
+                            'rules' => 'required'
+                    ),
+                    array(
+                            'field' => 'value',
+                            'label' => 'Status',
+                            'rules' => 'required'
                     ),
             )
 );

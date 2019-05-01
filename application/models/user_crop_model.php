@@ -23,8 +23,11 @@ class user_crop_model extends CI_Model {
         return $this->db->get('tbl_users_crop')->result_array();
     }
     public function getUserCropByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
-        return $this->db->get('tbl_users_crop')->row_array();
+        $this->db->select("uc.*,c.name as crop_name,");
+        $this->db->from('tbl_users_crop uc');
+        $this->db->join('tbl_crops c','c.id = uc.crop_id');
+        $this->db->where('uc.user_id',$user_id);
+        return $this->db->get()->result_array();
     }
     public function getUserCropById($id) {
         $this->db->where('id',$id);

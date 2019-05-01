@@ -12,12 +12,15 @@
                                     <p>Search Deals</p>		
                                 </a>
                             </li>
-<!--                            <li class="wow fadeInRight" data-wow-delay=".30s">
-                                <a href="javascript:void(0)">
-                                    <img src="<?= base_url() ?>assets/design/img/icons/deals-worth.png" class="img-responsive">
-                                    <p>Deals Worth <br><span><?= $total_worth['total_price']?></span></p>		
+                            <li class="wow fadeInUp" data-wow-delay=".30s" >
+                                <a href="#">
+                                    <div class="deals-worth">
+                                        <img src="<?= base_url() ?>assets/design/img/icons/count-deal.png" class="img-responsive">
+                                        <span><?= $total_worth['total_price']?></span>
+                                    </div>
+                                    <p>Deals Worth</p>
                                 </a>
-                            </li>-->
+                            </li>
                             <li class="wow fadeInRight" data-wow-delay=".30s">
                                 <a href="<?= base_url()?>post-requirement">
                                     <img src="<?= base_url() ?>assets/design/img/icons/post-deals.png" class="img-responsive">
@@ -179,7 +182,7 @@
                                     <div id="<?= $user_type_list[15]['id']?>" class="tab-pane fade in">
                                         <h3><?= $user_type_list[15]['name']?></h3>
                                         <p><?= $user_type_list[15]['description']?><br><br>
-<!--                                            <a href="<?= base_url()?>search-user?id=<?= $user_type_list[15]['id']?>" class="btn">Search <?= $user_type_list[15]['name']?></a>-->
+                                            <a href="<?= base_url()?>search-certification-agency?id=<?= $user_type_list[15]['id']?>" class="btn">Search <?= $user_type_list[15]['name']?></a>
                                         </p>
                                     </div>
                                     <div id="<?= $user_type_list[16]['id']?>" class="tab-pane fade in">

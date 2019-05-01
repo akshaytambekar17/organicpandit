@@ -4,7 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ProductController extends MY_Controller {
     function __construct() {
         parent::__construct();
-        
+        $session = UserSession();
+        if ( empty( $session['success'] ) ) {
+            redirect('admin', 'refresh');
+        }else {
+            $userSession = $session['userData'];
+            if( ADMINUSERNAME != $userSession['username'] ){
+                redirect('home', 'refresh');
+            }
+        }
     }
     
     public function index()
@@ -46,15 +54,10 @@ class ProductController extends MY_Controller {
                 if(empty($error)){
                     $details = $post;
                     $details['user_type_id'] = 1;
-                    $details['from_date'] = date('Y-m-d H:i:s');
-                    $details['to_date'] = date('Y-m-d H:i:s');
-                    $details['price'] = 10.00;
-                    $details['quantity'] = 100;
-                    $details['is_deleted'] = 0;
                     $details['updated_at'] = date('Y-m-d H:i:s');
                     $details['created_at'] = date('Y-m-d H:i:s');
-                    $product_id = $this->Product->add($details);
-                    if ($product_id) {
+                    $productId = $this->Product->add($details);
+                    if ( !empty( $productId ) ) {
                         $this->session->set_flashdata('Message', 'Product Added Succesfully');
                         return redirect('admin/product', 'refresh');
                     } else {

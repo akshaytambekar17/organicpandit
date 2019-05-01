@@ -25,6 +25,7 @@ class user_model extends CI_Model {
         $this->db->order_by('u.user_id','DESC');
         return $this->db->get()->result_array();
     }
+    
     public function getUserById($id) {
         $this->db->select("u.*,ut.name as user_type_name,");
         $this->db->from('tbl_users u');
@@ -32,6 +33,33 @@ class user_model extends CI_Model {
         $this->db->where('user_id',$id);
         return $this->db->get()->row_array();
     }
+    
+    public function getUserByPartnerUserId( $partnerUserId ) {
+        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where('u.partner_user_id',$partnerUserId);
+        $this->db->order_by('u.user_id','DESC');
+        return $this->db->get()->result_array();
+    }
+    
+    public function getUserByUserTypeId( $userTypeId ) {
+        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where('u.user_type_id',$userTypeId);
+        return $this->db->get()->result_array();
+    }
+    
+    public function getUserLoginByUsernamePassword( $username, $password ) {
+        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where('username', $username );
+        $this->db->where('password',  md5( $password ) );
+        return $this->db->get()->row_array();
+    }
+    
     public function getUserFarmers() {
         $this->db->order_by('id','DESC');
         return $this->db->get('tbl_farmer')->result_array();

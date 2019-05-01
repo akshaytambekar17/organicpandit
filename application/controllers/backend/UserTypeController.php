@@ -4,6 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class UserTypeController extends MY_Controller {
     function __construct() {
         parent::__construct();
+        $session = UserSession();
+        if ( empty( $session['success'] ) ) {
+            redirect('admin', 'refresh');
+        }else {
+            $userSession = $session['userData'];
+            if( ADMINUSERNAME != $userSession['username'] ){
+                redirect('home', 'refresh');
+            }
+        }
         
     }
     

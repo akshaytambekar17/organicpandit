@@ -220,14 +220,23 @@
                                             <label class="control-label label-required" for="product_id">Product Name</label>
                                             <select class="form-control select2" name="Product[product_id][]">
                                                 <option disabled="disabled" selected="selected">Select Product Name</option>
-                                                <?php foreach ($product_list as $value) { 
-                                                        if(!empty($val_product['product_id'])){
-                                                            $selected = $val_product['product_id'] == $value['id']?'selected="selected"':'';                                
-                                                        }else{
-                                                            $selected = '';
-                                                        }
-                                                ?>
-                                                    <option value="<?= $value['id'] ?>" <?= $selected?>><?= $value['name'] ?></option>
+                                                <?php foreach (getProductCategory() as $key_pro => $val_pro) { ?>
+                                                    <optgroup label="<?= $val_pro ?>">
+                                                        <?php
+                                                            foreach ($product_list as $value) {
+                                                                if ($value['product_category_id'] == $key_pro) {
+                                                                    if(!empty($val_product['product_id'])){
+                                                                        $selected = $val_product['product_id'] == $value['id']?'selected="selected"':'';                                
+                                                                    }else{
+                                                                        $selected = '';
+                                                                    }
+                                                        ?>      
+                                                                <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?> <?= $selected?>><?= $value['name'] ?></option>
+                                                        <?php 
+                                                                }
+                                                            } 
+                                                        ?>
+                                                    </optgroup>            
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -296,8 +305,18 @@
                                 <label class="control-label label-required" for="product_id">Product Name</label>
                                 <select class="form-control select2" name="Product[product_id][]">
                                     <option disabled="disabled" selected="selected">Select Product Name</option>
-                                    <?php foreach ($product_list as $value) { ?>
-                                        <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                    <?php foreach (getProductCategory() as $key_pro => $val_pro) { ?>
+                                        <optgroup label="<?= $val_pro ?>">
+                                            <?php
+                                                foreach ($product_list as $value) {
+                                                    if ($value['product_category_id'] == $key_pro) {
+                                            ?>      
+                                                    <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                            <?php 
+                                                    }
+                                                } 
+                                            ?>
+                                        </optgroup>            
                                     <?php } ?>
                                 </select>
                             </div>
@@ -357,8 +376,18 @@
                                 <label class="control-label label-required" for="product_id">Product Name</label>
                                 <select class="form-control select-picker" name="Product[product_id][]">
                                     <option disabled="disabled" selected="selected">Select Product Name</option>
-                                    <?php foreach ($product_list as $value) { ?>
-                                        <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                    <?php foreach (getProductCategory() as $key_pro => $val_pro) { ?>
+                                        <optgroup label="<?= $val_pro ?>">
+                                            <?php
+                                                foreach ($product_list as $value) {
+                                                    if ($value['product_category_id'] == $key_pro) {
+                                            ?>      
+                                                    <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                            <?php 
+                                                    }
+                                                } 
+                                            ?>
+                                        </optgroup>            
                                     <?php } ?>
                                 </select>
                             </div>
@@ -439,3 +468,589 @@
         </div>    
     </div>
 <?php } ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Crop Inspection Details</h3>
+            </div>
+            <div class="box-body">
+                <?php if(!empty($user_crop_details)){ ?>
+                    <?php foreach($user_crop_details as $val_crop){ 
+                    ?>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="crop_id">Select Crop</label>
+                                    <select class="form-control select2" name="Crop[crop_id][]" style="width:100%">
+                                        <option disabled="disabled" selected="selected" >Select Crop</option>
+                                        <?php foreach (getCropCategory() as $key_cat => $val_cat) { 
+                                        ?>
+                                            <optgroup label="<?= $val_cat ?>">
+                                                <?php
+                                                    foreach ($crop_list as $value) {
+                                                        if ($value['crop_category_id'] == $key_cat) {
+                                                            if(!empty($val_crop['crop_id'])){
+                                                                $selected = $val_crop['crop_id'] == $value['id']?'selected="selected"':'';                                
+                                                            }else{
+                                                                $selected = '';
+                                                            }
+                                                ?>      
+                                                        <option value="<?= $value['id'] ?>" <?= set_select('Crop[crop_id][]', $value['id']); ?> <?= $selected?>><?= $value['name'] ?></option>
+                                                <?php }
+                                            } ?>
+                                            </optgroup>            
+                                        <?php } ?>
+                                    </select>
+                                    <span class="has-error"><?php echo form_error('Crop[crop_id][]'); ?></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="Crop[area][]">Area (in acre's)</label>
+<!--                                    <input type="text" name="Crop[area][]"  class="form-control" id="area" placeholder="Area (in acre's)" value="<?= !empty($val_crop['area'])?$val_crop['area']:set_value('Crop[area][]') ?>" maxlength="5" onkeypress="numberValidation(event)">-->
+                                    <select class="form-control select2" name="Crop[area][]" style="width:100%">
+                                        <option disabled="disabled" selected="selected" >Select Acre's</option>
+                                        <?php foreach( getAreaInNumber() as $valArea ) { 
+                                                $selected = '';
+                                                if( !empty( $val_crop['area'] ) && $val_crop['area'] == $valArea  ) {
+                                                    $selected = 'selected = "selected" ';
+                                                }
+                                        ?>
+                                                <option value="<?= $valArea ?>" <?= set_select('Crop[area][]', $valArea); ?> <?= $selected; ?> ><?= $valArea ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <span class="has-error"><?php echo form_error('Crop[area][]'); ?></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="Crop[date_sown][]">Date of Sown</label>
+                                    <input type="text" name="Crop[date_sown][]" class="form-control picker-date pull-right" id="date_sown" placeholder="Date of Sown" value="<?= (!empty($val_crop['date_sown'])&& $val_crop['date_sown'] != '0000-00-00')?date('m/d/Y',strtotime($val_crop['date_sown'])):set_value('Crop[date_sown][]') ?>">
+                                    <span class="has-error"><?php echo form_error('Crop[date_sown][]'); ?></span>
+                                </div>    
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="Crop[date_harvest][]">Date of Harvest</label>
+                                    <input type="text" name="Crop[date_harvest][]" class="form-control picker-date pull-right" id="date_harvest" placeholder="Date of Harvest" value="<?= (!empty($val_crop['date_harvest']) && $val_crop['date_harvest'] != '0000-00-00')?date('m/d/Y',strtotime($val_crop['date_harvest'])):set_value('Crop[date_harvest][]') ?>">
+                                    <span class="has-error"><?php echo form_error('Crop[date_harvest][]'); ?></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="Crop[date_inspection][]">Date of Inspection</label>
+                                    <input type="text" name="Crop[date_inspection][]" class="form-control picker-date pull-right" id="date_inspection" placeholder="Date of Inspection" value="<?= (!empty($val_crop['date_inspection'])&& $val_crop['date_inspection'] != '0000-00-00')?date('m/d/Y',strtotime($val_crop['date_inspection'])):set_value('Crop[date_inspection][]') ?>">
+                                    <span class="has-error"><?php echo form_error('Crop[date_inspection][]'); ?></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="Crop[crop_condition][]">Crop Condition</label>
+                                    <input type="text" name="Crop[crop_condition][]" class="form-control" id="crop_condition" placeholder="Crop Condition" value="<?= !empty($val_crop['crop_condition'])?$val_crop['crop_condition']:set_value('Crop[crop_condition][]') ?>">
+                                    <span class="has-error"><?php echo form_error('Crop[crop_condition][]'); ?></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="Crop[other_details][]">Other Details</label>
+                                    <input type="text" name="Crop[other_details][]" class="form-control" id="other_details" placeholder="Other Details" value="<?= !empty($val_crop['other_details'])?$val_crop['other_details']:set_value('Crop[other_details][]') ?>">
+                                    <span class="has-error"><?php echo form_error('Crop[other_details][]'); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                <?php } } ?>
+                <div class="form-group crop-group-show">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="crop_id">Select Crop</label>
+                            <select class="form-control select2" name="Crop[crop_id][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Crop</option>
+                                <?php foreach (getCropCategory() as $key_cat => $val_cat) { ?>
+                                    <optgroup label="<?= $val_cat ?>">
+                                        <?php
+                                            foreach ($crop_list as $value) {
+                                            if ($value['crop_category_id'] == $key_cat) {
+                                        ?>      
+                                                <option value="<?= $value['id'] ?>" <?= set_select('Crop[crop_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                        <?php }
+                                    } ?>
+                                    </optgroup>            
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Crop[crop_id][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[area][]">Area (in acre's)</label>
+<!--                            <input type="text" name="Crop[area][]"  class="form-control" id="area" placeholder="Area (in acre's)" value="<?= set_value('Crop[area][]') ?>" maxlength="5" onkeypress="numberValidation(event)">-->
+                            <select class="form-control select2" name="Crop[area][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Acre's</option>
+                                <?php foreach( getAreaInNumber() as $valArea ) { ?>
+                                        <option value="<?= $valArea ?>" <?= set_select('Crop[area][]', $valArea); ?> ><?= $valArea ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Crop[area][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[date_sown][]">Date of Sown</label>
+                            <input type="text" name="Crop[date_sown][]" class="form-control picker-date pull-right" id="date_sown" placeholder="Date of Sown" value="<?= set_value('Crop[date_sown][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[date_sown][]'); ?></span>
+                        </div>    
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[date_harvest][]">Date of Harvest</label>
+                            <input type="text" name="Crop[date_harvest][]" class="form-control picker-date pull-right" id="date_harvest" placeholder="Date of Harvest" value="<?= set_value('Crop[date_harvest][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[date_harvest][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[date_inspection][]">Date of Inspection</label>
+                            <input type="text" name="Crop[date_inspection][]" class="form-control picker-date pull-right" id="date_inspection" placeholder="Date of Inspection" value="<?= set_value('Crop[date_inspection][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[date_inspection][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[crop_condition][]">Crop Condition</label>
+                            <input type="text" name="Crop[crop_condition][]" class="form-control" id="crop_condition" placeholder="Crop Condition" value="<?= set_value('Crop[crop_condition][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[crop_condition][]'); ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[other_details][]">Other Details</label>
+                            <input type="text" name="Crop[other_details][]" class="form-control" id="other_details" placeholder="Other Details" value="<?= set_value('Crop[other_details][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[other_details][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label class="control-label">Add</label>
+                            <button type="button" class="btn btn-success add-crop-button"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="crop_count" id="crop-count" value="0">
+                <div class=" form-group crop-group hide" id="template-crop">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="crop_id">Select Crop</label>
+                            <select class="form-control crop-select-picker" name="Crop[crop_id][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Crop</option>
+                                    <?php foreach (getCropCategory() as $key_cat => $val_cat) { ?>
+                                    <optgroup label="<?= $val_cat ?>">
+                                        <?php
+                                            foreach ($crop_list as $value) {
+                                                if ($value['crop_category_id'] == $key_cat) {
+                                        ?>      
+                                                <option value="<?= $value['id'] ?>" <?= set_select('Crop[crop_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                        <?php   
+                                                }
+                                            } 
+                                        ?>
+                                    </optgroup>            
+                                    <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Crop[crop_id][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[area][]">Area (in acre's)</label>
+<!--                            <input type="text" name="Crop[area][]"  class="form-control" id="area" placeholder="Area (in acre's)" value="<?= set_value('Crop[area][]') ?>" maxlength="5" onkeypress="numberValidation(event)">-->
+                            <select class="form-control" name="Crop[area][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Acre's</option>
+                                <?php foreach( getAreaInNumber() as $valArea ) { ?>
+                                        <option value="<?= $valArea ?>" <?= set_select('Crop[area][]', $valArea); ?> ><?= $valArea ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Crop[area][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[date_sown][]">Date of Sown</label>
+                            <input type="text" name="Crop[date_sown][]" class="form-control picker-date pull-right" id="date_sown" placeholder="Date of Sown" value="<?= set_value('Crop[date_sown][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[date_sown][]'); ?></span>
+                        </div>    
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[date_harvest][]">Date of Harvest</label>
+                            <input type="text" name="Crop[date_harvest][]" class="form-control picker-date pull-right" id="date_harvest" placeholder="Date of Harvest" value="<?= set_value('Crop[date_harvest][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[date_harvest][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[date_inspection][]">Date of Inspection</label>
+                            <input type="text" name="Crop[date_inspection][]" class="form-control picker-date pull-right" id="date_inspection" placeholder="Date of Inspection" value="<?= set_value('Crop[date_inspection][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[date_inspection][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[crop_condition]">Crop Condition</label>
+                            <input type="text" name="Crop[crop_condition][]" class="form-control" id="crop_condition" placeholder="Crop Condition" value="<?= set_value('Crop[crop_condition][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[crop_condition]'); ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[other_details][]">Other Details</label>
+                            <input type="text" name="Crop[other_details][]" class="form-control" id="other_details" placeholder="Other Details" value="<?= set_value('Crop[other_details][]') ?>">
+                            <span class="has-error"><?php echo form_error('Crop[other_details][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label class="control-label">Remove</label>
+                            <button type="button" class="btn btn-danger" onclick="removeCropTemplate(this)"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Soil Details</h3>
+            </div>
+            <div class="box-body">
+                <?php if(!empty($user_soil_details)){ 
+                        foreach($user_soil_details as $val_soil){ 
+                ?>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="element">Select Element</label>
+                                <select class="form-control" name="Soil[element][]" >
+                                    <option disabled="disabled" selected="selected">Select Element</option>
+                                    <?php foreach (getSoilElement() as $key => $value) { 
+                                            if(!empty($val_soil['element'])){
+                                                $selected = $val_soil['element'] == $key?'selected="selected"':'';                                
+                                            }else{
+                                                $selected = '';
+                                            }
+                                    ?>
+                                        <option value="<?= $key ?>" <?= set_select('Soil[element][]', $key); ?> <?= $selected?>><?= $value ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="percentage">Select Percentage</label>
+                                <select class="form-control" name="Soil[percentage][]" >
+                                    <option disabled="disabled" selected="selected">Select Percentage</option>
+                                    <?php foreach (getSoilPercentage() as $key => $value) { 
+                                            if(!empty($val_soil['percentage'])){
+                                                $selected = $val_soil['percentage'] == $key?'selected="selected"':'';                                
+                                            }else{
+                                                $selected = '';
+                                            }
+                                    ?>
+                                        <option value="<?= $key ?>" <?= set_select('Soil[percentage][]', $key); ?> <?= $selected?>><?= $value ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                <?php } } ?>
+                <div class="row soil-group-show">
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="element">Select Element</label>
+                        <select class="form-control" name="Soil[element][]" >
+                            <option disabled="disabled" selected="selected">Select Element</option>
+                            <?php foreach (getSoilElement() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Soil[element][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="percentage">Select Percentage</label>
+                        <select class="form-control" name="Soil[percentage][]" >
+                            <option disabled="disabled" selected="selected">Select Percentage</option>
+                            <?php foreach (getSoilPercentage() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Soil[percentage][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label class="control-label">Add</label>
+                        <button type="button" class="btn btn-success add-soil-button"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <input type="hidden" name="soil_count" id="soil-count" value="0">
+                <!-- The option field template containing an option field and a Remove button -->
+                <div class="row soil-group hide" id="template-soil">
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="element">Select Element</label>
+                        <select class="form-control soil-element" name="Soil[element][]">
+                            <option disabled="disabled" selected="selected">Select Element</option>
+                            <?php foreach (getSoilElement() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Soil[element][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="percentage">Select Percentage</label>
+                        <select class="form-control soil-percentage" name="Soil[percentage][]" >
+                            <option disabled="disabled" selected="selected">Select Percentage</option>
+                            <?php foreach (getSoilPercentage() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Soil[percentage][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label class="control-label">Remove</label>
+                        <button type="button" class="btn btn-danger" onclick="removeSoilTemplate(this)"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class=" form-group">
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Soil[element][]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Soil[percentage][]'); ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Micro Nutrient Status</h3>
+            </div>
+            <div class="box-body">
+                <?php if(!empty($user_micro_details)){ 
+                        foreach($user_micro_details as $val_micro){ 
+                ?>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="element">Select Element</label>
+                            <select class="form-control" name="Micro[element][]" >
+                                <option disabled="disabled" selected="selected">Select Element</option>
+                                <?php foreach (getMicroElement() as $key => $value) { 
+                                        if(!empty($val_micro['element'])){
+                                            $selected = $val_micro['element'] == $key?'selected="selected"':'';                                
+                                        }else{
+                                            $selected = '';
+                                        }
+                                ?>
+                                    <option value="<?= $key ?>" <?= set_select('Micro[element][]', $key); ?> <?= $selected?>><?= $value ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="percentage">Select Percentage</label>
+                            <select class="form-control" name="Micro[percentage][]" >
+                                <option disabled="disabled" selected="selected">Select Percentage</option>
+                                <?php foreach (getMicroPercentage() as $key => $value) { 
+                                        if(!empty($val_micro['percentage'])){
+                                            $selected = $val_micro['percentage'] == $key?'selected="selected"':'';                                
+                                        }else{
+                                            $selected = '';
+                                        }
+                                ?>
+                                    <option value="<?= $key ?>" <?= set_select('Micro[percentage][]', $key); ?> <?= $selected?>><?= $value ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                <?php } }?>
+                <div class="row micro-group-show">
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="element">Select Element</label>
+                        <select class="form-control" name="Micro[element][]" >
+                            <option disabled="disabled" selected="selected">Select Element</option>
+                            <?php foreach (getMicroElement() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Micro[element][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="percentage">Select Percentage</label>
+                        <select class="form-control" name="Micro[percentage][]" >
+                            <option disabled="disabled" selected="selected">Select Percentage</option>
+                            <?php foreach (getMicroPercentage() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Micro[percentage][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label class="control-label">Add</label>
+                        <button type="button" class="btn btn-success add-micro-button"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <!-- The option field template containing an option field and a Remove button -->
+                <div class="row micro-group hide" id="template-micro">
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="element">Select Element</label>
+                        <select class="form-control" name="Micro[element][]" >
+                            <option disabled="disabled" selected="selected">Select Element</option>
+                            <?php foreach (getMicroElement() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Micro[element][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="percentage">Select Percentage</label>
+                        <select class="form-control" name="Micro[percentage][]" >
+                            <option disabled="disabled" selected="selected">Select Percentage</option>
+                            <?php foreach (getMicroPercentage() as $key => $value) { ?>
+                                <option value="<?= $key ?>" <?= set_select('Micro[percentage][]', $key); ?>><?= $value ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label class="control-label">Remove</label>
+                        <button type="button" class="btn btn-danger" onclick="removeMicroTemplate(this)"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class=" form-group">
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Micro[element][]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Micro[percentage][]'); ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Input and Organic Manure</h3>
+            </div>
+            <div class="box-body">
+                <?php if( !empty( $userInputOrganicList ) ) { 
+                        foreach( $userInputOrganicList as $valInputOrganic ){ 
+                ?>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[input_date]">Date</label>
+                            <input type="text" name="Input[input_date][]" class="form-control picker-date pull-right" id="input_date" placeholder="Date" value="<?= !empty($valInputOrganic['input_date'])?date('d/m/Y',strtotime($valInputOrganic['input_date'])):set_value('Input[input_date][]') ?>">
+                            <span class="has-error"><?php echo form_error('Input[input_date][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[input_name]">Input Name</label>
+                            <input type="text" name="Input[input_name][]" class="form-control" id="crop_condition" placeholder="Input Name" value="<?= !empty($valInputOrganic['input_name'])?$valInputOrganic['input_name']:set_value('Input[input_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[input_name][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[supplier_name]">Supplier Name</label>
+                            <input type="text" name="Input[supplier_name][]" class="form-control" id="supplier_name" placeholder="Supplier Name" value="<?= !empty($valInputOrganic['supplier_name'])?$valInputOrganic['supplier_name']:set_value('Input[supplier_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[supplier_name][]'); ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[total_area]">Total Area (in acre's)</label>
+<!--                            <input type="text" name="Input[total_area]"  class="form-control" id="area" placeholder="Total Area (in acre's)" value="<?= !empty($valInputOrganic['total_area'])?$valInputOrganic['total_area']:set_value('Input[total_area]') ?>" maxlength="5" onkeypress="numberValidation(event)">-->
+                            <select class="form-control select2" name="Input[total_area][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Acre's</option>
+                                <?php foreach( getAreaInNumber() as $valArea ) { 
+                                        $selected = '';
+                                        if( !empty( $valInputOrganic['total_area'] ) && $valInputOrganic['total_area'] == $valArea  ) {
+                                            $selected = 'selected = "selected" ';
+                                        }
+                                ?>
+                                        <option value="<?= $valArea ?>" <?= set_select('Input[total_area][]', $valArea); ?> <?= $selected; ?> ><?= $valArea ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Input[total_area][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[other_details]">Other Details</label>
+                            <input type="text" name="Input[other_details][]" class="form-control" id="other_details" placeholder="Other Details" value="<?= !empty($valInputOrganic['other_details'])?$valInputOrganic['other_details']:set_value('Input[other_details][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[other_details][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[inspector_name][]">Crop Inspector Name</label>
+                            <input type="text" name="Crop[inspector_name][]" class="form-control" id="other_details" placeholder="Crop Inspector Name" value="<?= !empty($val_crop['inspector_name'])?$val_crop['inspector_name']:set_value('Crop[inspector_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Crop[inspector_name][]'); ?></span>
+                        </div>
+                    </div>
+                <?php } } ?>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[input_date]">Date</label>
+                            <input type="text" name="Input[input_date][]" class="form-control picker-date pull-right" id="input_date" placeholder="Date" value="<?= set_value('Input[input_date][]') ?>">
+                            <span class="has-error"><?php echo form_error('Input[input_date][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[input_name]">Input Name</label>
+                            <input type="text" name="Input[input_name][]" class="form-control" placeholder="Input Name" value="<?= set_value('Input[input_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[input_name][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[supplier_name]">Supplier Name</label>
+                            <input type="text" name="Input[supplier_name][]" class="form-control" id="supplier_name" placeholder="Supplier Name" value="<?= set_value('Input[supplier_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[supplier_name][]'); ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[total_area]">Total Area (in acre's)</label>
+<!--                                            <input type="text" name="Input[total_area]"  class="form-control" id="area" placeholder="Total Area (in acre's)" value="<?= set_value('Input[total_area]') ?>" maxlength="5" onkeypress="numberValidation(event)">-->
+                            <select class="form-control select2" name="Input[total_area][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Acre's</option>
+                                <?php foreach( getAreaInNumber() as $valArea ) { ?>
+                                        <option value="<?= $valArea ?>" <?= set_select('Input[total_area][]', $valArea); ?>><?= $valArea ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Input[total_area][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[other_details]">Other Details</label>
+                            <input type="text" name="Input[other_details][]" class="form-control" id="other_details" placeholder="Other Details" value="<?= set_value('Input[other_details][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[other_details][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[inspector_name][]">Crop Inspector Name</label>
+                            <input type="text" name="Crop[inspector_name][]" class="form-control" id="other_details" placeholder="Crop Inspector Name" value="<?= set_value('Crop[inspector_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Crop[inspector_name][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label class="control-label">Add</label>
+                            <button type="button" class="btn btn-success js-add-input-organic-button"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="js-input-organic-count" value="0">
+                <div class="form-group js-input-organic-group hide" id="js-template-input-organic">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[input_date][]">Date</label>
+                            <input type="text" name="Input[input_date][]" class="form-control picker-date pull-right" placeholder="Date" value="<?= set_value('Input[input_date][]') ?>">
+                            <span class="has-error"><?php echo form_error('Input[input_date][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[input_name][]">Input Name</label>
+                            <input type="text" name="Input[input_name][]" class="form-control" id="js-input-name" placeholder="Input Name" value="<?= set_value('Input[input_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[input_name][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[supplier_name][]">Supplier Name</label>
+                            <input type="text" name="Input[supplier_name][]" class="form-control" id="js-supplier-name" placeholder="Supplier Name" value="<?= set_value('Input[supplier_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Input[supplier_name][]'); ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[total_area][]">Total Area (in acre's)</label>
+<!--                                            <input type="text" name="Input[total_area]"  class="form-control" id="area" placeholder="Total Area (in acre's)" value="<?= set_value('Input[total_area]') ?>" maxlength="5" onkeypress="numberValidation(event)">-->
+                            <select class="form-control" name="Input[total_area][]" style="width:100%">
+                                <option disabled="disabled" selected="selected" >Select Acre's</option>
+                                <?php foreach( getAreaInNumber() as $valArea ) { ?>
+                                        <option value="<?= $valArea ?>" <?= set_select('Input[total_area]', $valArea); ?>><?= $valArea ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('Input[total_area][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Input[other_details]">Other Details</label>
+                            <input type="text" name="Input[other_details][]" class="form-control" id="other_details" placeholder="Other Details" value="<?= set_value('Input[other_details]')?>">
+                            <span class="has-error"><?php echo form_error('Input[other_details]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Crop[inspector_name][]">Crop Inspector Name</label>
+                            <input type="text" name="Crop[inspector_name][]" class="form-control" id="other_details" placeholder="Crop Inspector Name" value="<?= set_value('Crop[inspector_name][]')?>">
+                            <span class="has-error"><?php echo form_error('Crop[inspector_name][]'); ?></span>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label class="control-label">Remove</label>
+                            <button type="button" class="btn btn-danger" onclick="removeInputOrganicTemplate(this)"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

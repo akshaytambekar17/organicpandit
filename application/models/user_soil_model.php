@@ -22,7 +22,7 @@ class user_soil_model extends CI_Model {
         $this->db->order_by('id','DESC');
         return $this->db->get('tbl_users_soil_details')->result_array();
     }
-    public function getUsersSoilByUserId($user_id) {
+    public function getUserSoilByUserId($user_id) {
         $this->db->where('user_id',$user_id);
         return $this->db->get('tbl_users_soil_details')->result_array();
     }

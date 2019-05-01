@@ -29,23 +29,33 @@ class Login extends MY_Controller {
     function login_validation() {
         $this->load->library('form_validation');
         $post =$this->input->post();
-        $data = array('user_type_id' => $post['user_type_id'],
-                      'username' => $post['username'],
-                      'password' => $post['password']
-                    );
-        $result = $this->login_model->getUsersByEmailIdPassword($data);
-        if($result){
-            $session_data = array(
-                'usertype' => $result['user_type_id'],
-                'username' => $result['username'],
-                'id' => $result['user_id'],
-            );
-            $this->session->set_userdata('user_data', $result);
-            print('success');
+        if( !empty( $post['user_type_id'] ) ) { 
+            
+            $data = array('user_type_id' => $post['user_type_id'],
+                          'username' => $post['username'],
+                          'password' => $post['password']
+                        );
+            $arrUserDetailsResult = $this->login_model->getUsersByEmailIdPassword($data);
+            if( !empty( $arrUserDetailsResult ) ) { 
+                $userDetails = array(
+                    'usertype' => $arrUserDetailsResult['user_type_id'],
+                    'username' => $arrUserDetailsResult['username'],
+                    'id' => $arrUserDetailsResult['user_id'],
+                );
+                $this->session->set_userdata('user_data', $arrUserDetailsResult);
+                $result['success'] = true;
+                $result['userData'] = $userDetails;
+            } else {
+                $this->session->set_flashdata('error', 'Invalid Username and Password');
+                $result['success'] = false;
+                $result['message'] = 'Invalid Username and Password';
+            }
         } else {
-            $this->session->set_flashdata('error', 'Invalid Username and Password');
-            print('fail');
+            $this->session->set_flashdata('error', 'Please select the User Type');
+            $result['success'] = false;
+            $result['message'] = 'Please select the User Type';
         }
+        echo json_encode( $result );
     }
 
 }

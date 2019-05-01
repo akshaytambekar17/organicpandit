@@ -1,181 +1,247 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-      <title><?= $title?></title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- font awesome -->
-      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-      <!-- css -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" />
-      <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/styles.css">
 
-      <!-- js -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    </head>
-    <body background="<?php echo base_url(); ?>assets/images/final.jpg";>
-      <!-- header -->
-      <?php $this->load->view('includes/header');?>
-
-        <!-- banner -->
-        <div class="container-fluid">
-            <div class="row ">
-                <div class="banner">  <img src="<?php echo base_url(); ?>assets/images/banner/banner.png" alt="organic world" >     </div>
-            </div> 
-
-            <section>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!--<h2 class="text-center text-green text-uppercase ptb-50">Click on your Organic partner To Registration</h2>-->
-                            <h2 class="text-center text-green  pb1-30" style="color:black;"><?= $heading?></h2>
+<!-- banner -->
+<div class="container-fluid">
+    <div class="row ">
+        <div class="registration-banner">  <img src="<?php echo base_url(); ?>assets/design/img/banner-reg1.jpg" alt="organic world" >     </div>
+    </div> 
+    <section class="mid-icon-section main-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-12 col-xs-12 text-center">
+                        <div class="icon-dynamic-tabs">
+                            <h1 class="main-head wow fadeInDown" data-wow-delay="0.1s">Register  your organic network</h1>
+                            <div class="row no-margin network-tabs">
+                                <div class="col-sm-12">
+                                    <ul class="horizontal-list tab-list">
+                                        <li class="active wow fadeInLeft" data-wow-delay=".10s" >
+                                            <a href="#<?= $user_type_list[0]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/farmer.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInLeft" data-wow-delay=".20s" >
+                                            <a href="#<?= $user_type_list[1]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/fpo.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInLeft" data-wow-delay=".30s" >
+                                            <a href="#<?= $user_type_list[2]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/trader.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInLeft" data-wow-delay=".40s" >
+                                            <a href="#<?= $user_type_list[3]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/processor.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInLeft" data-wow-delay=".50s" >
+                                            <a href="#<?= $user_type_list[4]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/buyer.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInLeft" data-wow-delay=".60s" >
+                                            <a href="#<?= $user_type_list[5]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/organic consultant.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="vertical-list">
+                                        <ul class="inline-list tab-list">
+                                            <li class="wow fadeInUp" data-wow-delay="1.80s">
+                                                <a href="#<?= $user_type_list[6]['id'] ?>" data-toggle="tab">
+                                                    <img src="<?= base_url() ?>assets/design/img/icons-flat/organic inputs.png" class="img-responsive" />
+                                                </a>
+                                            </li>
+                                            <li class="wow fadeInUp" data-wow-delay="1.70s">
+                                                <a href="#<?= $user_type_list[7]['id'] ?>" data-toggle="tab">
+                                                    <img src="<?= base_url() ?>assets/design/img/icons-flat/packaging.png" class="img-responsive" />
+                                                </a>
+                                            </li>
+                                            <li class="wow fadeInUp" data-wow-delay="1.60s">
+                                                <a href="#<?= $user_type_list[8]['id'] ?>" data-toggle="tab">
+                                                    <img src="<?= base_url() ?>assets/design/img/icons-flat/logistic.png" class="img-responsive" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="tab-content organic-network-content wow zoomIn" data-wow-delay=".50s">
+                                        <div id="<?= $user_type_list[0]['id'] ?>" class="tab-pane fade in active">
+                                            <h3><?= $user_type_list[0]['name'] ?></h3>
+                                            <p>
+                                                <?= $user_type_list[0]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[0]['id'] ?>" class="btn">Register  <?= $user_type_list[0]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[1]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[1]['name'] ?></h3>
+                                            <p><?= $user_type_list[1]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[1]['id'] ?>" class="btn">Register  <?= $user_type_list[1]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[2]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[2]['name'] ?></h3>
+                                            <p><?= $user_type_list[2]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[2]['id'] ?>" class="btn">Register  <?= $user_type_list[2]['name'] ?></a></p>
+                                        </div>
+                                        <div id="<?= $user_type_list[3]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[3]['name'] ?></h3>
+                                            <p>
+                                                <?= $user_type_list[3]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[3]['id'] ?>" class="btn">Register  <?= $user_type_list[3]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[4]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[4]['name'] ?></h3>
+                                            <p>
+                                                <?= $user_type_list[4]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[4]['id'] ?>" class="btn">Register  <?= $user_type_list[4]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[5]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[5]['name'] ?></h3>
+                                            <p><?= $user_type_list[5]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[5]['id'] ?>" class="btn">Register  <?= $user_type_list[5]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[6]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[6]['name'] ?></h3>
+                                            <p><?= $user_type_list[6]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[6]['id'] ?>" class="btn">Register  <?= $user_type_list[6]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[7]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[7]['name'] ?></h3>
+                                            <p><?= $user_type_list[7]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[7]['id'] ?>" class="btn">Register  <?= $user_type_list[7]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[8]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[8]['name'] ?></h3>
+                                            <p><?= $user_type_list[8]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[8]['id'] ?>" class="btn">Register  <?= $user_type_list[8]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[9]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[9]['name'] ?></h3>
+                                            <p><?= $user_type_list[9]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[9]['id'] ?>" class="btn">Register  <?= $user_type_list[9]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[10]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[10]['name'] ?></h3>
+                                            <p><?= $user_type_list[10]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[10]['id'] ?>" class="btn">Register  <?= $user_type_list[10]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[11]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[11]['name'] ?></h3>
+                                            <p><?= $user_type_list[11]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[11]['id'] ?>" class="btn">Register  <?= $user_type_list[11]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[12]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[12]['name'] ?></h3>
+                                            <p><?= $user_type_list[12]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[12]['id'] ?>" class="btn">Register  <?= $user_type_list[12]['name'] ?></a></p>
+                                        </div>
+                                        <div id="<?= $user_type_list[13]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[13]['name'] ?></h3>
+                                            <p><?= $user_type_list[13]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[13]['id'] ?>" class="btn">Register  <?= $user_type_list[13]['name'] ?></a></p>
+                                        </div>
+                                        <div id="<?= $user_type_list[14]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[14]['name'] ?></h3>
+                                            <p><?= $user_type_list[14]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[14]['id'] ?>" class="btn">Register  <?= $user_type_list[14]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[15]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[15]['name'] ?></h3>
+                                            <p><?= $user_type_list[15]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>search-certification-agency?id=<?= $user_type_list[15]['id'] ?>" class="btn">Register  <?= $user_type_list[15]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                        <div id="<?= $user_type_list[16]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[16]['name'] ?></h3>
+                                            <p><?= $user_type_list[16]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration-certification-agency?id=<?= $user_type_list[16]['id'] ?>" class="btn">Register  <?= $user_type_list[16]['name'] ?></a></p>
+                                        </div>
+                                        <div id="<?= $user_type_list[17]['id'] ?>" class="tab-pane fade in">
+                                            <h3><?= $user_type_list[17]['name'] ?></h3>
+                                            <p><?= $user_type_list[17]['description'] ?><br><br>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[17]['id'] ?>" class="btn">Register  <?= $user_type_list[17]['name'] ?></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="vertical-list">
+                                        <ul class="inline-list tab-list">
+                                            <li class="wow fadeInDown" data-wow-delay=".70s" >
+                                                <a href="#<?= $user_type_list[17]['id'] ?>" data-toggle="tab">
+                                                    <img src="<?= base_url() ?>assets/design/img/icons-flat/ngo.png" class="img-responsive" />
+                                                </a>
+                                            </li>
+                                            <li class="wow fadeInDown" data-wow-delay=".80s" >
+                                                <a href="#<?= $user_type_list[16]['id'] ?>" data-toggle="tab">
+                                                    <img src="<?= base_url() ?>assets/design/img/icons-flat/restaurant.png" class="img-responsive" />
+                                                </a>
+                                            </li>
+                                            <li class="wow fadeInDown" data-wow-delay=".90s" >
+                                                <a href="#<?= $user_type_list[15]['id'] ?>" data-toggle="tab">
+                                                    <img src="<?= base_url() ?>assets/design/img/icons-flat/certification agencies.png" class="img-responsive" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <ul class="horizontal-list tab-list">
+                                        <li class="wow fadeInRight" data-wow-delay="1.50s">
+                                            <a href="#<?= $user_type_list[9]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/farm equipment.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInRight" data-wow-delay="1.40s">
+                                            <a href="#<?= $user_type_list[10]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/exhibitor.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInRight" data-wow-delay="1.30s">
+                                            <a href="#<?= $user_type_list[11]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/shops.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInRight" data-wow-delay="1.20s">
+                                            <a href="#<?= $user_type_list[12]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/labs.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInRight" data-wow-delay="1.10s">
+                                            <a href="#<?= $user_type_list[13]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/government agencies.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                        <li class="wow fadeInRight" data-wow-delay="1s" >
+                                            <a href="#<?= $user_type_list[14]['id'] ?>" data-toggle="tab">
+                                                <img src="<?= base_url() ?>assets/design/img/icons-flat/institution.png" class="img-responsive" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row" style="padding: 10px 70px; ">
-                        <center>
-                            <?php foreach($user_type_list as $value){ ?>
-                                <div class="col20 col-md-2 col-sm-4">
-                                    <?php if($value['id'] == 16){ ?>
-                                        <a href="<?= base_url()?>registration-certification-agency?id=<?= $value['id']?>">
-                                    <?php }else{ ?>
-                                        <a href="<?= base_url()?>registration?id=<?= $value['id']?>">
-                                    <?php } ?>
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/<?= $value['images']?>" alt="<?= $value['name']?>" ></div>
-                                        <p class="partner-head"><?= $value['name']?></p>
-                                    </a>
-                                </div>
-                            <?php } ?>
-                            <!--      <div class="col20 col-md-2 col-sm-4">
-                                      <a href="farmer-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/farmer.png" alt="organic world" ></div>
-                                        <p class="partner-head">Farmer</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="fpo-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/fpo(1).png" alt="organic world" ></div>
-                                        <p class="partner-head">FPO</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="trader-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/traders.png" alt="organic world" ></div>
-                                        <p class="partner-head">Trader</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="processor-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/processor.png" alt="organic world" ></div>
-                                        <p class="partner-head">Processor</p>
-                                      </a>
-                                    </div>-->
-                            <!--        <div class="col20 col-md-2 col-sm-4">
-                                      <a href="buyer-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/buyeR.png" alt="organic world" ></div>
-                                        <p class="partner-head">Buyer</p>
-                                      </a>
-                                    </div>-->
-                            <!--        <div class="col20 col-md-2 col-sm-4">
-                                      <a href="org-consultant-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/organic co.png" alt="organic world" ></div>
-                                        <p class="partner-head">Organic Consultant</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="org-input-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/organic input.png" alt="organic world" ></div>
-                                        <p class="partner-head">Organic Input Company</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="packing-company-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/packaging.png" alt="organic world" ></div>
-                                        <p class="partner-head">Packaging Company</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4 ">
-                                      <a href="logistic-company-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/logistic.png" alt="organic world" ></div>
-                                        <p class="partner-head">Logistic Company</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="farm-equip-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/farm equ.png" alt="organic world" ></div>
-                                        <p class="partner-head">Farm Equipment Company</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="exhibitor-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/exhibitors(1).png" alt="organic world" ></div>
-                                        <p class="partner-head">Exhibitors</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="org-shops-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/shops.png" alt="organic world" ></div>
-                                        <p class="partner-head">Shops</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="org-labs-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/labs.png" alt="organic world" ></div>
-                                        <p class="partner-head">Labs</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="gov-agency-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/government age.png" alt="organic world" ></div>
-                                        <p class="partner-head">Government Agencies</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="institutions-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/institution.png" alt="organic world" ></div>
-                                        <p class="partner-head">Institutions</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/certification.png" alt="organic world" ></div>
-                                        <p class="partner-head">Others</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="org-restaurant-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/resturant.png" alt="organic world" ></div>
-                                        <p class="partner-head">Restaurant</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="ngo-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/ngo(1).png" alt="organic world" ></div>
-                                        <p class="partner-head">NGO</p>
-                                      </a>
-                                    </div>
-                                    <div class="col20 col-md-2 col-sm-4">
-                                      <a href="certification-register">
-                                        <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/certification.png" alt="organic world" ></div>
-                                        <p class="partner-head">Certification</p>
-                                      </a>
-                                    </div>-->
-                            <!-- <div class="col20 col-md-2 col-sm-4">
-                               <a href="post-requirement">
-                                 <div class="partner-box"><img src="<?php echo base_url(); ?>assets/images/certification.png" alt="organic world" ></div>
-                                 <p class="partner-head">Post Require.</p>
-                               </a>
-                             </div>-->
-                        </center>  
-                    </div>
-
                 </div>
-            </section>
+            </div>
         </div>
-    
+    </section>
+</div>
+
 

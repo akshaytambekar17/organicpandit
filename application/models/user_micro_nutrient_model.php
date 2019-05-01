@@ -22,7 +22,7 @@ class user_micro_nutrient_model extends CI_Model {
         $this->db->order_by('id','DESC');
         return $this->db->get('tbl_users_micro_nutrient')->result_array();
     }
-    public function getUsersMicroNutrientByUserId($user_id) {
+    public function getUserMicroNutrientByUserId($user_id) {
         $this->db->where('user_id',$user_id);
         return $this->db->get('tbl_users_micro_nutrient')->result_array();
     }

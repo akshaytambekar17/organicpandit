@@ -36,6 +36,24 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
+define('SHOW_SEARCH_VIEW_DETAILS_KEY', 'show_search_view_details');
+define('SHOW_SEARCH_VIEW_ENQUIRY_KEY', 'show_search_view_enquiry');
 
+define('CURRENT_DATETIME',date('Y-m-d H:i:s'));
+
+define('ADMINUSERNAME', 'adminmaster');
+define('ADMINEMAILID', 'akshaytambekar17@gmail.com');
+define('REGISTRATION', 1);
+define('POST', 2);
+define('BID', 3);
+define('VERIFY_REGISTRATION', 4);
+define('VERIFY_POST', 5);
+define('NOTIFY_SMS', 1);
+define('NOTIFY_EMAIL', 2);
+define('NOTIFY_PUSH', 3);
+define('NOTIFY_WEB', 4);
+
+define('ENABLED',2);
+define('DISABLED',1);
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

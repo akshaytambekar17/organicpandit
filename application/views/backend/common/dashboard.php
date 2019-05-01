@@ -122,12 +122,12 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3><?= count($user_list)?></h3>
-                        <p>User Registrations</p>
+                        <p>Total Users</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="<?= base_url()?>admin/user" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url()?>admin/user-registration-dashboard" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             

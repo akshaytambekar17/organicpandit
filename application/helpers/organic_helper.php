@@ -20,6 +20,21 @@ function getBidNotifications(){
     return $result;
     
 }
+
+function getUserCount(){
+    $ci=& get_instance();
+    $ci->load->model('user_model','User');
+    $session = UserSession();
+    $userSession = $session['userData'];
+    if( ADMINUSERNAME == $userSession['username'] ){
+        $result = $ci->User->getUsers();
+    }else{
+        $result = $ci->User->getUserByPartnerUserId( $userSession['user_id'] );
+    }
+    return $result;
+    
+}
+
 function getPostNotifications(){
     $ci=& get_instance();
     $ci->load->model('notifications_model','Notifications');
@@ -27,6 +42,7 @@ function getPostNotifications(){
     return $result;
     
 }
+
 function getQuantities(){
     $data = array( 1 => '500kg to 1 ton',
                    2 => '1 ton to 3 ton',
@@ -60,6 +76,7 @@ function getTotalFarmer(){
     return $data;
 }
 function getCropCategory(){
+    
     $data = array( 
                    1 => 'Vegetables',
                    2 => 'Fruits',
@@ -68,8 +85,24 @@ function getCropCategory(){
                    5 => 'Rice',
                    6 => 'Other',
             );
-    return $data;
+    $result = getProductCategory();
+    return $result;
 }
+
+function getProductCategory(){
+    
+    $ci=& get_instance();
+    $ci->load->model('product_category_model','ProductCategory');
+    $productCategoryList = $ci->ProductCategory->getProductCategorys();
+    foreach( $productCategoryList as $value ) {
+        $resultData[$value['id']] =$value['name'];
+        $data = $resultData;
+    }
+    
+    return $data;
+    
+}
+
 function getSoilElement(){
     $data = array( 
                    1 => 'Nitrogen',
@@ -100,6 +133,7 @@ function getMicroElement(){
             );
     return $data;
 }
+
 function getMicroPercentage(){
     $data = array( 
                    1 => 'Sufficient',
@@ -107,6 +141,41 @@ function getMicroPercentage(){
             );
     return $data;
 }
+
+function getEcommerceCategory(){
+    $data = array( 
+                   1 => 'Organic Farming',
+                   2 => 'Testing Farming',
+            );
+    return $data;
+}
+
+function getEcommerceSubCategory(){
+    $data = array( 
+                   1 => 'Integrated Pest Management',
+                   2 => 'Crop Protection',
+                   3 => 'Crop Nutrition',
+            );
+    return $data;
+}
+
+function getEcommerceBrand(){
+    $data = array( 
+                   1 => 'Brand1',
+                   2 => 'Brand2',
+                   3 => 'Brand3',
+            );
+    return $data;
+}
+
+function getAreaInNumber() {
+    
+    for( $i = 1; $i <= 1000; $i++ ) {
+        $arrNumber[] = $i;
+    }
+    return $arrNumber;
+}
+
 function ViewRegistration($userTypeDetails){
     $ci=& get_instance();
     $data['user_type_details'] = $userTypeDetails;

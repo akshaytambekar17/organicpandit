@@ -8,16 +8,16 @@
                     <div class="col-sm-2">
                         <h5>GET STARTED</h5>
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Sign up</a></li>
+                            <li><a href="<?= base_url()?>">Home</a></li>
+                            <li><a href="<?= base_url()?>signup">Sign up</a></li>
                             <li><a href="#">Downloads</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-2">
                         <h5>ABOUT US</h5>
                         <ul>
-                            <li><a href="#">Company Information</a></li>
-                            <li><a href="#">Contact us</a></li>
+                            <li><a href="<?= base_url()?>about">Company Information</a></li>
+                            <li><a href="<?= base_url()?>contact">Contact us</a></li>
                             <li><a href="#">Reviews</a></li>
                         </ul>
                     </div>
@@ -35,13 +35,33 @@
                             <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
                             <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
                         </div>
-                        <button type="button" class="btn btn-default">Contact us</button>
+                        <a href="<?= base_url()?>contact" class="btn btn-default">Contact us</a></li>
+<!--                        <button type="button" class="btn btn-default">Contact us</button>-->
                     </div>
                 </div>
             </div>
             <div class="footer-copyright">
-                <p>&copy; 2018 Copyright Text </p>
+                <p>&copy; 2018 Organic Pandit </p>
             </div>
         </footer>
+        <script type="text/javascript">
+            function validateEmail( email ) {
+                var email_format = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                if(email_format.test( email )){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            function validateMobileNumber( mobileno ) {
+                var number_format = /^\d{10}$/;
+                if(number_format.test(mobileno)){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+        </script>
     </body>
 </html>

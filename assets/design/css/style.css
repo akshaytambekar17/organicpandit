@@ -107,8 +107,10 @@
 .img-circle{
     border-radius: 50%;
     width: 100%;
-    max-width: 73px;
-    height: auto;
+/*    max-width: 73px;
+    height: auto;*/
+    max-width: 96px;
+    height: 99px;
 }
 .accImg{
 /*    padding: 12px 17px;*/

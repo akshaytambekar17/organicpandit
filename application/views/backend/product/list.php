@@ -39,12 +39,9 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-<!--                                        <th>User Type</th>-->
+                                        <th>Category</th>
                                         <th>Product Name</th>
                                         <th>Description</th>
-<!--                                        <th>Quality</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>-->
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -56,12 +53,14 @@
                                 ?>
                                             <tr class="gradeX" id="order-<?= $value['id'] ?>">
                                                 <td class="hidden"><?= $value['id']; ?></td>
-<!--                                                <td><?= $value['user_type_name']; ?></td>-->
+                                                <td>
+                                                    <?php 
+                                                        $categoryDetails = getProductCategory();
+                                                        echo $categoryDetails[ $value['product_category_id'] ];
+                                                    ?>
+                                                </td>
                                                 <td><?= $value['name']; ?></td>
                                                 <td><?= $value['description']; ?></td>
-<!--                                                <td><?= $value['quality']; ?></td>
-                                                <td><?= $value['quantity']; ?></td>
-                                                <td><?= $value['price']; ?></td>-->
                                                 <td><?php
                                                         if($value['status'] == 2){ 
                                                             echo "Active";

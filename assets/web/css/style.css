@@ -57,6 +57,10 @@ a.disabled {
     text-align: center;
     display: block;
 }
+.certification-agency-verified-image{
+    margin: 34px 0px;
+    height: 45px;
+}
 /********Star rating css***********/
 div.stars {
   display: inline-block;

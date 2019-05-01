@@ -1,4 +1,13 @@
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <div class="content-wrapper">
     <section class="content-header">
         <h1><?= !empty($heading)?$heading:'Heading'?></h1>
@@ -36,17 +45,20 @@
                   <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover datatable-list" id="delete_list">
+                            <table class="table table-striped table-bordered table-hover" id="js-user-registration-list">
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <th>User Type</th>
+                                        <th>Partner User Type</th>
+                                        <th>Partner Fullname</th>
                                         <th>Fullname</th>
-                                        <th>Username</th>
+                                        <?php if( ADMINUSERNAME == $user_data['username'] ){ ?>
+                                            <th>User Type</th>
+                                        <?php } ?>
                                         <th>Email Id</th>
                                         <th>Mobile number</th>
                                         <th>Verified</th>
-                                        <?php if($user_data['username'] == ADMINUSERNAME || $user_data['user_type_id'] == 16 ){ ?>
+                                        <?php if( ADMINUSERNAME == $user_data['username'] || $user_data['user_type_id'] == 16 ){ ?>
                                                 <th>Action</th>
                                         <?php }?>
                                     </tr>
@@ -59,9 +71,30 @@
                                 ?>
                                             <tr class="gradeX" id="order-<?= $value['user_id'] ?>">
                                                 <td class="hidden"><?= $value['user_id']; ?></td>
-                                                <td><?= $value['user_type_name'];?></td>
-                                                <td><?= $value['fullname'];?></td>
-                                                <td><?= $value['username'];?></td>
+                                                <td>
+                                                    <?php
+                                                        if( ADMINUSERNAME == $user_data['username'] ) {
+                                                            $partnerUserTypeDetails = $this->UserType->getUserTypeById( $value['partner_type_id'] );
+                                                            echo $partnerUserTypeDetails['name'];
+                                                        }else {
+                                                            echo $value['user_type_name'];
+                                                        }
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        if( ADMINUSERNAME == $user_data['username'] ) {
+                                                            $partnerUserDetails = $this->User->getUserById( $value['partner_user_id'] );
+                                                            echo $partnerUserDetails['fullname'];
+                                                        }else {
+                                                            echo $value['fullname'];
+                                                        }
+                                                    ?>
+                                                </td>
+                                                <td><?= $value['fullname']?></td>
+                                                <?php if( ADMINUSERNAME == $user_data['username'] ){ ?>
+                                                    <td><?= $value['user_type_name'];?></td>
+                                                <?php } ?>
                                                 <td><?= $value['email_id'];?></td>
                                                 <td><?= $value['mobile_no'];?></td>
                                                 <td><?= ($value['is_verified'] == 2)?'Verified':'Not Verified';?></td>
@@ -143,6 +176,14 @@
                 }
             });
         });
+        $('#js-user-registration-list').dataTable( {
+            aaSorting: [[0, "desc"]],
+            dom: 'Bfrtip',
+            buttons: [
+                'csvHtml5', 'pdfHtml5'
+            ]
+        } );
+        
     });
     function userDelete(ths){
         var id = $(ths).data('user_id');

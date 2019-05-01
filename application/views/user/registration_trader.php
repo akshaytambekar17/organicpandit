@@ -185,8 +185,18 @@
                             <label class="control-label label-required" for="product_id">Product Name</label>
                             <select class="form-control select2" name="Product[product_id][]" id="product_id">
                                 <option disabled="disabled" selected="selected">Select Product Name</option>
-                                <?php foreach ($product_list as $value) { ?>
-                                    <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                <?php foreach (getProductCategory() as $key_pro => $val_pro) { ?>
+                                    <optgroup label="<?= $val_pro ?>">
+                                        <?php
+                                            foreach ($product_list as $value) {
+                                                if ($value['product_category_id'] == $key_pro) {
+                                        ?>      
+                                                <option value="<?= $value['id'] ?>" <?= set_select('Product[product_id][]', $value['id']); ?>><?= $value['name'] ?></option>
+                                        <?php 
+                                                }
+                                            } 
+                                        ?>
+                                    </optgroup>            
                                 <?php } ?>
                             </select>
                         </div>

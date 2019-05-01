@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="utype">User Type:</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control select2" name="user_type_id">
+                                    <select class="form-control select2" name="user_type_id" >
                                         <option disabled="disabled" selected="selected" >Select User Type</option>
                                         <?php foreach ($this->UserType->getUserTypes() as $value) { ?>
                                                 <option value="<?= $value['id'] ?>" <?= set_select('user_type_id', $value['id']); ?>><?= $value['name'] ?></option>
@@ -120,7 +120,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $('#loginForm').formValidation({
                     framework: 'bootstrap',
                     fields: {
-                        usertype: {
+                        user_type_id: {
                             validators: {
                                 notEmpty: {
                                     message: 'The user type is required'
@@ -154,22 +154,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 contentType: false,
                                 cache: false,
                                 processData: false,
-                                success: function (response)
-                                {
-                                    console.log(response);
-                                    if (response != 'success') {
+                                success: function (response) {
+                                    var response = $.parseJSON(response);
+                                    if ( false == response['success'] ) {
                                         swal({
                                             title: "Fail!",
-                                            text: "username or password is incorrect!",
+                                            text: response['message'],
                                             type: "warning",
                                             showCancelButton: false,
                                             timer: 2000
                                         });
-
-
-                                        // document.getElementById("farmerRegisterForm").reset();
                                     } else {
-                                        console.log(response);
                                         swal({
                                             title: "Success!",
                                             text: "Login successful!",

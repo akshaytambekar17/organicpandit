@@ -1,5 +1,4 @@
 <?php
-
 class MY_Controller extends CI_Controller {
 
     public function __construct() {
@@ -8,6 +7,7 @@ class MY_Controller extends CI_Controller {
         $this->load->library(array('form_validation'));
         $this->load->helper(array('url', 'language','form'));
         $this->load->model('login_model','Login');
+        $this->load->model('contact_us_model','ContactUs');
         $this->load->model('crop_model','Crop');
         $this->load->model('bid_model','Bid');
         $this->load->model('post_requirement_model','PostRequirement');
@@ -20,22 +20,16 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_micro_nutrient_model','UserMicroNutrient');
         $this->load->model('user_crop_model','UserCrop');
         $this->load->model('user_input_organic_model','UserInputOrganic');
+        $this->load->model('user_input_organic_ecommerce_model','UserInputOrganicEcommerce');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
         $this->load->model('notifications_model','Notifications');
         $this->load->model('certification_agency_model','CertificationAgency');
-        
-        define('ADMINUSERNAME', 'adminmaster');
-        define('REGISTRATION', 1);
-        define('POST', 2);
-        define('BID', 3);
-        define('VERIFY_REGISTRATION', 4);
-        define('VERIFY_POST', 5);
-        define('NOTIFY_SMS', 1);
-        define('NOTIFY_EMAIL', 2);
-        define('NOTIFY_PUSH', 3);
-        define('NOTIFY_WEB', 4);
-        
+        $this->load->model('organic_setting_model','OrganicSetting');
+        $this->load->model('search_enquiry_model','SearchEnquiry');
+        $this->load->model('product_category_model','ProductCategory');
+        $this->load->model('agency_model','Agency');
+
     }
 
     public function backendLayout($data) {
@@ -49,7 +43,7 @@ class MY_Controller extends CI_Controller {
         }else{
             includesAll($data);
         }
-        
+
     }
     public function frontendLayout($data) {
         includesHeaderFooter($data);
@@ -60,7 +54,7 @@ class MY_Controller extends CI_Controller {
     public function frontendLayoutHome($data) {
         includesHeaderFooterHome($data);
     }
-    
+
     function curlReq($url, $vars) {
         $curl_handle = curl_init();
         curl_setopt($curl_handle, CURLOPT_URL, $url);
@@ -72,7 +66,7 @@ class MY_Controller extends CI_Controller {
         $object = json_decode($buffer);
         return $object;
     }
-    
+
     public function sendSms($mobileno, $textmessage) {
 //Your authentication key
         $authKey = "149798ARBQ5C3uSC958f9edd0";
@@ -82,7 +76,7 @@ class MY_Controller extends CI_Controller {
         $senderId = "ShiftMe";
 //Your message to send, Add URL encoding here.
         $message = urlencode($textmessage);
-//Define route 
+//Define route
         $route = "1";
 //Prepare you post parameters
         $postData = array(
@@ -123,18 +117,18 @@ class MY_Controller extends CI_Controller {
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'ssl://smtp.gmail.com';
         $config['smtp_user'] = 'akshaytambekar17@gmail.com';
-        $config['smtp_pass'] = '@kshay_1793';
+        $config['smtp_pass'] = '1793_@kshu';
         $config['smtp_port'] = 465;
         $config['charset']   = 'utf-8';
         $config['newline']   = "\r\n";
         $config['mailtype'] = 'html';
         $config['wordwrap'] = TRUE;
         $this->email->initialize($config);
-        $this->email->from('akshaytambekar17@gmail.com', 'Shift Me');
+        $this->email->from('akshaytambekar17@gmail.com', 'Organic Pandit');
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($message);
-        
+
         if($this->email->send()){
             $result['success'] = true;
             $result['message'] = "Email has been sent Successfully";
@@ -144,6 +138,10 @@ class MY_Controller extends CI_Controller {
             //printDie($this->email->print_debugger());
         }
         return $result;
+    }
+    
+    public function response( $data ) {
+        echo json_encode( $data );
     }
 //    public function UserSession(){
 //        if($this->session->userdata('user_data')){
@@ -155,5 +153,5 @@ class MY_Controller extends CI_Controller {
 //        }
 //        return $result;
 //    }
-    
+
 }

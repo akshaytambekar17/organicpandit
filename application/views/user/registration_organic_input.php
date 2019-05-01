@@ -67,7 +67,7 @@
                     <span class="has-error"><?php echo form_error('website'); ?></span>
                     <br><br>
                 </div>
-                
+
 <!--                <div class="form-group col-md-4">
                     <label class="control-label label-required" for="agency_id">Select Certification Agency</label>
                     <select class="form-control select2" name="agency_id">
@@ -79,7 +79,7 @@
                     <span class="has-error"><?php echo form_error('agency_id'); ?></span>
                     <br><br>
                 </div>-->
-                
+
                 <div class="form-group col-md-4">
                     <label class="control-label label-required" for="state_id">Select State</label>
                     <select class="form-control select2" name="state_id" id="state_id">
@@ -127,6 +127,238 @@
                     <label class="control-label" for="video">Choose Video</label>
                     <input type="file" name="video" class="form-control" id="video">
                     <span class="has-error"><?php echo form_error('video'); ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">E-Commerce Details</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group pr-group box-body">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="category_id">Category</label>
+                            <select class="form-control select2" name="Ecommerce[category_id][]" id="category_id">
+                                <option disabled="disabled" selected="selected">Select Category</option>
+                                <?php foreach( getEcommerceCategory() as $key => $value ){ ?>
+                                    <option value="<?= $key ?>" <?= set_select('Ecommerce[category_id][]', $key); ?>><?= $value?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="category_id">Select SubCategory</label>
+                            <select class="form-control select2" name="Ecommerce[sub_category_id][]" id="sub_category_id">
+                                <option disabled="disabled" selected="selected">Select SubCategory</option>
+                                <?php foreach( getEcommerceSubCategory() as $key => $value ){ ?>
+                                    <option value="<?= $key ?>" <?= set_select('Ecommerce[sub_category_id][]', $key); ?>><?= $value?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="brand">Brand</label>
+                            <select class="form-control select2" name="Ecommerce[ecommerce_brand_id][]" id="ecommerce_brand_id">
+                                <option disabled="disabled" selected="selected">Select Brand</option>
+                                <?php foreach( getEcommerceBrand() as $key => $value ){ ?>
+                                    <option value="<?= $key ?>" <?= set_select('Ecommerce[ecommerce_brand_id][]', $key); ?>><?= $value?></option>
+                                <?php } ?>
+                            </select>
+<!--                            <input type="text" name="Ecommerce[ecommerbrand][]" class="form-control" id="brand" placeholder="Brand" value="<?= set_value('Ecommerce[brand][]') ?>">-->
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="price">Price</label>
+                            <input type="text" name="Ecommerce[price][]" class="form-control" id="price" placeholder="Price" value="<?= set_value('Ecommerce[price][]') ?>">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="images">Images</label>
+                            <input type="file" name="ecommerce_images[]" class="form-control" id="ecommerce_images">
+                        </div>
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Dosage</label>
+                            <input type="text" name="Ecommerce[dosage][]" class="form-control" id="dosage" placeholder="Dosage" value="<?= set_value('Ecommerce[dosage][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="price">Weight</label>
+                            <input type="text" name="Ecommerce[weight][]" class="form-control" id="weight" placeholder="Weight" value="<?= set_value('Ecommerce[weight][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Spectrum</label>
+                            <input type="text" name="Ecommerce[spectrum][]" class="form-control" id="spectrum" placeholder="Spectrum" value="<?= set_value('Ecommerce[spectrum][]') ?>">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Compatibility</label>
+                            <input type="text" name="Ecommerce[compatibility][]" class="form-control" id="compatibility" placeholder="Compatibility" value="<?= set_value('Ecommerce[compatibility][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Duration of Effect</label>
+                            <input type="text" name="Ecommerce[duration_effect][]" class="form-control" id="duration_effect" placeholder="Duration of Effect" value="<?= set_value('Ecommerce[duration_effect][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Frequency of Application</label>
+                            <input type="text" name="Ecommerce[frequency_application][]" class="form-control" id="frequency_application" placeholder="Frequency of Application" value="<?= set_value('Ecommerce[frequency_application][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Applicable Crops</label>
+                            <input type="text" name="Ecommerce[applicable_crops][]" class="form-control" id="applicable_crops" placeholder="Applicable Crops" value="<?= set_value('Ecommerce[applicable_crops][]') ?>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Final Remarks</label>
+                            <input type="text" name="Ecommerce[final_remarks][]" class="form-control" id="applicable_crops" placeholder="Final Remarks" value="<?= set_value('Ecommerce[final_remarks][]') ?>">
+                        </div>
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="quality">Chemical Composition</label>
+                            <input type="text" name="Ecommerce[chemical][]" class="form-control" id="chemical" placeholder="Chemical Composition" value="<?= set_value('Ecommerce[chemical][]') ?>">
+                        </div>
+                        
+                        <div class="form-group col-md-1">
+                            <label class="control-label">Add</label>
+                            <button type="button" class="btn btn-success js-add-ecommerce-fields"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- The option field template containing an option field and a Remove button -->
+                <div class=" form-group product-group box-body hide" id="ecommerce-template">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="category_id">Category</label>
+                            <select class="form-control select-picker" name="Ecommerce[category_id][]">
+                                <option disabled="disabled" selected="selected">Select Category</option>
+                                <?php foreach( getEcommerceCategory() as $key => $value ){ ?>
+                                    <option value="<?= $key ?>" <?= set_select('Ecommerce[category_id][]', $key); ?>><?= $value ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="category_id">Select SubCategory</label>
+                            <select class="form-control select-picker" name="Ecommerce[sub_category_id][]">
+                                <option disabled="disabled" selected="selected">Select SubCategory</option>
+                                <?php foreach( getEcommerceSubCategory() as $key => $value ){ ?>
+                                    <option value="<?= $key ?>" <?= set_select('Ecommerce[sub_category_id][]', $key); ?>><?= $value ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="brand">Brand</label>
+                            <select class="form-control" name="Ecommerce[ecommerce_brand_id][]" id="ecommerce_brand_id">
+                                <option disabled="disabled" selected="selected">Select Brand</option>
+                                <?php foreach( getEcommerceBrand() as $key => $value ){ ?>
+                                    <option value="<?= $key ?>" <?= set_select('Ecommerce[ecommerce_brand_id][]', $key); ?>><?= $value?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="price">Price</label>
+                            <input type="text" name="Ecommerce[price][]" class="form-control" id="price" placeholder="Price" value="<?= set_value('Ecommerce[price][]') ?>">
+                        </div>
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="images">Images</label>
+                            <input type="file" name="images[]" class="form-control" id="images">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Dosage</label>
+                            <input type="text" name="Ecommerce[dosage][]" class="form-control" id="dosage" placeholder="Dosage" value="<?= set_value('Ecommerce[dosage][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label label-required" for="price">Weight</label>
+                            <input type="text" name="Ecommerce[weight][]" class="form-control" id="weight" placeholder="Weight" value="<?= set_value('Ecommerce[weight][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Spectrum</label>
+                            <input type="text" name="Ecommerce[spectrum][]" class="form-control" id="spectrum" placeholder="Spectrum" value="<?= set_value('Ecommerce[spectrum][]') ?>">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Compatibility</label>
+                            <input type="text" name="Ecommerce[compatibility][]" class="form-control" id="compatibility" placeholder="Compatibility" value="<?= set_value('Ecommerce[compatibility][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Duration of Effect</label>
+                            <input type="text" name="Ecommerce[duration_effect][]" class="form-control" id="duration_effect" placeholder="Duration of Effect" value="<?= set_value('Ecommerce[duration_effect][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Frequency of Application</label>
+                            <input type="text" name="Ecommerce[frequency_application][]" class="form-control" id="frequency_application" placeholder="Frequency of Application" value="<?= set_value('Ecommerce[frequency_application][]') ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Applicable Crops</label>
+                            <input type="text" name="Ecommerce[applicable_crops][]" class="form-control" id="applicable_crops" placeholder="Applicable Crops" value="<?= set_value('Ecommerce[applicable_crops][]') ?>">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="price">Final Remarks</label>
+                            <input type="text" name="Ecommerce[final_remarks][]" class="form-control" id="applicable_crops" placeholder="Final Remarks" value="<?= set_value('Ecommerce[final_remarks][]') ?>">
+                        </div>
+                        
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="quality">Chemical Composition</label>
+                            <input type="text" name="Ecommerce[chemical][]" class="form-control" id="chemical" placeholder="Chemical Composition" value="<?= set_value('Ecommerce[chemical][]') ?>">
+                        </div>
+                        
+                        <div class="form-group col-md-1">
+                            <label class="control-label">Remove</label>
+                            <button type="button" class="btn btn-danger" onclick="removeButton(this)"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="ecommerce_count" id="ecommerce-count" value="0">
+                <div class=" form-group">
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Ecommerce[category_id][]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Ecommerce[sub_category_id][]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Ecommerce[brand][]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Ecommerce[price][]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('Ecommerce[weight]'); ?></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="has-error"><?php echo form_error('ecommerce_images[]'); ?></span>
+                    </div>
                 </div>
             </div>
         </div>

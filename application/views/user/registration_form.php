@@ -16,7 +16,7 @@
                     <?=$message ?>
                 </div>
             </div>
-        <?php }?> 
+        <?php }?>
         <?php if($message = $this ->session->flashdata('Error')){?>
             <div class="col-md-12 ">
                 <div class="alert alert-dismissible alert-danger">
@@ -26,12 +26,40 @@
             </div>
         <?php }?>
         <section class="content alert-box">
-            <div class="row">    
+            <div class="row">
                 <div class="col-md-12 ">
                     <div class="box box-success">
                         <div class="box-header"></div>
                         <form  method="post" enctype="multipart/form-data" name="registration-form" id="registration-form" >
                             <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Partner With Us</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label" for="partner_type_id">Partner Type</label>
+                                                    <select class="form-control select2" name="partner_type_id"  onchange="getPartnerUserDetails(this)">
+                                                        <option selected="selected" disabled="disabled" >Select Partner Type</option>
+                                                        <?php foreach( $userTypeList  as $value ) { ?>
+                                                                <option value="<?= $value['id'] ?>" <?= set_select('partner_type_id', $value['id'] ); ?> ><?= $value['name'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <span class="has-error"><?php echo form_error('partner_type_id'); ?></span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label" for="partner_user_id">Partner Name</label>
+                                                    <select class="form-control select2" name="partner_user_id" id="js-partner-user-id">
+                                                        <option selected="selected" disabled="disabled" >Select Partner Name</option>
+                                                    </select>
+                                                    <span class="has-error"><?php echo form_error('partner_user_id'); ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <?php echo ViewRegistration($user_type_details); ?>
                                 <?php if($user_type_details['id'] != 1 && $user_type_details['id'] != 2){ ?>
                                     <div class="row">
@@ -73,7 +101,7 @@
                                 <a href="<?php echo base_url(); ?>" class="btn btn-warning">Cancel</a>
                             </div>
                         </form>
-                    </div>  
+                    </div>
                     <div class="clearfix"> </div>
                 </div>
             </div>
@@ -81,6 +109,14 @@
     </div>
     <script>
         $(document).ready(function () {
+            var todayDate = currentDate();
+            $('.picker-date').datepicker({
+                    format : 'dd/mm/yyyy',
+                    autoclose: true,
+                    //startDate: new Date()
+                    startDate: '01/01/2017',
+                    setDate: todayDate
+            });
             $('.nav-tabs li').not('.active').addClass('disabled');
             $('.nav-tabs li').not('.active').find('a').removeAttr("data-toggle")
             if($("#user-type-id").val() == 1 || $("#user-type-id").val() == 2 ){
@@ -115,8 +151,9 @@
                 getCitiesByState(state_id);
             }
             $(".addButton").on('click',function() {
+                var todayDate = currentDate();
                 var count = $("#product-count").val();
-                var total_count = parseInt(count) + 1; 
+                var total_count = parseInt(count) + 1;
                 var $template = $('#optionTemplate'),
                 $clone    = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
                 $option   = $clone.find('[name="from_date[]"] , [name="to_date[]"]');
@@ -125,20 +162,80 @@
                 $("#product-count").val(total_count);
                 $("#select-picker-"+total_count).select2();
                 $('.picker-date').datepicker({
-                    //format : 'dd/mm/yyyy',
+                    format : 'dd/mm/yyyy',
                     autoclose: true,
-                    startDate: new Date()
+                    startDate: '01/01/2017',
+                    setDate: todayDate
                 });
-                
+
             });
+
+            $( ".js-add-ecommerce-fields" ).on('click',function() {
+                var count = $("#ecommerce-count").val();
+                var total_count = parseInt(count) + 1;
+                var $template = $('#ecommerce-template'),
+                $clone    = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
+                /*$option   = $clone.find('[name="from_date[]"] , [name="to_date[]"]');*/
+                $option_select = $clone.find('[name="Ecommerce[category_id][]"]');
+                $option_select.attr('id','select-picker-'+total_count);
+                $option_select_sub_category = $clone.find('[name="Ecommerce[sub_category_id][]"]');
+                $option_select_sub_category.attr('id','js-select-subcategory-picker-'+total_count);
+                $("#ecommerce-count").val(total_count);
+            });
+
+            $(".add-crop-button").on('click',function() {
+                var todayDate = currentDate();
+                var count = $("#crop-count").val();
+                var total_count = parseInt(count) + 1;
+                var $template = $('#template-crop'),
+                $clone    = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
+                $option_select = $clone.find('[name="Crop[crop_id][]"]');
+                $option_select.attr('id','crop-select-picker-'+total_count);
+                $( "#crop-select-picker-" + total_count).select2();
+                $selectArea = $clone.find('[name="Crop[area][]"]');
+                $selectArea.attr( 'id','js-crop-area-select-' + total_count );
+                $( "#js-crop-area-select-" + total_count).select2();
+                $('.picker-date').datepicker({
+                    format : 'dd/mm/yyyy',
+                    autoclose: true,
+                    startDate: '01/01/2017',
+                    setDate: todayDate
+                });
+
+            });
+
             $(".add-soil-button").on('click',function() {
+                //soil-count
                 var $template = $('#template-soil'),
                 $clone = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
+//                $option_element = $clone.find('[name="Soil[element][]"]');
+//                $option_percentage = $clone.find('[name="so[percentage][]"]');
+//                $option_select.attr('id','crop-select-picker-'+total_count);
             });
+
             $(".add-micro-button").on('click',function() {
                 var $template = $('#template-micro'),
                 $clone = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
             });
+            
+            $( ".js-add-input-organic-button" ).on('click',function() {
+                var todayDate = currentDate();
+                var count = $("#js-input-organic-count").val();
+                var totalCount = parseInt( count ) + 1;
+                var $template = $( '#js-template-input-organic' ),
+                $clone = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
+                $optionSelect = $clone.find('[name="Input[total_area][]"]');
+                $optionSelect.attr('id','js-input-organic-select-picker-' + totalCount);
+                $( "#js-input-organic-count" ).val( totalCount );
+                $( "#js-input-organic-select-picker-" + totalCount ).select2();
+                $('.picker-date').datepicker({
+                    format : 'dd/mm/yyyy',
+                    autoclose: true,
+                    startDate: '01/01/2010',
+                    setDate: todayDate
+                });
+            });
+            
             $("#email_id").on('focusout',function(){
                 var email = $(this).val();
                 var result = validateEmail(email);
@@ -148,11 +245,7 @@
                     $(".error-email-id").text("In Valid");
                 }
             });
-            $('.number-validation').keypress(function(event) {
-                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)  && event.which != 8) {
-                    event.preventDefault();
-                }
-            });
+
             $('.next-button').click(function(e){
                 e.preventDefault();
                 $('.nav-tabs li.active').next('li').removeClass('disabled');
@@ -164,6 +257,7 @@
                   $('.nav-tabs li:eq(0) a').trigger('click');
                 }
             });
+
             $('.prev-button').click(function(e){
                 e.preventDefault();
                 var prev_tab = $('.nav-tabs > .active').prev('li').find('a');
@@ -173,10 +267,12 @@
                   $('.nav-tabs li:eq(0) a').trigger('click');
                 }
             });
+
             $("#last-next-button").on('click',function(){
                 $("#submit").show();
             });
         });
+
         function getCitiesByState(state_id){
             $.ajax({
                 type: "POST",
@@ -190,20 +286,84 @@
                 }
             });
         }
+
+        function getPartnerUserDetails(ths){
+            var partner_type_id = $(ths).val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "get-partner-user-details",
+                data: { 'partner_type_id' : partner_type_id },
+                dataType: "html",
+                success: function(result){
+                    var html = $.parseJSON(result);
+                    $("#js-partner-user-id").html('<option disabled selected> Select Partner Name</option>');
+                    $("#js-partner-user-id").append(html);
+                }
+            });
+        }
+
         function removeButton(ths){
             var $row  = $(ths).parents('.product-group');
             // Remove element containing the option
             $row.remove();
         }
+
         function removeSoilTemplate(ths){
             var $row  = $(ths).parents('.soil-group');
             // Remove element containing the option
             $row.remove();
         }
+
         function removeMicroTemplate(ths){
             var $row  = $(ths).parents('.micro-group');
             // Remove element containing the option
             $row.remove();
         }
+
+        function removeCropTemplate(ths){
+            var $row  = $(ths).parents('.crop-group');
+            // Remove element containing the option
+            $row.remove();
+        }
         
+        function removeInputOrganicTemplate( ths ){
+            var $row  = $( ths ).parents('.js-input-organic-group');
+            // Remove element containing the option
+            $row.remove();
+        }
+        
+        function numberValidation(event){
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)  && event.which != 8) {
+                event.preventDefault();
+            }
+        }
+        
+        function currentDate() {
+            var date = new Date();
+            var todayDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            return todayDate;
+        }
+//        function soilValidationForm(){
+//            var flag = 1;
+//            $(".league-prize_structure").each(function() {
+//                var id = $(this).data('id');
+//                if($(this).val() == ''){
+//                    $("#league-prize_structure_"+id).next().text('Prize Structure cannot be blank');
+//                    $("#league-prize_structure_"+id).closest('div').addClass('has-error');
+//                    checkPrizeStructureStatus = 0;
+//                }else{
+//                    var prize_structure_value_id = "league-prize_structure_"+id;
+//                    var prize_max_id = "league-prize_"+id;
+//                    var prize_validation = prizeStructureValidation(prize_structure_value_id,prize_max_id);
+//                    if(prize_validation){
+//                        $("#league-prize_structure_"+id).closest('div').removeClass('has-error');
+//                        $("#league-prize_structure_"+id).next().text('');
+//                    }else{
+//                        $("#league-prize_structure_"+id).next().text('Prize Structure does not match with Prize');
+//                        $("#league-prize_structure_"+id).closest('div').addClass('has-error');
+//                        checkPrizeStructureStatus = 0;
+//                    }
+//                }
+//            });
+//        }
     </script>

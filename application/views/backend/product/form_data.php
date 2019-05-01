@@ -32,25 +32,26 @@
                     </div>
                     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?= !empty($product_details)?site_url('admin/product/update?id='.$product_details['id']):site_url('admin/product/add')?>" name="products-form" id="products-form">
                         <div class="box-body">
-<!--                            <div class="form-group col-md-12">
-                                <label>Select User Type</label>
-                                <select class="form-control select2" name="user_type_id">
-                                    <option disabled="disabled" selected="selected">Select User Type</option>
-                                    <?php /*foreach($user_type_list  as $value){ 
+                            <div class="form-group col-md-12">
+                                <label>Select Product Category</label>
+                                <select class="form-control select2" name="product_category_id">
+                                    <option disabled="disabled" selected="selected">Select Category</option>
+                                    <?php 
+                                        foreach(getProductCategory()  as $key => $value){ 
                                             $selected='';
-                                            if(!empty($product_details)){
-                                                if($product_details['user_type_id'] == $value['id']){
+                                            if( !empty( $product_details ) ) { 
+                                                if( $product_details['product_category_id'] == $key ){
                                                     $selected = 'selected="selected"';
                                                 }else{
                                                     $selected = '';
                                                 }
-                                            }*/
+                                            }
                                     ?>
-                                            <option value="<?php //$value['id']?>" <?php //!empty($product_details)?$selected:set_select('user_type_id',$value['id']);?>><?php //$value['name']?></option>
-                                    <?php //} ?>
+                                            <option value="<?= $key ?>" <?= !empty( $product_details ) ? $selected : set_select('product_category_id', $key );?>><?= $value?></option>
+                                    <?php } ?>
                                 </select>
-                                <span class="has-error"><?php echo form_error('user_type_id'); ?></span>
-                            </div>-->
+                                <span class="has-error"><?php echo form_error('product_category_id'); ?></span>
+                            </div>
                             <div class="form-group col-md-12">
                                 <label>Product Name</label>
                                 <input type="text" name="name"  class="form-control" id="name" placeholder="Product Name" value="<?= !empty($product_details['name'])?$product_details['name']:set_value('name')?>">

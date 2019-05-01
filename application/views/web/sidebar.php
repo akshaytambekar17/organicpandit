@@ -1,5 +1,8 @@
 <?php 
     $session = UserSession();
+    if ( empty( $session['success'] ) ) {
+        redirect('admin', 'refresh');
+    }
     $userSession = $session['userData'];
 ?>
 <body class="hold-transition skin-purple sidebar-mini fixed">
@@ -355,10 +358,15 @@
                             <?php } ?>
                         </a>
                     </li>
-                    <?php if($userSession['username'] == 'adminmaster'){ ?>    
+                    <?php if( $userSession['username'] == 'adminmaster'){ ?>    
                             <li>
                                 <a href="<?= base_url()?>admin/product">
                                     <i class="fa fa-cubes"></i> <span>Product</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url()?>admin/product-category">
+                                    <i class="fa fa-list-alt "></i> <span>Category</span>
                                 </a>
                             </li>
                             <li>
@@ -379,10 +387,17 @@
                         <a href="<?= base_url()?>admin/user">
                             <i class="ion ion-person-add"></i> <span>User Registration</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-green"><?= count($this->User->getUsers())?></small>
+                                <small class="label pull-right bg-green"><?= count(getUserCount())?></small>
                             </span>
                         </a>
                     </li>
+                    <?php if( $userSession['username'] == ADMINUSERNAME ) { ?>
+                        <li>
+                            <a href="<?= base_url()?>admin/organic-setting">
+                                <i class="fa fa-cog"></i> <span>Organic Setting</span>
+                            </a>
+                        </li>
+                    <?php } ?>
                     <?php if($userSession['username'] != ADMINUSERNAME ){ ?>
                         <li class="treeview">
                             <a href="#">

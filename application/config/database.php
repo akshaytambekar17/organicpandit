@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';           // organicpandit_db  root
-$db['default']['password'] = 'root';           // organicpandit_db  root 
-$db['default']['database'] = 'organicpandit';   //organicpandit_db  organicpandit_db
+$db['default']['password'] = '';           // organicpandit_db  root 
+$db['default']['database'] = 'db_demo_organic_pandit';   //organicpandit_db  organicpandit_db
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

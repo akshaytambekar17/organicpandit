@@ -21,6 +21,15 @@ class CertificationAgencyController extends MY_Controller {
      */
     function __construct() {
         parent::__construct();
+        $session = UserSession();
+        if ( empty( $session['success'] ) ) {
+            redirect('admin', 'refresh');
+        }else {
+            $userSession = $session['userData'];
+//            if( ADMINUSERNAME != $userSession['username'] ){
+//                redirect('home', 'refresh');
+//            }
+        }
         $this->load->model('login_model','Login');
     }
     public function index() {

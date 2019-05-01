@@ -34,6 +34,16 @@
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Partner Type</label>
+                                        <h4><?= $partnerUserTypeName?></h4>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Partner Name</label>
+                                        <h4><?= $partnerUserName?></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-12">
                                         <label>User Type</label>
                                         <h4><?= $user_details['user_type_name']?></h4>
@@ -256,7 +266,7 @@
                                 ?>
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <h4>Bank Details</h4>
+                                        <h3>Bank Details</h3>
                                     </div>
                                 </div>
                                 <?php 
@@ -280,6 +290,141 @@
                                         <h4><?= !empty($user_bank_details['ifsc_code'])?$user_bank_details['ifsc_code']:"NA"?></h4>
                                     </div>
                                 </div>
+                                <?php if(!empty($user_crop_details)){ ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <h3>Crop Inspection Details</h3>
+                                        </div>
+                                    </div>
+                                
+                                    <?php foreach($user_crop_details as $value_crop){ ?>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Crop Name</label>
+                                                <h4><?= !empty($value_crop['crop_name'])?$value_crop['crop_name']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Area (in acre's)</label>
+                                                <h4><?= !empty($value_crop['area'])?$value_crop['area']:"NA"?></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Date of Sown</label>
+                                                <h4><?= !empty($value_crop['date_sown'])?$value_crop['date_sown']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Date of Harvest</label>
+                                                <h4><?= !empty($value_crop['date_harvest'])?$value_crop['date_harvest']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Date of Harvest</label>
+                                                <h4><?= !empty($value_crop['date_harvest'])?$value_crop['date_harvest']:"NA"?></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Crop Condition</label>
+                                                <h4><?= !empty($value_crop['crop_condition'])?$value_crop['crop_condition']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Other Details</label>
+                                                <h4><?= !empty($value_crop['other_details'])?$value_crop['other_details']:"NA"?></h4>
+                                            </div>
+                                        </div>
+                                    <?php }?>
+                                <?php }?>
+                                <?php if(!empty($user_soil_details)){ ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <h3>Soil Details</h3>
+                                        </div>
+                                    </div>
+                                
+                                    <?php foreach($user_soil_details as $value_soil){ ?>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Element</label>
+                                                <h4><?php
+                                                        $element_details = getSoilElement();    
+                                                        echo $element_details[$value_soil['element']];
+                                                    ?>
+                                                </h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Percentage</label>
+                                                <h4><?php
+                                                        $percentage_details = getSoilPercentage();    
+                                                        echo $percentage_details[$value_soil['percentage']];
+                                                    ?>
+                                                </h4>
+                                            </div>
+                                            
+                                        </div>
+                                    <?php }?>
+                                <?php }?>
+                                <?php if(!empty($user_micro_details)){ ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <h3>Micro Nutrients Details</h3>
+                                        </div>
+                                    </div>
+                                
+                                    <?php foreach($user_micro_details as $value_micro){ ?>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Element</label>
+                                                <h4><?php
+                                                        $element_details = getMicroElement();    
+                                                        echo $element_details[$value_micro['element']];
+                                                    ?>
+                                                </h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Percentage</label>
+                                                <h4><?php
+                                                        $percentage_details = getMicroPercentage();    
+                                                        echo $percentage_details[$value_micro['percentage']];
+                                                    ?>
+                                                </h4>
+                                            </div>
+                                            
+                                        </div>
+                                    <?php }?>
+                                <?php }?>
+                                <?php if( !empty($user_input_details ) ) { ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <h3>Input Organic Details</h3>
+                                        </div>
+                                    </div>
+                                    <?php  foreach( $user_input_details as $valInputOrganic) { ?>
+                                        <div class="row">[
+                                            <div class="form-group col-md-3">
+                                                <label>Date</label>
+                                                <h4><?= !empty($valInputOrganic['input_date'])?$valInputOrganic['input_date']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Input Name</label>
+                                                <h4><?= !empty($valInputOrganic['input_name'])?$valInputOrganic['input_name']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Total Area (in acre's)</label>
+                                                <h4><?= !empty($valInputOrganic['total_area'])?$valInputOrganic['total_area']:"NA"?></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Supplier Name</label>
+                                                <h4><?= !empty($valInputOrganic['supplier_name'])?$valInputOrganic['supplier_name']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Other Details</label>
+                                                <h4><?= !empty($valInputOrganic['other_details'])?$valInputOrganic['other_details']:"NA"?></h4>
+                                            </div>
+                                        </div>
+                                    
+                                <?php } } ?>
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label>Certification Verification </label>
