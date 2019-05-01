@@ -659,6 +659,7 @@ class UserController extends MY_Controller {
             $data['userList'] = $this->User->getUserByPartnerUserId( $userSession['user_id'] );
         }
         $data['userTypeList'] = $this->UserType->getUserTypes();
+        
         $data['title'] = 'User Registration';
         $data['heading'] = 'User Registration';
         $data['backend'] = true;
