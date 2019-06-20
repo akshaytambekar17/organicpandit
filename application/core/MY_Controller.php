@@ -21,6 +21,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_crop_model','UserCrop');
         $this->load->model('user_input_organic_model','UserInputOrganic');
         $this->load->model('user_input_organic_ecommerce_model','UserInputOrganicEcommerce');
+	$this->load->model('user_certifications_model','UserCertifications');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
         $this->load->model('notifications_model','Notifications');
@@ -29,6 +30,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('search_enquiry_model','SearchEnquiry');
         $this->load->model('product_category_model','ProductCategory');
         $this->load->model('agency_model','Agency');
+        $this->load->model('sell_products_model','SellProduct');
 
     }
 
@@ -139,7 +141,7 @@ class MY_Controller extends CI_Controller {
         }
         return $result;
     }
-    
+
     public function response( $data ) {
         echo json_encode( $data );
     }

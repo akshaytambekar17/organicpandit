@@ -41,6 +41,7 @@
                                         <select class="form-control select2" name="city_id" id="city_id">
                                             <option disabled="disabled" selected="selected">Select City</option>
                                         </select>
+                                        <input type="hidden" value="<?= isset( $city_id_hidden ) ? $city_id_hidden  : '' ?>" class="js-city-id-hidden" >
                                         <span class="has-error"><?php echo form_error('city_id'); ?></span>
                                     </div>
 <!--                                    <div class="col-md-3">
@@ -53,13 +54,18 @@
                                         </select>
                                     </div>-->
                                     <div class="col-md-4">
-                                        <label>Select Certification</label>
-                                        <select class="form-control select2" name="certification_id" id="is_logistic">
-                                            <option disabled="disabled" selected="selected">Select Certification</option>
-                                            <?php foreach (getCertifications() as $key => $value) { ?>
-                                                <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
-                                            <?php } ?>
-                                        </select>
+                                        <?php if( 7 == $user_type_details['id'] ) {  ?>
+                                            <label>Search by Brand</label>
+                                            <input type="text" class="form-control" name="search_brand" value="<?= isset( $search_brand ) ? $search_brand : set_value('search_brand') ?>">
+                                        <?php } else { ?>
+                                            <label>Select Certification</label>
+                                            <select class="form-control select2" name="certification_id" >
+                                                <option disabled="disabled" selected="selected">Select Certification</option>
+                                                <?php foreach (getCertifications() as $key => $value) { ?>
+                                                    <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        <?php } ?>
                                     </div>
 
                                 </div>
@@ -107,7 +113,7 @@
                             <?php if(!empty($search_user_list)){
                                     foreach($search_user_list as $value){
                             ?>
-                                <div class="box post-panel">
+                                <div class="box box-warning post-panel">
                                     <div class="box-body">
                                         <div class="col-md-2">
                                             <h4>Fullname</h4>
@@ -124,6 +130,7 @@
                                                 ?>
 
                                             </h4>
+                                            
                                         </div>
                                         <div class="col-md-2">
                                             <h4>Email Id</h4>
@@ -139,18 +146,18 @@
                                             <div class="user-padding-block">
                                                 <?php $disabled = empty($userSession)?'disabled':'';  ?>
                                                 <?php if( !empty( $organicSettingViewDetails ) && ENABLED == $organicSettingViewDetails['value'] ){  ?>
-                                                    <div class="col-md-4">
-                                                        <a href="javascript:void(0)" class="btn btn-info" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  onclick="userModal(this)" title="View Details" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <div class="col-md-3">
+                                                        <a href="<?= base_url() ?>view-user-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-info" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  data-toggle="tooltip"  title="View Details" ><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                     </div>
                                                 <?php } ?>
                                                 <?php if( !empty( $organicSettingViewEnquiry ) && ENABLED == $organicSettingViewEnquiry['value'] ){  ?>
-                                                    <div class="col-md-6">
-                                                        <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  onclick="enquiryModal(this)" title="View Enquiry" ><i class="fa fa-address-card" aria-hidden="true"></i></a>
+                                                    <div class="col-md-3">
+                                                        <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  onclick="enquiryModal(this)" data-toggle="tooltip" title="View Enquiry" ><i class="fa fa-address-card" aria-hidden="true"></i></a>
                                                     </div>
                                                 <?php } ?>
                                                 <?php if( 7 == $user_type_details['id'] ){ ?>
-                                                    <div class="col-md-6">
-                                                        <a href="<?= base_url()?>organic-input-ecommerce-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-info" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" style="margin-left: 14px;">Buy Now</a>
+                                                    <div class="col-md-3">
+                                                        <a href="<?= base_url()?>organic-input-ecommerce-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Buy Now"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
                                                     </div>
                                                 <?php } ?>
                                             </div>
@@ -161,8 +168,39 @@
                                                 <img src="<?= base_url()?>upload/profile/not_verified.png" class="user-verified-image">
                                             <?php } ?>
                                         </div>
-
                                     </div>
+                                    <?php if( ORGANIC_INPUT == $value['user_type_id'] ) {  ?>
+                                        
+                                        <div class="box-body">
+                                            <div class="col-md-2">
+                                                <h4>Category</h4>
+                                                <?php if( isVal( $value['category_id'] ) ) {  ?>
+                                                    <b><?php
+                                                            $arrCategory = getEcommerceCategory();
+                                                            echo $arrCategory[$value['category_id']];
+                                                        ?>
+                                                    </b>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="col-md-4 center">
+                                                <h4>Sub Category</h4>
+                                                <?php if( isVal( $value['sub_category_id'] ) ) {  ?>
+                                                    <b><?php
+                                                            $arrSubCategory = getEcommerceSubCategory();
+                                                            echo $arrSubCategory[$value['category_id']];
+                                                        ?>
+                                                    </b>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <h4>Brand</h4>
+                                                <?php if( isVal( $value['ecommerce_brand_id'] ) ) {  ?>
+                                                    <b><?= $value['ecommerce_brand_id']; ?></b>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                              
+                                    <?php } ?>
                                 </div>
 
                             <?php } }else{ ?>
@@ -185,7 +223,7 @@
         </div>
     </div>
     <!-- modal -->
-    
+
     <div class="modal fade user-popup" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -204,7 +242,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="js-modal-enquiry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -252,7 +290,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade confirmation-popup" id="ConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -280,11 +318,13 @@
                 getCitiesByState(state_id);
             }
         });
-        function getCitiesByState(state_id){
+        function getCitiesByState( intStateId ){
+            var intCityIdHidden = $(".js-city-id-hidden").val();
+            
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>" + "getcities-by-state",
-                data: { 'state_id' : state_id },
+                data: { 'state_id' : intStateId, 'city_id_hidden' : intCityIdHidden },
                 dataType: "html",
                 success: function(result){
                     var html = $.parseJSON(result);
@@ -293,7 +333,7 @@
                 }
             });
         }
-        
+
 //        function search()
 //        {
 //            var searchterm = jQuery("#search").val().trim().toLowerCase();
@@ -312,10 +352,10 @@
         function enquiryModal( ths ){
             clearEnquiry();
             $("#js-user-hidden").val( $(ths).data('user_id') );
-            $(".js-modal-enquiry-fullname").text( $( ths ).data('fullname') );    
+            $(".js-modal-enquiry-fullname").text( $( ths ).data('fullname') );
             $('#js-modal-enquiry').modal('show');
         }
-        
+
         function enquiry() {
             var valid = validateEnquiry();
             var formData = new FormData(document.getElementsByName('enquirt_form')[0])
@@ -339,22 +379,22 @@
                             $(".js-error-enquiry-insert").text( 'Something went wrong.Please try again later' );
                         }
                     }
-                }); 
+                });
             }
         }
-        
+
         function clearEnquiry() {
             $("#js-enquiry-fullname").val('');
             $("#js-enquiry-mobile-no").val('');
             $("#js-enquiry-email").val('');
             $("#js-enquiry-description").val('');
         }
-        
+
         function validateEnquiry(){
             var fullname = $("#js-enquiry-fullname").val();
             var mobileno = $("#js-enquiry-mobile-no").val();
             var email = $("#js-enquiry-email").val();
-            
+
             flag = true;
             if( '' == fullname ){
                 $('.js-error-enquiry-fullname').text("Please enter the Fullname");
@@ -362,7 +402,7 @@
             }else{
                 $('.js-error-enquiry-fullname').text("");
             }
-            
+
             if( '' == mobileno ){
                 $('.js-error-enquiry-mobile-no').text("Mobile number cannot be blank");
                 flag = false;
@@ -387,7 +427,10 @@
             }
             return flag;
         }
-        
+
+        /**
+        * To show details in Modal box. Currently we removing modal box and showing in seperate page.
+        **/
         function userModal(ths){
             var user_id = $(ths).data('user_id');
             $.ajax({
@@ -402,7 +445,7 @@
                 }
             });
         }
-        
+
         function confirmationModal(ths){
             var amount = $("#amount").val();
             if(amount == ''){

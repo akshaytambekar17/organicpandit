@@ -44,6 +44,12 @@ class user_input_organic_ecommerce_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
+    public function getUsersInputOrganicEcommerceByEcommerceBrand( $intUserId, $strBrand ) {
+        $this->db->where('user_id',$intUserId);
+        $this->db->like('ecommerce_brand_id',$strBrand);
+        return $this->db->get('tbl_users_organic_input_ecommerce')->result_array();
+    }
+    
     public function getUsersInputOrganicEcommerceById( $id ) {
         $this->db->where('id',$id);
         return $this->db->get('tbl_users_organic_input_ecommerce')->row_array();

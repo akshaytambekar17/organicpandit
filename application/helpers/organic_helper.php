@@ -77,14 +77,14 @@ function getTotalFarmer(){
 }
 function getCropCategory(){
     
-    $data = array( 
-                   1 => 'Vegetables',
-                   2 => 'Fruits',
-                   3 => 'Dry Fruits',
-                   4 => 'Spices',
-                   5 => 'Rice',
-                   6 => 'Other',
-            );
+//    $data = array( 
+//                   1 => 'Vegetables',
+//                   2 => 'Fruits',
+//                   3 => 'Dry Fruits',
+//                   4 => 'Spices',
+//                   5 => 'Rice',
+//                   6 => 'Other',
+//            );
     $result = getProductCategory();
     return $result;
 }
@@ -174,6 +174,14 @@ function getAreaInNumber() {
         $arrNumber[] = $i;
     }
     return $arrNumber;
+}
+
+function getSellProductDeliveryType(){
+    $data = array( 
+                   1 => 'Door Step',
+                   2 => 'Pick Only'                  
+            );
+    return $data;
 }
 
 function ViewRegistration($userTypeDetails){

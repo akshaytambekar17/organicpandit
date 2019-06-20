@@ -46,6 +46,7 @@
                                                         <?php foreach( $userTypeList  as $value ) { ?>
                                                                 <option value="<?= $value['id'] ?>" <?= set_select('partner_type_id', $value['id'] ); ?> ><?= $value['name'] ?></option>
                                                         <?php } ?>
+	                                                    <option value="0" <?= set_select('partner_type_id', 0 ); ?> >NONE</option>
                                                     </select>
                                                     <span class="has-error"><?php echo form_error('partner_type_id'); ?></span>
                                                 </div>
@@ -217,7 +218,7 @@
                 var $template = $('#template-micro'),
                 $clone = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
             });
-            
+
             $( ".js-add-input-organic-button" ).on('click',function() {
                 var todayDate = currentDate();
                 var count = $("#js-input-organic-count").val();
@@ -235,7 +236,7 @@
                     setDate: todayDate
                 });
             });
-            
+
             $("#email_id").on('focusout',function(){
                 var email = $(this).val();
                 var result = validateEmail(email);
@@ -325,19 +326,19 @@
             // Remove element containing the option
             $row.remove();
         }
-        
+
         function removeInputOrganicTemplate( ths ){
             var $row  = $( ths ).parents('.js-input-organic-group');
             // Remove element containing the option
             $row.remove();
         }
-        
+
         function numberValidation(event){
             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)  && event.which != 8) {
                 event.preventDefault();
             }
         }
-        
+
         function currentDate() {
             var date = new Date();
             var todayDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());

@@ -55,5 +55,27 @@ define('NOTIFY_WEB', 4);
 
 define('ENABLED',2);
 define('DISABLED',1);
+
+define('FARMER',1);
+define('FPO',2);
+define('TRADER',3);
+define('PROCESSOR',4);
+define('BUYER',5);
+define('ORGANIC_CONSULTANT',6);
+define('ORGANIC_INPUT',7);
+define('PACKAGING',8);
+define('LOGISTICS',9);
+define('FARM_EQUIPMENT',10);
+define('EXHIBITOR',11);
+define('SHOPS',12);
+define('LABS',13);
+define('GOVERNMENT_AGENICES',14);
+define('INSTITUTION',15);
+define('CERTIFICATION_AGENICES',16);
+define('RESTAURANTS',17);
+define('NGO',18);
+
+
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

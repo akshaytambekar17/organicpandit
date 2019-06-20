@@ -164,13 +164,13 @@
                                         <div id="<?= $user_type_list[15]['id'] ?>" class="tab-pane fade in">
                                             <h3><?= $user_type_list[15]['name'] ?></h3>
                                             <p><?= $user_type_list[15]['description'] ?><br><br>
-                                                <a href="<?= base_url() ?>search-certification-agency?id=<?= $user_type_list[15]['id'] ?>" class="btn">Register  <?= $user_type_list[15]['name'] ?></a>
+                                                <a href="<?= base_url() ?>registration-certification-agency?id=<?= $user_type_list[15]['id'] ?>" class="btn">Register  <?= $user_type_list[15]['name'] ?></a>
                                             </p>
                                         </div>
                                         <div id="<?= $user_type_list[16]['id'] ?>" class="tab-pane fade in">
                                             <h3><?= $user_type_list[16]['name'] ?></h3>
                                             <p><?= $user_type_list[16]['description'] ?><br><br>
-                                                <a href="<?= base_url() ?>registration-certification-agency?id=<?= $user_type_list[16]['id'] ?>" class="btn">Register  <?= $user_type_list[16]['name'] ?></a></p>
+                                                <a href="<?= base_url() ?>registration?id=<?= $user_type_list[16]['id'] ?>" class="btn">Register  <?= $user_type_list[16]['name'] ?></a></p>
                                         </div>
                                         <div id="<?= $user_type_list[17]['id'] ?>" class="tab-pane fade in">
                                             <h3><?= $user_type_list[17]['name'] ?></h3>

@@ -34,6 +34,12 @@ class product_model extends CI_Model {
         $this->db->where('id',$id);
         return $this->db->get('tbl_product')->row_array();
     }
+    
+    public function getProductByCategoryId( $intCategoryId ) {
+        $this->db->where('product_category_id',$intCategoryId);
+        $this->db->where('status',2);
+        return $this->db->get('tbl_product')->result_array();
+    }
     public function getFarmerProduct() {
         //$this->db->order_by('id','DESC');
         return $this->db->get('tbl_pr_farmer')->result_array();

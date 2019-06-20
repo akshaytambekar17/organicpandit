@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | -------------------------------------------------------------------------
 | Form Validaiton
 | -------------------------------------------------------------------------
-| 
+|
 */
 $config = array(
         'login' => array(
@@ -130,7 +130,7 @@ $config = array(
                         'label' => 'Select Certification',
                         'rules' => 'required'
                 ),
-                
+
         ),
         'search-post-requirement-form' => array(
                 array(
@@ -143,7 +143,7 @@ $config = array(
                         'label' => 'Select City',
                         'rules' => 'required'
                 ),
-                                
+
         ),
         'search-user-form' => array(
                 array(
@@ -156,7 +156,12 @@ $config = array(
                         'label' => 'Select City',
                         'rules' => 'required'
                 ),
-                                
+                array(
+                        'field' => 'certification_id',
+                        'label' => 'Select Certification',
+                        'rules' => 'trim'
+                ),
+
         ),
         'products-form' => array(
                     array(
@@ -205,9 +210,9 @@ $config = array(
                             'rules' => 'required'
                     )
             ),
-    
+
             'product-category-form' => array(
-                    
+
                     array(
                             'field' => 'name',
                             'label' => 'Category Name',
@@ -219,7 +224,7 @@ $config = array(
                             'rules' => 'required'
                     )
             ),
-    
+
             'user-type-form' => array(
                     array(
                             'field' => 'name',
@@ -287,7 +292,104 @@ $config = array(
                             'label' => 'Status',
                             'rules' => 'required'
                     ),
-            )
+            ),
+	        'sell-product-form' => array(
+		        array(
+			        'field' => 'category_id',
+			        'label' => 'Category',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'product_id',
+			        'label' => 'Product',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'product_description',
+			        'label' => 'Product Description',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'price',
+			        'label' => 'Price',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'variety',
+			        'label' => 'Variety',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'moisture',
+			        'label' => 'Moisture',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'texture',
+			        'label' => 'Texture',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'colour',
+			        'label' => 'Colour',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'broken_ratio',
+			        'label' => 'Broken Ratio',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'crop_year',
+			        'label' => 'Crop Year',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'certification_id',
+			        'label' => 'Certification',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'grain_length',
+			        'label' => 'Grain Length',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'supply_quantity',
+			        'label' => 'Supply Quantity',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'packaging_type',
+			        'label' => 'Packaging Type',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'delivery_location',
+			        'label' => 'Delivery Location',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'lead_time',
+			        'label' => 'Lead Time',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'delivery_type_id',
+			        'label' => 'Delivery Type',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'is_logistics',
+			        'label' => 'Logistics Required',
+			        'rules' => 'required'
+		        ),
+		        array(
+			        'field' => 'other_details',
+			        'label' => 'Other Details',
+			        'rules' => 'required'
+		        ),
+	        )
 );
 $config['error_prefix'] = '<div class="error">';
 $config['error_suffix'] = '</div>';

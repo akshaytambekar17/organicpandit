@@ -384,6 +384,11 @@
                             </li>
                     <?php } ?>
                     <li>
+                        <a href="<?= base_url()?>sell-product">
+                            <i class="fa fa-cart-arrow-down"></i> <span>Sell Product</span>
+                        </a>
+                    </li>        
+                    <li>
                         <a href="<?= base_url()?>admin/user">
                             <i class="ion ion-person-add"></i> <span>User Registration</span>
                             <span class="pull-right-container">

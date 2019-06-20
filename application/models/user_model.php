@@ -88,6 +88,21 @@ class user_model extends CI_Model {
         //$this->db->where('is_verified',2);
         return $this->db->get('tbl_users')->result_array();
     }
+    
+    public function getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrData ) {
+        
+        $this->db->select("u.*,uoie.*");
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_users_organic_input_ecommerce uoie','uoie.user_id = u.user_id');
+        $this->db->where('u.user_type_id',$arrData['user_type_id']);
+        $this->db->where('u.state_id',$arrData['state_id']);
+        $this->db->where('u.city_id',$arrData['city_id']);
+        if( !empty( $arrData['search_brand'])){
+            $this->db->like('uoie.ecommerce_brand_id',$arrData['search_brand']);
+        }
+        return $this->db->get()->result_array();
+    }
+    
     public function insert($data){
         $this->db->insert('tbl_users', $data);
         $last_id = $this->db->insert_id();

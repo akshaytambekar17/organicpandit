@@ -75,6 +75,7 @@ $route['farmer-register/update/(:any)/(:any)'] = 'farmer_register/update/$1/$2';
 
 $route['user/home'] = "UserController/home";  //done
 $route['search-user'] = "UserController/searchUser";  //done
+$route['view-user-details'] = "UserController/viewUserDetails";  //done
 $route['search-certification-agency'] = "UserController/searchCertificationAgency";  //done
 $route['get-user-by-id'] = "UserController/getUserById";  //done
 $route['organic-input-ecommerce-details'] = "UserController/organicInputEcommerceDetails";  //done
@@ -95,6 +96,12 @@ $route['registration-certification-agency'] = "UserController/registrationCertif
 
 $route['search-enquiry'] = "UserController/searchEnquiry";
 
+$route['sell-product'] = "backend/SellProductController/index";
+$route['sell-product/create'] = "backend/SellProductController/create";
+$route['sell-product/update'] = "backend/SellProductController/update";
+$route['sell-product/delete'] = "backend/SellProductController/delete";
+
+$route['fetch-product-by-category-id'] = "backend/SellProductController/fetchProductByCategoryId";
 
 /************* New Implementation Admin Panel **************/
 
