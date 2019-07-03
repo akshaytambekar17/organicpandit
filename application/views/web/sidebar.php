@@ -1,4 +1,4 @@
-<?php 
+<?php
     $session = UserSession();
     if ( empty( $session['success'] ) ) {
         redirect('admin', 'refresh');
@@ -36,9 +36,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">You have 4 messages</li>
                                 <li>
-                                     inner menu: contains the actual data 
+                                     inner menu: contains the actual data
                                     <ul class="menu">
-                                        <li> start message 
+                                        <li> start message
                                             <a href="#">
                                                 <div class="pull-left">
                                                     <img src="<?= base_url()?>assets/web/<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -50,7 +50,7 @@
                                                 <p>Why not buy a new awesome theme?</p>
                                             </a>
                                         </li>
-                                         end message 
+                                         end message
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
@@ -118,14 +118,14 @@
                                         <?php foreach(getNotifications() as $value){ ?>
                                             <li>
                                                 <a href="<?= base_url()?>admin/user">
-                                                        <i class="fa fa-users text-aqua"></i> 
+                                                        <i class="fa fa-users text-aqua"></i>
                                                         <?= $value['message']?>
                                                 </a>
                                             </li>
-                                        <?php } ?>    
+                                        <?php } ?>
                                         <li>
                                             <a href="<?= base_url()?>admin/bid">
-                                                <i class="fa fa-th text-yellow"></i> <?= count(getBidNotifications())?> new Bid 
+                                                <i class="fa fa-th text-yellow"></i> <?= count(getBidNotifications())?> new Bid
                                             </a>
                                         </li>
                                         <li>
@@ -157,9 +157,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">You have 9 tasks</li>
                                 <li>
-                                     inner menu: contains the actual data 
+                                     inner menu: contains the actual data
                                     <ul class="menu">
-                                        <li> Task item 
+                                        <li> Task item
                                             <a href="#">
                                                 <h3>
                                                     Design some buttons
@@ -173,8 +173,8 @@
                                                 </div>
                                             </a>
                                         </li>
-                                         end task item 
-                                        <li> Task item 
+                                         end task item
+                                        <li> Task item
                                             <a href="#">
                                                 <h3>
                                                     Create a nice theme
@@ -188,8 +188,8 @@
                                                 </div>
                                             </a>
                                         </li>
-                                         end task item 
-                                        <li> Task item 
+                                         end task item
+                                        <li> Task item
                                             <a href="#">
                                                 <h3>
                                                     Some task I need to do
@@ -203,8 +203,8 @@
                                                 </div>
                                             </a>
                                         </li>
-                                         end task item 
-                                        <li> Task item 
+                                         end task item
+                                        <li> Task item
                                             <a href="#">
                                                 <h3>
                                                     Make beautiful transitions
@@ -218,7 +218,7 @@
                                                 </div>
                                             </a>
                                         </li>
-                                         end task item 
+                                         end task item
                                     </ul>
                                 </li>
                                 <li class="footer">
@@ -233,7 +233,7 @@
                                     <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="user-image" alt="User Image">
                                 <?php }else{ ?>
                                     <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <?php } ?>    
+                                <?php } ?>
                                 <span class="hidden-xs"><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></span>
                             </a>
                             <ul class="dropdown-menu">
@@ -243,7 +243,7 @@
                                         <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="img-circle" alt="User Image">
                                     <?php }else{ ?>
                                         <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                    <?php } ?>    
+                                    <?php } ?>
 <!--                                    <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
                                     <p>
@@ -263,7 +263,7 @@
                                             <a href="#">Friends</a>
                                         </div>
                                     </div>
-                                     /.row 
+                                     /.row
                                 </li>-->
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
@@ -271,9 +271,9 @@
                                         <div class="pull-left">
                                             <?php if($userSession['user_type_id'] == 16 ){ ?>
                                                 <a href="<?= base_url()?>admin/certification-agency/update?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
-                                            <?php }else{ ?>    
+                                            <?php }else{ ?>
                                                 <a href="<?= base_url()?>admin/user/update-profile?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
-                                            <?php } ?>    
+                                            <?php } ?>
                                         </div>
                                     <?php } ?>
                                     <div class="pull-right">
@@ -302,7 +302,7 @@
                             <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="img-circle" alt="User Image">
                         <?php }else{ ?>
                             <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                        <?php } ?>    
+                        <?php } ?>
 <!--                        <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
                     </div>
                     <div class="pull-left info">
@@ -338,7 +338,7 @@
                     <li>
                         <a href="<?= base_url()?>admin/bid">
                             <i class="fa fa-th"></i> <span>Bids</span>
-                            <?php if($userSession['username'] == 'adminmaster'){ ?>    
+                            <?php if($userSession['username'] == 'adminmaster'){ ?>
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-blue">
                                         <?= count($this->Bid->getBidByNotView())?>
@@ -350,7 +350,7 @@
                     <li>
                         <a href="<?= base_url()?>admin/post-requirement">
                             <i class="fa fa-laptop"></i> <span>Post Requirements</span>
-                            <?php if($userSession['username'] == 'adminmaster'){ ?>    
+                            <?php if($userSession['username'] == 'adminmaster'){ ?>
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-yellow">
                                         <?= count($this->PostRequirement->getPostRequirementByNotView())?></small>
@@ -358,7 +358,7 @@
                             <?php } ?>
                         </a>
                     </li>
-                    <?php if( $userSession['username'] == 'adminmaster'){ ?>    
+                    <?php if( $userSession['username'] == 'adminmaster'){ ?>
                             <li>
                                 <a href="<?= base_url()?>admin/product">
                                     <i class="fa fa-cubes"></i> <span>Product</span>
@@ -386,16 +386,17 @@
                     <li>
                         <a href="<?= base_url()?>sell-product">
                             <i class="fa fa-cart-arrow-down"></i> <span>Sell Product</span>
-                        </a>
-                    </li>        
-                    <li>
-                        <a href="<?= base_url()?>admin/user">
-                            <i class="ion ion-person-add"></i> <span>User Registration</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green"><?= count(getUserCount())?></small>
-                            </span>
+
                         </a>
                     </li>
+	                <li>
+		                <a href="<?= base_url()?>admin/user">
+			                <i class="ion ion-person-add"></i> <span>User Registration</span>
+			                <span class="pull-right-container">
+                                <small class="label pull-right bg-green"><?= count(getUserCount())?></small>
+                            </span>
+		                </a>
+	                </li>
                     <?php if( $userSession['username'] == ADMINUSERNAME ) { ?>
                         <li>
                             <a href="<?= base_url()?>admin/organic-setting">
@@ -414,9 +415,9 @@
                             <ul class="treeview-menu">
                                 <?php if($userSession['user_type_id'] == 16 ){ ?>
                                         <li><a href="<?= base_url()?>admin/certification-agency/update?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>"><i class="fa fa-pencil"></i>  Edit Profile</a></li>
-                                <?php }else{ ?>                
+                                <?php }else{ ?>
                                         <li><a href="<?= base_url()?>admin/user/update-profile?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>"><i class="fa fa-pencil"></i> Edit Profile</a></li>
-                                <?php }?>        
+                                <?php }?>
                                 <li><a href="<?= base_url()?>change-password"><i class="fa fa-unlock-alt"></i> Change Password</a></li>
 
                             </ul>

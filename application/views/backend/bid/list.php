@@ -126,7 +126,7 @@
                         });
                     }else{
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.alert-box-msg').parent().before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i>  Someting went wrong. Please try again...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert-box-msg').parent().before('<div class="alert alert-danger"><i class="fa fa-times-circle"></i>  Someting went wrong. Please try again...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });

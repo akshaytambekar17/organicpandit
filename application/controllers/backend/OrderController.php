@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class SellProductController extends MY_Controller {
+class OrderController extends MY_Controller {
 
     function __construct() {
         parent::__construct();
@@ -35,17 +35,18 @@ class SellProductController extends MY_Controller {
     public function index() {
         $session = UserSession();
         $userSession = $session['userData'];
-        $data['title'] = 'Sell Product';
-        $data['heading'] = 'Sell Product List';
+        
+        $data['title'] = 'Orders';
+        $data['heading'] = 'Orders';
         $data['backend'] = true;
-        $data['view'] = 'sell-product/list';
+        $data['view'] = 'order/list';
         $data['arrUserData'] = $userSession;
-        if ($userSession['username'] == 'adminmaster') {
-            $data['arrmixSellProductList'] = $this->SellProduct->getSellProducts();
+        if( $userSession['username'] == 'adminmaster' ) {
+            $data['arrmixOrderList'] = $this->Orders->getOrders();
         } else {
-            $data['arrmixSellProductList'] = $this->SellProduct->getSellProductByUserId($userSession['user_id']);
+            $data['arrmixOrderList'] = $this->Orders->getOrderByUserId( $userSession['user_id'] );
         }
-
+        
         $this->backendLayout($data);
     }
 
@@ -165,6 +166,22 @@ class SellProductController extends MY_Controller {
         }
     }
 
+    public function view() {
+        $session = UserSession();
+        $userSession = $session['userData'];
+        $get = $this->input->get();
+        $arrmixOrderDetails = $this->Orders->getOrderByOrderId( $get['order_id'] );
+        $arrProductList = json_decode( $arrmixOrderDetails['product_details'] );
+        $data['arrmixOrderDetails'] = $arrmixOrderDetails;
+        $data['arrProductList'] = $arrProductList;
+        $data['arrUserDetails'] = $userSession;
+        $data['title'] = $arrmixOrderDetails['order_no'];
+        $data['heading'] = ' Order number ' . $arrmixOrderDetails['order_no'];
+        $data['view'] = 'order/view';
+        $this->backendLayout($data);
+        
+    }
+    
     public function delete() {
         $post = $this->input->post();
 

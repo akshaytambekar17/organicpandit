@@ -6,7 +6,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>                        
+                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="<?php echo base_url(); ?>home"><img src="<?php echo base_url(); ?>assets/images/logo.png" class="logo-img"></a>
         </div>
@@ -16,7 +16,7 @@
                 <?php
                 $user_data = $this->session->all_userdata();
                 $user_data = !empty($user_data['user_data'])?$user_data['user_data']:'';
-                
+
 //                if (!empty($user_data['usertype'])) {
 //                    $usertype = $user_data['usertype'];
 //                    $username = $user_data['username'];
@@ -88,7 +88,8 @@
 
                 if (!empty($user_data)) {
                     ?>
-                    <li><a href="<?php echo base_url(); ?>home">Home</a></li> 
+                    <li><a href="<?php echo base_url(); ?>home">Home</a></li>
+                    <li><a href="<?php echo base_url(); ?>search-buy-product">Buy Product</a></li>
                     <li><a href="<?php echo base_url(); ?>about">About Us</a></li>
                     <li><a href="<?php echo base_url(); ?>contact"> Contact Us</a></li>
 
@@ -98,11 +99,11 @@
                                          <span class="badge badge-success"></span>
                                      </a>
                                      <ul class="green dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-             
+
                                         <li class="dropdown-header">
                                              <i class="ace-icon fa fa-exclamation-triangle"></i>
                                                  Notifications
-                                         </li>  
+                                         </li>
                                          <li class="dropdown-footer">
                                              <a href="<?php echo base_url(); ?>notification">
                                                  See all notifications
@@ -122,21 +123,23 @@
                                     <span class="accImg">
                                         <?php if(!empty($user_data['profile_image'])){ ?>
                                             <img class="img-circle" src="<?= base_url()?>assets/images/gallery/<?= $user_data['profile_image']?>">
-                                        <?php }else{ ?>    
+                                        <?php }else{ ?>
                                             <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                        <?php } ?>        
-                                    </span> 
+                                        <?php } ?>
+                                    </span>
                                     <p><?php echo $user_data['fullname']; ?></p>
-                                 <!--   <a class="btn btn-xs btn-success" href="<?php echo base_url(); ?>account/<?php echo $usertype . '/' . $username; ?>">My Account</a> -->
                                     <a class="btn btn-xs btn-success" href="<?php echo base_url(); ?>admin/dashboard">My Account</a>
-                                    <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>account/logout">Logout</a> 
+                                    <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>account/logout">Logout</a>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                
+                    <?php $arrCartList = fetchCartDetails(); ?>
+                    <li><a href="javascript:void(0)" class="js-cart-button"><img src="<?= base_url()?>assets/images/cd-cart.svg"><?= $arrCartList['total_items'] ?> items - &#8377; <?= $arrCartList['total'] ?></a></li>
+                    
                 <?php } else { ?>
-                    <li><a href="<?php echo base_url(); ?>home">Home</a></li>        
+                    <li><a href="<?php echo base_url(); ?>home">Home</a></li>
+                    <li><a href="<?php echo base_url(); ?>search-buy-product">Buy Product</a></li>
                     <li><a href="<?php echo base_url(); ?>about">About Us</a></li>
                     <li><a href="<?php echo base_url(); ?>signup">Register</a></li>
                     <li><a href="<?php echo base_url(); ?>contact"> Contact US</a></li>
@@ -145,4 +148,4 @@
             </ul>
         </div>
     </div>
-</nav>  
+</nav>

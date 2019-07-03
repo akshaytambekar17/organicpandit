@@ -60,7 +60,7 @@
                                             <tr class="gradeX" id="order-<?= $value['sell_product_id'] ?>">
                                                 <td class="hidden"><?= $value['sell_product_id']; ?></td>
 	                                            <?php if( $arrUserData['username'] == 'adminmaster' ) {  ?>
-                                                    <td><?= $value['fullname'] ?></td>
+                                                    <td><?= isVal( $value['fullname'] ) ? $value['fullname'] : 'Admin' ?></td>
 		                                        <?php } ?>
                                                 <td><?= $value['category_name'];?></td>
                                                 <td><?= $value['product_name'];?></td>

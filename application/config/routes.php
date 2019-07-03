@@ -96,12 +96,24 @@ $route['registration-certification-agency'] = "UserController/registrationCertif
 
 $route['search-enquiry'] = "UserController/searchEnquiry";
 
+$route['search-buy-product'] = "BuySellController/searchBuyProduct";
+$route['fetch-sell-product-by-id'] = "BuySellController/fetchSellProductById";
+
 $route['sell-product'] = "backend/SellProductController/index";
 $route['sell-product/create'] = "backend/SellProductController/create";
 $route['sell-product/update'] = "backend/SellProductController/update";
 $route['sell-product/delete'] = "backend/SellProductController/delete";
+$route['fetch-cities-by-state-id'] = "backend/SellProductController/fetchCitiesByStateId";
+
 
 $route['fetch-product-by-category-id'] = "backend/SellProductController/fetchProductByCategoryId";
+$route['buy-sell/fetch-product-by-category-id'] = "BuySellController/fetchProductByCategoryId";
+
+$route['add-to-cart'] = "UserController/addToCart";
+$route['remove-from-cart'] = "UserController/removeFromCart";
+$route['checkout-cart'] = "UserController/checkoutCart";
+$route['paynow'] = "UserController/paynow";
+$route['payment-response'] = "UserController/paymentResponse";
 
 /************* New Implementation Admin Panel **************/
 
@@ -151,6 +163,10 @@ $route['admin/organic-setting/add'] = "backend/OrganicSettingController/add";
 
 
 $route['admin/user-registration-dashboard'] = "backend/UserController/userRegistrationDashborad";
+
+$route['orders'] = "backend/OrderController/index";
+$route['order/view'] = "backend/OrderController/view";
+
 
 /************* api routes *************/
 $route['api/user/login'] = "api/UserController/login";

@@ -12,6 +12,7 @@
                                     <p>Search Deals</p>		
                                 </a>
                             </li>
+                            
                             <li class="wow fadeInUp" data-wow-delay=".30s" >
                                 <a href="#">
                                     <div class="deals-worth">
@@ -21,6 +22,7 @@
                                     <p>Deals Worth</p>
                                 </a>
                             </li>
+                            
                             <li class="wow fadeInRight" data-wow-delay=".30s">
                                 <a href="<?= base_url()?>post-requirement">
                                     <img src="<?= base_url() ?>assets/design/img/icons/post-deals.png" class="img-responsive">

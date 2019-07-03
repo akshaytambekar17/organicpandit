@@ -72,6 +72,16 @@
                     return false;
                 }
             }
+            
+            function validateQuantity( intQuantity ) {
+                var number_format = /^\d{6}$/;
+                if(number_format.test(intQuantity)){
+                    return true;
+                }else{
+                    return false;
+                }
+                
+            }
         </script>
     </body>
 </html>

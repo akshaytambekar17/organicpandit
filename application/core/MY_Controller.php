@@ -1,4 +1,6 @@
 <?php
+include_once('easebuzz/easebuzz_payment_gateway.php');
+
 class MY_Controller extends CI_Controller {
 
     public function __construct() {
@@ -31,6 +33,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model('product_category_model','ProductCategory');
         $this->load->model('agency_model','Agency');
         $this->load->model('sell_products_model','SellProduct');
+        $this->load->model('orders_model','Orders');
+        $this->load->model('transaction_model','Transaction');
 
     }
 
@@ -47,12 +51,15 @@ class MY_Controller extends CI_Controller {
         }
 
     }
+
     public function frontendLayout($data) {
-        includesHeaderFooter($data);
+    	includesHeaderFooter($data);
     }
+
     public function frontendFooterLayout($data) {
         includesFrontendFooter($data);
     }
+
     public function frontendLayoutHome($data) {
         includesHeaderFooterHome($data);
     }
@@ -113,6 +120,7 @@ class MY_Controller extends CI_Controller {
         return TRUE;
 //        echo $output;
     }
+
     public function sendEmail($to,$subject,$message){
         $this->load->library('email');
         $config = array();
@@ -145,15 +153,93 @@ class MY_Controller extends CI_Controller {
     public function response( $data ) {
         echo json_encode( $data );
     }
-//    public function UserSession(){
-//        if($this->session->userdata('user_data')){
-//            $result['success'] = true;
-//            $result['userData'] = $this->session->userdata('user_data');
-//        }else{
-//            $result['success'] = false;
-//            $result['userData'] = "Please login to continue";
-//        }
-//        return $result;
-//    }
 
+    public function paymentTransaction( $arrmixPaymentDetails ){
+        
+        $arrobjEasebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
+        if( INITIATE_PAYMENT == $arrmixPaymentDetails['api'] ) {
+            
+            /*  Very Important Notes
+            * 
+            * Post Data should be below format.
+            *
+                Array ( [txnid] => T3SAT0B5OL [amount] => 100.0 [firstname] => jitendra [email] => test@gmail.com [phone] => 1231231235 [productinfo] => Laptop [surl] => http://localhost:3000/response.php [furl] => http://localhost:3000/response.php [udf1] => aaaa [udf2] => aa [udf3] => aaaa [udf4] => aaaa [udf5] => aaaa [address1] => aaaa [address2] => aaaa [city] => aaaa [state] => aaaa [country] => aaaa [zipcode] => 123123 ) 
+            */
+            $result = $arrobjEasebuzzObj->initiatePaymentAPI( $arrmixPaymentDetails['payment_details'] );
+            
+            $this->easebuzzAPIResponse( $result, $arrmixPaymentDetails );
+            
+        } else if( TRANSACTION == $arrmixPaymentDetails['api'] ){ 
+
+            /*  Very Important Notes
+            * 
+            * Post Data should be below format.
+            *
+                Array ( [txnid] => TZIF0SS24C [amount] => 1.03 [email] => test@gmail.com [phone] => 1231231235 )
+            */
+            $result = $arrobjEasebuzzObj->transactionAPI( $arrmixPaymentDetails['payment_details'] );
+
+            $this->easebuzzAPIResponse( $result );
+     
+        }else if( TRANSACTION_DATE == $arrmixPaymentDetails['api'] || TRANSACTION_DATE_API == $arrmixPaymentDetails['api'] ){ 
+
+            /*  Very Important Notes
+            * 
+            * Post Data should be below format.
+            *
+                Array ( [merchant_email] => jitendra@gmail.com [transaction_date] => 06-06-2018 )
+            */
+            $result = $arrobjEasebuzzObj->transactionDateAPI( $arrmixPaymentDetails['payment_details'] );
+
+            $this->easebuzzAPIResponse( $result );
+                       
+        }else if( REFUND == $arrmixPaymentDetails['api']  ){
+            
+            /*  Very Important Notes
+            * 
+            * Post Data should be below format.
+            *
+                Array ( [txnid] => ASD20088 [refund_amount] => 1.03 [phone] => 1231231235 [email] => test@gmail.com [amount] => 1.03 )
+            */
+            $result = $arrobjEasebuzzObj->refundAPI( $arrmixPaymentDetails['payment_details'] );
+
+            $this->easebuzzAPIResponse( $result );
+                       
+        }else if( PAYOUT == $arrmixPaymentDetails['api'] ){
+
+            /*  Very Important Notes
+            * 
+            * Post Data should be below format.
+            *
+               Array ( [merchant_email] => jitendra@gmail.com [payout_date] => 08-06-2018 )
+            */
+            $result = $arrobjEasebuzzObj->payoutAPI( $arrmixPaymentDetails['payment_details'] );
+
+            $this->easebuzzAPIResponse( $result );
+                       
+        } else {
+            
+        }
+        
+    }
+    
+    public function easebuzzAPIResponse( $jsonmixResponseData, $arrmixPaymentDetails = array() ){ 
+        
+        printDie($jsonmixResponseData);
+        
+//        $arrSession = UserSession();
+//        $arrUserSession = $arrSession['userData'];
+//        $arrmixCartList = fetchCartDetails();
+//        $data['success_message'] = 'Successfully Transcation Done.';
+//        $data['transcation_id'] = 'TXNID00121';
+//        $data['arrUserDetails'] = $arrUserSession;
+//        $data['arrmixCartList'] = $arrmixCartList;
+//        $data['title'] = 'Payment Response';
+//        $data['heading'] = 'Payment Response';
+//        $data['hide_footer'] = true;
+//        $data['view'] = 'user/payment_response';
+//        
+//        $this->frontendLayout($data);
+    }
+    
 }

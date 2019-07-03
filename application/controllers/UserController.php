@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class UserController extends MY_Controller {
-
+    
     function __construct() {
         parent::__construct();
         //$this->load->model('farmer_model');
@@ -83,12 +83,12 @@ class UserController extends MY_Controller {
             $this->form_validation->set_rules('city_id', 'City', 'trim|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|required');
             //$this->form_validation->set_rules('story', 'Story', 'trim|required');
-            /*if ($post['user_type_id'] != 2) {
-                $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required|numeric|exact_length[12]');
-            }*/
+            /* if ($post['user_type_id'] != 2) {
+              $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required|numeric|exact_length[12]');
+              } */
 
-            /*$this->form_validation->set_rules('landline_no', 'Landline Number', 'trim');
-            $this->form_validation->set_rules('website', 'Website', 'trim');*/
+            /* $this->form_validation->set_rules('landline_no', 'Landline Number', 'trim');
+              $this->form_validation->set_rules('website', 'Website', 'trim'); */
 
             if ($post['user_type_id'] == 1 || $post['user_type_id'] == 2 || $post['user_type_id'] == 3 || $post['user_type_id'] == 4) {
                 //$this->form_validation->set_rules('is_visit_farm', 'Visit Farm', 'trim|required');
@@ -117,53 +117,53 @@ class UserController extends MY_Controller {
                 //$this->form_validation->set_rules('certification_number', 'Certification Number', 'trim');
                 $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
                 //$this->form_validation->set_rules('is_test_report', 'Test Report', 'trim|required');
-                /*$this->form_validation->set_rules('Product[product_id][]', 'Product Name', 'trim');
-                $this->form_validation->set_rules('Product[description][]', 'Description', 'trim');
-                $this->form_validation->set_rules('Product[from_date][]', 'From Date', 'trim');
-                $this->form_validation->set_rules('Product[to_date][]', 'To Date', 'trim');
-                $this->form_validation->set_rules('Product[quantity_id][]', 'Quantity', 'trim');
-                $this->form_validation->set_rules('Product[quality][]', 'Quality', 'trim');
-                $this->form_validation->set_rules('Product[price][]', 'Price', 'trim');*/
+                /* $this->form_validation->set_rules('Product[product_id][]', 'Product Name', 'trim');
+                  $this->form_validation->set_rules('Product[description][]', 'Description', 'trim');
+                  $this->form_validation->set_rules('Product[from_date][]', 'From Date', 'trim');
+                  $this->form_validation->set_rules('Product[to_date][]', 'To Date', 'trim');
+                  $this->form_validation->set_rules('Product[quantity_id][]', 'Quantity', 'trim');
+                  $this->form_validation->set_rules('Product[quality][]', 'Quality', 'trim');
+                  $this->form_validation->set_rules('Product[price][]', 'Price', 'trim'); */
 //                if(empty($_FILES['Product[images][]']['name'])){
 //                    $this->form_validation->set_rules('Product[images][]', 'Images', 'trim');
 //                }
             }
-            /*$this->form_validation->set_rules('Bank[bank_name]', 'Bank Name', 'trim');
-            $this->form_validation->set_rules('Bank[account_holder_name]', 'Account Holder Name', 'trim');
-            $this->form_validation->set_rules('Bank[account_no]', 'Account Number', 'trim');
-            $this->form_validation->set_rules('Bank[ifsc_code]', 'Ifsc Code', 'trim');*/
+            /* $this->form_validation->set_rules('Bank[bank_name]', 'Bank Name', 'trim');
+              $this->form_validation->set_rules('Bank[account_holder_name]', 'Account Holder Name', 'trim');
+              $this->form_validation->set_rules('Bank[account_no]', 'Account Number', 'trim');
+              $this->form_validation->set_rules('Bank[ifsc_code]', 'Ifsc Code', 'trim'); */
 
             if ($post['user_type_id'] == 1 || $post['user_type_id'] == 2) {
-                /*$this->form_validation->set_rules('Crop[crop_id][]', 'Select Crop', 'trim');
-                $this->form_validation->set_rules('Crop[area][]', 'Area', 'trim');
-                $this->form_validation->set_rules('Crop[date_sown][]', 'Date of Sown', 'trim');
-                $this->form_validation->set_rules('Crop[date_harvest][]', 'Date of Harvest', 'trim');
-                $this->form_validation->set_rules('Crop[date_inspection][]', 'Date of Inspection', 'trim');
-                $this->form_validation->set_rules('Crop[crop_condition][]', 'Crop Condition', 'trim');
-                $this->form_validation->set_rules('Crop[other_details][]', 'Other Details', 'trim');
+                /* $this->form_validation->set_rules('Crop[crop_id][]', 'Select Crop', 'trim');
+                  $this->form_validation->set_rules('Crop[area][]', 'Area', 'trim');
+                  $this->form_validation->set_rules('Crop[date_sown][]', 'Date of Sown', 'trim');
+                  $this->form_validation->set_rules('Crop[date_harvest][]', 'Date of Harvest', 'trim');
+                  $this->form_validation->set_rules('Crop[date_inspection][]', 'Date of Inspection', 'trim');
+                  $this->form_validation->set_rules('Crop[crop_condition][]', 'Crop Condition', 'trim');
+                  $this->form_validation->set_rules('Crop[other_details][]', 'Other Details', 'trim');
 
-                $this->form_validation->set_rules('Soil[element][]', 'Element', 'trim');
-                $this->form_validation->set_rules('Soil[percentage][]', 'Percentage', 'trim');
+                  $this->form_validation->set_rules('Soil[element][]', 'Element', 'trim');
+                  $this->form_validation->set_rules('Soil[percentage][]', 'Percentage', 'trim');
 
-                $this->form_validation->set_rules('Micro[element][]', 'Element', 'trim');
-                $this->form_validation->set_rules('Micro[percentage][]', 'Percentage', 'trim');
+                  $this->form_validation->set_rules('Micro[element][]', 'Element', 'trim');
+                  $this->form_validation->set_rules('Micro[percentage][]', 'Percentage', 'trim');
 
-                $this->form_validation->set_rules('Input[input_date]', 'Input Date', 'trim');
-                $this->form_validation->set_rules('Input[input_name]', 'Input Name', 'trim');
-                $this->form_validation->set_rules('Input[supplier_name]', 'Supplier Name', 'trim');
-                $this->form_validation->set_rules('Input[total_area]', 'Total Area', 'trim');
-                $this->form_validation->set_rules('Input[other_details]', 'Other Details', 'trim');*/
+                  $this->form_validation->set_rules('Input[input_date]', 'Input Date', 'trim');
+                  $this->form_validation->set_rules('Input[input_name]', 'Input Name', 'trim');
+                  $this->form_validation->set_rules('Input[supplier_name]', 'Supplier Name', 'trim');
+                  $this->form_validation->set_rules('Input[total_area]', 'Total Area', 'trim');
+                  $this->form_validation->set_rules('Input[other_details]', 'Other Details', 'trim'); */
             }
 
             if (7 == $post['user_type_id']) {
-                /*$this->form_validation->set_rules('Ecommerce[category_id][]', 'Select Category', 'trim');
-                $this->form_validation->set_rules('Ecommerce[sub_category_id][]', 'Select SubCategory', 'trim');
-                $this->form_validation->set_rules('Ecommerce[brand][]', 'Brand', 'trim');
-                $this->form_validation->set_rules('Ecommerce[price][]', 'Price', 'trim');
-                if (empty($_FILES['ecommerce_images']['name'])) {
-                    $this->form_validation->set_rules('ecommerce_images[]', 'Ecommerce Image', 'trim|required');
-                }
-                $this->form_validation->set_rules('Ecommerce[weight][]', 'Weight', 'trim');*/
+                /* $this->form_validation->set_rules('Ecommerce[category_id][]', 'Select Category', 'trim');
+                  $this->form_validation->set_rules('Ecommerce[sub_category_id][]', 'Select SubCategory', 'trim');
+                  $this->form_validation->set_rules('Ecommerce[brand][]', 'Brand', 'trim');
+                  $this->form_validation->set_rules('Ecommerce[price][]', 'Price', 'trim');
+                  if (empty($_FILES['ecommerce_images']['name'])) {
+                  $this->form_validation->set_rules('ecommerce_images[]', 'Ecommerce Image', 'trim|required');
+                  }
+                  $this->form_validation->set_rules('Ecommerce[weight][]', 'Weight', 'trim'); */
             }
 
             if ($this->form_validation->run() == TRUE) {
@@ -336,7 +336,7 @@ class UserController extends MY_Controller {
                 }
 
                 if (empty($error)) {
-                	//printDie($details);
+                    //printDie($details);
                     unset($details['confirm_password']);
                     unset($details['product_count']);
                     unset($details['crop_count']);
@@ -349,7 +349,7 @@ class UserController extends MY_Controller {
                     unset($details['Soil']);
                     unset($details['Micro']);
                     unset($details['Input']);
-	                unset($details['certification_id']);
+                    unset($details['certification_id']);
                     $details['landline_no'] = !empty($details['landline_no']) ? $details['landline_no'] : 0;
                     $details['password'] = md5($details['password']);
                     $details['profile_image'] = $profile_image;
@@ -365,19 +365,19 @@ class UserController extends MY_Controller {
                     $details['updated_at'] = date('Y-m-d H:i:s');
 
                     $user_id = $this->User->insert($details);
-	                if( !empty( $post['certification_id'] ) ) {
-	                	foreach( $post['certification_id'] as $intCertificationId ) {
-	                		$arrUserCertificationData = array(
-	                			                                'user_id' => $user_id,
-				                                                'certification_id' => $intCertificationId
-	                		                                );
-							$arrmixUserCertificationData[] = $arrUserCertificationData;
-			                $arrUserCertificationData = array();
-		                }
-	                	if( true == isArrVal( $arrmixUserCertificationData ) ) {
-							$this->UserCertifications->insertBatch( $arrmixUserCertificationData );
-		                }
-	                }
+                    if (!empty($post['certification_id'])) {
+                        foreach ($post['certification_id'] as $intCertificationId) {
+                            $arrUserCertificationData = array(
+                                'user_id' => $user_id,
+                                'certification_id' => $intCertificationId
+                            );
+                            $arrmixUserCertificationData[] = $arrUserCertificationData;
+                            $arrUserCertificationData = array();
+                        }
+                        if (true == isArrVal($arrmixUserCertificationData)) {
+                            $this->UserCertifications->insertBatch($arrmixUserCertificationData);
+                        }
+                    }
 
                     if (!empty($post['Product'])) {
                         $i = 0;
@@ -399,17 +399,17 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if ($count == $j) {
-                                	if( !empty( $product_data ) ) {
-		                                $product_data['from_date'] = date( "Y-m-d", strtotime( str_replace( '/', '-', $product_data['from_date'] ) ) );
-		                                $product_data['to_date'] = date( "Y-m-d", strtotime( str_replace( '/', '-', $product_data['to_date'] ) ) );
-		                                $product_search_details = $this->Product->getProductById($product_data['product_id']);
-		                                $product_data['name'] = $product_search_details['name'];
-		                                $product_data['user_id'] = $user_id;
-		                                $product_result = $this->UserProduct->insert($product_data);
-		                                $i++;
-		                                $j = 1;
-		                                $product_data = array();
-	                                }
+                                    if (!empty($product_data)) {
+                                        $product_data['from_date'] = date("Y-m-d", strtotime(str_replace('/', '-', $product_data['from_date'])));
+                                        $product_data['to_date'] = date("Y-m-d", strtotime(str_replace('/', '-', $product_data['to_date'])));
+                                        $product_search_details = $this->Product->getProductById($product_data['product_id']);
+                                        $product_data['name'] = $product_search_details['name'];
+                                        $product_data['user_id'] = $user_id;
+                                        $product_result = $this->UserProduct->insert($product_data);
+                                        $i++;
+                                        $j = 1;
+                                        $product_data = array();
+                                    }
                                 } else {
                                     $j++;
                                 }
@@ -436,25 +436,25 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if ($count == $j) {
-	                                if( !empty( $ecommerce_data ) ) {
-		                                $ecommerce_data['updated_at'] = date( "Y-m-d H:i:s" );
-		                                $ecommerce_data['user_id']    = $user_id;
-		                                $ecommerce_result             = $this->UserInputOrganicEcommerce->insert( $ecommerce_data );
-		                                $i++;
-		                                $j              = 1;
-		                                $ecommerce_data = [];
-	                                }
+                                    if (!empty($ecommerce_data)) {
+                                        $ecommerce_data['updated_at'] = date("Y-m-d H:i:s");
+                                        $ecommerce_data['user_id'] = $user_id;
+                                        $ecommerce_result = $this->UserInputOrganicEcommerce->insert($ecommerce_data);
+                                        $i++;
+                                        $j = 1;
+                                        $ecommerce_data = [];
+                                    }
                                 } else {
                                     $j++;
                                 }
                             }
                         }
                     }
-	                if( !empty( $post['Bank'] ) ) {
-		                $bank_details            = $post['Bank'];
-		                $bank_details['user_id'] = $user_id;
-		                $this->UserBank->insert( $bank_details );
-	                }
+                    if (!empty($post['Bank'])) {
+                        $bank_details = $post['Bank'];
+                        $bank_details['user_id'] = $user_id;
+                        $this->UserBank->insert($bank_details);
+                    }
 
                     if (!empty($post['Crop'])) {
                         $i = 0;
@@ -469,17 +469,17 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if ($count == $j) {
-	                                if( !empty( $crop_details ) ) {
-		                                $crop_details['user_id']         = $user_id;
-		                                $crop_details['user_type_id']    = $post['user_type_id'];
-		                                $crop_details['date_sown']       = !empty( $crop_details['date_sown'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_sown'] ) ) ) : '';
-		                                $crop_details['date_harvest']    = !empty( $crop_details['date_harvest'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_harvest'] ) ) ) : '';
-		                                $crop_details['date_inspection'] = !empty( $crop_details['date_inspection'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_inspection'] ) ) ) : '';
-		                                $result_crop                     = $this->UserCrop->insert( $crop_details );
-		                                $i++;
-		                                $j            = 1;
-		                                $crop_details = [];
-	                                }
+                                    if (!empty($crop_details)) {
+                                        $crop_details['user_id'] = $user_id;
+                                        $crop_details['user_type_id'] = $post['user_type_id'];
+                                        $crop_details['date_sown'] = !empty($crop_details['date_sown']) ? date('Y-m-d', strtotime(str_replace('/', '-', $crop_details['date_sown']))) : '';
+                                        $crop_details['date_harvest'] = !empty($crop_details['date_harvest']) ? date('Y-m-d', strtotime(str_replace('/', '-', $crop_details['date_harvest']))) : '';
+                                        $crop_details['date_inspection'] = !empty($crop_details['date_inspection']) ? date('Y-m-d', strtotime(str_replace('/', '-', $crop_details['date_inspection']))) : '';
+                                        $result_crop = $this->UserCrop->insert($crop_details);
+                                        $i++;
+                                        $j = 1;
+                                        $crop_details = [];
+                                    }
                                 } else {
                                     $j++;
                                 }
@@ -499,14 +499,14 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if ($count == $j) {
-	                                if( !empty( $soil_data ) ) {
-		                                $soil_data['user_id']      = $user_id;
-		                                $soil_data['user_type_id'] = $post['user_type_id'];
-		                                $soil_result               = $this->UserSoil->insert( $soil_data );
-		                                $i++;
-		                                $j         = 1;
-		                                $soil_data = [];
-	                                }
+                                    if (!empty($soil_data)) {
+                                        $soil_data['user_id'] = $user_id;
+                                        $soil_data['user_type_id'] = $post['user_type_id'];
+                                        $soil_result = $this->UserSoil->insert($soil_data);
+                                        $i++;
+                                        $j = 1;
+                                        $soil_data = [];
+                                    }
                                 } else {
                                     $j++;
                                 }
@@ -526,43 +526,43 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if ($count == $j) {
-	                                if( !empty( $micro_data ) ) {
-		                                $micro_data['user_id']      = $user_id;
-		                                $micro_data['user_type_id'] = $post['user_type_id'];
-		                                $micro_result               = $this->UserMicroNutrient->insert( $micro_data );
-		                                $i++;
-		                                $j          = 1;
-		                                $micro_data = [];
-	                                }
+                                    if (!empty($micro_data)) {
+                                        $micro_data['user_id'] = $user_id;
+                                        $micro_data['user_type_id'] = $post['user_type_id'];
+                                        $micro_result = $this->UserMicroNutrient->insert($micro_data);
+                                        $i++;
+                                        $j = 1;
+                                        $micro_data = [];
+                                    }
                                 } else {
                                     $j++;
                                 }
                             }
                         }
                     }
-                    if( !empty($post['Input'] ) ) {
+                    if (!empty($post['Input'])) {
 
                         $i = 0;
                         $j = 1;
-                        $postInputOrganic = array_filter( array_map( 'array_filter', $post['Input'] ) );
-                        $count = count( $postInputOrganic );
-                        for ( $x = 1; $x <= count( $postInputOrganic['input_date'] ); $x++ ) {
-                            foreach( $postInputOrganic as $keyInput => $valInput ) {
-                                foreach( $valInput as $key => $val ) {
-                                    if( $key == $i && !empty( $val ) ) {
+                        $postInputOrganic = array_filter(array_map('array_filter', $post['Input']));
+                        $count = count($postInputOrganic);
+                        for ($x = 1; $x <= count($postInputOrganic['input_date']); $x++) {
+                            foreach ($postInputOrganic as $keyInput => $valInput) {
+                                foreach ($valInput as $key => $val) {
+                                    if ($key == $i && !empty($val)) {
                                         $inputData[$keyInput] = $val;
                                     }
                                 }
                                 if ($count == $j) {
-	                                if( !empty( $inputData ) ) {
-		                                $inputData['user_id']      = $user_id;
-		                                $inputData['user_type_id'] = $post['user_type_id'];
-		                                $inputData['input_date']   = !empty( $inputData['input_date'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $inputData['input_date'] ) ) ) : '0000-00-00';
-		                                $this->UserInputOrganic->insert( $inputData );
-		                                $i++;
-		                                $j         = 1;
-		                                $inputData = [];
-	                                }
+                                    if (!empty($inputData)) {
+                                        $inputData['user_id'] = $user_id;
+                                        $inputData['user_type_id'] = $post['user_type_id'];
+                                        $inputData['input_date'] = !empty($inputData['input_date']) ? date('Y-m-d', strtotime(str_replace('/', '-', $inputData['input_date']))) : '0000-00-00';
+                                        $this->UserInputOrganic->insert($inputData);
+                                        $i++;
+                                        $j = 1;
+                                        $inputData = [];
+                                    }
                                 } else {
                                     $j++;
                                 }
@@ -572,7 +572,6 @@ class UserController extends MY_Controller {
 //                        $input_details['user_id'] = $user_id;
 //                        $input_details['user_type_id'] = $post['user_type_id'];
 //                        $input_details['input_date'] = !empty($input_details['input_date']) ? date('Y-m-d', strtotime($input_details['input_date'])) : '0000-00-00';
-
                     }
 
                     $user_type_details = $this->UserType->getUserTypeById($post['user_type_id']);
@@ -584,7 +583,7 @@ class UserController extends MY_Controller {
                         'message' => 'New ' . $user_type_details['name'] . ' ' . $post['fullname'] . ' has been register',
                     );
 
-                    $this->Notifications->insert( $dataNotify );
+                    $this->Notifications->insert($dataNotify);
 
                     $this->session->set_flashdata('Message', 'Registration Successfully. Please login to continue');
                     redirect('login');
@@ -704,8 +703,8 @@ class UserController extends MY_Controller {
         $user_type_details = $this->UserType->getUserTypeById($get['id']);
         $data['user_type_details'] = $user_type_details;
         $data['state_list'] = $this->State->getStates();
-        $data['organicSettingViewDetails'] = $this->OrganicSetting->getOrganicSettingByKey( SHOW_SEARCH_VIEW_DETAILS_KEY );
-        $data['organicSettingViewEnquiry'] = $this->OrganicSetting->getOrganicSettingByKey( SHOW_SEARCH_VIEW_ENQUIRY_KEY );
+        $data['organicSettingViewDetails'] = $this->OrganicSetting->getOrganicSettingByKey(SHOW_SEARCH_VIEW_DETAILS_KEY);
+        $data['organicSettingViewEnquiry'] = $this->OrganicSetting->getOrganicSettingByKey(SHOW_SEARCH_VIEW_ENQUIRY_KEY);
         $data['product_list'] = $this->Product->getProducts();
         $data['title'] = 'Search ' . $user_type_details['name'];
         $data['heading'] = 'Search ' . $user_type_details['name'];
@@ -713,11 +712,11 @@ class UserController extends MY_Controller {
         $data['view'] = 'user/search_user';
         if ($this->input->post()) {
             $post = $this->input->post();
-            $data['search_brand'] = isset( $post['search_brand'] ) ? $post['search_brand'] : '';
+            $data['search_brand'] = isset($post['search_brand']) ? $post['search_brand'] : '';
             if ($this->form_validation->run('search-user-form') == TRUE) {
                 $arrDetails = $post;
-                if( ORGANIC_INPUT == $arrDetails['user_type_id'] ) {
-                    $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrDetails );
+                if (ORGANIC_INPUT == $arrDetails['user_type_id']) {
+                    $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand($arrDetails);
                 } else {
                     $arrmixUserSearchList = $this->User->getUserBysearchKey($post);
                 }
@@ -734,16 +733,16 @@ class UserController extends MY_Controller {
 
     public function viewUserDetails() {
         $get = $this->input->get();
-        $arrmixUserDetails = $this->User->getUserById( $get['user_id'] );
-        $arrAgencyDetails = $this->CertificationAgency->getAgencyById( $arrmixUserDetails['agency_id'] );
+        $arrmixUserDetails = $this->User->getUserById($get['user_id']);
+        $arrAgencyDetails = $this->CertificationAgency->getAgencyById($arrmixUserDetails['agency_id']);
         $arrmixUserDetails['agency_name'] = !empty($arrAgencyDetails['name']) ? $arrAgencyDetails['name'] : 'NA';
         $arrCertificaionDetails = getCertifications();
-        $arrmixUserDetails['certification_name'] = !empty( $arrCertificaionDetails[$arrmixUserDetails['certification_id']] ) ? $arrCertificaionDetails[$arrmixUserDetails['certification_id']] : 'NA';
-        $arrStateDetails = $this->State->getStateById( $arrmixUserDetails['state_id'] );
+        $arrmixUserDetails['certification_name'] = !empty($arrCertificaionDetails[$arrmixUserDetails['certification_id']]) ? $arrCertificaionDetails[$arrmixUserDetails['certification_id']] : 'NA';
+        $arrStateDetails = $this->State->getStateById($arrmixUserDetails['state_id']);
         $arrmixUserDetails['state'] = $arrStateDetails['name'];
-        $arrCityDetails = $this->City->getCityById( $arrmixUserDetails['city_id'] );
+        $arrCityDetails = $this->City->getCityById($arrmixUserDetails['city_id']);
         $arrmixUserDetails['city'] = $arrCityDetails['name'];
-        $arrUserTypeDetails = $this->UserType->getUserTypeById( $arrmixUserDetails['user_type_id'] );
+        $arrUserTypeDetails = $this->UserType->getUserTypeById($arrmixUserDetails['user_type_id']);
         $arrmixUserDetails['user_type_name'] = $arrUserTypeDetails['name'];
         $data['user_details'] = $arrmixUserDetails;
 
@@ -752,7 +751,6 @@ class UserController extends MY_Controller {
         $data['hide_footer'] = true;
         $data['view'] = 'user/view_user_details';
         $this->frontendLayout($data);
-
     }
 
     public function organicInputEcommerceDetails() {
@@ -803,15 +801,15 @@ class UserController extends MY_Controller {
     public function getCitiesByState() {
         $post = $this->input->post();
         $cities = $this->City->getCitiesBystateId($post['state_id']);
-        $intCityIdHidden = isVal( $post['city_id_hidden'] ) ? $post['city_id_hidden'] : '';
+        $intCityIdHidden = isVal($post['city_id_hidden']) ? $post['city_id_hidden'] : '';
         $html = array();
         if (!empty($cities)) {
             foreach ($cities as $value) {
                 $strSelected = '';
-                if( $intCityIdHidden == $value['id'] ) {
+                if ($intCityIdHidden == $value['id']) {
                     $strSelected = 'selected="selected"';
                 }
-                $data2 = ' <option value="' . $value['id'] . '" ' . set_select('city_id', $value['id']) .' ' . $strSelected . ' > ' . $value['name'] . '</option>';
+                $data2 = ' <option value="' . $value['id'] . '" ' . set_select('city_id', $value['id']) . ' ' . $strSelected . ' > ' . $value['name'] . '</option>';
                 $html[] = $data2;
             }
         }
@@ -855,14 +853,14 @@ class UserController extends MY_Controller {
         $post = $this->input->post();
         $brandId = '';
         $subCategoryId = '';
-        if( !empty( $post['brand_id'] ) ) {
+        if (!empty($post['brand_id'])) {
             $brandId = $post['brand_id'];
         }
-        if( !empty( $post['sub_category_id'] ) ) {
+        if (!empty($post['sub_category_id'])) {
             $subCategoryId = $post['sub_category_id'];
         }
-        $organicInputEcommerceList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserIdBySubCategoryIdByBrandId( $post['user_id'], $subCategoryId, $brandId );
-        $userDetails = $this->User->getUserById( $post['user_id'] );
+        $organicInputEcommerceList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserIdBySubCategoryIdByBrandId($post['user_id'], $subCategoryId, $brandId);
+        $userDetails = $this->User->getUserById($post['user_id']);
         $data['userDetails'] = $userDetails;
         $data['arrCategory'] = getEcommerceCategory();
         $data['arrSubCategory'] = getEcommerceSubCategory();
@@ -879,30 +877,30 @@ class UserController extends MY_Controller {
         echo json_encode($post_details);
     }
 
-    public function getPartnerUserDetails(){
+    public function getPartnerUserDetails() {
         $post = $this->input->post();
-        $userDetails = $this->User->getUserByUserTypeId( $post['partner_type_id'] );
+        $userDetails = $this->User->getUserByUserTypeId($post['partner_type_id']);
 
-        if( !empty( $post['partner_user_id_hidden'] ) ) {
+        if (!empty($post['partner_user_id_hidden'])) {
             $partnerUserIdHidden = $post['partner_user_id_hidden'];
-        }else{
+        } else {
             $partnerUserIdHidden = '';
         }
 
         $html = array();
-        if( !empty( $userDetails ) ) {
-            foreach( $userDetails as $value) {
-                if( !empty( $partnerUserIdHidden ) ) {
-                    $selected = $partnerUserIdHidden == $value['user_id']?'selected="selected"':'';
-                }else{
+        if (!empty($userDetails)) {
+            foreach ($userDetails as $value) {
+                if (!empty($partnerUserIdHidden)) {
+                    $selected = $partnerUserIdHidden == $value['user_id'] ? 'selected="selected"' : '';
+                } else {
                     $selected = '';
                 }
-                $data2 = ' <option value="' . $value['user_id'] . '" ' . set_select('partner_user_id',$value['user_id']) .' '.$selected .' > ' . $value['fullname'] . '</option>';
+                $data2 = ' <option value="' . $value['user_id'] . '" ' . set_select('partner_user_id', $value['user_id']) . ' ' . $selected . ' > ' . $value['fullname'] . '</option>';
                 $html[] = $data2;
             }
-	        $html[] = ' <option value="0" ' . set_select('partner_user_id',0) .' >NONE</option>';
+            $html[] = ' <option value="0" ' . set_select('partner_user_id', 0) . ' >NONE</option>';
         } else {
-	        $html[] = ' <option value="0" ' . set_select('partner_user_id',0) .' >NONE</option>';
+            $html[] = ' <option value="0" ' . set_select('partner_user_id', 0) . ' >NONE</option>';
         }
         echo json_encode($html);
     }
@@ -912,12 +910,219 @@ class UserController extends MY_Controller {
 
         $details = $post;
         $details['updated_at'] = CURRENT_DATETIME;
-        $result = $this->SearchEnquiry->insert( $details );
-        if( $result ){
+        $result = $this->SearchEnquiry->insert($details);
+        if ($result) {
             echo true;
-        }else{
+        } else {
             echo false;
         }
+    }
 
+    public function fetchProductByCategoryId() {
+        $post = $this->input->post();
+        $arrProductList = $this->Product->getProductByCategoryId($post['category_id']);
+        if (isset($post['hidden_product_id'])) {
+            $intProductId = $post['hidden_product_id'];
+        } else {
+            $intProductId = '';
+        }
+        $html = array();
+        if (!empty($arrProductList)) {
+            foreach ($arrProductList as $arrProductDetails) {
+                if (isVal($intProductId)) {
+                    $selected = ( $intProductId == $arrProductDetails['id'] ) ? 'selected="selected"' : '';
+                } else {
+                    $selected = '';
+                }
+                $data2 = ' <option value="' . $arrProductDetails['id'] . '" ' . set_select('product_id', $arrProductDetails['id']) . ' ' . $selected . ' > ' . $arrProductDetails['name'] . '</option>';
+                $html[] = $data2;
+            }
+        }
+        echo json_encode($html);
+    }
+    
+    public function checkoutCart() {
+        $userSession = $this->session->userdata('user_data');
+        $data['userSession'] = $userSession;
+        $arrmixCartList = fetchCartDetails();
+        $data['arrmixCartList'] = $arrmixCartList;
+        $data['title'] = 'Checkout';
+        $data['heading'] = 'Checkout';
+        $data['hide_footer'] = true;
+        $data['view'] = 'user/checkout';
+        $this->frontendLayout($data);
+    }
+    
+    public function addToCart() {
+        $arrPost = $this->input->post();
+        $intProductId = $arrPost['product_id'];
+        $intPrice = $arrPost['price'];
+        $intQuantity = CART_QUANTITY;
+        $strProductName = $arrPost['product_name'];
+        
+        $arrmixCartList = fetchCartDetails();
+        $boolCart = true;
+        if( true == isArrVal( $arrmixCartList['cart_list'] ) ) {
+            foreach( $arrmixCartList['cart_list'] as $arrCartDetais ) {
+                if( $arrCartDetais['id'] == $intProductId ){
+                    $boolCart = false;
+                }
+            }
+        }
+        
+        if( true == $boolCart ) {
+            $arrCartData = array( 'id'          => $intProductId,
+                                  'qty'         => $intQuantity,
+                                  'price'       => $intPrice,
+                                  'price'       => $intPrice,
+                                  'name'        => $strProductName,
+                                  'options'     => array('product_id'  => $intProductId)
+                            );
+            if( true == $this->cart->insert( $arrCartData ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Your product <b>' . $strProductName . '</b> has been added to cart';
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'Something went wrong. We cannot add product to cart.';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'Product <b>' . $strProductName . '</b>  has already added in cart.';
+        }
+        
+        echo json_encode( $arrResult );
+    }
+    
+    public function removeFromCart() {
+        $arrPost = $this->input->post();
+        $intRowId = $arrPost['rowid'];
+        $intQuantity = 0;
+        $strProductName = $arrPost['product_name'];
+        
+        $arrCartData = array(
+                            'rowid' => $intRowId,
+                            'qty'   => $intQuantity
+                        );
+        
+        if( true == $this->cart->update( $arrCartData ) ) {
+            $arrResult['success'] = true;
+            $arrResult['message'] = 'Your product <b>' . $strProductName . '</b> has been removed from cart';
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'Something went wrong. We cannot remove product from cart.';
+        }
+        
+        echo json_encode( $arrResult );
+    }
+    
+    public function paynow() {
+        $arrSession = UserSession();
+        $arrUserSession = $arrSession['userData'];
+        $arrmixCartList = fetchCartDetails();
+        $data['arrStateList'] = $this->State->getStates();    
+        $data['arrUserDetails'] = $arrUserSession;
+        $data['arrmixCartList'] = $arrmixCartList;
+        $data['title'] = 'Paynow';
+        $data['heading'] = 'Paynow';
+        $data['hide_footer'] = true;
+        $data['view'] = 'user/paynow';
+        
+        if( $this->input->post() ) {
+            $arrPost = $this->input->post();
+            if( true == $this->form_validation->run('paynow-form') ) {
+                $arrmixData = $arrPost;
+                $arrmixData['product_details'] = json_encode( $arrmixCartList['cart_list'] );
+                $arrmixData['order_payment_status'] = ORDER_PAYMENT_STATUS_PENDING;
+                $intCurrentInsertedOrderId = $this->Orders->insert( $arrmixData );
+                $strOrderNo = 'ORDERNO00' . $intCurrentInsertedOrderId;
+                $arrUpdateData = array( 'order_id' => $intCurrentInsertedOrderId,
+                                        'order_no' => $strOrderNo
+                                    );
+                $this->Orders->update( $arrUpdateData );
+                $arrUrl = paymentGatewayResponseUrl();
+                
+                $strTxnId = 'TXNID' . $arrPost['user_id'] . $arrPost['user_type_id'] . strtotime( CURRENT_DATETIME );
+                $arrPaymentDetails = array( 'txnid'         => $strTxnId,
+                                            'amount'        => sprintf("%.2f", $arrPost['total_amount']),
+                                            'firstname'     => $arrPost['fullname'],
+                                            'email'         => $arrPost['email_id'],
+                                            'phone'         => $arrPost['mobile_no'],
+                                            'productinfo'   => $strOrderNo,
+                                            'surl'          => $arrUrl['surl'],
+                                            'furl'          => $arrUrl['furl'],
+                                            'udf1'          => $intCurrentInsertedOrderId,
+                                            'udf2'          => '',
+                                            'udf3'          => '',
+                                            'udf4'          => '',
+                                            'udf5'          => '',
+                                            'address1'      => '',
+                                            'address2'      => '',
+                                            'city'          => '',
+                                            'state'         => '',
+                                            'country'       => '',
+                                            'zipcode'       => $arrPost['pincode'],
+                                    );
+                $arrmixPaymentDetails['payment_details'] = $arrPaymentDetails;
+                $arrmixPaymentDetails['api'] = INITIATE_PAYMENT;
+                $arrmixPaymentDetails['order_details'] = $arrmixData;
+                
+                $this->paymentTransaction( $arrmixPaymentDetails );
+                
+                $this->frontendLayout($data);
+            } else {
+                $this->frontendLayout($data);
+            }
+        } else {
+            $this->frontendLayout($data);
+        }
+        
+    }
+    
+    public function paymentResponse() {
+        
+        $arrSession = UserSession();
+        $arrUserSession = $arrSession['userData'];
+        $arrPost = $this->input->post();
+        $easebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
+        $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
+        $arrmixResult = json_decode( $arrResult );
+        if( isVal( $arrmixResult->status ) ) {
+            $arrTransactionDetails = array(  
+                                            'order_id'          => $arrmixResult->data->udf1,
+                                            'txnid'             => $arrmixResult->data->txnid,
+                                            'status'            => $arrmixResult->data->status,   
+                                            'error'             => isset( $arrmixResult->data->error ) ? $arrmixResult->data->error : '',
+                                            'error_message'     => $arrmixResult->data->error_Message,   
+                                            'easepayid'         => $arrmixResult->data->easepayid,   
+                                            'payment_source'    => $arrmixResult->data->payment_source,   
+                                            'net_amount_debit'  => $arrmixResult->data->net_amount_debit,   
+                                            'added_on'          => $arrmixResult->data->addedon,   
+                                            'total_amount'      => $arrmixResult->data->amount,   
+                                        );
+            $this->Transaction->insert( $arrTransactionDetails );
+            $arrUpdateOrderData = array(    
+                                        'order_payment_status' => ORDER_PAYMENT_STATUS_COMPLETED,
+                                        'order_id' => $arrmixResult->data->udf1
+                                    );
+            $this->Orders->update( $arrUpdateOrderData );
+            destroyCart();
+            $data['boolStatus'] = true;
+            $data['strMessage'] = "Transaction has been done successfully.";
+            $data['intTranscationId'] = $arrmixResult->data->txnid;
+            $data['strOrderNo'] = $arrmixResult->data->productinfo;
+            $data['strAddedOn'] = $arrmixResult->data->addedon;
+            
+        } else {
+            $data['boolStatus'] = false;
+            $data['strMessage'] = $arrmixResult->data->error_message;
+        }
+        
+        $data['title'] = 'Payment Response';
+        $data['heading'] = 'Payment Response';
+        $data['hide_footer'] = true;
+        $data['view'] = 'user/payment_response';
+        
+        $this->frontendLayout($data);
+                
     }
 }

@@ -56,6 +56,14 @@ define('NOTIFY_WEB', 4);
 define('ENABLED',2);
 define('DISABLED',1);
 
+define('CART_QUANTITY',1);
+
+define('PAYMENT_METHOD_CASH',1);
+define('PAYMENT_METHOD_ONLINE',2);
+
+define('ORDER_PAYMENT_STATUS_COMPLETED',2);
+define('ORDER_PAYMENT_STATUS_PENDING',1);
+
 define('FARMER',1);
 define('FPO',2);
 define('TRADER',3);
@@ -75,7 +83,19 @@ define('CERTIFICATION_AGENICES',16);
 define('RESTAURANTS',17);
 define('NGO',18);
 
+define('MERCHANT_KEY','O1D3HUYIC3');
+define('SALT','RGODULJ8YB');
+define('ENV_TEST','test');
+define('ENV_PROD','prod');
+//define('SURL', base_url() . 'payment-response' );
+//define('FURL', base_url() . 'payment-response' );
 
+define('INITIATE_PAYMENT','initiate_payment');
+define('TRANSACTION','transaction');
+define('TRANSACTION_DATE','transaction_date');
+define('TRANSACTION_DATE_API','transaction_date_api');
+define('REFUND','refund');
+define('PAYOUT','payout');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

@@ -268,3 +268,44 @@ function ViewProfile($userTypeDetails,$user_details,$user_product_details){
         return $ci->load->view('backend/user/profile_certification_agencies',$data);
     }
 }
+
+function fetchCartDetails() {
+        //$this->cart->destroy();
+    $ci = & get_instance();
+    $arrCartList = $ci->cart->contents();
+    if( true == isArrVal( $arrCartList ) ) {
+        $arrmixCartList['cart_list'] = $arrCartList;
+        $arrmixCartList['total'] = $ci->cart->total();
+        $arrmixCartList['total_items'] = $ci->cart->total_items();
+    } else {
+        $arrmixCartList['cart_list'] = array();
+        $arrmixCartList['total'] = 0;
+        $arrmixCartList['total_items'] = 0;
+    }
+    return $arrmixCartList;
+
+}
+
+function destroyCart() {
+    $ci = & get_instance();
+    $ci->cart->destroy();
+}
+
+function paymentGatewayEnviroment() {
+    $strBaseUrl = base_url();
+    
+    if( 'http://localhost/organicpandit/' == $strBaseUrl ) {
+        return ENV_TEST;
+    } else {
+        return ENV_PROD;
+    }
+    
+}
+
+function paymentGatewayResponseUrl() {
+    
+    $arrUrl['surl'] = base_url() . 'payment-response';
+    $arrUrl['furl'] = base_url() . 'payment-response';
+    
+    return $arrUrl;
+}

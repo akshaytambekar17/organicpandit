@@ -102,7 +102,7 @@
 .accBox{
     text-align: center;
     padding: 10px 25px;
-    
+
 }
 .img-circle{
     border-radius: 50%;
@@ -122,3 +122,38 @@
     font-weight: 700;
     font-size: 18px;
 }
+
+.modal-cart {
+    color: black;
+}
+
+.cart-table{
+    width:100%;
+    color: black;
+}
+
+.cart-table tr th {
+    padding: 3%;
+}
+
+.cart-table tr td {
+    padding: 3%;
+}
+
+.checkout-table{
+    width:100%;
+    color: black;
+}
+
+.checkout-table tr th {
+    padding: 2%;
+}
+
+.checkout-table tr td {
+    padding: 2%;
+}
+
+.text-align-center {
+    text-align: center !important;
+}
+

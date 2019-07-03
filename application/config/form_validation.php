@@ -365,8 +365,13 @@ $config = array(
 			        'rules' => 'required'
 		        ),
 		        array(
+			        'field' => 'delivery_location_state',
+			        'label' => 'State',
+			        'rules' => 'required'
+		        ),
+		        array(
 			        'field' => 'delivery_location',
-			        'label' => 'Delivery Location',
+			        'label' => 'City',
 			        'rules' => 'required'
 		        ),
 		        array(
@@ -389,7 +394,76 @@ $config = array(
 			        'label' => 'Other Details',
 			        'rules' => 'required'
 		        ),
+	        ),
+        'search-buy-product-form' => array(
+
+	        array(
+		        'field' => 'delivery_location_state',
+		        'label' => 'State',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'delivery_location',
+		        'label' => 'City',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'category_id',
+		        'label' => 'Category',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'product_id',
+		        'label' => 'Product',
+		        'rules' => 'required'
 	        )
+        ),
+    
+        'paynow-form' => array(
+
+	        array(
+		        'field' => 'fullname',
+		        'label' => 'Fullname',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'email_id',
+		        'label' => 'Email Id',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'mobile_no',
+		        'label' => 'Mobile Number',
+		        'rules' => 'required|numeric|exact_length[10]'
+	        ),
+	        array(
+		        'field' => 'state_id',
+		        'label' => 'State',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'city_id',
+		        'label' => 'City',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'pincode',
+		        'label' => 'Pincode',
+		        'rules' => 'required|numeric|exact_length[6]'
+	        ),
+	        array(
+		        'field' => 'address',
+		        'label' => 'Address',
+		        'rules' => 'required'
+	        ),
+	        array(
+		        'field' => 'payment_method',
+		        'label' => 'Payment Method',
+		        'rules' => 'required'
+	        )
+        )
+
+
 );
 $config['error_prefix'] = '<div class="error">';
 $config['error_suffix'] = '</div>';

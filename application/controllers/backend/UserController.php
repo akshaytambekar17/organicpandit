@@ -23,6 +23,7 @@ class UserController extends MY_Controller {
         parent::__construct();
         $this->load->model('login_model','Login');
     }
+
     public function index() {
         $session = UserSession();
         if ( empty( $session['success'] ) ) {
@@ -57,7 +58,7 @@ class UserController extends MY_Controller {
 //                redirect('home', 'refresh');
 //            }
         }
-        
+
         $data['title'] = 'Login';
         $data['heading'] = 'Organic Pandit';
         $data['hide_footer'] = true;
@@ -83,6 +84,7 @@ class UserController extends MY_Controller {
             $this->backendLayout($data);
         }
     }
+
     public function view(){
         $session = UserSession();
         if ( empty( $session['success'] ) ) {
@@ -118,7 +120,7 @@ class UserController extends MY_Controller {
                                     );
                     $result_notification = $this->Notifications->insert($data_notify);
                 }else{
-                    
+
                     $user_type_details = $this->UserType->getUserTypeById($post['user_type_id']);
                     $data_notify = array(
                                         'user_id' => $post['user_id'],
@@ -154,8 +156,8 @@ class UserController extends MY_Controller {
                 $data['view'] = 'user/view';
                 $this->backendLayout($data);
             }
-                
-            
+
+
         }else{
             $user_details = $this->User->getUserById($get['id']);
             $user_crop_details = $this->UserCrop->getUserCropByUserId($get['id']);
@@ -179,13 +181,14 @@ class UserController extends MY_Controller {
             $this->backendLayout($data);
         }
     }
+
     public function updateProfile(){
         $get = $this->input->get();
         $session = UserSession();
         $userSession = $session['userData'];
-        if($this->input->post()){   
+        if($this->input->post()){
             $post = $this->input->post();
-                
+
             if($post['user_type_id'] == 2){
                 $fullname_title = 'FPO Name';
             }else{
@@ -200,20 +203,20 @@ class UserController extends MY_Controller {
             $this->form_validation->set_rules('city_id', 'City', 'trim|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|required');
             $this->form_validation->set_rules('story', 'Story', 'trim|required');
-            
+
             if( ADMINUSERNAME == $userSession['username'] ){
                 if( !empty( $post['password'] ) ) {
                     $this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]|matches[confirm_password]');
                     $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[5]');
                 }
             }
-            
+
             if($post['user_type_id'] != 2 ){
                 $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required|numeric|exact_length[12]');
             }
             $this->form_validation->set_rules('landline_no', 'Landline Number', 'trim');
             $this->form_validation->set_rules('website', 'Website', 'trim');
-            
+
             if($post['user_type_id'] == 1 || $post['user_type_id'] == 2 || $post['user_type_id'] == 3 || $post['user_type_id'] == 4){
                 $this->form_validation->set_rules('is_visit_farm', 'Visit Farm', 'trim|required');
             }
@@ -311,7 +314,7 @@ class UserController extends MY_Controller {
                     $config['upload_path']          = './assets/images/gallery/';
                     $config['allowed_types']        = 'gif|jpg|png|jpeg';
                     $config['max_size']             = 2048;
-                    
+
                     $this->load->library('upload', $config);
                     if($this->upload->do_upload('profile_image')){
                         $uploadData = $this->upload->data();
@@ -360,7 +363,7 @@ class UserController extends MY_Controller {
                     $company_image = !empty($post['company_image_hidden'])?$post['company_image_hidden']:'';
                     $error = '';
                 }
-                
+
                 if(!empty($_FILES['product_images']['name'])){
                     $count = count($_FILES['product_images']['name']);
                     $files = $_FILES;
@@ -429,7 +432,7 @@ class UserController extends MY_Controller {
                         $this->UserProduct->deleteByUserId($post['user_id']);
                         $i = 0;
                         $j = 1;
-                        $post_product = array_filter(array_map('array_filter', $post['Product'])); 
+                        $post_product = array_filter(array_map('array_filter', $post['Product']));
                         $count = count($post_product);
                         for($x=1;$x<=count($post_product['product_id']);$x++){
                             foreach($post_product as $key_product => $val_product){
@@ -439,7 +442,7 @@ class UserController extends MY_Controller {
                                         if(!empty($product_images)){
                                             foreach($product_images as $key_image => $val_image){
                                                 if($key_image == $i){
-                                                    $product_data['images'] = $val_image;   
+                                                    $product_data['images'] = $val_image;
                                                 }
                                             }
                                         }
@@ -468,7 +471,7 @@ class UserController extends MY_Controller {
                         $this->UserCrop->deleteByUserId($post['user_id']);
                         $i = 0;
                         $j = 1;
-                        $post_crop = array_filter(array_map('array_filter', $post['Crop'])); 
+                        $post_crop = array_filter(array_map('array_filter', $post['Crop']));
                         $count = count($post_crop);
                         for($x=1;$x<=count($post_crop['crop_id']);$x++){
                             foreach($post_crop as $key_crop => $val_crop){
@@ -478,13 +481,13 @@ class UserController extends MY_Controller {
                                     }
                                 }
                                 if($count == $j){
-                                    
+
                                     $crop_details['user_id'] = $user_id;
                                     $crop_details['user_type_id'] = $post['user_type_id'];
                                     $crop_details['date_sown'] = !empty( $crop_details['date_sown'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_sown'] ) ) ) : '';
                                     $crop_details['date_harvest'] = !empty( $crop_details['date_harvest'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_harvest'] ) ) ) : '';
                                     $crop_details['date_inspection'] = !empty( $crop_details['date_inspection'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_inspection'] ) ) ) : '';
-                                    
+
                                     $result_crop = $this->UserCrop->insert($crop_details);
                                     $i++;
                                     $j = 1;
@@ -499,7 +502,7 @@ class UserController extends MY_Controller {
                         $this->UserSoil->deleteByUserId($post['user_id']);
                         $i = 0;
                         $j = 1;
-                        $post_soil = array_filter(array_map('array_filter', $post['Soil'])); 
+                        $post_soil = array_filter(array_map('array_filter', $post['Soil']));
                         $count = count($post_soil);
                         for($x=1;$x<=max(count($post_soil['element']),count($post_soil['percentage']));$x++){
                             foreach($post_soil as $key_soil => $val_soil){
@@ -525,7 +528,7 @@ class UserController extends MY_Controller {
                         $this->UserMicroNutrient->deleteByUserId($post['user_id']);
                         $i = 0;
                         $j = 1;
-                        $post_micro = array_filter(array_map('array_filter', $post['Micro'])); 
+                        $post_micro = array_filter(array_map('array_filter', $post['Micro']));
                         $count = count($post_micro);
                         for($x=1;$x<=max(count($post_micro['element']),count($post_micro['percentage']));$x++){
                             foreach($post_micro as $key_micro => $val_micro){
@@ -577,9 +580,9 @@ class UserController extends MY_Controller {
 //                        $input_details['user_id'] = $user_id;
 //                        $input_details['user_type_id'] = $post['user_type_id'];
 //                        $input_details['input_date'] = !empty($input_details['input_date']) ? date('Y-m-d', strtotime($input_details['input_date'])) : '0000-00-00';
-                        
+
                     }
-                    
+
                     if($userSession['username'] == ADMINUSERNAME){
                         $this->session->set_flashdata('Message', $details['fullname']. ' profile has been updated successfully.');
                         redirect('admin/user');
@@ -607,6 +610,7 @@ class UserController extends MY_Controller {
             $this->backendLayout($data_return);
         }
     }
+
     public function profileData($user_id,$user_type_id,$userSession){
         $user_details = $this->User->getUserById($user_id);
         if($user_details['user_type_id'] == 1 || $user_details['user_type_id'] == 2 || $user_details['user_type_id'] == 4 || $user_details['user_type_id'] == 3 || $user_details['user_type_id'] == 5 ){
@@ -614,12 +618,12 @@ class UserController extends MY_Controller {
         }else{
             $user_product_details = '';
         }
-        
+
         $user_crop_details = $this->UserCrop->getUserCropByUserId($user_id);
         $user_soil_details = $this->UserSoil->getUserSoilByUserId($user_id);
         $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($user_id);
         $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($user_id);
-       
+
         $user_bank_details = $this->UserBank->getUserBankByUserId($user_id);
         $user_type_details = $this->UserType->getUserTypeById($user_type_id);
         $data['userInputOrganicList'] = $this->UserInputOrganic->getUserInputOrganicByUserId( $user_id );
@@ -645,13 +649,13 @@ class UserController extends MY_Controller {
         $data['view'] = 'user/profile_form';
         return $data;
     }
-    
+
     public function userRegistrationDashborad() {
         $session = UserSession();
         if ( empty( $session['success'] ) ) {
             redirect('home', 'refresh');
         }
-        
+
         $userSession = $session['userData'];
         if( ADMINUSERNAME == $userSession['username'] ){
             $data['userList'] = $this->User->getUsers();
@@ -659,7 +663,7 @@ class UserController extends MY_Controller {
             $data['userList'] = $this->User->getUserByPartnerUserId( $userSession['user_id'] );
         }
         $data['userTypeList'] = $this->UserType->getUserTypes();
-        
+
         $data['title'] = 'User Registration';
         $data['heading'] = 'User Registration';
         $data['backend'] = true;
@@ -667,7 +671,7 @@ class UserController extends MY_Controller {
         $data['userSessionData'] = $userSession;
         $this->backendLayout($data);
     }
-    
+
     public function changePassword() {
         if (!$this->session->userdata('user_data')) {
             redirect('home', 'refresh');
@@ -706,10 +710,12 @@ class UserController extends MY_Controller {
             $this->backendLayout($data);
         }
     }
+
     public function logout() {
         $this->session->unset_userdata('user_data');
         return redirect('home');
     }
+    
     public function delete(){
         $post = $this->input->post();
         $result = $this->User->delete($post['user_id']);
