@@ -167,6 +167,7 @@ $route['admin/user-registration-dashboard'] = "backend/UserController/userRegist
 $route['orders'] = "backend/OrderController/index";
 $route['order/view'] = "backend/OrderController/view";
 
+$route['transactions'] = "backend/TransactionController/index";
 
 /************* api routes *************/
 $route['api/user/login'] = "api/UserController/login";

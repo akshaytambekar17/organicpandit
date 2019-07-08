@@ -390,6 +390,16 @@
                         </a>
                     </li>
 	                <li>
+		                <a href="<?= base_url()?>orders">
+			                <i class="fa fa-cart-plus"></i> <span>Orders</span>
+						</a>
+	                </li>
+	                <li>
+		                <a href="<?= base_url()?>transactions">
+			                <i class="fa fa-money" aria-hidden="true"></i> <span>Transaction</span>
+		                </a>
+	                </li>
+	                <li>
 		                <a href="<?= base_url()?>admin/user">
 			                <i class="ion ion-person-add"></i> <span>User Registration</span>
 			                <span class="pull-right-container">

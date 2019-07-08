@@ -4,7 +4,7 @@
         <h1><?= !empty($heading)?$heading:'Heading'?></h1>
         <ol class="breadcrumb">
             <li><a href="<?= base_url()?>admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active"><a href="#">Order</a></li>
+            <li class="active"><a href="#">Transaction</a></li>
         </ol>
     </section>
     <section class="content">
@@ -37,42 +37,37 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <?php if( $arrUserData['username'] == 'adminmaster' ) {  ?>
-                                            <th>User Type</th>
-                                        <?php } ?>
                                         <th>Order number</th>
-                                        <th>Fullname</th>
-                                        <th>Mobile Number</th>
-                                        <th>Address</th>
+                                        <th>Transaction Id</th>
+                                        <th>Status</th>
+                                        <th>Error</th>
+                                        <th>Error Message</th>
                                         <th>Total Amount</th>
-                                        <th>Payment Method</th>
-	                                    <th>Payment Status</th>
-                                        <th>Order Date</th>
-                                        <th>Action</th>
+	                                    <th>Date</th>
+                                        <!--<th>Action</th>-->
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if( isset( $arrmixOrderList ) ) {
-                                        foreach( $arrmixOrderList as $key => $arrOrderDetails ) {
+                                    if( true == isset( $arrmixTransactionList ) ) {
+                                        foreach( $arrmixTransactionList as $key => $arrTransactionDetails ) {
 
                                 ?>
-                                            <tr class="gradeX" id="order-<?= $arrOrderDetails['order_id'] ?>">
-                                                <td class="hidden"><?= $arrOrderDetails['order_id']; ?></td>
-                                                <?php if( $arrUserData['username'] == ADMINUSERNAME ) {  ?>
-                                                    <td><?= $arrOrderDetails['user_type_name'] ?></td>
-                                                <?php } ?>
-                                                <td><?= $arrOrderDetails['order_no'];?></td>
-                                                <td><?= $arrOrderDetails['fullname'];?></td>
-                                                <td><?= $arrOrderDetails['mobile_no']; ?></td>
-                                                <td><?= $arrOrderDetails['address'] ?></td>
-                                                <td><?= $arrOrderDetails['total_amount']; ?></td>
-                                                <td><?= ( PAYMENT_METHOD_ONLINE == $arrOrderDetails['payment_method'] ) ? 'Online Payment' : 'COD' ?></td>
-	                                            <td><?= ( ORDER_PAYMENT_STATUS_COMPLETED == $arrOrderDetails['order_payment_status'] ) ? 'Completed' : 'Pending' ?></td>
-                                                <td><?= $arrOrderDetails['created_at']; ?></td>
-                                                <td>
-                                                    <a href="<?= base_url()?>order/view?order_id=<?= $arrOrderDetails['order_id'] ?>" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                </td>
+                                            <td class="gradeX" id="order-<?= $arrTransactionDetails['transaction_id'] ?>">
+                                                <td class="hidden"><?= $arrTransactionDetails['transaction_id']; ?></td>
+	                                            <td><a href="<?= base_url()?>order/view?order_id=<?= $arrTransactionDetails['order_id'] ?>" data-toggle="tooltip" title="View">
+		                                                <?= $arrTransactionDetails['order_no'];?>
+		                                            </a>
+	                                            </td>
+	                                            <td><?= $arrTransactionDetails['txnid'];?></td>
+                                                <td><?= $arrTransactionDetails['status']; ?></td>
+                                                <td><?= $arrTransactionDetails['error'] ?></td>
+	                                            <td><?= $arrTransactionDetails['error_message'] ?></td>
+                                                <td><?= $arrTransactionDetails['total_amount']; ?></td>
+                                                <td><?= $arrTransactionDetails['added_on']; ?></td>
+                                                <!--<td>
+                                                    <a href="<?/*= base_url()*/?>order/view?order_id=<?/*= $arrTransactionDetails['order_id'] */?>" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                </td>-->
                                             </tr>
                                             <?php
                                         }

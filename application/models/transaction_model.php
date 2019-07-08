@@ -21,14 +21,25 @@ class transaction_model extends CI_Model {
     }
 
     public function getTransactions() {
+	    $this->db->select('tt.*, tos.*');
+	    $this->db->from('tbl_transaction tt');
+	    $this->db->join('tbl_orders tos', 'tos.order_id = tt.order_id', 'left');
         $this->db->order_by('transaction_id', 'DESC');
-        return $this->db->get('tbl_transaction')->result_array();
+        return $this->db->get()->result_array();
     }
 
     public function getTransactionByTransactionId( $intTransactionId ) {
         $this->db->where('transaction_id', $intTransactionId);
         return $this->db->get('tbl_transaction')->row_array();
     }
+
+	public function getTransactionsByUserId( $intUserId ) {
+		$this->db->select('tt.*, tos.*');
+		$this->db->from('tbl_transaction tt');
+		$this->db->join('tbl_orders tos', 'tos.order_id = tt.order_id', 'left');
+		$this->db->where('tos.user_id', $intUserId);
+		return $this->db->get()->result_array();
+	}
 
     public function insert($data) {
         $this->db->insert('tbl_transaction', $data);
@@ -37,7 +48,7 @@ class transaction_model extends CI_Model {
     }
 
     public function update( $arrUpdateData ) {
-        
+
         //$arrUpdateData['updated_at'] = CURRENT_DATETIME;
         $this->db->where('transaction_id', $arrUpdateData['transaction_id']);
         $this->db->update('tbl_transaction', $arrUpdateData);
