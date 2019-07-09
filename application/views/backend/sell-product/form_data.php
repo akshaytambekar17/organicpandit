@@ -154,10 +154,10 @@
 
                                 <div class="form-group col-md-4">
 	                                <label class="control-label label-required" for="delivery_location">Select City</label>
-	                                <select class="form-control select2" name="delivery_location" id="js-delivery-location">
+	                                <select class="form-control select2" name="delivery_location[]" id="js-delivery-location" multiple>
                                         <option disabled="disabled" selected="selected">Select City</option>
                                     </select>
-                                    <span class="has-error"><?php echo form_error('delivery_location'); ?></span>
+                                    <span class="has-error"><?php echo form_error('delivery_location[]'); ?></span>
                                 </div>
                             </div>
 
@@ -215,6 +215,69 @@
                                     <span class="has-error"><?php echo form_error('other_details'); ?></span>
                                 </div>
                             </div>
+	                        <br>
+	                        <label class="control-label label-required">Images</label>
+	                        <div class="row">
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Primary Image</label>
+			                        <input type="file" name="primary_image" id="js-primary-image">
+			                        <?php if( true == isset( $arrSellProductDetails['primary_image'] ) ){ ?>
+				                        <br>
+				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['primary_image']?>" width="70px" height="70px">
+				                        <input type="hidden" name="primary_image_hidden" value="<?= $arrSellProductDetails['primary_image'] ?>">
+			                        <?php } ?>
+			                        <span class="has-error"><?php echo form_error('primary_image'); ?></span>
+		                        </div>
+							</div>
+
+	                        <div class="row">
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Secondary Image1</label>
+			                        <input type="file" name="other_image1" id="js-other-image1">
+			                        <?php if( true == isset( $arrSellProductDetails['other_image1'] ) ){ ?>
+				                        <br>
+				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image1']?>" width="70px" height="70px">
+				                        <input type="hidden" name="other_image_hidden1" value="<?= $arrSellProductDetails['other_image1'] ?>">
+			                        <?php } ?>
+			                        <span class="has-error"><?php echo form_error('other_image1'); ?></span>
+		                        </div>
+
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Secondary Image2</label>
+			                        <input type="file" name="other_image2" id="js-other-image2">
+			                        <?php if( true == isset( $arrSellProductDetails['other_image2'] ) ){ ?>
+				                        <br>
+				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image2']?>" width="70px" height="70px">
+				                        <input type="hidden" name="other_image1_hidden2" value="<?= $arrSellProductDetails['other_image2'] ?>">
+			                        <?php } ?>
+			                        <span class="has-error"><?php echo form_error('other_image2'); ?></span>
+		                        </div>
+
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Secondary Image3</label>
+			                        <input type="file" name="other_image3" id="js-other-image3">
+			                        <?php if( true == isset( $arrSellProductDetails['other_image3'] ) ){ ?>
+				                        <br>
+				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image3']?>" width="70px" height="70px">
+				                        <input type="hidden" name="other_image_hidden3" value="<?= $arrSellProductDetails['other_image3'] ?>">
+			                        <?php } ?>
+			                        <span class="has-error"><?php echo form_error('other_image3'); ?></span>
+		                        </div>
+							</div>
+
+	                        <div class="row">
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Secondary Image4</label>
+			                        <input type="file" name="other_image4" id="js-other-image4">
+			                        <?php if( true == isset( $arrSellProductDetails['other_image4'] ) ){ ?>
+				                        <br>
+				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image4']?>" width="70px" height="70px">
+				                        <input type="hidden" name="other_image_hidden3" value="<?= $arrSellProductDetails['other_image4'] ?>">
+			                        <?php } ?>
+			                        <span class="has-error"><?php echo form_error('other_image4'); ?></span>
+		                        </div>
+							</div>
+
                         </div>
                         <?php if( isset( $arrSellProductDetails['sell_product_id'] ) ) { ?>
                                 <input type="hidden" name="sell_product_id" value="<?= $arrSellProductDetails['sell_product_id']?>">
@@ -276,11 +339,11 @@
     }
 
     function getCitiesByState( intStateId ){
-	    var intHiddenCityId = $(".js-hidden-delivery-location").val();
+	    var intstrHiddenCityId = $(".js-hidden-delivery-location").val();
 	    $.ajax({
 		    type: "POST",
 		    url: "<?php echo base_url(); ?>" + "fetch-cities-by-state-id",
-		    data: { 'state_id' : intStateId, 'hidden_city_id' : intHiddenCityId },
+		    data: { 'state_id' : intStateId, 'hidden_city_id' : intstrHiddenCityId },
 		    dataType: "html",
 		    success: function(result){
 			    var html = $.parseJSON(result);

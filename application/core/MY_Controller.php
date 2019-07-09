@@ -23,7 +23,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_crop_model','UserCrop');
         $this->load->model('user_input_organic_model','UserInputOrganic');
         $this->load->model('user_input_organic_ecommerce_model','UserInputOrganicEcommerce');
-	$this->load->model('user_certifications_model','UserCertifications');
+		$this->load->model('user_certifications_model','UserCertifications');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
         $this->load->model('notifications_model','Notifications');
@@ -35,7 +35,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('sell_products_model','SellProduct');
         $this->load->model('orders_model','Orders');
         $this->load->model('transaction_model','Transaction');
-
+	    $this->load->model('sell_products_images_model','SellProductImage');
     }
 
     public function backendLayout($data) {
@@ -155,24 +155,24 @@ class MY_Controller extends CI_Controller {
     }
 
     public function paymentTransaction( $arrmixPaymentDetails ){
-        
+
         $arrobjEasebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
         if( INITIATE_PAYMENT == $arrmixPaymentDetails['api'] ) {
-            
-            /*  Very Important Notes
-            * 
-            * Post Data should be below format.
-            *
-                Array ( [txnid] => T3SAT0B5OL [amount] => 100.0 [firstname] => jitendra [email] => test@gmail.com [phone] => 1231231235 [productinfo] => Laptop [surl] => http://localhost:3000/response.php [furl] => http://localhost:3000/response.php [udf1] => aaaa [udf2] => aa [udf3] => aaaa [udf4] => aaaa [udf5] => aaaa [address1] => aaaa [address2] => aaaa [city] => aaaa [state] => aaaa [country] => aaaa [zipcode] => 123123 ) 
-            */
-            $result = $arrobjEasebuzzObj->initiatePaymentAPI( $arrmixPaymentDetails['payment_details'] );
-            
-            $this->easebuzzAPIResponse( $result, $arrmixPaymentDetails );
-            
-        } else if( TRANSACTION == $arrmixPaymentDetails['api'] ){ 
 
             /*  Very Important Notes
-            * 
+            *
+            * Post Data should be below format.
+            *
+                Array ( [txnid] => T3SAT0B5OL [amount] => 100.0 [firstname] => jitendra [email] => test@gmail.com [phone] => 1231231235 [productinfo] => Laptop [surl] => http://localhost:3000/response.php [furl] => http://localhost:3000/response.php [udf1] => aaaa [udf2] => aa [udf3] => aaaa [udf4] => aaaa [udf5] => aaaa [address1] => aaaa [address2] => aaaa [city] => aaaa [state] => aaaa [country] => aaaa [zipcode] => 123123 )
+            */
+            $result = $arrobjEasebuzzObj->initiatePaymentAPI( $arrmixPaymentDetails['payment_details'] );
+
+            $this->easebuzzAPIResponse( $result, $arrmixPaymentDetails );
+
+        } else if( TRANSACTION == $arrmixPaymentDetails['api'] ){
+
+            /*  Very Important Notes
+            *
             * Post Data should be below format.
             *
                 Array ( [txnid] => TZIF0SS24C [amount] => 1.03 [email] => test@gmail.com [phone] => 1231231235 )
@@ -180,11 +180,11 @@ class MY_Controller extends CI_Controller {
             $result = $arrobjEasebuzzObj->transactionAPI( $arrmixPaymentDetails['payment_details'] );
 
             $this->easebuzzAPIResponse( $result );
-     
-        }else if( TRANSACTION_DATE == $arrmixPaymentDetails['api'] || TRANSACTION_DATE_API == $arrmixPaymentDetails['api'] ){ 
+
+        }else if( TRANSACTION_DATE == $arrmixPaymentDetails['api'] || TRANSACTION_DATE_API == $arrmixPaymentDetails['api'] ){
 
             /*  Very Important Notes
-            * 
+            *
             * Post Data should be below format.
             *
                 Array ( [merchant_email] => jitendra@gmail.com [transaction_date] => 06-06-2018 )
@@ -192,11 +192,11 @@ class MY_Controller extends CI_Controller {
             $result = $arrobjEasebuzzObj->transactionDateAPI( $arrmixPaymentDetails['payment_details'] );
 
             $this->easebuzzAPIResponse( $result );
-                       
+
         }else if( REFUND == $arrmixPaymentDetails['api']  ){
-            
+
             /*  Very Important Notes
-            * 
+            *
             * Post Data should be below format.
             *
                 Array ( [txnid] => ASD20088 [refund_amount] => 1.03 [phone] => 1231231235 [email] => test@gmail.com [amount] => 1.03 )
@@ -204,11 +204,11 @@ class MY_Controller extends CI_Controller {
             $result = $arrobjEasebuzzObj->refundAPI( $arrmixPaymentDetails['payment_details'] );
 
             $this->easebuzzAPIResponse( $result );
-                       
+
         }else if( PAYOUT == $arrmixPaymentDetails['api'] ){
 
             /*  Very Important Notes
-            * 
+            *
             * Post Data should be below format.
             *
                Array ( [merchant_email] => jitendra@gmail.com [payout_date] => 08-06-2018 )
@@ -216,17 +216,17 @@ class MY_Controller extends CI_Controller {
             $result = $arrobjEasebuzzObj->payoutAPI( $arrmixPaymentDetails['payment_details'] );
 
             $this->easebuzzAPIResponse( $result );
-                       
+
         } else {
-            
+
         }
-        
+
     }
-    
-    public function easebuzzAPIResponse( $jsonmixResponseData, $arrmixPaymentDetails = array() ){ 
-        
+
+    public function easebuzzAPIResponse( $jsonmixResponseData, $arrmixPaymentDetails = array() ){
+
         printDie($jsonmixResponseData);
-        
+
 //        $arrSession = UserSession();
 //        $arrUserSession = $arrSession['userData'];
 //        $arrmixCartList = fetchCartDetails();
@@ -238,8 +238,8 @@ class MY_Controller extends CI_Controller {
 //        $data['heading'] = 'Payment Response';
 //        $data['hide_footer'] = true;
 //        $data['view'] = 'user/payment_response';
-//        
+//
 //        $this->frontendLayout($data);
     }
-    
+
 }

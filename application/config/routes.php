@@ -138,7 +138,7 @@ $route['admin/product-category/update'] = "backend/ProductCategoryController/upd
 $route['admin/product-category/delete'] = "backend/ProductCategoryController/delete";
 
 
-$route['admin/user-type'] = "backend/UserTypeController";
+$route['admin/user  -type'] = "backend/UserTypeController";
 $route['admin/user-type/add'] = "backend/UserTypeController/add";
 $route['admin/user-type/update'] = "backend/UserTypeController/update";
 $route['admin/user-type/delete'] = "backend/UserTypeController/delete";

@@ -52,37 +52,173 @@ class SellProductController extends MY_Controller {
     public function create() {
         $session = UserSession();
         $userSession = $session['userData'];
-        if ($this->input->post()) {
+        if( $this->input->post() ) {
             $post = $this->input->post();
-            if (TRUE == $this->form_validation->run('sell-product-form')) {
+	        if( true == empty( $_FILES['primary_image']['name'] ) ) {
+		        $this->form_validation->set_rules( 'primary_image', 'Primary Image', 'trim|required' );
+	        }
+            if( true == $this->form_validation->run( 'sell-product-form' ) ) {
                 $arrPostSellProductDetails = $post;
-                if ($userSession['username'] == 'adminmaster') {
-                    $arrPostSellProductDetails['user_id'] = 0;
-                    $arrPostSellProductDetails['created_by'] = $userSession['register_id'];
-                    $arrPostSellProductDetails['updated_by'] = $userSession['register_id'];
-                } else {
-                    $arrPostSellProductDetails['user_id'] = $userSession['user_id'];
-                    $arrPostSellProductDetails['created_by'] = $userSession['user_id'];
-                    $arrSellProductDetails['updated_by'] = $userSession['user_id'];
-                }
-                $boolResult = $this->SellProduct->insert($arrPostSellProductDetails);
-                if ($boolResult) {
-                    $this->session->set_flashdata('Message', 'Product has been out for the sell. You can see in Buy product section ');
-                    return redirect('sell-product', 'refresh');
-                } else {
-                    $this->session->set_flashdata('Error', 'Failed to create for selling product');
-                    $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
-                    $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
-                    $data['arrCitiesList'] = $this->City->getCities();
-                    $data['arrStateList'] = $this->State->getStates();
-                    $data['arrProductCategoryList'] = $arrProductCategoryList;
-                    $data['title'] = 'Sell Product';
-                    $data['heading'] = 'Sell Product';
-                    $data['view'] = 'sell-product/form_data';
-                    $this->backendLayout($data);
-                }
+
+	            if( !empty( $_FILES['primary_image']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'primary_image' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strPrimaryImageName = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strPrimaryImageName = '';
+		            }
+	            } else {
+		            $strPrimaryImageName = '';
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image1']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image1' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName1 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName1 = '';
+		            }
+	            } else {
+		            $strOtherImageName1 = '';
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image3']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image3' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName3 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName3 = '';
+		            }
+	            } else {
+		            $strOtherImageName3 = '';
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image4']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image4' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName4 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName4 = '';
+		            }
+	            } else {
+		            $strOtherImageName4 = '';
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image2']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image2' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName2 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName2 = '';
+		            }
+	            } else {
+		            $strOtherImageName2 = '';
+		            $arrError[] = '';
+	            }
+
+	            if( false == isArrVal( array_filter( $arrError ) ) ) {
+		            unset( $arrPostSellProductDetails['primary_image'] );
+		            unset( $arrPostSellProductDetails['other_image1'] );
+		            unset( $arrPostSellProductDetails['other_image2'] );
+		            unset( $arrPostSellProductDetails['other_image3'] );
+		            unset( $arrPostSellProductDetails['other_image4'] );
+		            unset( $arrPostSellProductDetails['delivery_location'] );
+					$arrPostSellProductDetails['delivery_location'] = implode( ',', $post['delivery_location'] );
+
+		            if( ADMINUSERNAME == $userSession['username'] ) {
+			            $arrPostSellProductDetails['user_id']    = 0;
+			            $arrPostSellProductDetails['created_by'] = $userSession['register_id'];
+			            $arrPostSellProductDetails['updated_by'] = $userSession['register_id'];
+		            } else {
+			            $arrPostSellProductDetails['user_id']    = $userSession['user_id'];
+			            $arrPostSellProductDetails['created_by'] = $userSession['user_id'];
+			            $arrSellProductDetails['updated_by']     = $userSession['user_id'];
+		            }
+		            $intSellproductId = $this->SellProduct->insert( $arrPostSellProductDetails );
+		            if( true == isVal( $intSellproductId ) ) {
+
+		            	$arrSellProductImageDetails = array(
+		            		                                'sell_product_id' => $intSellproductId,
+				                                            'primary_image' => $strPrimaryImageName,
+				                                            'other_image1' => $strOtherImageName1,
+				                                            'other_image2' => $strOtherImageName2,
+				                                            'other_image3' => $strOtherImageName3,
+				                                            'other_image4' => $strOtherImageName4,
+			                                            );
+		            	$intSellProductImageId = $this->SellProductImage->insert( $arrSellProductImageDetails );
+		            	if( true == isVal( $intSellProductImageId ) ) {
+				            $this->session->set_flashdata( 'Message', 'Product has been out for the sell. You can see in Buy product section ' );
+			            } else {
+				            $this->session->set_flashdata( 'Error', 'Product has been added successfully, but the images cannot be added. Something went wrong. Please try using the update' );
+			            }
+
+						return redirect( 'sell-product', 'refresh' );
+		            } else {
+			            $this->session->set_flashdata( 'Error', 'Failed to create for selling product' );
+			            $arrProductCategoryList               = $this->ProductCategory->getProductCategorys();
+			            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+			            $data['arrCitiesList']                = $this->City->getCities();
+			            $data['arrStateList']                 = $this->State->getStates();
+			            $data['arrProductCategoryList']       = $arrProductCategoryList;
+			            $data['title']                        = 'Sell Product';
+			            $data['heading']                      = 'Sell Product';
+			            $data['view']                         = 'sell-product/form_data';
+			            $this->backendLayout( $data );
+		            }
+	            } else {
+		            printDie( $arrError );
+		            $this->session->set_flashdata('Error', implode( ',', $arrError ));
+		            $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
+		            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+		            $data['arrCitiesList'] = $this->City->getCities();
+		            $data['arrStateList'] = $this->State->getStates();
+		            $data['arrProductCategoryList'] = $arrProductCategoryList;
+		            $data['title'] = 'Sell Product';
+		            $data['heading'] = 'Sell Product';
+		            $data['view'] = 'sell-product/form_data';
+		            $this->backendLayout($data);
+	            }
             } else {
-                $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
+            	$arrProductCategoryList = $this->ProductCategory->getProductCategorys();
                 $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
                 $data['arrCitiesList'] = $this->City->getCities();
                 $data['arrStateList'] = $this->State->getStates();
@@ -110,33 +246,172 @@ class SellProductController extends MY_Controller {
         $userSession = $session['userData'];
 
         $get = $this->input->get();
-        if ($this->input->post()) {
+        if( $this->input->post() ) {
             $post = $this->input->post();
             if ($this->form_validation->run('sell-product-form') == TRUE) {
                 $arrPostSellProductDetails = $post;
-                if ($userSession['username'] == 'adminmaster') {
-                    $arrPostSellProductDetails['updated_by'] = $userSession['register_id'];
-                } else {
-                    $arrPostSellProductDetails['updated_by'] = $userSession['user_id'];
-                }
-                $boolResult = $this->SellProduct->update($arrPostSellProductDetails);
-                if (true == $boolResult) {
-                    $this->session->set_flashdata('Message', 'Your sell product details has been updated succesfully');
-                    return redirect('sell-product', 'refresh');
-                } else {
-                    $this->session->set_flashdata('Error', 'Failed to update category');
-                    $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $post['sell_product_id'] );
-                    $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
-                    $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
-                    $data['arrCitiesList'] = $this->City->getCities();
-                    $data['arrStateList'] = $this->State->getStates();
-                    $data['arrProductCategoryList'] = $arrProductCategoryList;
-                    $data['arrSellProductDetails'] = $arrSellProductDetails;
-                    $data['title'] = 'Sell Product';
-                    $data['heading'] = 'Sell Product';
-                    $data['view'] = 'sell-product/form_data';
-                    $this->backendLayout($data);
-                }
+
+	            if( !empty( $_FILES['primary_image']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'primary_image' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strPrimaryImageName = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strPrimaryImageName = '';
+		            }
+	            } else {
+		            $strPrimaryImageName = isset( $post['primary_image_hidden'] ) ? $post['primary_image_hidden'] : '' ;
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image1']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image1' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName1 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName1 = '';
+		            }
+	            } else {
+		            $strOtherImageName1 = isset( $post['other_image_hidden1'] ) ? $post['other_image_hidden1'] : '' ;
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image3']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image3' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName3 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName3 = '';
+		            }
+	            } else {
+		            $strOtherImageName3 = isset( $post['other_image_hidden3'] ) ? $post['other_image_hidden3'] : '' ;;
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image4']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image4' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName4 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName4 = '';
+		            }
+	            } else {
+		            $strOtherImageName4 = isset( $post['other_image_hidden4'] ) ? $post['other_image_hidden4'] : '' ;;
+		            $arrError[] = '';
+	            }
+
+	            if( !empty( $_FILES['other_image2']['name'] ) ) {
+		            $config['upload_path'] = './assets/images/sell_products/';
+		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		            $config['max_size'] = 2048;
+
+		            $this->load->library( 'upload', $config );
+		            if( $this->upload->do_upload( 'other_image2' ) ) {
+			            $arrUploadData = $this->upload->data();
+			            $strOtherImageName2 = $arrUploadData['file_name'];
+			            $arrError[] = '';
+		            } else {
+			            $arrError[] = $this->upload->display_errors();
+			            $strOtherImageName2 = '';
+		            }
+	            } else {
+		            $strOtherImageName2 = isset( $post['other_image_hidden2'] ) ? $post['other_image_hidden2'] : '' ;;
+		            $arrError[] = '';
+	            }
+
+	            if( false == isArrVal( $arrError ) ) {
+		            unset( $arrPostSellProductDetails['primary_image'] );
+		            unset( $arrPostSellProductDetails['other_image1'] );
+		            unset( $arrPostSellProductDetails['other_image2'] );
+		            unset( $arrPostSellProductDetails['other_image3'] );
+		            unset( $arrPostSellProductDetails['other_image4'] );
+		            unset( $arrPostSellProductDetails['delivery_location'] );
+		            unset( $arrPostSellProductDetails['primary_image_hidden'] );
+		            unset( $arrPostSellProductDetails['other_image_hidden1'] );
+		            unset( $arrPostSellProductDetails['other_image_hidden2'] );
+		            unset( $arrPostSellProductDetails['other_image_hidden3'] );
+		            unset( $arrPostSellProductDetails['other_image_hidden4'] );
+
+		            $arrPostSellProductDetails['delivery_location'] = implode( ',', $post['delivery_location'] );
+
+		            if( $userSession['username'] == 'adminmaster' ) {
+			            $arrPostSellProductDetails['updated_by'] = $userSession['register_id'];
+		            } else {
+			            $arrPostSellProductDetails['updated_by'] = $userSession['user_id'];
+		            }
+		            $boolResult = $this->SellProduct->update( $arrPostSellProductDetails );
+		            if( true == $boolResult ) {
+						$arrSellProductImageDetails = array(
+				            'id' => $post['sell_product_image_id'],
+				            'sell_product_id' => $post['sell_product_id'],
+				            'primary_image' => $strPrimaryImageName,
+				            'other_image1' => $strOtherImageName1,
+				            'other_image2' => $strOtherImageName2,
+				            'other_image3' => $strOtherImageName3,
+				            'other_image4' => $strOtherImageName4,
+			            );
+
+			            $this->SellProductImage->update( $arrSellProductImageDetails );
+
+			            $this->session->set_flashdata( 'Message', 'Your sell product details has been updated succesfully' );
+
+			            return redirect( 'sell-product', 'refresh' );
+		            } else {
+			            $this->session->set_flashdata( 'Error', 'Failed to update category' );
+			            $arrSellProductDetails                = $this->SellProduct->getSellProductBySellProductId( $post['sell_product_id'] );
+			            $arrProductCategoryList               = $this->ProductCategory->getProductCategorys();
+			            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+			            $data['arrCitiesList']                = $this->City->getCities();
+			            $data['arrStateList']                 = $this->State->getStates();
+			            $data['arrProductCategoryList']       = $arrProductCategoryList;
+			            $data['arrSellProductDetails']        = $arrSellProductDetails;
+			            $data['title']                        = 'Sell Product';
+			            $data['heading']                      = 'Sell Product';
+			            $data['view']                         = 'sell-product/form_data';
+			            $this->backendLayout( $data );
+		            }
+	            } else {
+		            $this->session->set_flashdata('Error', implode( ',', $arrError ));
+		            $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $post['sell_product_id'] );
+		            $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
+		            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+		            $data['arrCitiesList'] = $this->City->getCities();
+		            $data['arrStateList'] = $this->State->getStates();
+		            $data['arrProductCategoryList'] = $arrProductCategoryList;
+		            $data['arrSellProductDetails'] = $arrSellProductDetails;
+		            $data['title'] = 'Sell Product';
+		            $data['heading'] = 'Sell Product';
+		            $data['view'] = 'sell-product/form_data';
+		            $this->backendLayout($data);
+	            }
+
             } else {
                 $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $post['sell_product_id'] );
                 $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
@@ -202,16 +477,20 @@ class SellProductController extends MY_Controller {
 
     public function fetchCitiesByStateId() {
         $post = $this->input->post();
+		$arrCitiesList = $this->City->getCitiesBystateId($post['state_id']);
+        $intstrCityIdHidden = isVal($post['hidden_city_id']) ? $post['hidden_city_id'] : '';
+        $arrintCityIdHidden = explode( ',', $intstrCityIdHidden );
 
-        $arrCitiesList = $this->City->getCitiesBystateId($post['state_id']);
-        $intCityIdHidden = isVal($post['hidden_city_id']) ? $post['hidden_city_id'] : '';
         $html = array();
         if (!empty($arrCitiesList)) {
             foreach ($arrCitiesList as $arrCityDetails) {
                 $strSelected = '';
-                if ($intCityIdHidden == $arrCityDetails['id']) {
-                    $strSelected = 'selected="selected"';
+                foreach( $arrintCityIdHidden as $intCityIdHidden ){
+	                if( $intCityIdHidden == $arrCityDetails['id']) {
+		                $strSelected = 'selected="selected"';
+	                }
                 }
+
                 $data2 = ' <option value="' . $arrCityDetails['id'] . '" ' . set_select('delivery_location', $arrCityDetails['id']) . ' ' . $strSelected . ' > ' . $arrCityDetails['name'] . '</option>';
                 $html[] = $data2;
             }

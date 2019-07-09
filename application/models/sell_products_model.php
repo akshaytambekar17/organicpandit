@@ -36,6 +36,7 @@ class sell_products_model extends CI_Model {
     public function getSellProductBySellProductId($intSellProductId) {
         $this->db->select('tsp.*,tu.*,tp.name as product_name, tcp.name as category_name,c.name as city_name, s.name as state_name, ta.name as certificaton_agency_name');
         $this->db->from('tbl_sell_products tsp');
+	    $this->db->join('tbl_sell_products_images tspi', 'tspi.sell_product_id = tsp.sell_product_id','left');
         $this->db->join('tbl_product tp', 'tp.id = tsp.product_id');
         $this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id');
         $this->db->join('tbl_certification_agency tca', 'tca.user_id = tsp.certification_id', 'left');
@@ -50,6 +51,7 @@ class sell_products_model extends CI_Model {
     public function getSellProductByUserId($intUserId) {
         $this->db->select('tsp.*,tu.*,tp.name as product_name, tcp.name as category_name,c.name as city_name, ta.name as certificaton_agency_name');
         $this->db->from('tbl_sell_products tsp');
+	    $this->db->join('tbl_sell_products_images tspi', 'tspi.sell_product_id = tsp.sell_product_id','left');
         $this->db->join('tbl_users tu', 'tu.user_id = tsp.user_id');
         $this->db->join('tbl_product tp', 'tp.id = tsp.product_id');
         $this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id');

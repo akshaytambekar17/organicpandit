@@ -370,7 +370,7 @@ $config = array(
 			        'rules' => 'required'
 		        ),
 		        array(
-			        'field' => 'delivery_location',
+			        'field' => 'delivery_location[]',
 			        'label' => 'City',
 			        'rules' => 'required'
 		        ),
@@ -418,7 +418,7 @@ $config = array(
 		        'rules' => 'required'
 	        )
         ),
-    
+
         'paynow-form' => array(
 
 	        array(
