@@ -109,8 +109,18 @@
                                     </div>
 
 	                                <div class="form-group col-md-4">
-		                                <label>Payment Status</label>
-		                                <h4><?= ( ORDER_PAYMENT_STATUS_COMPLETED == $arrmixOrderDetails['order_payment_status'] ) ? 'Completed' : 'Pending' ?></h4>
+		                                <label>Online Payment Status</label>
+		                                <h4>
+			                                <?php
+				                                if( ORDER_PAYMENT_STATUS_COMPLETED == $arrmixOrderDetails['order_payment_status'] ){
+					                                echo 'Completed';
+				                                } else if( ORDER_PAYMENT_STATUS_USER_CANCELLED == $arrmixOrderDetails['order_payment_status'] ) {
+					                                echo 'User Cancelled';
+				                                } else {
+					                                echo 'Pending';
+				                                }
+			                                ?>
+		                                </h4>
 	                                </div>
 
                                     <div class="form-group col-md-4">

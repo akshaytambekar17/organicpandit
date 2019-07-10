@@ -64,24 +64,26 @@
                                     <span class="has-error"><?php echo form_error('product_description'); ?></span>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Price</label>
-                                    <input type="text" name="price" class="form-control" id="js-price" placeholder="Price" value="<?= !empty( $arrSellProductDetails['price'] )? $arrSellProductDetails['price'] : set_value('price')?>" >
-                                    <span class="has-error"><?php echo form_error('price'); ?></span>
+                                    <label class="control-label label-required">Quantity (in Kg)</label>
+                                    <input type="text" name="sell_quantity" class="form-control" id="js-sell-quantity" placeholder="Quantity" value="<?= !empty( $arrSellProductDetails['sell_quantity'] )? $arrSellProductDetails['sell_quantity'] : set_value('sell_quantity')?>" >
+                                    <span class="has-error"><?php echo form_error('sell_quantity'); ?></span>
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label class="control-label label-required" >Variety</label>
-                                    <input type="text" name="variety" class="form-control" id="js-variety" placeholder="Variety" value="<?= !empty( $arrSellProductDetails['variety'] ) ? $arrSellProductDetails['variety'] : set_value('variety')?>">
-                                    <span class="has-error"><?php echo form_error('variety'); ?></span>
-                                </div>
+	                            <div class="form-group col-md-4">
+		                            <label class="control-label label-required">Expected Price</label>
+		                            <input type="text" name="price" class="form-control" id="js-price" placeholder="Price" value="<?= !empty( $arrSellProductDetails['price'] )? $arrSellProductDetails['price'] : set_value('price')?>" >
+		                            <span class="has-error"><?php echo form_error('price'); ?></span>
+	                            </div>
 
-                                <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Moisture</label>
-                                    <input type="text" name="moisture" class="form-control" id="js-moisture" placeholder="Moisture" value="<?= !empty( $arrSellProductDetails['moisture'] ) ? $arrSellProductDetails['moisture'] : set_value('moisture') ?>" >
-                                    <span class="has-error"><?php echo form_error('moisture'); ?></span>
-                                </div>
+	                            <div class="form-group col-md-4">
+		                            <label class="control-label label-required">Total Price</label>
+		                            <input type="text" name="total_price" class="form-control" id="js-total-price" placeholder="Total Price" value="<?= !empty( $arrSellProductDetails['total_price'] )? $arrSellProductDetails['total_price'] : set_value('total_price')?>" readonly="readonly">
+		                            <span class="has-error"><?php echo form_error('total_price'); ?></span>
+	                            </div>
+
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
@@ -107,7 +109,7 @@
                                     <label class="control-label label-required">Crop Year</label>
                                     <div class="input-group date">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" name="crop_year" class="form-control picker-date pull-right" id="js-crop-year"  value="<?= !empty( $arrSellProductDetails['crop_year'] ) ? $arrSellProductDetails['crop_year'] : set_value('crop_year') ?>" readonly>
+                                        <input type="text" name="crop_year" class="form-control picker-date pull-right" id="js-crop-year"  value="<?= !empty( $arrSellProductDetails['crop_year'] ) ? $arrSellProductDetails['crop_year'] : set_value('crop_year') ?>" readonly="readonly" >
                                     </div>
                                     <span class="has-error"><?php echo form_error('crop_year'); ?></span>
                                 </div>
@@ -118,7 +120,7 @@
                                         <option disabled="disabled" selected="selected" >Select Certification Agency</option>
                                         <?php foreach( $arrCertificationAgenciesList as $arrCertificationAgencyDetails ) {
                                         	$strSelected = '';
-                                        	if( $arrCertificationAgencyDetails['user_id'] == $arrSellProductDetails['certification_id']  ) {
+                                        	if( $arrCertificationAgencyDetails['user_id'] == $arrSellProductDetails['sell_product_certification_id']  ) {
 		                                        $strSelected = 'selected="selected"';
 	                                        }
                                         ?>
@@ -134,6 +136,33 @@
                                     <span class="has-error"><?php echo form_error('grain_length'); ?></span>
                                 </div>
                             </div>
+
+	                        <div class="row">
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required" >Variety</label>
+			                        <input type="text" name="variety" class="form-control" id="js-variety" placeholder="Variety" value="<?= !empty( $arrSellProductDetails['variety'] ) ? $arrSellProductDetails['variety'] : set_value('variety')?>">
+			                        <span class="has-error"><?php echo form_error('variety'); ?></span>
+		                        </div>
+
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Moisture</label>
+			                        <input type="text" name="moisture" class="form-control" id="js-moisture" placeholder="Moisture" value="<?= !empty( $arrSellProductDetails['moisture'] ) ? $arrSellProductDetails['moisture'] : set_value('moisture') ?>" >
+			                        <span class="has-error"><?php echo form_error('moisture'); ?></span>
+		                        </div>
+
+		                        <div class="form-group col-md-4">
+			                        <label class="control-label label-required">Stock</label>
+			                        <br>
+			                        <label>
+										<input type="radio" name="stock"  class="form-co1ntrol" id="js-stock" value="<?= IN_STOCK ?>" <?= ( true == isset( $arrSellProductDetails['stock'] ) && ( IN_STOCK == $arrSellProductDetails['stock'] ) ) ?  'checked' : set_checkbox('stock', IN_STOCK ) ?> > &nbsp; In Stock
+			                        </label>
+			                        <label>
+			                            <input type="radio" name="stock"  class="form-control" id="js-stock" value="<?= OUT_STOCK ?>" <?= ( true == isset( $arrSellProductDetails['stock'] ) && ( OUT_STOCK == $arrSellProductDetails['stock'] ) ) ?  'checked' : set_checkbox('stock', OUT_STOCK ) ?> > &nbsp; Out of Stock
+			                        </label>
+			                        <span class="has-error"><?php echo form_error('stock'); ?></span>
+		                        </div>
+	                        </div>
+
 	                        <label class="control-label label-required" for="delivery_location">Delivery Location</label>
                             <div class="row">
 	                            <div class="form-group col-md-4">
@@ -215,13 +244,14 @@
                                     <span class="has-error"><?php echo form_error('other_details'); ?></span>
                                 </div>
                             </div>
+
 	                        <br>
-	                        <label class="control-label label-required">Images</label>
+	                        <label class="control-label">Images</label>
 	                        <div class="row">
 		                        <div class="form-group col-md-4">
 			                        <label class="control-label label-required">Primary Image</label>
-			                        <input type="file" name="primary_image" id="js-primary-image">
-			                        <?php if( true == isset( $arrSellProductDetails['primary_image'] ) ){ ?>
+			                        <input type="file" name="primary_image" id="js-primary-image" <?= ( true == isset( $arrSellProductDetails['primary_image'] ) && ( true == isVal( $arrSellProductDetails['primary_image'] ) ) ) ? '' : 'required' ?> >
+			                        <?php if( true == isset( $arrSellProductDetails['primary_image'] ) && ( true == isVal( $arrSellProductDetails['primary_image'] ) ) ) { ?>
 				                        <br>
 				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['primary_image']?>" width="70px" height="70px">
 				                        <input type="hidden" name="primary_image_hidden" value="<?= $arrSellProductDetails['primary_image'] ?>">
@@ -232,9 +262,9 @@
 
 	                        <div class="row">
 		                        <div class="form-group col-md-4">
-			                        <label class="control-label label-required">Secondary Image1</label>
+			                        <label class="control-label">Secondary Image1</label>
 			                        <input type="file" name="other_image1" id="js-other-image1">
-			                        <?php if( true == isset( $arrSellProductDetails['other_image1'] ) ){ ?>
+			                        <?php if( true == isset( $arrSellProductDetails['other_image1'] ) && ( true == isVal( $arrSellProductDetails['other_image1'] ) ) ){ ?>
 				                        <br>
 				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image1']?>" width="70px" height="70px">
 				                        <input type="hidden" name="other_image_hidden1" value="<?= $arrSellProductDetails['other_image1'] ?>">
@@ -243,20 +273,20 @@
 		                        </div>
 
 		                        <div class="form-group col-md-4">
-			                        <label class="control-label label-required">Secondary Image2</label>
+			                        <label class="control-label">Secondary Image2</label>
 			                        <input type="file" name="other_image2" id="js-other-image2">
-			                        <?php if( true == isset( $arrSellProductDetails['other_image2'] ) ){ ?>
+			                        <?php if( true == isset( $arrSellProductDetails['other_image2'] ) && ( true == isVal( $arrSellProductDetails['other_image2'] ) ) ){ ?>
 				                        <br>
 				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image2']?>" width="70px" height="70px">
-				                        <input type="hidden" name="other_image1_hidden2" value="<?= $arrSellProductDetails['other_image2'] ?>">
+				                        <input type="hidden" name="other_image_hidden2" value="<?= $arrSellProductDetails['other_image2'] ?>">
 			                        <?php } ?>
 			                        <span class="has-error"><?php echo form_error('other_image2'); ?></span>
 		                        </div>
 
 		                        <div class="form-group col-md-4">
-			                        <label class="control-label label-required">Secondary Image3</label>
+			                        <label class="control-label">Secondary Image3</label>
 			                        <input type="file" name="other_image3" id="js-other-image3">
-			                        <?php if( true == isset( $arrSellProductDetails['other_image3'] ) ){ ?>
+			                        <?php if( true == isset( $arrSellProductDetails['other_image3'] ) && ( true == isVal( $arrSellProductDetails['other_image3'] ) )  ){ ?>
 				                        <br>
 				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image3']?>" width="70px" height="70px">
 				                        <input type="hidden" name="other_image_hidden3" value="<?= $arrSellProductDetails['other_image3'] ?>">
@@ -267,9 +297,9 @@
 
 	                        <div class="row">
 		                        <div class="form-group col-md-4">
-			                        <label class="control-label label-required">Secondary Image4</label>
+			                        <label class="control-label">Secondary Image4</label>
 			                        <input type="file" name="other_image4" id="js-other-image4">
-			                        <?php if( true == isset( $arrSellProductDetails['other_image4'] ) ){ ?>
+			                        <?php if( true == isset( $arrSellProductDetails['other_image4'] ) && ( true == isVal( $arrSellProductDetails['other_image4'] ) ) ){ ?>
 				                        <br>
 				                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image4']?>" width="70px" height="70px">
 				                        <input type="hidden" name="other_image_hidden3" value="<?= $arrSellProductDetails['other_image4'] ?>">
@@ -282,6 +312,10 @@
                         <?php if( isset( $arrSellProductDetails['sell_product_id'] ) ) { ?>
                                 <input type="hidden" name="sell_product_id" value="<?= $arrSellProductDetails['sell_product_id']?>">
                         <?php } ?>
+	                    <?php if( isset( $arrSellProductDetails['sell_product_image_id'] ) ) { ?>
+		                    <input type="hidden" name="sell_product_image_id" value="<?= $arrSellProductDetails['sell_product_image_id']?>">
+	                    <?php } ?>
+
 	                    <input type="hidden" value="<?= isset( $arrSellProductDetails['product_id'] ) ? $arrSellProductDetails['product_id'] : ''; ?>" class="js-hidden-product-id">
 	                    <input type="hidden" value="<?= isset( $arrSellProductDetails['delivery_location'] ) ? $arrSellProductDetails['delivery_location'] : ''; ?>" class="js-hidden-delivery-location">
 	                    <div class="box-footer">
@@ -321,6 +355,27 @@
 	    if( '' != intStateId ){
 		    getCitiesByState( intStateId );
 	    }
+
+	    $("#js-sell-quantity").on('focusout',function(){
+		    var intPrice = $("#js-price").val();
+		    var intQuantity = $(this).val();
+		    if( intPrice != '' &&  intQuantity !='' ) {
+			    var intTotalPrice = parseInt(intPrice) * parseInt(intQuantity);
+			    $("#js-total-price").val(intTotalPrice);
+		    }else{
+			    $("#js-total-price").val(0);
+		    }
+	    });
+	    $("#js-price").on('focusout',function(){
+		    var intQuantity = $("#js-sell-quantity").val();
+		    var intPrice = $(this).val();
+		    if( intPrice != '' &&  intQuantity !='' ) {
+			    var intTotalPrice = parseInt(intPrice) * parseInt(intQuantity);
+			    $("#js-total-price").val(intTotalPrice);
+		    }else{
+			    $("#js-total-price").val(0);
+		    }
+	    });
     });
 
     function fetchProductByCategory( $intCategoryId ) {

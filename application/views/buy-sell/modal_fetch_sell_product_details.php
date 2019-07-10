@@ -15,11 +15,23 @@
                 <label>Product</label>
                 <h4><?= $arrSellProductDetails['product_name']; ?></h4>
             </div>
-	        <div class="form-group col-md-4">
-		        <label>Price</label>
-		        <h4><?= $arrSellProductDetails['price']?></h4>
-	        </div>
         </div>
+
+	    <div class="row">
+		    <div class="form-group col-md-4">
+			    <label>Quantity (in Kg)</label>
+			    <h4><?= $arrSellProductDetails['sell_quantity']?></h4>
+		    </div>
+		    <div class="form-group col-md-4">
+			    <label>Expected Price</label>
+			    <h4><?= $arrSellProductDetails['price']; ?></h4>
+		    </div>
+		    <div class="form-group col-md-4">
+			    <label>Total Price</label>
+			    <h4><?= $arrSellProductDetails['total_price']?></h4>
+		    </div>
+	    </div>
+
         <div class="row">
 	        <div class="form-group col-md-4">
 		        <label>Certification Agency</label>
@@ -73,21 +85,29 @@
 		        <h4><?= $arrSellProductDetails['supply_quantity']?></h4>
 	        </div>
         </div>
+
+	    <div class="row">
+		    <div class="form-group col-md-4">
+			    <label>Stock</label>
+			    <h4><?= ( IN_STOCK == $arrSellProductDetails['stock'] ) ? 'In Stock' : ' Out of Stock ' ?></h4>
+		    </div>
+		</div>
+
         <br>
         <div class="row">
             <div class="form-group col-md-3">
                 <h4>Delivery Details</h4>
             </div>
         </div>
-	    <label>Delivery Location</label>
+
 	    <div class="row">
 		    <div class="form-group col-md-4">
 			    <label>State</label>
 			    <h4><?= $arrSellProductDetails['state_name']?></h4>
 		    </div>
 		    <div class="form-group col-md-4">
-			    <label>City</label>
-			    <h4><?= $arrSellProductDetails['city_name']?></h4>
+			    <label>Delivery Location</label>
+			    <h4><?= $strDeliveryLocation ?></h4>
 		    </div>
 		</div>
 	    <div class="row">
@@ -117,6 +137,68 @@
 			    <h4><?= $arrSellProductDetails['other_details']?></h4>
 		    </div>
 		</div>
+
+	    <br>
+	    <div class="row">
+		    <div class="form-group col-md-3">
+			    <h4>Images</h4>
+		    </div>
+	    </div>
+	    <div class="row">
+		    <div class="form-group col-md-4">
+			    <label>Primary Image</label>
+			    <?php if( true == isVal( $arrSellProductDetails['primary_image'] ) ){ ?>
+				    <br>
+				    <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['primary_image']?>" width="70px" height="70px">
+			    <?php } else { ?>
+				    <h4>NA</h4>
+			    <?php } ?>
+		    </div>
+	    </div>
+	    <div class="row">
+		    <div class="form-group col-md-4">
+			    <label>Other Image1</label>
+			    <?php if( true == isVal( $arrSellProductDetails['other_image1'] ) ){ ?>
+				    <br>
+				    <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image1']?>" width="70px" height="70px">
+			    <?php } else { ?>
+				    <h4>NA</h4>
+			    <?php } ?>
+		    </div>
+
+		    <div class="form-group col-md-4">
+			    <label>Other Image2</label>
+			    <?php if( true == isVal( $arrSellProductDetails['other_image2'] ) ){ ?>
+				    <br>
+				    <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image2']?>" width="70px" height="70px">
+			    <?php } else { ?>
+				    <h4>NA</h4>
+			    <?php } ?>
+		    </div>
+
+		    <div class="form-group col-md-4">
+			    <label>Other Image3</label>
+			    <?php if( true == isVal( $arrSellProductDetails['other_image3'] ) ){ ?>
+				    <br>
+				    <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image3']?>" width="70px" height="70px">
+			    <?php } else { ?>
+				    <h4>NA</h4>
+			    <?php } ?>
+		    </div>
+
+		    <div class="form-group col-md-4">
+			    <label>Other Image4</label>
+			    <?php if( true == isVal( $arrSellProductDetails['other_image4'] ) ){ ?>
+				    <br>
+				    <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['other_image4']?>" width="70px" height="70px">
+			    <?php } else { ?>
+				    <h4>NA</h4>
+			    <?php } ?>
+		    </div>
+	    </div>
+
+
+
     </div>
     <div class="clearfix"> </div>
 </div>

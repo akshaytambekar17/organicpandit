@@ -206,7 +206,7 @@ class SellProductController extends MY_Controller {
 		            }
 	            } else {
 		            printDie( $arrError );
-		            $this->session->set_flashdata('Error', implode( ',', $arrError ));
+		            $this->session->set_flashdata('Error', implode( ',', array_filter( $arrError ) ) );
 		            $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
 		            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
 		            $data['arrCitiesList'] = $this->City->getCities();
@@ -346,7 +346,7 @@ class SellProductController extends MY_Controller {
 		            $arrError[] = '';
 	            }
 
-	            if( false == isArrVal( $arrError ) ) {
+	            if( false == isArrVal( array_filter( $arrError ) ) ) {
 		            unset( $arrPostSellProductDetails['primary_image'] );
 		            unset( $arrPostSellProductDetails['other_image1'] );
 		            unset( $arrPostSellProductDetails['other_image2'] );
@@ -358,10 +358,11 @@ class SellProductController extends MY_Controller {
 		            unset( $arrPostSellProductDetails['other_image_hidden2'] );
 		            unset( $arrPostSellProductDetails['other_image_hidden3'] );
 		            unset( $arrPostSellProductDetails['other_image_hidden4'] );
+		            unset( $arrPostSellProductDetails['sell_product_image_id'] );
 
 		            $arrPostSellProductDetails['delivery_location'] = implode( ',', $post['delivery_location'] );
 
-		            if( $userSession['username'] == 'adminmaster' ) {
+		            if( ADMINUSERNAME == $userSession['username'] ) {
 			            $arrPostSellProductDetails['updated_by'] = $userSession['register_id'];
 		            } else {
 			            $arrPostSellProductDetails['updated_by'] = $userSession['user_id'];
@@ -398,7 +399,7 @@ class SellProductController extends MY_Controller {
 			            $this->backendLayout( $data );
 		            }
 	            } else {
-		            $this->session->set_flashdata('Error', implode( ',', $arrError ));
+		            $this->session->set_flashdata('Error', implode( ',', array_filter( $arrError ) ) );
 		            $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $post['sell_product_id'] );
 		            $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
 		            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();

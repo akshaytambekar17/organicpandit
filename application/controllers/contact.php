@@ -14,22 +14,22 @@ class Contact extends MY_Controller {
         $data['homeSlider'] = true;
         if($this->input->post()){
             $post = $this->input->post();
-           
+
             if($this->form_validation->run('contact-us') == TRUE){
                 $details = $post;
                 $details['updated_at'] = date('Y-m-d H:i:s');
                 $details['created_at'] = date('Y-m-d H:i:s');
                 $details['is_send_mail'] = 0;
-                
+
                 $contact_id = $this->ContactUs->add($details);
                 if(!empty($contact_id)){
                     $mail_data['contact_details'] = $details;
                     $mail_data['contact_id'] = $contact_id;
-                    
+
                     $to = ADMINEMAILID;
                     $subject = "New Contact us enquiry";
-                    //$message = $this->load->view('Email/contact_us',$mail_data,TRUE);
-                    //$result_mail = $this->sendEmail($to, $subject, $message);
+                    $message = $this->load->view('Email/contact_us',$mail_data,TRUE);
+                    $result_mail = $this->sendEmail($to, $subject, $message);
                     $this->session->set_flashdata('Message', 'Thank you, Mail has send successfully. Our support team will contact soon.');
                     return redirect('contact', 'refresh');
 //                    if($result_mail['success']){
@@ -53,7 +53,7 @@ class Contact extends MY_Controller {
         }else{
             $this->frontendLayoutHome($data);
         }
-        
+
     }
 
     public function sendMail() {
@@ -64,8 +64,8 @@ class Contact extends MY_Controller {
         $username = $this->input->post('username');
         $address = $this->input->post('$address');
         $message = $this->input->post('message');
-        // $to_email = "swapnesh@sandatwebsolution.com"; 
-        //Load email library 
+        // $to_email = "swapnesh@sandatwebsolution.com";
+        //Load email library
         $this->load->library('email');
 
         $this->email->from($from_email, 'Organic Pandit');

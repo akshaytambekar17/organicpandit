@@ -47,7 +47,7 @@
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Certification</th>
-                                        <th>Delivery Location</th>
+                                        <th>Stock</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -66,7 +66,7 @@
                                                 <td><?= $value['product_name'];?></td>
                                                 <td><?= $value['price']; ?></td>
                                                 <td><?= $value['certificaton_agency_name'] ?></td>
-                                                <td><?= $value['city_name']; ?></td>
+                                                <td><?= ( IN_STOCK == $value['stock'] ) ? 'In Stock' : 'Out of Stock' ; ?></td>
                                                 <td>
 	                                              <a href="<?= base_url()?>sell-product/update?sell_product_id=<?= $value['sell_product_id'] ?>" data-toggle="tooltip" title="Update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 	                                              <a href="javascript:void(0)" class="js-delete-sell-product" data-id="<?= $value['sell_product_id'] ?>" data-toggle="tooltip" title="Delete" onclick="sellProductDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>

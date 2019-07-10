@@ -68,7 +68,16 @@
                                                 <td><?= $arrOrderDetails['address'] ?></td>
                                                 <td><?= $arrOrderDetails['total_amount']; ?></td>
                                                 <td><?= ( PAYMENT_METHOD_ONLINE == $arrOrderDetails['payment_method'] ) ? 'Online Payment' : 'COD' ?></td>
-	                                            <td><?= ( ORDER_PAYMENT_STATUS_COMPLETED == $arrOrderDetails['order_payment_status'] ) ? 'Completed' : 'Pending' ?></td>
+	                                            <td><?php
+		                                                if( ORDER_PAYMENT_STATUS_COMPLETED == $arrOrderDetails['order_payment_status'] ){
+		                                                	echo 'Completed';
+		                                                } else if( ORDER_PAYMENT_STATUS_USER_CANCELLED == $arrOrderDetails['order_payment_status'] ) {
+			                                                echo 'User Cancelled';
+		                                                } else {
+		                                                	echo 'Pending';
+		                                                }
+	                                                ?>
+	                                            </td>
                                                 <td><?= $arrOrderDetails['created_at']; ?></td>
                                                 <td>
                                                     <a href="<?= base_url()?>order/view?order_id=<?= $arrOrderDetails['order_id'] ?>" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>

@@ -35,7 +35,7 @@
 
 	                                <div class="col-md-3">
 		                                <label>Select City</label>
-		                                <select class="form-control select2" name="delivery_location" id="js-delivery-location">
+		                                <select class="form-control select2" name="delivery_location[]" id="js-delivery-location" multiple>
 			                                <option disabled="disabled" selected="selected">Select City</option>
 		                                </select>
 		                                <input type="hidden" value="<?= isset( $intHiddenCityid ) ? $intHiddenCityid  : '' ?>" class="js-hidden-delivery-location" >
@@ -98,25 +98,36 @@
                             ?>
                                 <div class="box post-panel">
                                     <div class="box-body">
-                                        <div class="col-md-3">
+	                                    <div class="col-md-2">
+		                                    <?php if( true == isVal( $arrSellProductDetails['primary_image'] ) ){ ?>
+		                                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['primary_image'] ?>" class="mt-30" width="40%" height="40%">
+		                                    <?php } else { ?>
+			                                    <img src="<?= base_url()?>assets/images/logo.png" class="mt-40" width="70%" height="90px">
+		                                    <?php } ?>
+	                                    </div>
+                                        <div class="col-md-2">
                                             <h4>Category</h4>
                                             <span class="product-name"> <?= $arrSellProductDetails['category_name'] ?> </span>
                                             <br>
                                             <h4>Product</h4>
                                             <span class="product-name"> <?= $arrSellProductDetails['product_name'] ?> </span>
                                         </div>
-	                                    <div class="col-md-3">
-                                                <h4>Certificatioin Agency</h4>
-                                                <span><?= $arrSellProductDetails['certificaton_agency_name']; ?></span>
-                                                <br>
-                                                <h4>Product Description</h4>
-                                                <span><?= $arrSellProductDetails['product_description']; ?></span>
-                                            </div>
-                                        <div class="col-md-3">
-	                                        <h4>Price : </h4>
-	                                        <span><?= $arrSellProductDetails['price']; ?></span>
-                                                <h4>Product Description : </h4>
-	                                        <span><?= $arrSellProductDetails['product_description']; ?></span>
+	                                    <div class="col-md-2">
+                                            <h4>Quantity (in Kg)</h4>
+                                            <span><?= $arrSellProductDetails['sell_quantity']; ?></span>
+                                            <br>
+                                            <h4>Expected Price</h4>
+                                            <span><?= $arrSellProductDetails['price']; ?></span>
+		                                </div>
+	                                    <div class="col-md-2">
+		                                    <h4>Total Price : </h4>
+		                                    <span><?= $arrSellProductDetails['total_price']; ?></span>
+		                                    <h4>Product Description : </h4>
+		                                    <span><?= $arrSellProductDetails['product_description']; ?></span>
+										</div>
+                                        <div class="col-md-1">
+											<h4>Stock : </h4>
+	                                        <span><b><?= ( IN_STOCK == $arrSellProductDetails['stock'] ) ? 'In Stock' : ' Out of Stock ' ?></b></span>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="row">
@@ -124,7 +135,7 @@
                                                     <a href="javascript:void(0)" class="btn btn-info" id="js-sell-product-view-details-button"  data-fullname="<?= ( true == isVal( $arrSellProductDetails['fullname'] ) ) ? $arrSellProductDetails['fullname'] : 'Organic Pandit' ?>" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-toggle="tooltip"  title="View Details" onclick="sellProductViewDetailsModal( this )"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <a href="javascript:void(0)" class="btn btn-success" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-product_id="<?= $arrSellProductDetails['product_id']?>" data-fullname="<?= ( true == isVal( $arrSellProductDetails['fullname'] ) ) ? $arrSellProductDetails['fullname'] : 'Organic Pandit' ?>" data-category="<?= $arrSellProductDetails['category_name'] ?>" data-product="<?= $arrSellProductDetails['product_name'] ?>" data-price="<?= $arrSellProductDetails['price'] ?>" data-toggle="tooltip" title="Add to Cart" onclick="addToCartModal( this )" ><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
+                                                    <a href="javascript:void(0)" class="btn btn-success" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-product_id="<?= $arrSellProductDetails['product_id']?>" data-fullname="<?= ( true == isVal( $arrSellProductDetails['fullname'] ) ) ? $arrSellProductDetails['fullname'] : 'Organic Pandit' ?>" data-category="<?= $arrSellProductDetails['category_name'] ?>" data-product="<?= $arrSellProductDetails['product_name'] ?>" data-price="<?= $arrSellProductDetails['total_price'] ?>" data-toggle="tooltip" title="Add to Cart" onclick="addToCartModal( this )" ><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +208,7 @@
                             <label class="control-label label-required">Price</label>
                             <input type="text" class="form-control" placeholder="Price" readonly="readonly" id="js-add-to-cart-price" >
                         </div>
-
+						<input type="hidden" id="js-add-to-cart-sell-product-id">
                         <!--<div class="form-group col-md-3">
                             <label class="control-label label-required">Quantity</label>
                             <input type="text" class="form-control" id="js-add-to-cart-quantity" placeholder="Quantity">
@@ -286,17 +297,19 @@
             $("#js-add-to-cart-product").data('product_id', $(ths).data('product_id'));
             $("#js-add-to-cart-category").val($(ths).data('category'));
             $("#js-add-to-cart-price").val($(ths).data('price'));
+	        $("#js-add-to-cart-sell-product-id").val($(ths).data('sell_product_id'));
             $('#js-add-cart-modal').modal('show');
         }
 
         function addToCart( ths ) {
             var intProductId = $("#js-add-to-cart-product").data('product_id');
             var intPrice = $("#js-add-to-cart-price").val();
+	        var intSellProductId = $("#js-add-to-cart-sell-product-id").val();
             var strProductName = $("#js-add-to-cart-product").val();
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>" + "add-to-cart",
-                data: { 'product_id' : intProductId, 'price' : intPrice, 'product_name' : strProductName },
+                data: { 'product_id' : intProductId, 'price' : intPrice, 'product_name' : strProductName, 'sell_product_id' : intSellProductId },
                 success: function( arrmixResult ) {
                     var arrmixResult = $.parseJSON( arrmixResult );
                     $('#js-add-cart-modal').modal('hide');
@@ -306,9 +319,9 @@
                         $('.alert').fadeIn().delay(5000).fadeOut(function () {
                             $(this).remove();
                         });
-                        setTimeout(function(){ 
+                        setTimeout(function(){
                             location.reload();
-                        }, 2000);    
+                        }, 2000);
                     } else {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         $('.js-alert-message').parent().before('<div class="alert alert-danger"><i class="fa fa-times-circle"></i>  ' + arrmixResult['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');

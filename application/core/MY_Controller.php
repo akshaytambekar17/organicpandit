@@ -7,7 +7,7 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->library(array('form_validation'));
-        $this->load->helper(array('url', 'language','form'));
+	    $this->load->helper(array('url', 'language','form'));
         $this->load->model('login_model','Login');
         $this->load->model('contact_us_model','ContactUs');
         $this->load->model('crop_model','Crop');
@@ -122,10 +122,11 @@ class MY_Controller extends CI_Controller {
     }
 
     public function sendEmail($to,$subject,$message){
+	    $this->load->library('encrypt');
         $this->load->library('email');
         $config = array();
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['protocol'] = 'ssmtp';
+        $config['smtp_host'] = 'ssl://ssmtp.gmail.com';
         $config['smtp_user'] = 'akshaytambekar17@gmail.com';
         $config['smtp_pass'] = '1793_@kshu';
         $config['smtp_port'] = 465;
@@ -145,7 +146,7 @@ class MY_Controller extends CI_Controller {
         }else{
             $result['success'] = false;
             $result['message'] = "Something went wrong please try again";
-            //printDie($this->email->print_debugger());
+            printDie($this->email->print_debugger());
         }
         return $result;
     }

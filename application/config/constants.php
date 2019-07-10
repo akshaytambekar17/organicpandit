@@ -56,13 +56,17 @@ define('NOTIFY_WEB', 4);
 define('ENABLED',2);
 define('DISABLED',1);
 
+define('IN_STOCK',2);
+define('OUT_STOCK',1);
+
 define('CART_QUANTITY',1);
 
 define('PAYMENT_METHOD_CASH',1);
 define('PAYMENT_METHOD_ONLINE',2);
 
-define('ORDER_PAYMENT_STATUS_COMPLETED',2);
 define('ORDER_PAYMENT_STATUS_PENDING',1);
+define('ORDER_PAYMENT_STATUS_COMPLETED',2);
+define('ORDER_PAYMENT_STATUS_USER_CANCELLED',3);
 
 define('FARMER',1);
 define('FPO',2);
@@ -83,8 +87,11 @@ define('CERTIFICATION_AGENICES',16);
 define('RESTAURANTS',17);
 define('NGO',18);
 
-define('MERCHANT_KEY','O1D3HUYIC3');
-define('SALT','RGODULJ8YB');
+//define('MERCHANT_KEY','O1D3HUYIC3');
+//define('SALT','RGODULJ8YB');
+define('MERCHANT_KEY','64KVCDORC9');
+define('SALT','F9GOZVJS1N');
+
 define('ENV_TEST','test');
 define('ENV_PROD','prod');
 //define('SURL', base_url() . 'payment-response' );

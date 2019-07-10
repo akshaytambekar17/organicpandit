@@ -24,13 +24,11 @@ class BuySellController extends MY_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        
+
     }
 
     public function searchBuyProduct() {
 
-        //$this->cart->destroy();
-        //printDie($this->cart->contents());
         $data['arrProductCategoryList'] = $this->ProductCategory->getProductCategorys();
         $arrSellProductList = $this->SellProduct->getSellProducts();
         $data['arrStateList'] = $this->State->getStates();
@@ -47,7 +45,8 @@ class BuySellController extends MY_Controller {
         if ($this->input->post()) {
             $arrPost = $this->input->post();
             if (true == $this->form_validation->run('search-buy-product-form')) {
-                $arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity($arrPost['product_id'], $arrPost['category_id'], $arrPost['delivery_location_state'], $arrPost['delivery_location']);
+
+            	$arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity($arrPost['product_id'], $arrPost['category_id'], $arrPost['delivery_location_state'], $arrPost['delivery_location']);
                 $data['arrSellProductList'] = $arrSellProductList;
                 $data['intProductId'] = $arrPost['product_id'];
                 $data['intHiddenCityid'] = $arrPost['delivery_location'];
@@ -65,6 +64,12 @@ class BuySellController extends MY_Controller {
         $post = $this->input->post();
 
         $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId($post['sell_product_id']);
+        $arrintDeliveryLocation = explode( ',', $arrSellProductDetails['delivery_location'] );
+	    foreach( $arrintDeliveryLocation as $intDeliveryLocation ) {
+		    $arrCityDetails = $this->City->getCityById( $intDeliveryLocation );
+		    $arrstrDeliveryLocation[] = $arrCityDetails['name'];
+	    }
+        $data['strDeliveryLocation'] = implode( ',', $arrstrDeliveryLocation );
         $data['arrSellProductDetails'] = $arrSellProductDetails;
 
         echo $this->load->view('buy-sell/modal_fetch_sell_product_details', $data);

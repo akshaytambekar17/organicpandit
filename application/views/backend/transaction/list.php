@@ -53,7 +53,7 @@
                                         foreach( $arrmixTransactionList as $key => $arrTransactionDetails ) {
 
                                 ?>
-                                            <td class="gradeX" id="order-<?= $arrTransactionDetails['transaction_id'] ?>">
+                                            <tr class="gradeX" id="order-<?= $arrTransactionDetails['transaction_id'] ?>">
                                                 <td class="hidden"><?= $arrTransactionDetails['transaction_id']; ?></td>
 	                                            <td><a href="<?= base_url()?>order/view?order_id=<?= $arrTransactionDetails['order_id'] ?>" data-toggle="tooltip" title="View">
 		                                                <?= $arrTransactionDetails['order_no'];?>

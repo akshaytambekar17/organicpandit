@@ -40,34 +40,40 @@
     <!--                        <h3 class="box-title">Data Table With Full Features</h3>-->
                         </div>
                         <div class="box-body">
-                            <div class="form-group js-alert-message">
-                                <?php if( true == $boolStatus ) { ?>
-                                    <div class="callout callout-success">
-                                        <h4><i class="icon fa fa-check"></i> Success</h4>
-                                        <p><?= $strMessage?></p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h4>Transaction Id</h4>
-                                            <p><?= $intTranscationId; ?></p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h4>Order number</h4>
-                                            <p><?= $strOrderNo; ?></p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h4>Date</h4>
-                                            <p><?= $strAddedOn; ?></p>
-                                        </div>
-                                    </div>
-                                    
-                                <?php } else { ?>
-                                    <div class="callout callout-danger">
-                                        <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                                        <p><?= $strMessage?></p>
-                                    </div>
-                                <?php } ?>
-                            </div>
+	                        <?php if( false == $boolDirectCallPaymentResponse ) { ?>
+	                            <div class="form-group js-alert-message">
+	                                <?php if( true == $boolStatus ) { ?>
+	                                    <div class="callout callout-success">
+	                                        <h4><i class="icon fa fa-check"></i> Success</h4>
+	                                        <p><?= $strMessage?></p>
+	                                    </div>
+	                                    <div class="row">
+	                                        <div class="col-md-4">
+	                                            <h4>Transaction Id</h4>
+	                                            <p><?= $intTranscationId; ?></p>
+	                                        </div>
+	                                        <div class="col-md-4">
+	                                            <h4>Order number</h4>
+	                                            <p><?= $strOrderNo; ?></p>
+	                                        </div>
+	                                        <div class="col-md-4">
+	                                            <h4>Date</h4>
+	                                            <p><?= $strAddedOn; ?></p>
+	                                        </div>
+	                                    </div>
+
+	                                <?php } else { ?>
+	                                    <div class="callout callout-danger">
+	                                        <h4><i class="icon fa fa-ban"></i> Error!</h4>
+	                                        <p><?= $strMessage?></p>
+	                                    </div>
+	                                <?php } ?>
+	                            </div>
+	                        <?php } else { ?>
+			                        <div class="callout callout-danger">
+				                        <h4><i class="icon fa fa-ban"></i> Error!  Invalid Page.</h4>
+				                    </div>
+	                        <?php }  ?>
                         </div>
                         <div class="box-footer center">
                             <a href="<?= base_url()?>search-buy-product" class="btn btn-primary" >Go to Buy Product</a>
@@ -97,8 +103,8 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-        
+
         });
-        
+
      </script>
 

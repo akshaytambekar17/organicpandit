@@ -310,8 +310,18 @@ $config = array(
 			        'rules' => 'required'
 		        ),
 		        array(
+			        'field' => 'sell_quantity',
+			        'label' => 'Quantity',
+			        'rules' => 'required||numeric|greater_than_equal_to[1]|less_than_equal_to[1000]'
+		        ),
+		        array(
 			        'field' => 'price',
 			        'label' => 'Price',
+			        'rules' => 'required||numeric'
+		        ),
+		        array(
+			        'field' => 'total_price',
+			        'label' => 'Total Price',
 			        'rules' => 'required'
 		        ),
 		        array(
@@ -394,6 +404,11 @@ $config = array(
 			        'label' => 'Other Details',
 			        'rules' => 'required'
 		        ),
+		        array(
+			        'field' => 'stock',
+			        'label' => 'Stock',
+			        'rules' => 'required'
+		        )
 	        ),
         'search-buy-product-form' => array(
 
@@ -403,7 +418,7 @@ $config = array(
 		        'rules' => 'required'
 	        ),
 	        array(
-		        'field' => 'delivery_location',
+		        'field' => 'delivery_location[]',
 		        'label' => 'City',
 		        'rules' => 'required'
 	        ),

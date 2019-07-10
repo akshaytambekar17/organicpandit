@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class UserController extends MY_Controller {
-    
+
     function __construct() {
         parent::__construct();
         //$this->load->model('farmer_model');
@@ -940,7 +940,7 @@ class UserController extends MY_Controller {
         }
         echo json_encode($html);
     }
-    
+
     public function checkoutCart() {
         $userSession = $this->session->userdata('user_data');
         $data['userSession'] = $userSession;
@@ -952,14 +952,15 @@ class UserController extends MY_Controller {
         $data['view'] = 'user/checkout';
         $this->frontendLayout($data);
     }
-    
+
     public function addToCart() {
         $arrPost = $this->input->post();
-        $intProductId = $arrPost['product_id'];
+        $intSellProductId = $arrPost['sell_product_id'];
+	    $intProductId = $arrPost['product_id'];
         $intPrice = $arrPost['price'];
         $intQuantity = CART_QUANTITY;
         $strProductName = $arrPost['product_name'];
-        
+
         $arrmixCartList = fetchCartDetails();
         $boolCart = true;
         if( true == isArrVal( $arrmixCartList['cart_list'] ) ) {
@@ -969,14 +970,16 @@ class UserController extends MY_Controller {
                 }
             }
         }
-        
+
         if( true == $boolCart ) {
             $arrCartData = array( 'id'          => $intProductId,
                                   'qty'         => $intQuantity,
                                   'price'       => $intPrice,
                                   'price'       => $intPrice,
                                   'name'        => $strProductName,
-                                  'options'     => array('product_id'  => $intProductId)
+                                  'options'     => array('product_id'  => $intProductId,
+	                                                     'sell_product_id' => $intSellProductId
+	                                                    )
                             );
             if( true == $this->cart->insert( $arrCartData ) ) {
                 $arrResult['success'] = true;
@@ -989,21 +992,21 @@ class UserController extends MY_Controller {
             $arrResult['success'] = false;
             $arrResult['message'] = 'Product <b>' . $strProductName . '</b>  has already added in cart.';
         }
-        
+
         echo json_encode( $arrResult );
     }
-    
+
     public function removeFromCart() {
         $arrPost = $this->input->post();
         $intRowId = $arrPost['rowid'];
         $intQuantity = 0;
         $strProductName = $arrPost['product_name'];
-        
+
         $arrCartData = array(
                             'rowid' => $intRowId,
                             'qty'   => $intQuantity
                         );
-        
+
         if( true == $this->cart->update( $arrCartData ) ) {
             $arrResult['success'] = true;
             $arrResult['message'] = 'Your product <b>' . $strProductName . '</b> has been removed from cart';
@@ -1011,22 +1014,22 @@ class UserController extends MY_Controller {
             $arrResult['success'] = false;
             $arrResult['message'] = 'Something went wrong. We cannot remove product from cart.';
         }
-        
+
         echo json_encode( $arrResult );
     }
-    
+
     public function paynow() {
         $arrSession = UserSession();
         $arrUserSession = $arrSession['userData'];
         $arrmixCartList = fetchCartDetails();
-        $data['arrStateList'] = $this->State->getStates();    
+        $data['arrStateList'] = $this->State->getStates();
         $data['arrUserDetails'] = $arrUserSession;
         $data['arrmixCartList'] = $arrmixCartList;
         $data['title'] = 'Paynow';
         $data['heading'] = 'Paynow';
         $data['hide_footer'] = true;
         $data['view'] = 'user/paynow';
-        
+
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
             if( true == $this->form_validation->run('paynow-form') ) {
@@ -1040,7 +1043,7 @@ class UserController extends MY_Controller {
                                     );
                 $this->Orders->update( $arrUpdateData );
                 $arrUrl = paymentGatewayResponseUrl();
-                
+
                 $strTxnId = 'TXNID' . $arrPost['user_id'] . $arrPost['user_type_id'] . strtotime( CURRENT_DATETIME );
                 $arrPaymentDetails = array( 'txnid'         => $strTxnId,
                                             'amount'        => sprintf("%.2f", $arrPost['total_amount']),
@@ -1065,9 +1068,9 @@ class UserController extends MY_Controller {
                 $arrmixPaymentDetails['payment_details'] = $arrPaymentDetails;
                 $arrmixPaymentDetails['api'] = INITIATE_PAYMENT;
                 $arrmixPaymentDetails['order_details'] = $arrmixData;
-                
+
                 $this->paymentTransaction( $arrmixPaymentDetails );
-                
+
                 $this->frontendLayout($data);
             } else {
                 $this->frontendLayout($data);
@@ -1075,54 +1078,106 @@ class UserController extends MY_Controller {
         } else {
             $this->frontendLayout($data);
         }
-        
+
     }
-    
+
     public function paymentResponse() {
-        
+
         $arrSession = UserSession();
         $arrUserSession = $arrSession['userData'];
         $arrPost = $this->input->post();
-        $easebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
-        $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
-        $arrmixResult = json_decode( $arrResult );
-        if( isVal( $arrmixResult->status ) ) {
-            $arrTransactionDetails = array(  
-                                            'order_id'          => $arrmixResult->data->udf1,
-                                            'txnid'             => $arrmixResult->data->txnid,
-                                            'status'            => $arrmixResult->data->status,   
-                                            'error'             => isset( $arrmixResult->data->error ) ? $arrmixResult->data->error : '',
-                                            'error_message'     => $arrmixResult->data->error_Message,   
-                                            'easepayid'         => $arrmixResult->data->easepayid,   
-                                            'payment_source'    => $arrmixResult->data->payment_source,   
-                                            'net_amount_debit'  => $arrmixResult->data->net_amount_debit,   
-                                            'added_on'          => $arrmixResult->data->addedon,   
-                                            'total_amount'      => $arrmixResult->data->amount,   
-                                        );
-            $this->Transaction->insert( $arrTransactionDetails );
-            $arrUpdateOrderData = array(    
-                                        'order_payment_status' => ORDER_PAYMENT_STATUS_COMPLETED,
-                                        'order_id' => $arrmixResult->data->udf1
-                                    );
-            $this->Orders->update( $arrUpdateOrderData );
-            destroyCart();
-            $data['boolStatus'] = true;
-            $data['strMessage'] = "Transaction has been done successfully.";
-            $data['intTranscationId'] = $arrmixResult->data->txnid;
-            $data['strOrderNo'] = $arrmixResult->data->productinfo;
-            $data['strAddedOn'] = $arrmixResult->data->addedon;
-            
-        } else {
-            $data['boolStatus'] = false;
-            $data['strMessage'] = $arrmixResult->data->error_message;
+	    if( true == isArrVal( $arrPost ) ) {
+	        $easebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
+            $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
+            $arrmixResult = json_decode( $arrResult );
+	        if( isVal( $arrmixResult->status ) ) {
+		        if( 'success' ==  $arrmixResult->data->status ) {
+			        $arrOrderDetails = $this->Orders->getOrderByOrderId( $arrmixResult->data->udf1 );
+			        $arrTransactionDetails = array(
+				        'order_id'          => $arrmixResult->data->udf1,
+				        'txnid'             => $arrmixResult->data->txnid,
+				        'status'            => $arrmixResult->data->status,
+				        'error'             => isset( $arrmixResult->data->error ) ? $arrmixResult->data->error : '',
+				        'error_message'     => $arrmixResult->data->error_Message,
+				        'easepayid'         => $arrmixResult->data->easepayid,
+				        'payment_source'    => $arrmixResult->data->payment_source,
+				        'net_amount_debit'  => $arrmixResult->data->net_amount_debit,
+				        'added_on'          => $arrmixResult->data->addedon,
+				        'total_amount'      => $arrmixResult->data->amount,
+			        );
+			        $this->Transaction->insert( $arrTransactionDetails );
+
+			        /***
+			         * To change the payment status in order table
+			         ***/
+			        $arrUpdateOrderData = array(
+				        'order_payment_status' => ORDER_PAYMENT_STATUS_COMPLETED,
+				        'order_id' => $arrmixResult->data->udf1
+			        );
+			        $this->Orders->update( $arrUpdateOrderData );
+
+			        /***
+			         * Destroy all the cart product
+			         ***/
+			        destroyCart();
+
+			        /***
+			         * To make the out of stock
+			         ***/
+			        $arrobjproductDetails = json_decode( $arrOrderDetails['product_details'] );
+			        foreach( $arrobjproductDetails as $objProductDetails ) {
+				        $arrSellProductData = array(
+					        'sell_product_id' => $objProductDetails->options->sell_product_id,
+					        'stock' => OUT_STOCK
+				        );
+				        $this->SellProduct->update( $arrSellProductData );
+			        }
+
+			        $data['boolStatus'] = true;
+			        $data['strMessage'] = "Transaction has been done successfully.";
+			        $data['intTranscationId'] = $arrmixResult->data->txnid;
+			        $data['strOrderNo'] = $arrmixResult->data->productinfo;
+			        $data['strAddedOn'] = $arrmixResult->data->addedon;
+			        $data['arrOrderDetails'] = $arrOrderDetails;
+
+			        $to = ADMINEMAILID;
+			        $subject = "New Order has been placed";
+			        $message = $this->load->view('Email/order_admin',$data,TRUE);
+			        $this->sendEmail($to, $subject, $message);
+
+			        $to = $arrOrderDetails['email_id'];
+			        $subject = "Your order has been placed successfully";
+			        $message = $this->load->view('Email/order_buyer',$data,TRUE);
+			        $this->sendEmail($to, $subject, $message);
+		        } else {
+			        if( 'userCancelled' ==  $arrmixResult->data->status ) {
+				        $arrUpdateOrderData = array(
+					        'order_payment_status' => ORDER_PAYMENT_STATUS_USER_CANCELLED,
+					        'order_id' => $arrmixResult->data->udf1
+				        );
+				        $this->Orders->update( $arrUpdateOrderData );
+
+				        $data['boolStatus'] = false;
+				        $data['strMessage'] = 'You have cancelled the transaction of amount ' . $arrmixResult->data->amount;
+			        } else {
+				        $data['boolStatus'] = false;
+				        $data['strMessage'] = 'Something went wrong. Transaction has not proceed further. Please try again later.';
+			        }
+		        }
+
+	        } else {
+		        $data['boolStatus'] = false;
+		        $data['strMessage'] = $arrmixResult->data->error_message;
+	        }
+	        $data['boolDirectCallPaymentResponse'] = false;
         }
-        
+	    $data['boolDirectCallPaymentResponse'] = true;
         $data['title'] = 'Payment Response';
         $data['heading'] = 'Payment Response';
         $data['hide_footer'] = true;
         $data['view'] = 'user/payment_response';
-        
+
         $this->frontendLayout($data);
-                
+
     }
 }
