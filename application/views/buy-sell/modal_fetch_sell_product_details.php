@@ -23,7 +23,7 @@
 			    <h4><?= $arrSellProductDetails['sell_quantity']?></h4>
 		    </div>
 		    <div class="form-group col-md-4">
-			    <label>Expected Price</label>
+			    <label>Expected Price (per Kg)</label>
 			    <h4><?= $arrSellProductDetails['price']; ?></h4>
 		    </div>
 		    <div class="form-group col-md-4">
@@ -82,7 +82,7 @@
 	        </div>
 	        <div class="form-group col-md-4">
 		        <label>Packaging Type</label>
-		        <h4><?= $arrSellProductDetails['supply_quantity']?></h4>
+		        <h4><?= $arrSellProductDetails['packaging_type']?></h4>
 	        </div>
         </div>
 

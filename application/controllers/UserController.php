@@ -1087,10 +1087,10 @@ class UserController extends MY_Controller {
         $arrUserSession = $arrSession['userData'];
         $arrPost = $this->input->post();
 	    if( true == isArrVal( $arrPost ) ) {
-	        $easebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
-            $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
-            $arrmixResult = json_decode( $arrResult );
-	        if( isVal( $arrmixResult->status ) ) {
+		    $easebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
+		    $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
+		    $arrmixResult = json_decode( $arrResult );
+		    if( isVal( $arrmixResult->status ) ) {
 		        if( 'success' ==  $arrmixResult->data->status ) {
 			        $arrOrderDetails = $this->Orders->getOrderByOrderId( $arrmixResult->data->udf1 );
 			        $arrTransactionDetails = array(
@@ -1170,8 +1170,10 @@ class UserController extends MY_Controller {
 		        $data['strMessage'] = $arrmixResult->data->error_message;
 	        }
 	        $data['boolDirectCallPaymentResponse'] = false;
-        }
-	    $data['boolDirectCallPaymentResponse'] = true;
+        } else {
+		    $data['boolDirectCallPaymentResponse'] = true;
+	    }
+
         $data['title'] = 'Payment Response';
         $data['heading'] = 'Payment Response';
         $data['hide_footer'] = true;

@@ -45,15 +45,30 @@ class BuySellController extends MY_Controller {
         if ($this->input->post()) {
             $arrPost = $this->input->post();
             if (true == $this->form_validation->run('search-buy-product-form')) {
-
-            	$arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity($arrPost['product_id'], $arrPost['category_id'], $arrPost['delivery_location_state'], $arrPost['delivery_location']);
+	            $strintDeliveryLocation = '';
+	            $intProductId = '';
+	            $intCategoryId = '';
+	            $intDeliveryLocationState = '';
+	            if( true == isset( $arrPost['delivery_location'] ) && true == isArrVal( $arrPost['delivery_location'] ) ) {
+		            $strintDeliveryLocation = implode( ',', $arrPost['delivery_location'] );
+	            }
+	            if( true == isset( $arrPost['product_id'] ) ) {
+					$intProductId = $arrPost['product_id'];
+	            }
+				if( true == isset( $arrPost['category_id'] ) ) {
+		            $intCategoryId = $arrPost['category_id'];
+	            }
+	            if( true == isset( $arrPost['delivery_location_state'] ) ) {
+		            $intDeliveryLocationState = $arrPost['delivery_location_state'];
+	            }
+	            $arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity( $intProductId, $intCategoryId, $intDeliveryLocationState, $strintDeliveryLocation );
                 $data['arrSellProductList'] = $arrSellProductList;
-                $data['intProductId'] = $arrPost['product_id'];
-                $data['intHiddenCityid'] = $arrPost['delivery_location'];
-                $this->frontendLayout($data);
+                $data['intProductId'] = $intProductId;
+                $data['intHiddenCityid'] = '';
+                $this->frontendLayout( $data );
             } else {
                 $data['intHiddenCityid'] = $arrPost['delivery_location'];
-                $this->frontendLayout($data);
+                $this->frontendLayout( $data );
             }
         } else {
             $this->frontendLayout($data);
@@ -71,8 +86,13 @@ class BuySellController extends MY_Controller {
 	    }
         $data['strDeliveryLocation'] = implode( ',', $arrstrDeliveryLocation );
         $data['arrSellProductDetails'] = $arrSellProductDetails;
-
-        echo $this->load->view('buy-sell/modal_fetch_sell_product_details', $data);
+        if( true == isset( $post['bool_add_to_cart_modal'] ) ) {
+	        echo $this->load->view('buy-sell/modal_add_to_cart', $data);
+        } else if( true == isset( $post['bool_send_enquiry_modal'] ) ) {
+			echo $this->load->view('buy-sell/modal_send_enquiry', $data);
+        } else {
+		    echo $this->load->view('buy-sell/modal_fetch_sell_product_details', $data);
+	    }
     }
 
     public function fetchProductByCategoryId() {
@@ -97,6 +117,40 @@ class BuySellController extends MY_Controller {
             }
         }
         echo json_encode($html);
+    }
+
+    public function sendEnquirySellProduct() {
+	    $session = UserSession();
+	    $arrUserSession = $session['userData'];
+	    $arrPost = $this->input->post();
+	    $intSellProductId = $arrPost['sell_product_id'];
+	    $strDescription = $arrPost['description'];
+	    $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId($post['sell_product_id']);
+	    $arrintDeliveryLocation = explode( ',', $arrSellProductDetails['delivery_location'] );
+	    foreach( $arrintDeliveryLocation as $intDeliveryLocation ) {
+		    $arrCityDetails = $this->City->getCityById( $intDeliveryLocation );
+		    $arrstrDeliveryLocation[] = $arrCityDetails['name'];
+	    }
+	    $data['strDeliveryLocation'] = implode( ',', $arrstrDeliveryLocation );
+	    $data['arrSellProductDetails'] = $arrSellProductDetails;
+		$data['strBuyerName'] = $arrUserSession['fullname'];
+	    $data['strSellerName'] = $arrUserSession['fullname'];
+
+	    $to = ADMINEMAILID;
+	    $subject = "New enquiry has been sent by the buyer.";
+	    $message = $this->load->view('Email/send_enquiry_admin',$data,TRUE);
+	    $this->sendEmail($to, $subject, $message);
+
+	    $to = $arrSellProductDetails['email_id'];
+	    $subject = "New enquiry has been sent by the buyer.";
+	    $message = $this->load->view('Email/send_enquiry_seller',$data,TRUE);
+	    $this->sendEmail($to, $subject, $message);
+
+	    $to = $arrUserSession['email_id'];
+	    $subject = "Your enquiry has been sent to the seller.";
+	    $message = $this->load->view('Email/send_enquiry_buyer',$data,TRUE);
+	    $this->sendEmail($to, $subject, $message);
+
     }
 
 }

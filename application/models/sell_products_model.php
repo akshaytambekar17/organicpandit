@@ -40,7 +40,7 @@ class sell_products_model extends CI_Model {
 	    $this->db->join('tbl_sell_products_images tspi', 'tspi.sell_product_id = tsp.sell_product_id','left');
         $this->db->join('tbl_product tp', 'tp.id = tsp.product_id');
         $this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id');
-        $this->db->join('tbl_certification_agency tca', 'tca.user_id = tsp.certification_id', 'left');
+	    $this->db->join('tbl_certification_agency tca', 'tca.user_id = tsp.certification_id', 'left');
         $this->db->join('cities c', 'c.id = tsp.delivery_location', 'left');
 	    $this->db->join('states s', 's.id = tsp.delivery_location_state', 'left');
         $this->db->join('tbl_agency ta', ' ta.id = tca.agency_id', 'left');
@@ -77,9 +77,10 @@ class sell_products_model extends CI_Model {
         return $this->db->get()->result_array();
     }
 
-	public function getSellProductByProductIdByCategoryIdByStateIdByCity( $intProductId, $intCategoryId, $intStateId, $intCityId ) {
-		$this->db->select('tsp.*,tu.*,tp.name as product_name, tcp.name as category_name,c.name as city_name, ta.name as certificaton_agency_name');
+	public function getSellProductByProductIdByCategoryIdByStateIdByCity( $intProductId, $intCategoryId, $intStateId, $strintCityId ) {
+		$this->db->select('tsp.*,tspi.*,tspi.id as sell_product_image_id, tu.*,tp.name as product_name, tcp.name as category_name,c.name as city_name, ta.name as certificaton_agency_name');
 		$this->db->from('tbl_sell_products tsp');
+		$this->db->join('tbl_sell_products_images tspi', 'tspi.sell_product_id = tsp.sell_product_id','left');
 		$this->db->join('tbl_users tu', 'tu.user_id = tsp.user_id','left');
 		$this->db->join('tbl_product tp', 'tp.id = tsp.product_id');
 		$this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id');
@@ -87,10 +88,18 @@ class sell_products_model extends CI_Model {
 		$this->db->join('cities c', 'c.id = tsp.delivery_location', 'left');
 		$this->db->join('states s', 's.id = tsp.delivery_location_state', 'left');
 		$this->db->join('tbl_agency ta', ' ta.id = tca.agency_id', 'left');
-		$this->db->where('tsp.product_id', $intProductId);
-		$this->db->where('tsp.category_id', $intCategoryId);
-		$this->db->where('tsp.delivery_location_state', $intStateId);
-		//$this->db->where('tsp.delivery_location', $intCityId);
+		if( true == isVal( $intProductId ) ) {
+			$this->db->where('tsp.product_id', $intProductId);
+		}
+		if( true == isVal( $intCategoryId ) ) {
+			$this->db->where('tsp.category_id', $intCategoryId);
+		}
+		if( true == isVal( $intStateId ) ) {
+			$this->db->where('tsp.delivery_location_state', $intStateId);
+		}
+		if( true == isVal( $strintCityId ) ) {
+			$this->db->like('tsp.delivery_location', $strintCityId);
+		}
 		return $this->db->get()->result_array();
 	}
 

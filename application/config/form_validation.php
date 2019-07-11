@@ -415,22 +415,22 @@ $config = array(
 	        array(
 		        'field' => 'delivery_location_state',
 		        'label' => 'State',
-		        'rules' => 'required'
+		        'rules' => 'trim'
 	        ),
 	        array(
 		        'field' => 'delivery_location[]',
 		        'label' => 'City',
-		        'rules' => 'required'
+		        'rules' => 'trim'
 	        ),
 	        array(
 		        'field' => 'category_id',
 		        'label' => 'Category',
-		        'rules' => 'required'
+		        'rules' => 'trim'
 	        ),
 	        array(
 		        'field' => 'product_id',
 		        'label' => 'Product',
-		        'rules' => 'required'
+		        'rules' => 'trim'
 	        )
         ),
 

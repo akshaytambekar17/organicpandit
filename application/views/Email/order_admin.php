@@ -15,7 +15,7 @@
                         <p>New order has been placed. Please check the following details</p>
                         <p><b>Order number : </b> <?= $arrOrderDetails['order_no']?>.</p>
 	                    <p><b>Transcation Id : </b> <?= $intTranscationId?>.</p>
-	                    <p><b>Fullname : </b> <?= $arrOrderDetails['email_id']?>.</p>
+	                    <p><b>Fullname : </b> <?= $arrOrderDetails['fullname']?>.</p>
                         <p><b>Email Id : </b> <?= $arrOrderDetails['email_id']?>.</p>
                         <p><b>Mobile number : </b> <?= $arrOrderDetails['mobile_no']?>.</p>
                         <p><b>Total Amount : </b> <?= $arrOrderDetails['total_amount']?>.</p>

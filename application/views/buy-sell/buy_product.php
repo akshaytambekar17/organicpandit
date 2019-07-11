@@ -99,7 +99,7 @@
                                 <div class="box post-panel">
                                     <div class="box-body">
 	                                    <div class="col-md-2">
-		                                    <?php if( true == isVal( $arrSellProductDetails['primary_image'] ) ){ ?>
+		                                    <?php if( true == isset( $arrSellProductDetails['primary_image'] ) ){ ?>
 		                                        <img src="<?= base_url()?>assets/images/sell_products/<?= $arrSellProductDetails['primary_image'] ?>" class="mt-30" width="40%" height="40%">
 		                                    <?php } else { ?>
 			                                    <img src="<?= base_url()?>assets/images/logo.png" class="mt-40" width="70%" height="90px">
@@ -116,7 +116,7 @@
                                             <h4>Quantity (in Kg)</h4>
                                             <span><?= $arrSellProductDetails['sell_quantity']; ?></span>
                                             <br>
-                                            <h4>Expected Price</h4>
+                                            <h4>Expected Price (per Kg)</h4>
                                             <span><?= $arrSellProductDetails['price']; ?></span>
 		                                </div>
 	                                    <div class="col-md-2">
@@ -134,9 +134,15 @@
                                                 <div class="col-md-3">
                                                     <a href="javascript:void(0)" class="btn btn-info" id="js-sell-product-view-details-button"  data-fullname="<?= ( true == isVal( $arrSellProductDetails['fullname'] ) ) ? $arrSellProductDetails['fullname'] : 'Organic Pandit' ?>" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-toggle="tooltip"  title="View Details" onclick="sellProductViewDetailsModal( this )"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <a href="javascript:void(0)" class="btn btn-success" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-product_id="<?= $arrSellProductDetails['product_id']?>" data-fullname="<?= ( true == isVal( $arrSellProductDetails['fullname'] ) ) ? $arrSellProductDetails['fullname'] : 'Organic Pandit' ?>" data-category="<?= $arrSellProductDetails['category_name'] ?>" data-product="<?= $arrSellProductDetails['product_name'] ?>" data-price="<?= $arrSellProductDetails['total_price'] ?>" data-toggle="tooltip" title="Add to Cart" onclick="addToCartModal( this )" ><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
-                                                </div>
+	                                            <?php if( IN_STOCK == $arrSellProductDetails['stock'] ) { ?>
+	                                                <div class="col-md-3">
+	                                                    <a href="javascript:void(0)" class="btn btn-success" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-product_id="<?= $arrSellProductDetails['product_id']?>" data-fullname="<?= ( true == isVal( $arrSellProductDetails['fullname'] ) ) ? $arrSellProductDetails['fullname'] : 'Organic Pandit' ?>" data-category="<?= $arrSellProductDetails['category_name'] ?>" data-product="<?= $arrSellProductDetails['product_name'] ?>" data-price="<?= $arrSellProductDetails['total_price'] ?>" data-toggle="tooltip" title="Add to Cart" onclick="addToCartModal( this )" ><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
+	                                                </div>
+	                                            <?php } ?>
+	                                            <div class="col-md-3">
+		                                            <a href="javascript:void(0)" class="btn btn-warning" id="js-sell-product-send-enquiry-button" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-toggle="tooltip"  title="Send Enquiry" onclick="sendEnquiryModal( this )"><i class="fa fa-address-card" aria-hidden="true"></i></a>
+	                                            </div>
+
                                             </div>
                                         </div>
 
@@ -183,7 +189,6 @@
         </div>
     </div>
 
-
     <div class="modal fade" id="js-add-cart-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -193,29 +198,7 @@
                     <h4 class="modal-title">Add the Product to cart</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label class="control-label label-required">Category Name</label>
-                            <input type="text"  class="form-control" placeholder="Category" readonly="readonly" id="js-add-to-cart-category" >
-                        </div>
-
-                        <div class="form-group col-md-3">
-                            <label class="control-label label-required">Product Name</label>
-                            <input type="text"  class="form-control" placeholder="Product" readonly="readonly" id="js-add-to-cart-product" >
-                        </div>
-
-                        <div class="form-group col-md-3">
-                            <label class="control-label label-required">Price</label>
-                            <input type="text" class="form-control" placeholder="Price" readonly="readonly" id="js-add-to-cart-price" >
-                        </div>
-						<input type="hidden" id="js-add-to-cart-sell-product-id">
-                        <!--<div class="form-group col-md-3">
-                            <label class="control-label label-required">Quantity</label>
-                            <input type="text" class="form-control" id="js-add-to-cart-quantity" placeholder="Quantity">
-                            <span class="has-error js-add-to-cart-quantity-error"></span>
-                        </div>-->
-
-                    </div>
+	                <div id="js-sell-product-add-to-cart"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -223,6 +206,32 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade js-sell-product-send-enquiry-modal" id="js-sell-product-send-enquiry-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span></button>
+				    <h4 class="modal-title">Send Enquiry</h4>
+			    </div>
+			    <div class="modal-body">
+				    <div id="js-sell-product-send-enquiry-modal-body"></div>
+				    <div class="row">
+					    <div class="form-group col-md-12">
+						    <label>Description</label>
+						    <br>
+						    <textarea id="js-send-enquiry-description" class="form-control"></textarea>
+					    </div>
+				    </div>
+			    </div>
+			    <div class="modal-footer">
+				    <button type="button" class="btn btn-success" onclick="sendEnquiry(this)">Send</button>
+				    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			    </div>
+		    </div>
+	    </div>
     </div>
 
     <script type="text/javascript">
@@ -263,8 +272,7 @@
 
         function getCitiesByState( intStateId ){
                 var intCityIdHidden = $(".js-hidden-delivery-location").val();
-
-                $.ajax({
+				$.ajax({
                         type: "POST",
                         url: "<?php echo base_url(); ?>" + "getcities-by-state",
                         data: { 'state_id' : intStateId, 'city_id_hidden' : intCityIdHidden },
@@ -293,17 +301,41 @@
         }
 
         function addToCartModal( ths ) {
-            $("#js-add-to-cart-product").val($(ths).data('product'));
-            $("#js-add-to-cart-product").data('product_id', $(ths).data('product_id'));
-            $("#js-add-to-cart-category").val($(ths).data('category'));
-            $("#js-add-to-cart-price").val($(ths).data('price'));
-	        $("#js-add-to-cart-sell-product-id").val($(ths).data('sell_product_id'));
-            $('#js-add-cart-modal').modal('show');
+        	var intSellProductId = $(ths).data('sell_product_id');
+        	var boolAddToCartModal = true;
+	        $.ajax({
+		        type: "POST",
+		        url: "<?php echo base_url(); ?>" + "fetch-sell-product-by-id",
+		        data: { 'sell_product_id' : intSellProductId, 'bool_add_to_cart_modal' : boolAddToCartModal },
+		        dataType: "html",
+		        success: function(result){
+			        $("#js-sell-product-add-to-cart").html(result);
+			        $('#js-add-cart-modal').modal('show');
+		        }
+	        });
+        }
+
+        function sendEnquiryModal( ths ) {
+        	$(ths).addClass('disabled');
+	        var intSellProductId = $(ths).data('sell_product_id');
+	        var boolSendEnquiryModal = true;
+	        $("#js-send-enquiry-description").val('');
+	        $.ajax({
+		        type: "POST",
+		        url: "<?php echo base_url(); ?>" + "fetch-sell-product-by-id",
+		        data: { 'sell_product_id' : intSellProductId, 'bool_send_enquiry_modal' : boolSendEnquiryModal },
+		        dataType: "html",
+		        success: function(result){
+			        $(ths).removeClass('disabled');
+			        $("#js-sell-product-send-enquiry-modal-body").html(result);
+			        $('#js-sell-product-send-enquiry-modal').modal('show');
+		        }
+	        });
         }
 
         function addToCart( ths ) {
             var intProductId = $("#js-add-to-cart-product").data('product_id');
-            var intPrice = $("#js-add-to-cart-price").val();
+            var intPrice = $("#js-add-to-cart-price").data('total_price');
 	        var intSellProductId = $("#js-add-to-cart-sell-product-id").val();
             var strProductName = $("#js-add-to-cart-product").val();
             $.ajax({
@@ -331,6 +363,36 @@
                     }
                 }
             });
+        }
+
+        function sendEnquiry( ths ) {
+	        var intSellProductId = $("#js-send-enquiry-sell-product-id").val();
+	        var strDescription = $("#js-send-enquiry-description").val();
+	        $.ajax({
+		        type: "POST",
+		        url: "<?php echo base_url(); ?>" + "send-enquiry-sell-product",
+		        data: { 'sell_product_id' : intSellProductId, 'description' : strDescription },
+		        success: function( arrmixResult ) {
+			        var arrmixResult = $.parseJSON( arrmixResult );
+			        $('#js-sell-product-send-enquiry-modal').modal('hide');
+			        if( true == arrmixResult['success'] ) {
+				        $('html, body').animate({ scrollTop: 0 }, 'slow');
+				        $('.js-alert-message').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + arrmixResult['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				        $('.alert').fadeIn().delay(5000).fadeOut(function () {
+					        $(this).remove();
+				        });
+				        setTimeout(function(){
+					        location.reload();
+				        }, 2000);
+			        } else {
+				        $('html, body').animate({ scrollTop: 0 }, 'slow');
+				        $('.js-alert-message').parent().before('<div class="alert alert-danger"><i class="fa fa-times-circle"></i>  ' + arrmixResult['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				        $('.alert').fadeIn().delay(5000).fadeOut(function () {
+					        $(this).remove();
+				        });
+			        }
+		        }
+	        });
         }
 
     </script>

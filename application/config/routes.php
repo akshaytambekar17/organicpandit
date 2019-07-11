@@ -108,6 +108,7 @@ $route['fetch-cities-by-state-id'] = "backend/SellProductController/fetchCitiesB
 
 $route['fetch-product-by-category-id'] = "backend/SellProductController/fetchProductByCategoryId";
 $route['buy-sell/fetch-product-by-category-id'] = "BuySellController/fetchProductByCategoryId";
+$route['send-enquiry-sell-product'] = "BuySellController/sendEnquirySellProduct";
 
 $route['add-to-cart'] = "UserController/addToCart";
 $route['remove-from-cart'] = "UserController/removeFromCart";
