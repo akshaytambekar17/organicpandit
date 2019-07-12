@@ -8,13 +8,12 @@
         <table>
             <tbody>
                 <tr>
-                    <td><p style="Margin-bottom: 0;"> Hi Admin, </p></td>
+                    <td><p style="Margin-bottom: 0;"> Hi <?= $strBuyerName; ?>, </p></td>
                 </tr>
                 <tr>
                     <td>
-                        <p>Buyer has sent the enquiry details to seller. Please follow the details</p>
-                        <p><b>Buyer Name : </b> <?= $strBuyerName; ?>.</p>
-	                    <p><b>Seller Name : </b> <?= $strSellerName; ?>.</p>
+                        <p>Please find details which has been sent to seller</p>
+                        <p><b>Seller Name : </b> <?= $strSellerName; ?>.</p>
 	                    <p><b>Category : </b> <?= $arrSellProductDetails['category_name'] ?>.</p>
 	                    <p><b>Product : </b> <?= $arrSellProductDetails['product_name'] ?>.</p>
                         <p><b>Quantity (in Kg) : </b> <?= $arrSellProductDetails['sell_quantity']?>.</p>

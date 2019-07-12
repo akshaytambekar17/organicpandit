@@ -140,16 +140,14 @@
 	                                                </div>
 	                                            <?php } ?>
 	                                            <div class="col-md-3">
-		                                            <a href="javascript:void(0)" class="btn btn-warning" id="js-sell-product-send-enquiry-button" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-toggle="tooltip"  title="Send Enquiry" onclick="sendEnquiryModal( this )"><i class="fa fa-address-card" aria-hidden="true"></i></a>
+		                                            <a href="javascript:void(0)" class="btn btn-warning" id="js-sell-product-send-enquiry-button" data-sell_product_id="<?= $arrSellProductDetails['sell_product_id']?>" data-toggle="tooltip"  title="Send Enquiry" onclick="sendEnquiryModal(this)"><i class="fa fa-address-card" aria-hidden="true"></i></a>
 	                                            </div>
-
-                                            </div>
+											</div>
                                         </div>
 
                                     </div>
                                 </div>
-
-                            <?php } }else{ ?>
+							<?php } }else{ ?>
                                     <div class="box">
                                         <div class="box-body">
                                             <div class="col-md-12 center">
@@ -158,6 +156,7 @@
                                         </div>
                                     </div>
                             <?php } ?>
+	                        <input type="hidden" id="js-user-id" value="<?= $intUserId ?>">
                         </div>
                     </div>
 
@@ -218,7 +217,7 @@
 			    </div>
 			    <div class="modal-body">
 				    <div id="js-sell-product-send-enquiry-modal-body"></div>
-				    <div class="row">
+				    <div class="row js-description-row">
 					    <div class="form-group col-md-12">
 						    <label>Description</label>
 						    <br>
@@ -227,7 +226,7 @@
 				    </div>
 			    </div>
 			    <div class="modal-footer">
-				    <button type="button" class="btn btn-success" onclick="sendEnquiry(this)">Send</button>
+				    <button type="button" class="btn btn-success js-send-enquiry-button" onclick="sendEnquiry(this)">Send</button>
 				    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			    </div>
 		    </div>
@@ -317,20 +316,32 @@
 
         function sendEnquiryModal( ths ) {
         	$(ths).addClass('disabled');
-	        var intSellProductId = $(ths).data('sell_product_id');
-	        var boolSendEnquiryModal = true;
-	        $("#js-send-enquiry-description").val('');
-	        $.ajax({
-		        type: "POST",
-		        url: "<?php echo base_url(); ?>" + "fetch-sell-product-by-id",
-		        data: { 'sell_product_id' : intSellProductId, 'bool_send_enquiry_modal' : boolSendEnquiryModal },
-		        dataType: "html",
-		        success: function(result){
-			        $(ths).removeClass('disabled');
-			        $("#js-sell-product-send-enquiry-modal-body").html(result);
-			        $('#js-sell-product-send-enquiry-modal').modal('show');
-		        }
-	        });
+	        var intUserId = $("#js-user-id").val();
+	        if( '' == intUserId ) {
+		        $( "#js-sell-product-send-enquiry-modal-body" ).html( '<h2 class="has-error"> Please login to send the enquiry </h2>' );
+		        $(".js-send-enquiry-button").hide();
+		        $(".js-description-row").hide();
+		        $(ths).removeClass('disabled');
+		        $( '#js-sell-product-send-enquiry-modal' ).modal( 'show' );
+	        } else {
+		        $( "#js-sell-product-send-enquiry-modal-body" ).html('');
+		        $(".js-send-enquiry-button").show();
+		        $(".js-description-row").show();
+		        var intSellProductId = $( ths ).data( 'sell_product_id' );
+		        var boolSendEnquiryModal = true;
+		        $( "#js-send-enquiry-description" ).val( '' );
+		        $.ajax( {
+			        type: "POST",
+			        url: "<?php echo base_url(); ?>" + "fetch-sell-product-by-id",
+			        data: { 'sell_product_id': intSellProductId, 'bool_send_enquiry_modal': boolSendEnquiryModal },
+			        dataType: "html",
+			        success: function( result ) {
+				        $( ths ).removeClass( 'disabled' );
+				        $( "#js-sell-product-send-enquiry-modal-body" ).html( result );
+				        $( '#js-sell-product-send-enquiry-modal' ).modal( 'show' );
+			        }
+		        } );
+	        }
         }
 
         function addToCart( ths ) {
@@ -366,7 +377,7 @@
         }
 
         function sendEnquiry( ths ) {
-	        var intSellProductId = $("#js-send-enquiry-sell-product-id").val();
+        	var intSellProductId = $("#js-send-enquiry-sell-product-id").val();
 	        var strDescription = $("#js-send-enquiry-description").val();
 	        $.ajax({
 		        type: "POST",
@@ -393,6 +404,7 @@
 			        }
 		        }
 	        });
+
         }
 
     </script>

@@ -37,7 +37,7 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <?php if( $arrUserData['username'] == 'adminmaster' ) {  ?>
+                                        <?php if( $arrUserData['username'] == ADMINUSERNAME ) {  ?>
                                             <th>User Type</th>
                                         <?php } ?>
                                         <th>Order number</th>

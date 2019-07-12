@@ -36,7 +36,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('orders_model','Orders');
         $this->load->model('transaction_model','Transaction');
 	    $this->load->model('sell_products_images_model','SellProductImage');
-    }
+	    $this->load->model('send_enquiry_buyer_model','SendEnquiryBuyer');}
 
     public function backendLayout($data) {
         $data['structure'] = 'backend';

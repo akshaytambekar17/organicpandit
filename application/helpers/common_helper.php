@@ -82,7 +82,7 @@ function UserSession() {
 }
 
 function isArrVal( $arrData ) {
-    if (!empty($arrData) && count($arrData) > 0) {
+    if ( isset( $arrData ) && !empty($arrData) && count($arrData) > 0) {
         return true;
     } else {
         return false;
