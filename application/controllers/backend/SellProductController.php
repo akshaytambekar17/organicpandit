@@ -54,6 +54,7 @@ class SellProductController extends MY_Controller {
         $userSession = $session['userData'];
         if( $this->input->post() ) {
             $post = $this->input->post();
+	        $data['strErrorImage'] = '';
 	        if( true == empty( $_FILES['primary_image']['name'] ) ) {
 		        $this->form_validation->set_rules( 'primary_image', 'Primary Image', 'trim|required' );
 	        }
@@ -205,8 +206,8 @@ class SellProductController extends MY_Controller {
 			            $this->backendLayout( $data );
 		            }
 	            } else {
-		            printDie( $arrError );
 		            $this->session->set_flashdata('Error', implode( ',', array_filter( $arrError ) ) );
+		            $data['strErrorImage'] = implode( ',', array_filter( $arrError ) );
 		            $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
 		            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
 		            $data['arrCitiesList'] = $this->City->getCities();
@@ -248,9 +249,9 @@ class SellProductController extends MY_Controller {
         $get = $this->input->get();
         if( $this->input->post() ) {
             $post = $this->input->post();
+	        $data['strErrorImage'] = '';
             if ($this->form_validation->run('sell-product-form') == TRUE) {
                 $arrPostSellProductDetails = $post;
-
 	            if( !empty( $_FILES['primary_image']['name'] ) ) {
 		            $config['upload_path'] = './assets/images/sell_products/';
 		            $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -400,6 +401,7 @@ class SellProductController extends MY_Controller {
 		            }
 	            } else {
 		            $this->session->set_flashdata('Error', implode( ',', array_filter( $arrError ) ) );
+		            $data['strErrorImage'] = implode( ',', array_filter( $arrError ) );
 		            $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $post['sell_product_id'] );
 		            $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
 		            $data['arrCertificationAgenciesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();

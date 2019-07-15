@@ -307,7 +307,7 @@ $config = array(
 		        array(
 			        'field' => 'product_description',
 			        'label' => 'Product Description',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'sell_quantity',
@@ -327,32 +327,32 @@ $config = array(
 		        array(
 			        'field' => 'variety',
 			        'label' => 'Variety',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'moisture',
 			        'label' => 'Moisture',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'texture',
 			        'label' => 'Texture',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'colour',
 			        'label' => 'Colour',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'broken_ratio',
 			        'label' => 'Broken Ratio',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'crop_year',
 			        'label' => 'Crop Year',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'certification_id',
@@ -362,17 +362,17 @@ $config = array(
 		        array(
 			        'field' => 'grain_length',
 			        'label' => 'Grain Length',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'supply_quantity',
 			        'label' => 'Supply Quantity',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'packaging_type',
 			        'label' => 'Packaging Type',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'delivery_location_state',
@@ -387,7 +387,7 @@ $config = array(
 		        array(
 			        'field' => 'lead_time',
 			        'label' => 'Lead Time',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'delivery_type_id',
@@ -402,7 +402,7 @@ $config = array(
 		        array(
 			        'field' => 'other_details',
 			        'label' => 'Other Details',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'stock',

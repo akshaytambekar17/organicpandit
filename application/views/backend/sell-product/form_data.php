@@ -16,11 +16,19 @@
             </div>
         </div>
     <?php }?>
-    <?php if($message = $this ->session->flashdata('Error')){?>
+    <?php if( $this ->session->flashdata('Error') || !empty( $strErrorImage ) ) {
+	        $strMessage = 'Something went wrong.';
+    	    if( $this ->session->flashdata('Error') ) {
+    	    	$strMessage = $this ->session->flashdata('Error');
+	        }
+    	    if( !empty( $strErrorImage ) ) {
+		        $strMessage = $strErrorImage;
+	        }
+    ?>
         <div class="col-md-12 ">
             <div class="alert alert-dismissible alert-danger">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <?=$message ?>
+                <?= $strMessage ?>
             </div>
         </div>
     <?php }?>
@@ -59,7 +67,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Product Description</label>
+                                    <label class="control-label">Product Description</label>
                                     <input type="text" name="product_description" class="form-control" id="js-product-description" placeholder="Product Description" value="<?= !empty( $arrSellProductDetails['product_description'] ) ? $arrSellProductDetails['product_description'] : set_value('product_description')?>" >
                                     <span class="has-error"><?php echo form_error('product_description'); ?></span>
                                 </div>
@@ -87,26 +95,26 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Texture</label>
+                                    <label class="control-label">Texture</label>
                                     <input type="text" name="texture" class="form-control" id="js-texture" placeholder="Texture" value="<?= !empty( $arrSellProductDetails['texture'] ) ? $arrSellProductDetails['texture'] : set_value('texture') ?>" >
                                     <span class="has-error"><?php echo form_error('texture'); ?></span>
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Colour</label>
+                                    <label class="control-label">Colour</label>
                                     <input type="text" name="colour" class="form-control" id="js-colour" placeholder="Colour" value="<?= !empty( $arrSellProductDetails['colour'] ) ? $arrSellProductDetails['colour'] : set_value('colour') ?>" >
                                     <span class="has-error"><?php echo form_error('colour'); ?></span>
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Broken Ratio</label>
+                                    <label class="control-label">Broken Ratio</label>
                                     <input type="text" name="broken_ratio" class="form-control" id="js-broken-ration" placeholder="Broken Ration" value="<?= !empty( $arrSellProductDetails['broken_ratio'] ) ? $arrSellProductDetails['broken_ratio'] : set_value('broken_ratio') ?>" >
                                     <span class="has-error"><?php echo form_error('broken_ration'); ?></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Crop Year</label>
+                                    <label class="control-label">Crop Year</label>
                                     <div class="input-group date">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                         <input type="text" name="crop_year" class="form-control picker-date pull-right" id="js-crop-year"  value="<?= !empty( $arrSellProductDetails['crop_year'] ) ? $arrSellProductDetails['crop_year'] : set_value('crop_year') ?>" readonly="readonly" >
@@ -131,7 +139,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Grain Length</label>
+                                    <label class="control-label">Grain Length</label>
                                     <input type="text" name="grain_length" class="form-control" id="js-grain-length" placeholder="Grain Length" value="<?= !empty( $arrSellProductDetails['grain_length'] ) ? $arrSellProductDetails['grain_length'] : set_value('grain_length') ?>" >
                                     <span class="has-error"><?php echo form_error('grain_length'); ?></span>
                                 </div>
@@ -139,13 +147,13 @@
 
 	                        <div class="row">
 		                        <div class="form-group col-md-4">
-			                        <label class="control-label label-required" >Variety</label>
+			                        <label class="control-label" >Variety</label>
 			                        <input type="text" name="variety" class="form-control" id="js-variety" placeholder="Variety" value="<?= !empty( $arrSellProductDetails['variety'] ) ? $arrSellProductDetails['variety'] : set_value('variety')?>">
 			                        <span class="has-error"><?php echo form_error('variety'); ?></span>
 		                        </div>
 
 		                        <div class="form-group col-md-4">
-			                        <label class="control-label label-required">Moisture</label>
+			                        <label class="control-label">Moisture</label>
 			                        <input type="text" name="moisture" class="form-control" id="js-moisture" placeholder="Moisture" value="<?= !empty( $arrSellProductDetails['moisture'] ) ? $arrSellProductDetails['moisture'] : set_value('moisture') ?>" >
 			                        <span class="has-error"><?php echo form_error('moisture'); ?></span>
 		                        </div>
@@ -192,19 +200,19 @@
 
                             <div class="row">
 	                            <div class="form-group col-md-4">
-		                            <label class="control-label label-required">Supply Quantity</label>
+		                            <label class="control-label">Supply Quantity</label>
 		                            <input type="text" name="supply_quantity" class="form-control" id="js-supply-quantity" placeholder="Supply Quantity" value="<?= !empty( $arrSellProductDetails['supply_quantity'] ) ? $arrSellProductDetails['supply_quantity'] : set_value('supply_quantity') ?>" >
 		                            <span class="has-error"><?php echo form_error('supply_quantity'); ?></span>
 	                            </div>
 
 	                            <div class="form-group col-md-4">
-		                            <label class="control-label label-required">Packaging Type</label>
+		                            <label class="control-label">Packaging Type</label>
 		                            <input type="text" name="packaging_type" class="form-control" id="js-packaging-type" placeholder="Packaging Type" value="<?= !empty( $arrSellProductDetails['packaging_type'] ) ? $arrSellProductDetails['packaging_type'] : set_value('packaging_type') ?>" >
 		                            <span class="has-error"><?php echo form_error('packaging_type'); ?></span>
 	                            </div>
 
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Lead Time</label>
+                                    <label class="control-label">Lead Time</label>
                                     <input type="text" name="lead_time" class="form-control" id="js-lead-time" placeholder="Lead Time" value="<?= !empty( $arrSellProductDetails['lead_time'] ) ? $arrSellProductDetails['lead_time'] : set_value('lead_time') ?>" >
                                     <span class="has-error"><?php echo form_error('lead_time'); ?></span>
                                 </div>
@@ -239,7 +247,7 @@
 	                            </div>
 
 	                            <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Other Details</label>
+                                    <label class="control-label">Other Details</label>
                                     <input type="text" name="other_details" class="form-control" id="js-other-details" placeholder="Other Details" value="<?= !empty( $arrSellProductDetails['other_details'] ) ? $arrSellProductDetails['other_details'] : set_value('other_details') ?>" >
                                     <span class="has-error"><?php echo form_error('other_details'); ?></span>
                                 </div>
