@@ -400,6 +400,11 @@
 		                </a>
 	                </li>
 	                <li>
+		                <a href="<?= base_url()?>buyer-enquiry-list">
+			                <i class="fa fa-info-circle" aria-hidden="true"></i> <span>Buyer Enquires</span>
+		                </a>
+	                </li>
+	                <li>
 		                <a href="<?= base_url()?>admin/user">
 			                <i class="ion ion-person-add"></i> <span>User Registration</span>
 			                <span class="pull-right-container">

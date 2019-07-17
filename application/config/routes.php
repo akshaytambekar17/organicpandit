@@ -170,7 +170,7 @@ $route['order/view'] = "backend/OrderController/view";
 
 $route['transactions'] = "backend/TransactionController/index";
 
-$route['send-enquiry-list'] = "backend/SendEnquiryBuyerController/index";
+$route['buyer-enquiry-list'] = "backend/SendEnquiryBuyerController/index";
 
 /************* api routes *************/
 $route['api/user/login'] = "api/UserController/login";

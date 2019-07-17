@@ -21,27 +21,34 @@ class send_enquiry_buyer_model extends CI_Model {
     }
 
     public function getSendEnquiryBuyers() {
-        $this->db->select('tseb.*,tsp.*,tu.fullname as buyer_name');
+        $this->db->select('tseb.*,tsp.*,tu.fullname as buyer_name, tp.name as product_name, tcp.name as category_name');
         $this->db->from('tbl_send_enquiry_buyer tseb');
-        $this->db->join('tbl_sell_products tsp', 'tsp.sell_product_id = tseb.sell_product_id');
+        $this->db->join('tbl_sell_products tsp', 'tsp.sell_product_id = tseb.sell_product_id','left' );
 	    $this->db->join('tbl_users tu', 'tu.user_id = tseb.buyer_id','left');
+	    $this->db->join('tbl_product tp', 'tp.id = tsp.product_id','left');
+	    $this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id','left');
         $this->db->order_by('tseb.id', 'DESC');
         return $this->db->get()->result_array();
     }
 
     public function getSendEnquiryBuyersBySellProductId( $intSellProductId ) {
-	    $this->db->select('tsp.*, tseb.*, tu.fullname as buyer_name');
+	    $this->db->select('tsp.*, tseb.*, tu.fullname as buyer_name, tp.name as product_name, tcp.name as category_name');
 	    $this->db->from('tbl_send_enquiry_buyer tseb');
-	    $this->db->join('tbl_sell_products tsp', 'tsp.sell_product_id = tseb.sell_product_id');
+	    $this->db->join('tbl_sell_products tsp', 'tsp.sell_product_id = tseb.sell_product_id','left');
 	    $this->db->join('tbl_users tu', 'tu.user_id = tseb.buyer_id','left');
+	    $this->db->join('tbl_product tp', 'tp.id = tsp.product_id','left');
+	    $this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id','left');
 	    $this->db->where('tseb.sell_product_id', $intSellProductId);
         return $this->db->get()->row_array();
     }
 
     public function getSendEnquiryBuyersByUserId( $intUserId ) {
-	    $this->db->select('tsp.*, tseb.*');
+	    $this->db->select('tseb.*, tsp.*, tu.fullname as buyer_name, tp.name as product_name, tcp.name as category_name');
 	    $this->db->from('tbl_send_enquiry_buyer tseb');
-	    $this->db->join('tbl_sell_products tsp', 'tsp.sell_product_id = tseb.sell_product_id');
+	    $this->db->join('tbl_sell_products tsp', 'tsp.sell_product_id = tseb.sell_product_id','left');
+	    $this->db->join('tbl_users tu', 'tu.user_id = tseb.buyer_id','left');
+	    $this->db->join('tbl_product tp', 'tp.id = tsp.product_id','left');
+	    $this->db->join('tbl_product_category tcp', 'tcp.id = tsp.category_id','left');
 	    $this->db->where('tsp.user_id', $intUserId);
         return $this->db->get()->result_array();
     }

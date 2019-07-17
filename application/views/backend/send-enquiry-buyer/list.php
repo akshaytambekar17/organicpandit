@@ -52,24 +52,24 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if( true == isset( $arrmixTransactionList ) ) {
-                                        foreach( $arrmixTransactionList as $key => $arrTransactionDetails ) {
+                                    if( true == isset( $arrmixSendEnquiryBuyerList ) ) {
+                                        foreach( $arrmixSendEnquiryBuyerList as $key => $arrSendEnquiryBuyerDetails ) {
 
                                 ?>
-                                            <tr class="gradeX" id="order-<?= $arrTransactionDetails['transaction_id'] ?>">
-                                                <td class="hidden"><?= $arrTransactionDetails['transaction_id']; ?></td>
-	                                            <td><a href="<?= base_url()?>order/view?order_id=<?= $arrTransactionDetails['order_id'] ?>" data-toggle="tooltip" title="View">
-		                                                <?= $arrTransactionDetails['order_no'];?>
-		                                            </a>
-	                                            </td>
-	                                            <td><?= $arrTransactionDetails['txnid'];?></td>
-                                                <td><?= $arrTransactionDetails['status']; ?></td>
-                                                <td><?= $arrTransactionDetails['error'] ?></td>
-	                                            <td><?= $arrTransactionDetails['error_message'] ?></td>
-                                                <td><?= $arrTransactionDetails['total_amount']; ?></td>
-                                                <td><?= $arrTransactionDetails['added_on']; ?></td>
-                                                <!--<td>
-                                                    <a href="<?/*= base_url()*/?>order/view?order_id=<?/*= $arrTransactionDetails['order_id'] */?>" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <tr class="gradeX" id="send-enquiry-buyer-<?= $arrSendEnquiryBuyerDetails['id'] ?>">
+                                                <td class="hidden"><?= $arrSendEnquiryBuyerDetails['id']; ?></td>
+	                                            <?php if( ADMINUSERNAME  == $arrUserData['username'] ) {  ?>
+		                                            <td><?= $arrSendEnquiryBuyerDetails['seller_name'] ?></td>
+	                                            <?php } ?>
+	                                            <td><?= $arrSendEnquiryBuyerDetails['buyer_name'];?></td>
+                                                <td><?= $arrSendEnquiryBuyerDetails['category_name']; ?></td>
+                                                <td><?= $arrSendEnquiryBuyerDetails['product_name'] ?></td>
+	                                            <td><?= $arrSendEnquiryBuyerDetails['sell_quantity'] ?></td>
+                                                <td><?= $arrSendEnquiryBuyerDetails['price']; ?></td>
+                                                <td><?= $arrSendEnquiryBuyerDetails['total_price']; ?></td>
+	                                            <td><?= $arrSendEnquiryBuyerDetails['description']; ?></td>
+	                                            <!--<td>
+                                                    <a href="<?/*= base_url()*/?>order/view?order_id=<?/*= $arrSendEnquiryBuyerDetails['order_id'] */?>" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                 </td>-->
                                             </tr>
                                             <?php
@@ -90,9 +90,3 @@
     </section>
 </div>
 
-<script>
-    $(document).ready(function () {
-
-    });
-
-</script>

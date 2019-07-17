@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class OrderController extends MY_Controller {
+class SendEnquiryBuyerController extends MY_Controller {
 
     function __construct() {
         parent::__construct();
@@ -39,12 +39,18 @@ class OrderController extends MY_Controller {
         $data['title'] = 'Enquiry Send by Buyer List';
         $data['heading'] = 'Enquiry Send by Buyer List';
         $data['backend'] = true;
-        $data['view'] = 'send_enquiry/seller_list';
+        $data['view'] = 'send-enquiry-buyer/list';
         $data['arrUserData'] = $userSession;
-        if( $userSession['username'] == 'adminmaster' ) {
-            $data['arrmixSendEnquiryBuyerList'] = $this->SendEnquiryBuyer->getSendEnquiryBuyers();
+        if( ADMINUSERNAME == $userSession['username'] ) {
+            $arrSendEnquiryBuyerList = $this->SendEnquiryBuyer->getSendEnquiryBuyers();
+            foreach( $arrSendEnquiryBuyerList as $arrSendEnquiryBuyerDetails ) {
+	            $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $arrSendEnquiryBuyerDetails['sell_product_id'] );
+	            $arrSendEnquiryBuyerDetails['seller_name'] = $arrSellProductDetails['fullname'];
+	            $arrmixSendEnquiryBuyerList[] = $arrSendEnquiryBuyerDetails;
+            }
+	        $data['arrmixSendEnquiryBuyerList'] = $arrmixSendEnquiryBuyerList;
         } else {
-            $data['arrmixSendEnquiryBuyerList'] = $this->SendEnquiryBuyer->getSendEnquiryBuyersBySellProductId( $userSession['user_id'] );
+            $data['arrmixSendEnquiryBuyerList'] = $this->SendEnquiryBuyer->getSendEnquiryBuyersByUserId( $userSession['user_id'] );
         }
 
         $this->backendLayout($data);

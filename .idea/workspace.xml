@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/backend/order/list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="41" selection-end-column="50" />
+            <state relative-caret-position="286">
+              <caret line="48" column="62" selection-start-line="48" selection-start-column="62" selection-end-line="48" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -37,7 +37,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/BuySellController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
+            <state relative-caret-position="3036">
               <caret line="164" column="54" selection-start-line="164" selection-start-column="54" selection-end-line="164" selection-end-column="54" />
               <folding>
                 <element signature="n#searchBuyProduct#0;n#BuySellController#0;n#!!top" expanded="true" />
@@ -48,75 +48,56 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/models/send_enquiry_buyer_model.php">
+        <entry file="file://$PROJECT_DIR$/application/controllers/backend/SendEnquiryBuyerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="55" />
+            <state relative-caret-position="484">
+              <caret line="52" column="118" selection-start-line="52" selection-start-column="118" selection-end-line="52" selection-end-column="118" />
               <folding>
-                <element signature="n#getSendEnquiryBuyers#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-                <element signature="n#getSendEnquiryBuyersBySellProductId#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-                <element signature="n#getSendEnquiryBuyersByUserId#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-                <element signature="n#insert#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-                <element signature="n#update#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-                <element signature="n#deleteBySellProductId#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-                <element signature="n#delete#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
+                <element signature="n#__construct#0;n#OrderController#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/buy-sell/modal_send_enquiry.php">
+        <entry file="file://$PROJECT_DIR$/application/models/sell_products_model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="16" column="171" selection-start-line="16" selection-start-column="158" selection-end-line="16" selection-end-column="171" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/buy-sell/buy_product.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="322" column="41" selection-start-line="322" selection-start-column="41" selection-end-line="322" selection-end-column="41" />
+            <state relative-caret-position="792">
+              <caret line="41" column="80" lean-forward="true" selection-start-line="40" selection-start-column="8" selection-end-line="41" selection-end-column="80" />
               <folding>
-                <element signature="e#127#134#1" expanded="true" />
-                <element signature="e#126#133#1" expanded="true" />
-                <element signature="e#127#134#1" expanded="true" />
-                <element signature="e#126#133#1" expanded="true" />
+                <element signature="n#getSellProducts#0;n#sell_products_model#0;n#!!top" expanded="true" />
+                <element signature="n#getSellProductByUserId#0;n#sell_products_model#0;n#!!top" expanded="true" />
+                <element signature="n#getSellProductByProductIdByCategoryIdByStateIdByCity#0;n#sell_products_model#0;n#!!top" expanded="true" />
+                <element signature="n#insert#0;n#sell_products_model#0;n#!!top" expanded="true" />
+                <element signature="n#update#0;n#sell_products_model#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers/backend/SellProductController.php">
+        <entry file="file://$PROJECT_DIR$/application/views/backend/send-enquiry-buyer/list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="254" column="16" selection-start-line="254" selection-start-column="16" selection-end-line="254" selection-end-column="16" />
-              <folding>
-                <element signature="n#index#0;n#SellProductController#0;n#!!top" expanded="true" />
-                <element signature="n#create#0;n#SellProductController#0;n#!!top" expanded="true" />
-                <element signature="n#fetchCitiesByStateId#0;n#SellProductController#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="264">
+              <caret line="33" column="42" lean-forward="true" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/web/sidebar.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="403" column="55" selection-start-line="403" selection-start-column="55" selection-end-line="403" selection-end-column="55" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/views/backend/sell-product/form_data.php">
+        <entry file="file://$PROJECT_DIR$/application/config/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="268" column="34" lean-forward="true" selection-start-line="268" selection-start-column="34" selection-end-line="268" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/config/form_validation.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
-              <caret line="396" column="22" lean-forward="true" selection-start-line="396" selection-start-column="22" selection-end-line="396" selection-end-column="22" />
+            <state relative-caret-position="498">
+              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
             </state>
           </provider>
         </entry>
@@ -125,10 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>certifi</find>
-      <find>other_image1_hidden2</find>
-      <find>quantity</find>
-      <find>#quantity</find>
       <find>js-total-price</find>
       <find>nmber</find>
       <find>number</find>
@@ -155,6 +132,10 @@
       <find>sendEnquiryModal</find>
       <find>getSellProductBySellProductId</find>
       <find>strErrorImage</find>
+      <find>getSendEnquiryBuyersBySellProductId</find>
+      <find>$arrTransactionDetails</find>
+      <find>quantity</find>
+      <find>js-sell-quantity</find>
     </findStrings>
     <replaceStrings>
       <replace>$arrTransactionDetails</replace>
@@ -166,6 +147,7 @@
       <replace>tbl_send_enquiry_buyer</replace>
       <replace>tseb</replace>
       <replace>$arrSellProductDetails</replace>
+      <replace>$arrSendEnquiryBuyerDetails</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -179,7 +161,6 @@
         <option value="$PROJECT_DIR$/application/config/config.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/application/controllers/backend/TransactionController.php" />
-        <option value="$PROJECT_DIR$/application/views/web/sidebar.php" />
         <option value="$PROJECT_DIR$/application/models/transaction_model.php" />
         <option value="$PROJECT_DIR$/application/models/sell_products_images_model.php" />
         <option value="$PROJECT_DIR$/application/controllers/contact.php" />
@@ -210,14 +191,16 @@
         <option value="$PROJECT_DIR$/application/views/Email/send_enquiry_seller.php" />
         <option value="$PROJECT_DIR$/application/views/Email/send_enquiry_admin.php" />
         <option value="$PROJECT_DIR$/application/views/Email/send_enquiry_buyer.php" />
-        <option value="$PROJECT_DIR$/application/config/routes.php" />
-        <option value="$PROJECT_DIR$/application/models/send_enquiry_buyer_model.php" />
-        <option value="$PROJECT_DIR$/application/controllers/backend/SendEnquiryBuyerController.php" />
         <option value="$PROJECT_DIR$/application/views/backend/order/list.php" />
-        <option value="$PROJECT_DIR$/application/views/backend/send-enquiry-buyer/list.php" />
         <option value="$PROJECT_DIR$/application/controllers/backend/SellProductController.php" />
         <option value="$PROJECT_DIR$/application/config/form_validation.php" />
         <option value="$PROJECT_DIR$/application/views/backend/sell-product/form_data.php" />
+        <option value="$PROJECT_DIR$/application/views/backend/send-enquiry-buyer/list.php" />
+        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-3/SendEnquiryBuyerController.php" />
+        <option value="$PROJECT_DIR$/application/config/routes.php" />
+        <option value="$PROJECT_DIR$/application/views/web/sidebar.php" />
+        <option value="$PROJECT_DIR$/application/controllers/backend/SendEnquiryBuyerController.php" />
+        <option value="$PROJECT_DIR$/application/models/send_enquiry_buyer_model.php" />
       </list>
     </option>
   </component>
@@ -237,6 +220,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -292,7 +276,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -341,11 +324,12 @@
       <workItem from="1562817954315" duration="11366000" />
       <workItem from="1562899040144" duration="9916000" />
       <workItem from="1563158181571" duration="872000" />
+      <workItem from="1563340902703" duration="5547000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60904000" />
+    <option name="totallyTimeSpent" value="66451000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
@@ -383,29 +367,6 @@
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/backend/user/profile_farmer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="150" column="38" lean-forward="true" selection-start-line="146" selection-start-column="28" selection-end-line="150" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/sell_products_images_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="30" column="47" lean-forward="true" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
-          <folding>
-            <element signature="n#getSellProducts#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#getSellProductBySellProductId#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#getSellProductByUserId#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#insert#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#update#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#delete#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#deleteBySellProductId#1;n#sell_products_images_model#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
@@ -569,13 +530,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/sell_products_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="23" column="84" selection-start-line="23" selection-start-column="84" selection-end-line="23" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/sell_products_model.php" />
     <entry file="file://$PROJECT_DIR$/application/controllers/MY_Controller.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -595,13 +550,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/BuySellController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-2/BuySellController.php" />
     <entry file="file://$PROJECT_DIR$/application/views/backend/order/form_data.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -641,48 +590,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-3/SellProductController.php" />
+    <entry file="file://$PROJECT_DIR$/application/controllers/backend/SellProductController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3784">
-          <caret line="172" column="55" selection-start-line="172" selection-start-column="55" selection-end-line="172" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/backend/SendEnquiryBuyerController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="49" column="36" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
+        <state relative-caret-position="329">
+          <caret line="254" column="16" selection-start-line="254" selection-start-column="16" selection-end-line="254" selection-end-column="16" />
           <folding>
-            <element signature="n#__construct#0;n#OrderController#0;n#!!top" expanded="true" />
+            <element signature="n#index#0;n#SellProductController#0;n#!!top" expanded="true" />
+            <element signature="n#create#0;n#SellProductController#0;n#!!top" expanded="true" />
+            <element signature="n#fetchCitiesByStateId#0;n#SellProductController#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/sell_products_model.php">
+    <entry file="file://$PROJECT_DIR$/application/views/buy-sell/buy_product.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="83" column="8" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="75" />
+        <state relative-caret-position="3684">
+          <caret line="322" column="41" selection-start-line="322" selection-start-column="41" selection-end-line="322" selection-end-column="41" />
           <folding>
-            <element signature="n#getSellProducts#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#getSellProductBySellProductId#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#getSellProductByUserId#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#insert#0;n#sell_products_model#0;n#!!top" expanded="true" />
-            <element signature="n#update#0;n#sell_products_model#0;n#!!top" expanded="true" />
+            <element signature="e#127#134#1" expanded="true" />
+            <element signature="e#126#133#1" expanded="true" />
+            <element signature="e#127#134#1" expanded="true" />
+            <element signature="e#126#133#1" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/backend/send-enquiry-buyer/list.php">
+    <entry file="file://$PROJECT_DIR$/application/views/buy-sell/modal_send_enquiry.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="916">
-          <caret line="53" column="37" lean-forward="true" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
+        <state relative-caret-position="220">
+          <caret line="16" column="171" selection-start-line="16" selection-start-column="158" selection-end-line="16" selection-end-column="171" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/backend/order/list.php">
+    <entry file="file://$PROJECT_DIR$/application/controllers/BuySellController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="41" selection-end-column="50" />
+        <state relative-caret-position="3036">
+          <caret line="164" column="54" selection-start-line="164" selection-start-column="54" selection-end-line="164" selection-end-column="54" />
+          <folding>
+            <element signature="n#searchBuyProduct#0;n#BuySellController#0;n#!!top" expanded="true" />
+            <element signature="n#fetchSellProductById#0;n#BuySellController#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -699,25 +647,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/BuySellController.php">
+    <entry file="file://$PROJECT_DIR$/application/views/backend/order/list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="164" column="54" selection-start-line="164" selection-start-column="54" selection-end-line="164" selection-end-column="54" />
+        <state relative-caret-position="286">
+          <caret line="48" column="62" selection-start-line="48" selection-start-column="62" selection-end-line="48" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/form_validation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="396" column="22" selection-start-line="396" selection-start-column="22" selection-end-line="396" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/backend/sell-product/form_data.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="91" column="94" selection-start-line="91" selection-start-column="83" selection-end-line="91" selection-end-column="94" />
           <folding>
-            <element signature="n#searchBuyProduct#0;n#BuySellController#0;n#!!top" expanded="true" />
-            <element signature="n#fetchSellProductById#0;n#BuySellController#0;n#!!top" expanded="true" />
+            <element signature="e#26300#27775#0#HTML" expanded="true" />
+            <element signature="e#27443#27767#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-3/SendEnquiryBuyerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="41" column="50" lean-forward="true" selection-start-line="41" selection-start-column="50" selection-end-line="41" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/backend/SendEnquiryBuyerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="52" column="118" selection-start-line="52" selection-start-column="118" selection-end-line="52" selection-end-column="118" />
+          <folding>
+            <element signature="n#__construct#0;n#OrderController#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/sell_products_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="41" column="80" lean-forward="true" selection-start-line="40" selection-start-column="8" selection-end-line="41" selection-end-column="80" />
+          <folding>
+            <element signature="n#getSellProducts#0;n#sell_products_model#0;n#!!top" expanded="true" />
+            <element signature="n#getSellProductByUserId#0;n#sell_products_model#0;n#!!top" expanded="true" />
+            <element signature="n#getSellProductByProductIdByCategoryIdByStateIdByCity#0;n#sell_products_model#0;n#!!top" expanded="true" />
+            <element signature="n#insert#0;n#sell_products_model#0;n#!!top" expanded="true" />
+            <element signature="n#update#0;n#sell_products_model#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/backend/send-enquiry-buyer/list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="33" column="42" lean-forward="true" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/web/sidebar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="403" column="55" selection-start-line="403" selection-start-column="55" selection-end-line="403" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/models/send_enquiry_buyer_model.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="55" />
+        <state relative-caret-position="713">
+          <caret line="50" column="87" lean-forward="true" selection-start-line="50" selection-start-column="87" selection-end-line="50" selection-end-column="87" />
           <folding>
             <element signature="n#getSendEnquiryBuyers#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
             <element signature="n#getSendEnquiryBuyersBySellProductId#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
-            <element signature="n#getSendEnquiryBuyersByUserId#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
             <element signature="n#insert#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
             <element signature="n#update#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
             <element signature="n#deleteBySellProductId#0;n#send_enquiry_buyer_model#0;n#!!top" expanded="true" />
@@ -726,52 +732,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/buy-sell/modal_send_enquiry.php">
+    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="16" column="171" selection-start-line="16" selection-start-column="158" selection-end-line="16" selection-end-column="171" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/buy-sell/buy_product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="322" column="41" selection-start-line="322" selection-start-column="41" selection-end-line="322" selection-end-column="41" />
-          <folding>
-            <element signature="e#127#134#1" expanded="true" />
-            <element signature="e#126#133#1" expanded="true" />
-            <element signature="e#127#134#1" expanded="true" />
-            <element signature="e#126#133#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-3/SellProductController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/backend/SellProductController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="254" column="16" selection-start-line="254" selection-start-column="16" selection-end-line="254" selection-end-column="16" />
-          <folding>
-            <element signature="n#index#0;n#SellProductController#0;n#!!top" expanded="true" />
-            <element signature="n#create#0;n#SellProductController#0;n#!!top" expanded="true" />
-            <element signature="n#fetchCitiesByStateId#0;n#SellProductController#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/form_validation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="396" column="22" lean-forward="true" selection-start-line="396" selection-start-column="22" selection-end-line="396" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/backend/sell-product/form_data.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="268" column="34" lean-forward="true" selection-start-line="268" selection-start-column="34" selection-end-line="268" selection-end-column="34" />
+        <state relative-caret-position="498">
+          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
         </state>
       </provider>
     </entry>
