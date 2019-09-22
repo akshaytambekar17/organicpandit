@@ -88,12 +88,12 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="gst_number">GST Number</label>
+                            <label class="control-label" for="gst_number">GST Number</label>
                             <input type="text" name="gst_number" class="form-control" id="gst_number" placeholder="GST Number" value="<?= set_value('gst_number') ?>">
                             <span class="has-error"><?php echo form_error('gst_number'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="aadhar_number">Aadhar Card Number</label>
+                            <label class="control-label" for="aadhar_number">Aadhar Card Number</label>
                             <input type="text" name="aadhar_number" class="form-control" id="aadhar_number" placeholder="Aadhar Card Number" value="<?= set_value('aadhar_number') ?>">
                             <span class="has-error"><?php echo form_error('aadhar_number'); ?></span>
                         </div>
@@ -105,12 +105,12 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="story">Story</label>
+                            <label class="control-label" for="story">Story</label>
                             <input type="text" name="story"  class="form-control" id="story" placeholder="Story" value="<?= set_value('story') ?>">
                             <span class="has-error"><?php echo form_error('story'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="is_visit_farm">Can we visit your farm</label>
+                            <label class="control-label" for="is_visit_farm">Can we visit your farm</label>
                             <select class="form-control select2" name="is_visit_farm" id="is_visit_farm">
                                 <option disabled="disabled" selected="selected">Select Options</option>
                                 <option value="2" <?= set_select('is_visit_farm', 2); ?> >Yes</option>
@@ -119,7 +119,7 @@
                             <span class="has-error"><?php echo form_error('is_visit_farm'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="is_test_report">Can you provide test report</label>
+                            <label class="control-label" for="is_test_report">Can you provide test report</label>
                             <select class="form-control select2" name="is_test_report" id="is_test_report">
                                 <option disabled="disabled" selected="selected">Select Options</option>
                                 <option value="2" <?= set_select('is_test_report', 2); ?> >Yes</option>
@@ -131,13 +131,13 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="certification_id">Select Certification</label>
-                            <select class="form-control select2" name="certification_id" id="certification_id">
+                            <select class="form-control select2" name="certification_id[]" id="certification_id" multiple="multiple" >
                                 <option disabled="disabled" selected="selected">Select Certification</option>
                                 <?php foreach (getCertifications() as $key => $value) { ?>
-                                    <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
+                                    <option value="<?= $key ?>" <?= set_select('certification_id[]', $key); ?>><?= $value ?></option>
                                 <?php } ?>
                             </select>
-                            <span class="has-error"><?php echo form_error('certification_id'); ?></span>
+                            <span class="has-error"><?php echo form_error('certification_id[]'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Certification Number</label>
@@ -176,11 +176,11 @@
                 <div class="box-body">
                     <div class="form-group pr-group box-body">
 <!--                        <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="name">Product Name</label>
+                            <label class="control-label" for="name">Product Name</label>
                             <input type="text" name="Product[name][]" class="form-control" id="name" placeholder="Product Name" value="<?= set_value('Product[name][]') ?>">
                         </div>-->
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="product_id">Product Name</label>
+                            <label class="control-label" for="product_id">Product Name</label>
                             <select class="form-control select2" name="Product[product_id][]" id="product_id">
                                 <option disabled="disabled" selected="selected">Select Product Name</option>
                                 <?php foreach (getProductCategory() as $key_pro => $val_pro) { ?>
@@ -199,25 +199,25 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="description">Description</label>
+                            <label class="control-label" for="description">Description</label>
                             <input type="text" name="Product[description][]" class="form-control" id="description" placeholder="Product Description" value="<?= set_value('Product[description][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="from_date">From Date</label>
+                            <label class="control-label" for="from_date">From Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input type="text" name="Product[from_date][]" class="form-control picker-date pull-right" id="from_date" placeholder="From Date" value="<?= set_value('Product[from_date][]') ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="to_date">To Date</label>
+                            <label class="control-label" for="to_date">To Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input type="text" name="Product[to_date][]" class="form-control picker-date pull-right" id="to_date" placeholder="To Date" value="<?= set_value('Product[to_date][]') ?>">
                             </div>        
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="quantity_id">Select Quantity</label>
+                            <label class="control-label" for="quantity_id">Select Quantity</label>
                             <select class="form-control" name="Product[quantity_id][]" >
                                 <option disabled="disabled" selected="selected">Select Quantity</option>
                                 <?php foreach (getQuantities() as $key => $value) { ?>
@@ -226,15 +226,15 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="quality">Qualitity</label>
+                            <label class="control-label" for="quality">Qualitity</label>
                             <input type="text" name="Product[quality][]" class="form-control" id="quality" placeholder="Quality" value="<?= set_value('Product[quality][]') ?>">
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="control-label label-required" for="price">Price</label>
+                            <label class="control-label" for="price">Price</label>
                             <input type="text" name="Product[price][]" class="form-control" id="price" placeholder="Price" value="<?= set_value('Product[price][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="images">Product Images</label>
+                            <label class="control-label" for="images">Product Images</label>
                             <input type="file" name="product_images[]" class="form-control" id="images">
                         </div>
                         <div class="form-group col-md-1">
@@ -245,11 +245,11 @@
                     <!-- The option field template containing an option field and a Remove button -->
                     <div class=" form-group product-group box-body hide" id="optionTemplate">
 <!--                        <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="name">Product Name</label>
+                            <label class="control-label" for="name">Product Name</label>
                             <input type="text" name="Product[name][]" class="form-control" id="name" placeholder="Product Name" value="<?= set_value('Product[name][]') ?>">
                         </div>-->
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="product_id">Product Name</label>
+                            <label class="control-label" for="product_id">Product Name</label>
                             <select class="form-control select-picker" name="Product[product_id][]">
                                 <option disabled="disabled" selected="selected">Select Product Name</option>
                                 <?php foreach ($product_list as $value) { ?>
@@ -258,25 +258,25 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="description">Description</label>
+                            <label class="control-label" for="description">Description</label>
                             <input type="text" name="Product[description][]" class="form-control" id="description" placeholder="Product Description" value="<?= set_value('Product[description][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="from_date">From Date</label>
+                            <label class="control-label" for="from_date">From Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input type="text" name="Product[from_date][]" class="form-control picker-date pull-right" id="from_date" placeholder="From Date" value="<?= set_value('Product[from_date][]') ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="to_date">To Date</label>
+                            <label class="control-label" for="to_date">To Date</label>
                             <div class="input-group date">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input type="text" name="Product[to_date][]" class="form-control picker-date pull-right" id="to_date" placeholder="To Date" value="<?= set_value('Product[to_date][]') ?>">
                             </div>        
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="quantity_id">Select Quantity</label>
+                            <label class="control-label" for="quantity_id">Select Quantity</label>
                             <select class="form-control" name="Product[quantity_id][]" >
                                 <option disabled="disabled" selected="selected">Select Quantity</option>
                                 <?php foreach (getQuantities() as $key => $value) { ?>
@@ -285,15 +285,15 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="quality">Qualitity</label>
+                            <label class="control-label" for="quality">Qualitity</label>
                             <input type="text" name="Product[quality][]" class="form-control" id="quality" placeholder="Quality" value="<?= set_value('Product[quality][]') ?>">
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="control-label label-required" for="price">Price</label>
+                            <label class="control-label" for="price">Price</label>
                             <input type="text" name="Product[price][]" class="form-control" id="price" placeholder="Price" value="<?= set_value('Product[price][]') ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label label-required" for="images">Product Images</label>
+                            <label class="control-label" for="images">Product Images</label>
                             <input type="file" name="product_images[]" class="form-control" id="images">
                         </div>
                         <div class="form-group col-md-1">

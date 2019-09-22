@@ -19,48 +19,47 @@ class user_product_model extends CI_Model {
     }
     
     public function getUserProducts() {
-        $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_users_products')->result_array();
+        $this->db->select( 'tup.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_products tup' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tup.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tu.user_type_id' );
+        $this->db->order_by( 'tup.id','DESC' );
+        return $this->db->get()->result_array();
     }
-    public function getUserProductByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
-        return $this->db->get('tbl_users_products')->result_array();
+    
+    public function getUserProductsByUserId( $intUserId ) {
+        $this->db->select( 'tup.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_products tup' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tup.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tu.user_type_id' );
+        $this->db->where( 'user_id', $intUserId );
+        $this->db->order_by( 'tup.id','DESC' );
+        return $this->db->get()->result_array();
     }
-    public function getBidByPostRequirementId($id) {
-        $this->db->where('post_requirement_id',$id);
-        return $this->db->get('tbl_bid')->result_array();
+    
+    public function getUserProductsByUserProductId( $intUserProductId ) {
+        $this->db->select( 'tup.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_products tup' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tup.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tu.user_type_id' );
+        $this->db->where( 'tup.id', $intUserProductId );
+        return $this->db->get()->row_array();
     }
-    public function getBidByNotView() {
-        $this->db->where('is_view',0);
-        return $this->db->get('tbl_bid')->result_array();
-    }
+    
     
     public function insert($data){
         $this->db->insert('tbl_users_products', $data);
         $last_id = $this->db->insert_id();
         return $last_id;
     }
-    public function update($updateData){
-        $this->db->where('id',$updateData['id']);
-        $this->db->update('tbl_users_products',$updateData);
-        if($this->db->affected_rows()){
-            return true;
-        }else{
-            return false;
-        }
+    public function update( $updateData ){
+        $this->db->where( 'id',$updateData['id'] );
+        $this->db->update( 'tbl_users_products', $updateData );
+        return true;
     }
-    public function updateIsView(){
-        $updateData = array('is_view' => 1);
-        $this->db->update('tbl_bid',$updateData);
-        if($this->db->affected_rows()){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public function delete($id) {
-        $this->db->where('id',$id);
+    
+    public function delete( $intId ) {
+        $this->db->where( 'id', $intId );
         $this->db->delete('tbl_users_products'); 
         if($this->db->affected_rows()){
             return true;

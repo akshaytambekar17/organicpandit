@@ -44,7 +44,9 @@ function getPostNotifications(){
 }
 
 function getQuantities(){
-    $data = array( 1 => '500kg to 1 ton',
+    $data = array( 
+                   0 => 'None',
+                   1 => '500kg to 1 ton',
                    2 => '1 ton to 3 ton',
                    3 => '3 ton to 5 ton',
                    4 => '5 ton to 10 ton',
@@ -308,4 +310,15 @@ function paymentGatewayResponseUrl() {
     $arrUrl['furl'] = base_url() . 'payment-response';
     
     return $arrUrl;
+}
+
+function boolTemporaryRemove() {
+    return true;
+}
+
+function getUserTypes() {
+    /**
+     * It mostly used in model. If adding or removing user type be handle carefully it will impact to other areas 
+     **/
+    return [ FARMER, FPO, TRADER, PROCESSOR, BUYER ];
 }

@@ -392,12 +392,12 @@ $config = array(
 		        array(
 			        'field' => 'delivery_type_id',
 			        'label' => 'Delivery Type',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'is_logistics',
 			        'label' => 'Logistics Required',
-			        'rules' => 'required'
+			        'rules' => 'trim'
 		        ),
 		        array(
 			        'field' => 'other_details',
@@ -476,7 +476,88 @@ $config = array(
 		        'label' => 'Payment Method',
 		        'rules' => 'required'
 	        )
-        )
+        ),
+    
+        'user-product-form' => array(
+                array(
+                        'field' => 'product_id',
+                        'label' => 'Product',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'description',
+                        'label' => 'Description',
+                        'rules' => 'required|alpha_numeric_spaces'
+                ),
+                array(
+                        'field' => 'from_date',
+                        'label' => 'From Date',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'to_date',
+                        'label' => 'To Date',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'quantity_id',
+                        'label' => 'Quantity',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'quality',
+                        'label' => 'Quality',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'price',
+                        'label' => 'Price',
+                        'rules' => 'required|numeric'
+                )
+        ),
+    
+        'user-crop-form' => array(
+                array(
+                        'field' => 'crop_id',
+                        'label' => 'Crop',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'area',
+                        'label' => 'Area',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'date_sown',
+                        'label' => 'Date of Sown',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'date_harvest',
+                        'label' => 'Date of Harvest',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'date_inspection',
+                        'label' => 'Date of Inspection',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'inspector_name',
+                        'label' => 'Inspector Name',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'crop_conditon',
+                        'label' => 'Crop Condition',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'other_details',
+                        'label' => 'Other Details',
+                        'rules' => 'required'
+                )
+        ),
 
 
 );

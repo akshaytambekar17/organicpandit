@@ -66,8 +66,8 @@ class UserController extends MY_Controller {
             } else {
                 $fullname_title = 'Fullname';
             }
-            $this->form_validation->set_rules('partner_type_id', 'Partner Type', 'trim|required');
-            $this->form_validation->set_rules('partner_user_id', 'Partner Name', 'trim|required');
+            //$this->form_validation->set_rules('partner_type_id', 'Partner Type', 'trim|required');
+            //$this->form_validation->set_rules('partner_user_id', 'Partner Name', 'trim|required');
             $this->form_validation->set_rules('fullname', $fullname_title, 'trim|required');
             $this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[tbl_users.username]');
             $this->form_validation->set_message('is_unique', 'The Username already exists.');

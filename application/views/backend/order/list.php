@@ -33,11 +33,11 @@
                   <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover datatable-list" >
+                            <table class="table table-striped table-bordered table-hover js-datatable-list" >
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <?php if( $arrUserData['username'] == ADMINUSERNAME ) {  ?>
+                                        <?php if( $arrUserData['username'] == 'adminmaster' ) {  ?>
                                             <th>User Type</th>
                                         <?php } ?>
                                         <th>Order number</th>

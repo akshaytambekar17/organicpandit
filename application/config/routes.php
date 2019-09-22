@@ -139,7 +139,7 @@ $route['admin/product-category/update'] = "backend/ProductCategoryController/upd
 $route['admin/product-category/delete'] = "backend/ProductCategoryController/delete";
 
 
-$route['admin/user  -type'] = "backend/UserTypeController";
+$route['admin/user-type'] = "backend/UserTypeController";
 $route['admin/user-type/add'] = "backend/UserTypeController/add";
 $route['admin/user-type/update'] = "backend/UserTypeController/update";
 $route['admin/user-type/delete'] = "backend/UserTypeController/delete";
@@ -147,10 +147,31 @@ $route['admin/user-type/delete'] = "backend/UserTypeController/delete";
 $route['admin/bid'] = "backend/BidController";
 $route['admin/bid/delete'] = "backend/BidController/delete";
 
-$route['admin/user'] = "backend/UserController";
+$route['admin/user/user-list'] = "backend/UserController/userList";
 $route['admin/user/delete'] = "backend/UserController/delete";
 $route['admin/user/view'] = "backend/UserController/view";
 $route['admin/user/update-profile'] = "backend/UserController/updateProfile";
+
+$route['admin/user/user-products'] = "backend/UserProductsController";
+$route['admin/user/user-products/add'] = "backend/UserProductsController/add";
+$route['admin/user/user-products/update'] = "backend/UserProductsController/update";
+$route['admin/user/user-products/delete'] = "backend/UserProductsController/delete";
+
+$route['admin/user/user-crops'] = "backend/UserCropsController";
+$route['admin/user/user-crops/add'] = "backend/UserCropsController/add";
+$route['admin/user/user-crops/update'] = "backend/UserCropsController/update";
+$route['admin/user/user-crops/delete'] = "backend/UserCropsController/delete";
+
+$route['admin/user/user-soils'] = "backend/UserSoilsController";
+$route['admin/user/user-soils/add'] = "backend/UserSoilsController/add";
+$route['admin/user/user-soils/update'] = "backend/UserSoilsController/update";
+$route['admin/user/user-soils/delete'] = "backend/UserSoilsController/delete";
+
+$route['admin/user/user-micro-nutrients'] = "backend/UserMicroNutrientsController";
+$route['admin/user/user-micro-nutrients/add'] = "backend/UserMicroNutrientsController/add";
+$route['admin/user/user-micro-nutrients/update'] = "backend/UserMicroNutrientsController/update";
+$route['admin/user/user-micro-nutrients/delete'] = "backend/UserMicroNutrientsController/delete";
+
 
 $route['admin/certification-agency'] = "backend/CertificationAgencyController";
 $route['admin/certification-agency/delete'] = "backend/CertificationAgencyController/delete";

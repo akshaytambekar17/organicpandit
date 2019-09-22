@@ -32,35 +32,37 @@
                         <div class="box-header"></div>
                         <form  method="post" enctype="multipart/form-data" name="registration-form" id="registration-form" >
                             <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="box box-info">
-                                            <div class="box-header with-border">
-                                                <h3 class="box-title">Partner With Us</h3>
-                                            </div>
-                                            <div class="box-body">
-                                                <div class="form-group col-md-6">
-                                                    <label class="control-label" for="partner_type_id">Partner Type</label>
-                                                    <select class="form-control select2" name="partner_type_id"  onchange="getPartnerUserDetails(this)">
-                                                        <option selected="selected" disabled="disabled" >Select Partner Type</option>
-                                                        <?php foreach( $userTypeList  as $value ) { ?>
-                                                                <option value="<?= $value['id'] ?>" <?= set_select('partner_type_id', $value['id'] ); ?> ><?= $value['name'] ?></option>
-                                                        <?php } ?>
-	                                                    <option value="0" <?= set_select('partner_type_id', 0 ); ?> >NONE</option>
-                                                    </select>
-                                                    <span class="has-error"><?php echo form_error('partner_type_id'); ?></span>
+                                <?php if( false == boolTemporaryRemove() ) { ?>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Partner With Us</h3>
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <label class="control-label" for="partner_user_id">Partner Name</label>
-                                                    <select class="form-control select2" name="partner_user_id" id="js-partner-user-id">
-                                                        <option selected="selected" disabled="disabled" >Select Partner Name</option>
-                                                    </select>
-                                                    <span class="has-error"><?php echo form_error('partner_user_id'); ?></span>
+                                                <div class="box-body">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="control-label" for="partner_type_id">Partner Type</label>
+                                                        <select class="form-control select2" name="partner_type_id"  onchange="getPartnerUserDetails(this)">
+                                                            <option selected="selected" disabled="disabled" >Select Partner Type</option>
+                                                            <?php foreach( $userTypeList  as $value ) { ?>
+                                                                    <option value="<?= $value['id'] ?>" <?= set_select('partner_type_id', $value['id'] ); ?> ><?= $value['name'] ?></option>
+                                                            <?php } ?>
+                                                                <option value="0" <?= set_select('partner_type_id', 0 ); ?> >NONE</option>
+                                                        </select>
+                                                        <span class="has-error"><?php echo form_error('partner_type_id'); ?></span>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="control-label" for="partner_user_id">Partner Name</label>
+                                                        <select class="form-control select2" name="partner_user_id" id="js-partner-user-id">
+                                                            <option selected="selected" disabled="disabled" >Select Partner Name</option>
+                                                        </select>
+                                                        <span class="has-error"><?php echo form_error('partner_user_id'); ?></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                                 <?php echo ViewRegistration($user_type_details); ?>
                                 <?php if($user_type_details['id'] != 1 && $user_type_details['id'] != 2){ ?>
                                     <div class="row">

@@ -35,7 +35,7 @@
                             <span class="has-error"><?php echo form_error('mobile_no'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="landline_no">Landline number</label>
+                            <label class="control-label" for="landline_no">Landline number</label>
                             <input type="text" name="landline_no"  class="form-control" id="landline_no" placeholder="Landline number" value="<?= !empty($user_details['landline_no'])?$user_details['landline_no']:set_value('landline_no') ?>">
                             <span class="has-error"><?php echo form_error('landline_no'); ?></span>
                         </div>
@@ -90,19 +90,19 @@
                         </div>
                         
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="gst_number">GST Number</label>
+                            <label class="control-label" for="gst_number">GST Number</label>
                             <input type="text" name="gst_number" class="form-control" id="gst_number" placeholder="GST Number" value="<?= !empty($user_details['gst_number'])?$user_details['gst_number']:set_value('gst_number') ?>">
                             <span class="has-error"><?php echo form_error('gst_number'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="aadhar_number">Aadhar Card Number</label>
+                            <label class="control-label" for="aadhar_number">Aadhar Card Number</label>
                             <input type="text" name="aadhar_number" class="form-control" id="aadhar_number" placeholder="Aadhar Card Number" value="<?= !empty($user_details['aadhar_number'])?$user_details['aadhar_number']:set_value('aadhar_number') ?>">
                             <span class="has-error"><?php echo form_error('aadhar_number'); ?></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="story">Story</label>
+                            <label class="control-label" for="story">Story</label>
                             <input type="text" name="story"  class="form-control" id="story" placeholder="Story" value="<?= !empty($user_details['story'])?$user_details['story']:set_value('story') ?>">
                             <span class="has-error"><?php echo form_error('story'); ?></span>
                         </div>
@@ -129,7 +129,7 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="certification_id">Select Certification</label>
-                            <select class="form-control select2" name="certification_id" id="certification_id">
+                            <select class="form-control select2" name="certification_id[]" id="certification_id">
                                 <option disabled="disabled" selected="selected">Select Certification</option>
                                 <?php foreach (getCertifications() as $key => $value) { 
                                         if(!empty($user_details['certification_id'])){
@@ -138,10 +138,13 @@
                                             $selected = '';
                                         }
                                 ?>
-                                    <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?> <?= $selected?>><?= $value ?></option>
+                                    <option value="<?= $key ?>" <?= set_select('certification_id[]', $key); ?> <?= $selected?>><?= $value ?></option>
                                 <?php } ?>
                             </select>
-                            <span class="has-error"><?php echo form_error('certification_id'); ?></span>
+                            <?php if( true == isVal( $strUserCertificationName ) ){ ?>
+                                    <p><?= $strUserCertificationName; ?></p>
+                            <?php } ?>
+                            <span class="has-error"><?php echo form_error('certification_id[]'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Certification Number</label>

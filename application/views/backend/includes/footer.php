@@ -52,7 +52,7 @@
                 $(".alert").delay(5000).slideUp(200, function() {
                     $(this).alert('close');
                 });
-                $('.datatable-list').dataTable({
+                $('.js-datatable-list').dataTable({
                     "aaSorting": [[0, "desc"]],
                 });
                  $('.select2').select2();

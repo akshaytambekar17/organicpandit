@@ -37,7 +37,7 @@
                   <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover datatable-list" id="delete_list">
+                            <table class="table table-striped table-bordered table-hover js-datatable-list" id="delete_list">
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>

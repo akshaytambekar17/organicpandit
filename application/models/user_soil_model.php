@@ -18,17 +18,30 @@ class user_soil_model extends CI_Model {
         parent::__construct();
     }
     
-    public function getUsersSoil() {
-        $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_users_soil_details')->result_array();
+    public function getUserSoil() {
+        $this->db->select( 'tusd.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_soil_details tusd' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tusd.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tusd.user_type_id' );
+        $this->db->order_by( 'tusd.id', 'DESC' );
+        return $this->db->get()->result_array();
     }
-    public function getUserSoilByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
-        return $this->db->get('tbl_users_soil_details')->result_array();
+    public function getUserSoilByUserId( $intUserId ) {
+        $this->db->select( 'tusd.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_soil_details tusd' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tusd.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tusd.user_type_id' );
+        $this->db->where( 'tusd.user_id', $intUserId );
+        $this->db->order_by( 'tusd.id', 'DESC' );
+        return $this->db->get()->result_array();
     }
-    public function getUserSoilById($id) {
-        $this->db->where('id',$id);
-        return $this->db->get('tbl_users_soil_details')->row_array();
+    public function getUserSoilByUserSoilId( $intUserSoilId ) {
+        $this->db->select( 'tusd.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_soil_details tusd' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tusd.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tusd.user_type_id' );
+        $this->db->where( 'tusd.id', $intUserSoilId );
+        return $this->db->get()->row_array();
     }
     public function insert($data){
         $this->db->insert('tbl_users_soil_details', $data);

@@ -52,65 +52,63 @@
                                         <th>Partner User Type</th>
                                         <th>Partner Fullname</th>
                                         <th>Fullname</th>
-                                        <?php if( ADMINUSERNAME == $user_data['username'] ){ ?>
+                                        <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
                                             <th>User Type</th>
                                         <?php } ?>
                                         <th>Email Id</th>
                                         <th>Mobile number</th>
                                         <th>Verified</th>
-                                        <?php if( ADMINUSERNAME == $user_data['username'] || $user_data['user_type_id'] == 16 ){ ?>
+                                        <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] || $arrUserSessionDetails['user_type_id'] == 16 ){ ?>
                                                 <th>Action</th>
                                         <?php }?>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if (!empty($user_list)) {
-                                        foreach ($user_list as $key => $value) {
+                                    if( true == isArrVal( $arrUsersList ) ) {
+                                        foreach( $arrUsersList as $arrUserDetails ) {
                                             
                                 ?>
-                                            <tr class="gradeX" id="order-<?= $value['user_id'] ?>">
-                                                <td class="hidden"><?= $value['user_id']; ?></td>
+                                            <tr class="gradeX" id="order-<?= $arrUserDetails['user_id'] ?>">
+                                                <td class="hidden"><?= $arrUserDetails['user_id']; ?></td>
                                                 <td>
                                                     <?php
-                                                        if( ADMINUSERNAME == $user_data['username'] ) {
-                                                            $partnerUserTypeDetails = $this->UserType->getUserTypeById( $value['partner_type_id'] );
-                                                            echo $partnerUserTypeDetails['name'];
+                                                        if( ADMINUSERNAME == $arrUserSessionDetails['username'] ) {
+                                                            echo ( true == isVal( $arrUserDetails['partner_type_name'] ) ) ? $arrUserDetails['partner_type_name'] : '--';
                                                         }else {
-                                                            echo $value['user_type_name'];
+                                                            echo $arrUserDetails['user_type_name'];
                                                         }
                                                     ?>
                                                 </td>
                                                 <td>
                                                     <?php
-                                                        if( ADMINUSERNAME == $user_data['username'] ) {
-                                                            $partnerUserDetails = $this->User->getUserById( $value['partner_user_id'] );
-                                                            echo $partnerUserDetails['fullname'];
+                                                        if( ADMINUSERNAME == $arrUserSessionDetails['username'] ) {
+                                                            echo ( true == isVal( $arrUserDetails['partner_fullname'] ) ) ? $arrUserDetails['partner_fullname'] : '--';
                                                         }else {
-                                                            echo $value['fullname'];
+                                                            echo $arrUserDetails['fullname'];
                                                         }
                                                     ?>
                                                 </td>
-                                                <td><?= $value['fullname']?></td>
-                                                <?php if( ADMINUSERNAME == $user_data['username'] ){ ?>
-                                                    <td><?= $value['user_type_name'];?></td>
+                                                <td><?= $arrUserDetails['fullname']?></td>
+                                                <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
+                                                    <td><?= $arrUserDetails['user_type_name'];?></td>
                                                 <?php } ?>
-                                                <td><?= $value['email_id'];?></td>
-                                                <td><?= $value['mobile_no'];?></td>
-                                                <td><?= ($value['is_verified'] == 2)?'Verified':'Not Verified';?></td>
-                                                <?php if(!empty($user_data['user_type_id']) && $user_data['user_type_id'] == 16 ){ ?>
+                                                <td><?= $arrUserDetails['email_id'];?></td>
+                                                <td><?= $arrUserDetails['mobile_no'];?></td>
+                                                <td><?= ($arrUserDetails['is_verified'] == 2)?'Verified':'Not Verified';?></td>
+                                                <?php if(!empty($arrUserSessionDetails['user_type_id']) && $arrUserSessionDetails['user_type_id'] == 16 ){ ?>
                                                     <td style="text-align: center">
-                                                        <?php if($user_data['user_id'] == $value['agency_id']){ ?>
-                                                            <a href="<?= site_url('admin/user/view?id='.$value['user_id'])?>" class="view-product" data-id="<?= $value['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i> </a>
+                                                        <?php if($arrUserSessionDetails['user_id'] == $arrUserDetails['agency_id']){ ?>
+                                                            <a href="<?= site_url('admin/user/view?id='.$arrUserDetails['user_id'])?>" class="view-product" data-id="<?= $arrUserDetails['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i> </a>
                                                         <?php } ?>        
                                                     </td>
                                                 <?php }
-                                                    if($user_data['username'] == ADMINUSERNAME){ 
+                                                    if($arrUserSessionDetails['username'] == ADMINUSERNAME){ 
                                                 ?>
                                                         <td>
-                                                            <a href="<?= site_url('admin/user/update-profile?id='.$value['user_id'].'&user_type_id='.$value['user_type_id'])?>" class="view-product" data-id="<?= $value['user_id'] ?>" name="view-product"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                                            <a href="<?= site_url('admin/user/view?id='.$value['user_id'])?>" class="view-product" data-id="<?= $value['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="javascript:void(0)" class="delete-user" data-user_id="<?= $value['user_id'] ?>" name="delete-user" onclick="userDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a><br>
+                                                            <a href="<?= site_url('admin/user/update-profile?id='.$arrUserDetails['user_id'].'&user_type_id='.$arrUserDetails['user_type_id'])?>" class="view-product" data-id="<?= $arrUserDetails['user_id'] ?>" name="view-product"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                                            <a href="<?= site_url('admin/user/view?id='.$arrUserDetails['user_id'])?>" class="view-product" data-id="<?= $arrUserDetails['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                            <a href="javascript:void(0)" class="delete-user" data-user_id="<?= $arrUserDetails['user_id'] ?>" name="delete-user" onclick="userDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a><br>
                                                         </td>
                                                 <?php } ?>    
                                             </tr>

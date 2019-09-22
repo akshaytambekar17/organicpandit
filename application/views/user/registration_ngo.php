@@ -42,17 +42,17 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="landline_no">Landline number</label>
+                            <label class="control-label" for="landline_no">Landline number</label>
                             <input type="text" name="landline_no"  class="form-control" id="landline_no" placeholder="Landline number" value="<?= set_value('landline_no') ?>">
                             <span class="has-error"><?php echo form_error('landline_no'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="gst_number">GST Number</label>
+                            <label class="control-label" for="gst_number">GST Number</label>
                             <input type="text" name="gst_number" class="form-control" id="gst_number" placeholder="GST Number" value="<?= set_value('gst_number') ?>">
                             <span class="has-error"><?php echo form_error('gst_number'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="aadhar_number">Aadhar Card Number</label>
+                            <label class="control-label" for="aadhar_number">Aadhar Card Number</label>
                             <input type="text" name="aadhar_number" class="form-control" id="aadhar_number" placeholder="Aadhar Card Number" value="<?= set_value('aadhar_number') ?>">
                             <span class="has-error"><?php echo form_error('aadhar_number'); ?></span>
                         </div>
@@ -102,7 +102,7 @@
                             <span class="has-error"><?php echo form_error('website'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="story">Story</label>
+                            <label class="control-label" for="story">Story</label>
                             <input type="text" name="story"  class="form-control" id="story" placeholder="Story" value="<?= set_value('story') ?>">
                             <span class="has-error"><?php echo form_error('story'); ?></span>
                         </div>
@@ -114,7 +114,7 @@
                             <span class="has-error"><?php echo form_error('profile_image'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="company_image">Choose Company Image</label>
+                            <label class="control-label" for="company_image">Choose Company Image</label>
                             <input type="file" name="company_image" class="form-control" id="company_image">
                             <span class="has-error"><?php echo form_error('company_image'); ?></span>
                         </div>

@@ -18,17 +18,30 @@ class user_micro_nutrient_model extends CI_Model {
         parent::__construct();
     }
     
-    public function getUsersMicroNutrient() {
-        $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_users_micro_nutrient')->result_array();
+    public function getUserMicroNutrients() {
+        $this->db->select( 'tumn.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_micro_nutrient tumn' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tumn.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tumn.user_type_id' );
+        $this->db->order_by( 'tumn.id', 'DESC');
+        return $this->db->get()->result_array();
     }
-    public function getUserMicroNutrientByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
-        return $this->db->get('tbl_users_micro_nutrient')->result_array();
+    public function getUserMicroNutrientByUserId( $intUserId ) {
+        $this->db->select( 'tumn.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_micro_nutrient tumn' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tumn.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tumn.user_type_id' );
+        $this->db->where( 'tumn.user_id', $intUserId );
+        $this->db->order_by( 'tumn.id', 'DESC' );
+        return $this->db->get()->result_array();
     }
-    public function getUserMicroNutrientById($id) {
-        $this->db->where('id',$id);
-        return $this->db->get('tbl_users_micro_nutrient')->row_array();
+    public function getUserMicroNutrientByUserMicroNutrientId( $UserMicroNutrientId ) {
+        $this->db->select( 'tumn.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_micro_nutrient tumn' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tumn.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tumn.user_type_id' );
+        $this->db->where( 'tumn.id', $UserMicroNutrientId );
+        return $this->db->get()->row_array();
     }
     public function insert($data){
         $this->db->insert('tbl_users_micro_nutrient', $data);

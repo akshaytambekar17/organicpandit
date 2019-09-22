@@ -23,15 +23,15 @@ class user_certifications_model extends CI_Model {
         return $this->db->get('tbl_user_certifications')->result_array();
     }
 
-    public function getUserCertificationByUserId($user_id) {
-        $this->db->where('user_id',$user_id);
-        return $this->db->get('tbl_user_certifications')->row_array();
+    public function getUserCertificationByUserId( $intUserId ) {
+        $this->db->where( 'user_id', $intUserId );
+        return $this->db->get('tbl_user_certifications')->result_array();
     }
 
-	public function getUserCertificationByUserCertificationId( $intUsersCertificationId ) {
-		$this->db->where('users_certification_id',$intUsersCertificationId);
-		return $this->db->get('tbl_user_certifications')->row_array();
-	}
+    public function getUserCertificationByUserCertificationId( $intUsersCertificationId ) {
+            $this->db->where('users_certification_id',$intUsersCertificationId);
+            return $this->db->get('tbl_user_certifications')->row_array();
+    }
 
     public function getUserCertificationByCertificationId( $intCertificationId ) {
         $this->db->where('certification_id',$intCertificationId);
@@ -44,14 +44,14 @@ class user_certifications_model extends CI_Model {
         return $last_id;
     }
 
-	public function insertBatch( $arrmixBatchData ){
-		$this->db->insert_batch('tbl_user_certifications', $arrmixBatchData);
-		if($this->db->affected_rows()){
-			return true;
-		}else{
-			return false;
-		}
-	}
+    public function insertBatch( $arrmixBatchData ){
+            $this->db->insert_batch('tbl_user_certifications', $arrmixBatchData);
+            if($this->db->affected_rows()){
+                    return true;
+            }else{
+                    return false;
+            }
+    }
 
     public function update($updateData){
         $this->db->where('users_certification_id',$updateData['users_certification_id']);
@@ -73,9 +73,19 @@ class user_certifications_model extends CI_Model {
         }
     }
 
-    public function delete($id) {
-        $this->db->where('id',$id);
-        $this->db->delete('tbl_user_certifications');
+    public function delete( $intUserCeritificationId ) {
+        $this->db->where( 'user_ceritification_id', $intUserCeritificationId );
+        $this->db->delete( 'tbl_user_certifications' );
+        if($this->db->affected_rows()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function deleteByUserId( $intUserId ) {
+        $this->db->where( 'user_id', $intUserId );
+        $this->db->delete( 'tbl_user_certifications' );
         if($this->db->affected_rows()){
             return true;
         }else{

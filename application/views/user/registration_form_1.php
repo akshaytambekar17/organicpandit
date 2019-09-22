@@ -76,7 +76,7 @@
                                                     <span class="has-error"><?php echo form_error('mobile_no'); ?></span>
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label class="control-label label-required" for="landline_no">Landline number</label>
+                                                    <label class="control-label" for="landline_no">Landline number</label>
                                                     <input type="text" name="landline_no"  class="form-control" id="landline_no" placeholder="Landline number" value="<?= set_value('landline_no')?>">
                                                     <span class="has-error"><?php echo form_error('landline_no'); ?></span>
                                                 </div>
@@ -136,26 +136,26 @@
                                                     <span class="has-error"><?php echo form_error('is_test_report'); ?></span>
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label class="control-label label-required" for="story">Story</label>
+                                                    <label class="control-label" for="story">Story</label>
                                                     <input type="text" name="story"  class="form-control" id="story" placeholder="Story" value="<?= set_value('story')?>">
                                                     <span class="has-error"><?php echo form_error('story'); ?></span>
                                                 </div>
                                                 <?php if($user_type_details['id'] == 2 || $user_type_details['id'] == 3 || $user_type_details['id'] == 4 || $user_type_details['id'] == 5){ ?>
                                                     <div class="form-group col-md-4">
-                                                        <label class="control-label label-required" for="gst_number">GST Number</label>
+                                                        <label class="control-label" for="gst_number">GST Number</label>
                                                         <input type="text" name="gst_number" class="form-control" id="gst_number" placeholder="GST Number" value="<?= set_value('gst_number')?>">
                                                         <span class="has-error"><?php echo form_error('gst_number'); ?></span>
                                                     </div>
                                                 <?php }?>
                                                 <?php if($user_type_details['id'] == 1){ ?>
                                                     <div class="form-group col-md-4">
-                                                        <label class="control-label label-required" for="pancard_number">Pan Card Number</label>
+                                                        <label class="control-label" for="pancard_number">Pan Card Number</label>
                                                         <input type="text" name="pancard_number" class="form-control" id="pancard_number" placeholder="Pan Card Number" value="<?= set_value('pancard_number')?>">
                                                         <span class="has-error"><?php echo form_error('pancard_number'); ?></span>
                                                     </div>
                                                 <?php }?>
                                                 <div class="form-group col-md-4">
-                                                    <label class="control-label label-required" for="aadhar_number">Aadhar Card Number</label>
+                                                    <label class="control-label" for="aadhar_number">Aadhar Card Number</label>
                                                     <input type="text" name="aadhar_number" class="form-control" id="aadhar_number" placeholder="Aadhar Card Number" value="<?= set_value('aadhar_number')?>">
                                                     <span class="has-error"><?php echo form_error('aadhar_number'); ?></span>
                                                 </div>
@@ -166,7 +166,7 @@
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label class="control-label label-required" for="certification_id">Select Certification</label>
-                                                    <select class="form-control select2" name="certification_id" id="certification_id">
+                                                    <select class="form-control select2" name="certification_id[]" id="certification_id">
                                                         <option disabled="disabled" selected="selected">Select Certification</option>
                                                         <?php foreach(getCertifications() as $key=>$value){ ?>
                                                             <option value="<?= $key?>" <?= set_select('certification_id',$key);?>><?= $value?></option>

@@ -390,9 +390,9 @@
                         </a>
                     </li>
 	                <li>
-		                <a href="<?= base_url()?>orders">
-			                <i class="fa fa-cart-plus"></i> <span>Orders</span>
-						</a>
+                            <a href="<?= base_url() ?>orders">
+                                <i class="fa fa-cart-plus"></i> <span>Orders</span>
+                            </a>
 	                </li>
 	                <li>
 		                <a href="<?= base_url()?>transactions">
@@ -404,13 +404,58 @@
 			                <i class="fa fa-info-circle" aria-hidden="true"></i> <span>Buyer Enquires</span>
 		                </a>
 	                </li>
-	                <li>
-		                <a href="<?= base_url()?>admin/user">
-			                <i class="ion ion-person-add"></i> <span>User Registration</span>
-			                <span class="pull-right-container">
-                                <small class="label pull-right bg-green"><?= count(getUserCount())?></small>
-                            </span>
-		                </a>
+	                <li class="treeview <?= ( 'user' == $this->uri->segment(2) ) ? 'active' : '' ?> " >
+                            <a href="javascript:void(0)">
+                                <i class="ion ion-person-add"></i> <span>Users</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?= ( 'user-list' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/user-list">
+                                        <i class="fa fa-circle-o"></i> <span>Registrations</span>
+                                        <span class="pull-right-container ">
+                                            <small class="label pull-right bg-green"><?= count(getUserCount()) ?></small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'user-products' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/user-products">
+                                        <i class="fa fa-circle-o"></i> <span>User Products</span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'user-crops' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/user-crops">
+                                        <i class="fa fa-circle-o"></i> <span>Crop Inspections</span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'user-soils' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/user-soils">
+                                        <i class="fa fa-circle-o"></i> <span>Soils</span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'user-micro-nutrients' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/user-micro-nutrients">
+                                        <i class="fa fa-circle-o"></i> <span>Micro Nutrient</span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'product' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/product">
+                                        <i class="fa fa-circle-o"></i> <span>Input and Organic Manure</span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'product' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/product">
+                                        <i class="fa fa-circle-o"></i> <span>E-Commerce Organic Input</span>
+                                    </a>
+                                </li>
+                                <li class="<?= ( 'product' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                    <a href="<?= base_url() ?>admin/user/product">
+                                        <i class="fa fa-circle-o"></i> <span>E-Commerce Shops</span>
+                                    </a>
+                                </li>
+                            </ul>
 	                </li>
                     <?php if( $userSession['username'] == ADMINUSERNAME ) { ?>
                         <li>

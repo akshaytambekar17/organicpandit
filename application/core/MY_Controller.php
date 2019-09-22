@@ -1,13 +1,12 @@
 <?php
 include_once('easebuzz/easebuzz_payment_gateway.php');
-
 class MY_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library(array('form_validation'));
-	    $this->load->helper(array('url', 'language','form'));
+        $this->load->helper(array('url', 'language','form'));
         $this->load->model('login_model','Login');
         $this->load->model('contact_us_model','ContactUs');
         $this->load->model('crop_model','Crop');
@@ -23,7 +22,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_crop_model','UserCrop');
         $this->load->model('user_input_organic_model','UserInputOrganic');
         $this->load->model('user_input_organic_ecommerce_model','UserInputOrganicEcommerce');
-		$this->load->model('user_certifications_model','UserCertifications');
+        $this->load->model('user_certifications_model','UserCertifications');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
         $this->load->model('notifications_model','Notifications');
@@ -35,8 +34,10 @@ class MY_Controller extends CI_Controller {
         $this->load->model('sell_products_model','SellProduct');
         $this->load->model('orders_model','Orders');
         $this->load->model('transaction_model','Transaction');
-	    $this->load->model('sell_products_images_model','SellProductImage');
-	    $this->load->model('send_enquiry_buyer_model','SendEnquiryBuyer');}
+        $this->load->model('sell_products_images_model','SellProductImage');
+        $this->load->model('send_enquiry_buyer_model','SendEnquiryBuyer');
+        
+    }
 
     public function backendLayout($data) {
         $data['structure'] = 'backend';

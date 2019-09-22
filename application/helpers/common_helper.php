@@ -82,7 +82,7 @@ function UserSession() {
 }
 
 function isArrVal( $arrData ) {
-    if ( isset( $arrData ) && !empty($arrData) && count($arrData) > 0) {
+    if ( isset( $arrData ) && !empty( $arrData ) && count( $arrData ) > 0) {
         return true;
     } else {
         return false;
@@ -95,4 +95,25 @@ function isVal( $strData ) {
     } else {
         return false;
     }
+}
+
+function isStrVal( $strData ) {
+    if ( true == isset( $strData ) && !empty( $strData ) && is_string( $strData ) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isIdVal( $intData ) {
+    if ( true == isset( $intData ) && !empty( $intData ) && is_numeric( $intData ) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function printLastSql() {
+    $ci = & get_instance();
+    printDie( $ci->db->last_query() );
 }

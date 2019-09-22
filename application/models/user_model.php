@@ -11,6 +11,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  *
  * @author comc
  */
+
 class user_model extends CI_Model {
 
     //put your code here
@@ -19,9 +20,26 @@ class user_model extends CI_Model {
     }
     
     public function getUsers() {
-        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->select( 'u.*,'
+                            . 'ut.name as user_type_name,'
+                            . '( select name from tbl_user_type where id = u.partner_type_id ) as partner_type_name,'
+                            . '( select fullname from tbl_users where user_id = u.partner_user_id ) as partner_fullname '  
+                        );
         $this->db->from('tbl_users u');
         $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->order_by('u.user_id','DESC');
+        return $this->db->get()->result_array();
+    }
+    
+    public function getUsersByUserType() {
+        $this->db->select( 'u.*,'
+                            . 'ut.name as user_type_name,'
+                            . '( select name from tbl_user_type where id = u.partner_type_id ) as partner_type_name,'
+                            . '( select fullname from tbl_users where user_id = u.partner_user_id ) as partner_fullname '  
+                        );
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where_in('u.user_type_id', getUserTypes());
         $this->db->order_by('u.user_id','DESC');
         return $this->db->get()->result_array();
     }

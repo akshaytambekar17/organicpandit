@@ -15,7 +15,7 @@
 |
 */
 // local url
-$config['base_url']	= 'http://localhost/organicpandit/';
+$config['base_url']	= 'http://localhost/organic-pandit/';
 
 // server url
 // $config['base_url']	= 'http://organicpandit.com/';
