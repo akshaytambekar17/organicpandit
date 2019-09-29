@@ -44,7 +44,7 @@
                 <p>&copy; 2018 Organic Pandit </p>
             </div>
         </footer>
-        <div class="modal fade" id="js-cart-modal" role="dialog">
+        <div class="modal fade add-to-cart-modal" id="js-cart-modal" role="dialog">
 	        <div class="modal-dialog">
 		        <!-- Modal content-->
 		        <div class="modal-content">
@@ -57,38 +57,100 @@
                                         <?php $arrmixCartList = fetchCartDetails(); 
                                             if( true == isArrVal( $arrmixCartList['cart_list'] ) ) {
                                         ?>
+                                                <h4>Buy Product</h4>
                                                 <table class="table-bordered table-responsive cart-table">
                                                     <thead>
                                                         <th>Product Name</th>
                                                         <th>Price</th>
+                                                        <th>Quantity</th>
                                                         <th>Action</th>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach( $arrmixCartList['cart_list'] as $arrCartDetails ) { ?>  
-                                                            <tr>
-                                                                <td><?= $arrCartDetails['name'] ?></td>
-                                                                <td><?= $arrCartDetails['price'] ?></td>
-                                                                <td><a href="javascript:void(0)" class="btn btn-danger remove-cart-product" data-rowid="<?= $arrCartDetails['rowid'] ?>" data-product_name="<?= $arrCartDetails['name'] ?>"  data-toggle="tooltip" title="Remove Product" onclick="removeCartProduct(this)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                                                            </tr>        
-                                                        <?php } ?>
-                                                        <tr>
-                                                            <td><b>Total</b></td>
-                                                            <td colspan="2"><?= $arrmixCartList['total'] ?></td>
-                                                        </tr>
+                                                        <?php foreach( $arrmixCartList['cart_list'] as $arrCartDetails ) { 
+                                                                if( CART_ORDER_TYPE_1 == $arrCartDetails['options']['cart_order_type'] ) {
+                                                        ?>  
+                                                                    <tr>
+                                                                        <td><?= $arrCartDetails['name'] ?></td>
+                                                                        <td><?= $arrCartDetails['price'] ?></td>
+                                                                        <td><?= $arrCartDetails['qty'] ?></td>
+                                                                        <td><a href="javascript:void(0)" class="btn btn-danger remove-cart-product" data-rowid="<?= $arrCartDetails['rowid'] ?>" data-product_name="<?= $arrCartDetails['name'] ?>"  data-toggle="tooltip" title="Remove Product" onclick="removeCartProduct(this)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                                                    </tr>        
+                                                        <?php } } ?>
                                                     </tbody>
-                                                </table>  
-                                               
-                                                
+                                                </table>
+                                                <br>
+                                                <h4>Organic Input-Ecommerce</h4>
+                                                <table class="table-bordered table-responsive cart-table">
+                                                    <thead>
+                                                        <th>Category</th>
+                                                        <th>Sub Category</th>
+                                                        <th>Brand</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Action</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php 
+                                                            $arrEcommerceCategory = getEcommerceCategory();
+                                                            $arrEcommerceSubCategory = getEcommerceSubCategory();
+                                                            foreach( $arrmixCartList['cart_list'] as $arrCartDetails ) { 
+                                                                if( CART_ORDER_TYPE_2 == $arrCartDetails['options']['cart_order_type'] ) {
+                                                        ?>  
+                                                                    <tr>
+                                                                        <td><?= $arrEcommerceCategory[$arrCartDetails['options']['category_id']] ?></td>
+                                                                        <td><?= $arrEcommerceCategory[$arrCartDetails['options']['sub_category_id']] ?></td>
+                                                                        <td><?= $arrCartDetails['options']['brand'] ?></td>
+                                                                        <td><?= $arrCartDetails['price'] ?></td>
+                                                                        <td><?= $arrCartDetails['qty'] ?></td>
+                                                                        <td><a href="javascript:void(0)" class="btn btn-danger remove-cart-product" data-rowid="<?= $arrCartDetails['rowid'] ?>" data-product_name="<?= $arrCartDetails['name'] ?>"  data-toggle="tooltip" title="Remove Product" onclick="removeCartProduct(this)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                                                    </tr>        
+                                                        <?php } } ?>
+                                                    </tbody>
+                                                </table>
+                                                <br>
+                                                <h4>Shop Products</h4>
+                                                <table class="table-bordered table-responsive cart-table">
+                                                    <thead>
+                                                        <th>Product Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Action</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach( $arrmixCartList['cart_list'] as $arrCartDetails ) { 
+                                                                if( CART_ORDER_TYPE_3 == $arrCartDetails['options']['cart_order_type'] ) {
+                                                        ?>  
+                                                                    <tr>
+                                                                        <td><?= $arrCartDetails['name'] ?></td>
+                                                                        <td><?= $arrCartDetails['price'] ?></td>
+                                                                        <td><?= $arrCartDetails['qty'] ?></td>
+                                                                        <td><a href="javascript:void(0)" class="btn btn-danger remove-cart-product" data-rowid="<?= $arrCartDetails['rowid'] ?>" data-product_name="<?= $arrCartDetails['name'] ?>"  data-toggle="tooltip" title="Remove Product" onclick="removeCartProduct(this)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                                                    </tr>        
+                                                        <?php } } ?>
+                                                    </tbody>
+                                                </table>
+                                         
                                         <?php } else { ?>
                                                 <p> Your cart is empty</p>
                                         <?php } ?>
                                     </div>
 			        </div>
 			        <div class="modal-footer">
-                                    <?php if( true == isArrVal( $arrmixCartList['cart_list'] ) ) { ?>
-                                        <a href="<?= base_url()?>checkout-cart" class="btn btn-primary js-checkout-modal-button">Checkout</a>
-                                    <?php } ?>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <?php if( true == isArrVal( $arrmixCartList['cart_list'] ) ) { ?>
+                                                <div class="pull-left">
+                                                    <span>Total Cost : </span> <?= $arrmixCartList['total'] ?>
+                                                </div>    
+                                            <?php } ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <?php if( true == isArrVal( $arrmixCartList['cart_list'] ) ) { ?>
+                                                <a href="<?= base_url()?>checkout-cart" class="btn btn-primary js-checkout-modal-button">Checkout</a>
+                                            <?php } ?>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
 			        </div>
 		        </div>
 

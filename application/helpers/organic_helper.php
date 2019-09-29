@@ -227,11 +227,11 @@ function ViewRegistration($userTypeDetails){
         return $ci->load->view('user/registration_certification_agencies',$data);
     }
 }
-function ViewProfile($userTypeDetails,$user_details,$user_product_details){
+function ViewProfile($userTypeDetails,$user_details){
     $ci=& get_instance();
     $data['user_type_details'] = $userTypeDetails;
     $data['user_details'] = $user_details;
-    $data['user_product_details'] = $user_product_details;
+    
     if($userTypeDetails['id'] == 1){
         return $ci->load->view('backend/user/profile_farmer',$data);
     }else if($userTypeDetails['id'] == 2){
@@ -284,6 +284,7 @@ function fetchCartDetails() {
         $arrmixCartList['total'] = 0;
         $arrmixCartList['total_items'] = 0;
     }
+    
     return $arrmixCartList;
 
 }
@@ -296,11 +297,23 @@ function destroyCart() {
 function paymentGatewayEnviroment() {
     $strBaseUrl = base_url();
     
-    if( 'http://localhost/organicpandit/' == $strBaseUrl ) {
+    if( 'http://localhost/organic-pandit/' == $strBaseUrl ) {
         return ENV_TEST;
     } else {
         return ENV_PROD;
     }
+    
+}
+
+function getPaymentGatewayConfigDetails() {
+   if( ENV_TEST == paymentGatewayEnviroment() ) {
+       $arrGatewayDetails['key'] = TEST_MERCHANT_KEY;
+       $arrGatewayDetails['salt'] = TEST_SALT;
+   } else {
+       $arrGatewayDetails['key'] = MERCHANT_KEY;
+       $arrGatewayDetails['salt'] = SALT;
+   }
+   return $arrGatewayDetails;
     
 }
 
@@ -321,4 +334,11 @@ function getUserTypes() {
      * It mostly used in model. If adding or removing user type be handle carefully it will impact to other areas 
      **/
     return [ FARMER, FPO, TRADER, PROCESSOR, BUYER ];
+}
+
+function getUserTypesOtherThenProducts() {
+    /**
+     * It mostly used in model. If adding or removing user type be handle carefully it will impact to other areas 
+     **/
+    return [ FARMER, FPO ];
 }

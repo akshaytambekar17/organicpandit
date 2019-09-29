@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li><a href="<?= base_url()?>"><i class="fa fa-home"></i> Home</a></li>
                 <?php if($user_session['username'] == ADMINUSERNAME){
-                        $href = base_url().'admin/user';
+                        $href = base_url().'admin/user/user-list';
                         $title_middle = 'User';
                     }else{
                         $href = base_url().'admin/dashboard';
@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php echo ViewProfile($user_type_details,$user_details,$user_product_details); ?>
+                                <?php echo ViewProfile($user_type_details,$user_details); ?>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="box box-primary">

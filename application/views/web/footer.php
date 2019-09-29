@@ -43,6 +43,8 @@
         
         <script src="<?= base_url() ?>assets/web/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         
+        <script src="<?php echo base_url();?>assets/web/js/common.js"></script>
+        
         
         <script>
             $(function () {
@@ -64,23 +66,10 @@
                     startDate: new Date()
                 });
             });
-            function validateEmail(email) {
-                var email_format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                if(email_format.test(email)){
-                    return true;
-                }else{
-                    return false;
-                }
-            }
             
-            function validateQuantity( intQuantity ) {
-                var number_format = /^\d{6}$/;
-                if(number_format.test(intQuantity)){
-                    return true;
-                }else{
-                    return false;
-                }
-                
+            function getBaseUrl() {
+                var strBaseUrl = "<?php echo base_url()?>";
+                return strBaseUrl;
             }
         </script>
     </body>

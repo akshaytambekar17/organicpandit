@@ -32,7 +32,7 @@ class UserMicroNutrientsController extends MY_Controller {
     public function add() {
         
         $arrData['backend'] = true;
-        $arrData['arrUsersList'] = $this->User->getUsersByUserType();
+        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
         $arrData['strTitle'] = 'Add Micro Nutrient';
         $arrData['title'] = 'Add Micro Nutrient';
@@ -41,10 +41,7 @@ class UserMicroNutrientsController extends MY_Controller {
         $arrData['view'] = 'user-micro-nutrient/form-details';
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
-            printDie( $arrPost );
-            if( ADMINUSERNAME == $this->arrUserSession['username'] ) {
-                $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-            }
+            $this->form_validation->set_rules('user_id', 'User', 'trim|required');
             $this->form_validation->set_rules('element', 'Element', 'trim|required');
             $this->form_validation->set_rules('percentage', 'Percentage', 'trim|required');
             
@@ -63,7 +60,6 @@ class UserMicroNutrientsController extends MY_Controller {
                     $this->backendLayout( $arrData );
                 }
             } else {
-                printDie( validation_errors() );
                 $this->backendLayout( $arrData );
             }    
             
@@ -81,7 +77,7 @@ class UserMicroNutrientsController extends MY_Controller {
             redirect( 'admin/user/user-soils', 'refresh' );
         }
         $arrData['backend'] = true;
-        $arrData['arrUsersList'] = $this->User->getUsersByUserType();
+        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
         $arrData['arrUserMicroNutrientDetails'] = $arrUserMicroNutrientDetails;
         $arrData['strTitle'] = 'Update Micro Nutrient';
@@ -92,9 +88,8 @@ class UserMicroNutrientsController extends MY_Controller {
 
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
-            if( ADMINUSERNAME == $this->arrUserSession['username'] ) {
-                $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-            }
+            
+            $this->form_validation->set_rules('user_id', 'User', 'trim|required');
             $this->form_validation->set_rules('element', 'Element', 'trim|required');
             $this->form_validation->set_rules('percentage', 'Percentage', 'trim|required');
             
@@ -108,7 +103,7 @@ class UserMicroNutrientsController extends MY_Controller {
 
                 if( true == isVal( $boolResult ) ) {
                     $this->session->set_flashdata( 'Message', 'Micro Nutrient has been updated succesfully' );
-                    return redirect( 'admin/user/user-soils', 'refresh' );
+                    return redirect( 'admin/user/user-micro-nutrients', 'refresh' );
                 } else {
                     $this->session->set_flashdata( 'Error', 'Failed to update Micro Nutrient ' );
                     $this->backendLayout( $arrData );

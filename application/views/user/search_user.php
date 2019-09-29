@@ -39,7 +39,7 @@
                                     <div class="col-md-4">
                                         <label>Select City</label>
                                         <select class="form-control select2" name="city_id" id="city_id">
-                                            <option disabled="disabled" selected="selected">Select City</option>
+                                            <option selected="selected">Select City</option>
                                         </select>
                                         <input type="hidden" value="<?= isset( $city_id_hidden ) ? $city_id_hidden  : '' ?>" class="js-city-id-hidden" >
                                         <span class="has-error"><?php echo form_error('city_id'); ?></span>
@@ -155,9 +155,13 @@
                                                         <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  onclick="enquiryModal(this)" data-toggle="tooltip" title="View Enquiry" ><i class="fa fa-address-card" aria-hidden="true"></i></a>
                                                     </div>
                                                 <?php } ?>
-                                                <?php if( 7 == $user_type_details['id'] ){ ?>
+                                                <?php if( ORGANIC_INPUT == $user_type_details['id'] ){ ?>
                                                     <div class="col-md-3">
-                                                        <a href="<?= base_url()?>organic-input-ecommerce-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Buy Now"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
+                                                        <a href="<?= base_url()?>organic-input-ecommerce-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Shop Now"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                                    </div>
+                                                <?php } else if( SHOPS == $user_type_details['id'] ) { ?>
+                                                    <div class="col-md-3">
+                                                        <a href="<?= base_url()?>user-shop-ecommerces?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Shop Now"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
                                                     </div>
                                                 <?php } ?>
                                             </div>
@@ -328,7 +332,7 @@
                 dataType: "html",
                 success: function(result){
                     var html = $.parseJSON(result);
-                    $("#city_id").html('<option disabled selected> Select City</option>');
+                    $("#city_id").html('<option selected value=""> Select City</option>');
                     $("#city_id").append(html);
                 }
             });

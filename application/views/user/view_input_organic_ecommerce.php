@@ -59,7 +59,7 @@
                                 </div>-->
             </div>
             <div class="row">
-                <div class="col-md-12 mt-20 alert-message">
+                <div class="col-md-12 mt-20 alert-message js-alert-message">
                     <div class="box box-success">
                         <div class="box-header">
                             <h4>User : <?= $userDetails['fullname'] ?></h4>
@@ -110,7 +110,7 @@
                                                         <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="modalEcommerceDetails(this)" data-toggle="tooltip" title="View Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a href="javascript:void(0)" class="btn btn-success" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="paymentGateway(this)" data-toggle="tooltip" title="Add to cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                        <a href="javascript:void(0)" class="btn btn-success" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="showAddToCartModal(this)" data-toggle="tooltip" title="Add to cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                                                     </div>
                                                 </div>
                                                 <br><br>
@@ -170,6 +170,25 @@
                         <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
                         <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="js-add-cart-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add the Product to cart</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="js-modal-body-content-add-to-cart"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" onclick="organicInputEcommerceAddToCart(this)">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -281,8 +300,62 @@
             });
         }
 
-        function paymentGateway(ths) {
-            alert("In Progress");
+        function showAddToCartModal( ths ) {
+            var intOrganicInputEcommerceId = $(ths).data('id');
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "fetch-organic-input-ecommerce-add-to-cart",
+                data: { 'organic_input_ecommerce_id' : intOrganicInputEcommerceId },
+                dataType: "html",
+                success: function(result){
+                    $("#js-modal-body-content-add-to-cart").html(result);
+                    $('#js-add-cart-modal').modal('show');
+                }
+            });
+        }
+        
+        function organicInputEcommerceAddToCart( ths ) {
+            var intOrganicInputEcommerceId = $("#js-add-to-cart-organic-input-ecommerce-id").val();
+            var intPrice = $("#js-add-to-cart-price").val();
+            var intQuantity = $("#js-add-to-cart-quantity").val();
+            var strProductName = '';
+            var intCategoryId = $("#js-add-to-cart-category-id").val();
+            var intSubCategoryId = $("#js-add-to-cart-sub-category-id").val();
+            var strBrand= $("#js-add-to-cart-brand").val();
+            var cart_order_type = '<?= CART_ORDER_TYPE_2; ?>';
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "add-to-cart",
+                data: { 'organic_input_ecommerce_id' : intOrganicInputEcommerceId, 
+                        'price' : intPrice, 
+                        'qunatity' : intQuantity, 
+                        'product_name' : strProductName, 
+                        'category_id' : intCategoryId, 
+                        'sub_category_id' : intSubCategoryId, 
+                        'brand' : strBrand, 
+                        'cart_order_type': cart_order_type 
+                },
+                success: function( arrmixResult ) {
+                    var arrmixResult = $.parseJSON( arrmixResult );
+                    $('#js-add-cart-modal').modal('hide');
+                    if( true == arrmixResult['success'] ) {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        $('.js-alert-message').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + arrmixResult['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert').fadeIn().delay(5000).fadeOut(function () {
+                            $(this).remove();
+                        });
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        $('.js-alert-message').parent().before('<div class="alert alert-danger"><i class="fa fa-times-circle"></i>  ' + arrmixResult['message'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert').fadeIn().delay(5000).fadeOut(function () {
+                            $(this).remove();
+                        });
+                    }
+                }
+            });
         }
     </script>
 

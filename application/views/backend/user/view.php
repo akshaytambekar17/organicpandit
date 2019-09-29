@@ -3,7 +3,7 @@
         <h1><?= !empty($heading)?$heading:'Heading'?></h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="<?= base_url()?>admin/user">Users</a></li>
+            <li><a href="<?= base_url()?>admin/user/user-list">Users</a></li>
             <li class="active"><a href="javascript:void(0)"><?= $title?></a></li>
         </ol>
     </section>
@@ -205,7 +205,7 @@
                                     </div>
                                 </div>
                                 <?php 
-                                    $user_product_details = $this->UserProduct->getUserProductByUserId($user_details['user_id']);
+                                    $user_product_details = $this->UserProduct->getUserProductsByUserId($user_details['user_id']);
                                     if(!empty($user_product_details)){ 
                                 ?>
                                         <div class="row">

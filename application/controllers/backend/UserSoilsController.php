@@ -32,7 +32,7 @@ class UserSoilsController extends MY_Controller {
     public function add() {
         
         $arrData['backend'] = true;
-        $arrData['arrUsersList'] = $this->User->getUsersByUserType();
+        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
         $arrData['strTitle'] = 'Add Soil';
         $arrData['title'] = 'Add Soil';
@@ -42,9 +42,8 @@ class UserSoilsController extends MY_Controller {
 
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
-            if( ADMINUSERNAME == $this->arrUserSession['username'] ) {
-                $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-            }
+            
+            $this->form_validation->set_rules('user_id', 'User', 'trim|required');
             $this->form_validation->set_rules('element', 'Element', 'trim|required');
             $this->form_validation->set_rules('percentage', 'Percentage', 'trim|required');
             
@@ -80,7 +79,7 @@ class UserSoilsController extends MY_Controller {
             redirect( 'admin/user/user-soils', 'refresh' );
         }
         $arrData['backend'] = true;
-        $arrData['arrUsersList'] = $this->User->getUsersByUserType();
+        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
         $arrData['arrUserSoilDetails'] = $arrUserSoilDetails;
         $arrData['strTitle'] = 'Update Soil';

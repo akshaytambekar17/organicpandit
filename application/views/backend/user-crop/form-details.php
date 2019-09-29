@@ -54,6 +54,12 @@
                                         </select>
                                         <span class="has-error"><?php echo form_error('user_id'); ?></span>
                                     </div>
+                                <?php } else { ?>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label label-required" for="user_id">User</label>
+                                            <input type="text" class="form-control" value="<?= $arrUserSessionDetails['fullname'] ?>" disabled="disabled">
+                                            <input type="hidden" name="user_id" class="form-control" id="js-user-id" value="<?= $arrUserSessionDetails['user_id'] ?>">
+                                        </div>
                                 <?php } ?>
                                 <div class="form-group col-md-6">
                                     <label class="control-label label-required" for="crop_id">Select Crop</label>

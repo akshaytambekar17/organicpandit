@@ -67,6 +67,16 @@ a.disabled {
     margin: 34px 0px;
     height: 45px;
 }
+
+.add-to-cart-modal .modal-dialog{
+    overflow-y: initial !important
+}
+
+.add-to-cart-modal .modal-body{
+    height: 450px;
+    overflow-y: auto;
+}
+
 /********Star rating css***********/
 div.stars {
   display: inline-block;

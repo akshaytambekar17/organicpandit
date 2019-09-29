@@ -17,6 +17,14 @@ class user_model extends CI_Model {
     //put your code here
     public function __construct() {
         parent::__construct();
+        $arrSession = UserSession();
+        $this->arrUserSession = '';
+        if( true == $arrSession['success'] ) {
+            $this->arrUserSession = $arrSession['userData'];
+            if( ADMINUSERNAME == $this->arrUserSession['username'] ){
+                $this->arrUserSession['user_id'] = 1;
+            }
+        }
     }
     
     public function getUsers() {
@@ -44,6 +52,19 @@ class user_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
+    public function getUsersByUserTypeOtherThenProducts() {
+        $this->db->select( 'u.*,'
+                            . 'ut.name as user_type_name,'
+                            . '( select name from tbl_user_type where id = u.partner_type_id ) as partner_type_name,'
+                            . '( select fullname from tbl_users where user_id = u.partner_user_id ) as partner_fullname '  
+                        );
+        $this->db->from('tbl_users u');
+        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where_in('u.user_type_id', getUserTypesOtherThenProducts());
+        $this->db->order_by('u.user_id','DESC');
+        return $this->db->get()->result_array();
+    }
+    
     public function getUserById($id) {
         $this->db->select("u.*,ut.name as user_type_name,");
         $this->db->from('tbl_users u');
@@ -61,11 +82,16 @@ class user_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
-    public function getUserByUserTypeId( $userTypeId ) {
-        $this->db->select("u.*,ut.name as user_type_name,");
-        $this->db->from('tbl_users u');
-        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
-        $this->db->where('u.user_type_id',$userTypeId);
+    public function getUserByUserTypeId( $intUserTypeId ) {
+        $this->db->select( 'u.*,'
+                            . 'ut.name as user_type_name,'
+                            . '( select name from tbl_user_type where id = u.partner_type_id ) as partner_type_name,'
+                            . '( select fullname from tbl_users where user_id = u.partner_user_id ) as partner_fullname '  
+                        );
+        $this->db->from( 'tbl_users u' );
+        $this->db->join( 'tbl_user_type ut','ut.id = u.user_type_id' );
+        $this->db->where( 'u.user_type_id', $intUserTypeId );
+        $this->db->order_by( 'u.user_id', 'DESC' );
         return $this->db->get()->result_array();
     }
     
@@ -114,21 +140,41 @@ class user_model extends CI_Model {
         $this->db->join('tbl_users_organic_input_ecommerce uoie','uoie.user_id = u.user_id');
         $this->db->where('u.user_type_id',$arrData['user_type_id']);
         $this->db->where('u.state_id',$arrData['state_id']);
-        $this->db->where('u.city_id',$arrData['city_id']);
-        if( !empty( $arrData['search_brand'])){
+        if( true == isset( $arrData['city_id'] ) && true == isIdVal( $arrData['city_id'] ) ) {
+            $this->db->where('u.city_id',$arrData['city_id']);
+        }
+        if( true == isset( $arrData['search_brand'] ) && true == isVal( $arrData['search_brand'] ) ){
             $this->db->like('uoie.ecommerce_brand_id',$arrData['search_brand']);
         }
         return $this->db->get()->result_array();
     }
     
-    public function insert($data){
-        $this->db->insert('tbl_users', $data);
-        $last_id = $this->db->insert_id();
-        return $last_id;
+    public function insert( $arrInsertData ){
+        $arrInsertData['updated_at'] = CURRENT_DATETIME;
+        if( true == isset( $this->arrUserSession['user_id'] ) ) {
+            $arrInsertData['created_by'] = $this->arrUserSession['user_id'];
+            $arrInsertData['updated_by'] = $this->arrUserSession['user_id'];
+        }
+        
+        $this->db->insert( 'tbl_users', $arrInsertData );
+        $intLastId = $this->db->insert_id();
+        if( false == isset( $this->arrUserSession['user_id'] ) ) { 
+            $arrUpdateData = array( 'created_by' => $intLastId,
+                                    'updated_by' => $intLastId,
+                                    'user_id' => $intLastId   
+                            );
+            $this->update( $arrUpdateData );
+        }
+        return $intLastId;
     }
-    public function update($updateData){
-        $this->db->where('user_id',$updateData['user_id']);
-        $this->db->update('tbl_users',$updateData);
+    public function update( $arrUpdateData ){
+        $arrUpdateData['updated_at'] = CURRENT_DATETIME;
+        if( true == isset( $this->arrUserSession['user_id'] ) ) { 
+            $arrUpdateData['updated_by'] = $this->arrUserSession['user_id'];
+        }    
+        
+        $this->db->where( 'user_id', $arrUpdateData['user_id'] );
+        $this->db->update( 'tbl_users', $arrUpdateData );
         if($this->db->affected_rows()){
             return true;
         }else{

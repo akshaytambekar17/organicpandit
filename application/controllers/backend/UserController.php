@@ -94,8 +94,8 @@ class UserController extends MY_Controller {
         $data['view'] = 'common/login';
         if ($this->input->post()) {
             if ($this->form_validation->run('admin-login') == TRUE) {
-                $post = $this->input->post();
-                $result = $this->Login->getUserByEmailIdPassword($post);
+                $arrPost = $this->input->post();
+                $result = $this->Login->getUserByEmailIdPassword($arrPost);
                 if(!empty($result)){
                     $this->session->set_userdata('user_data', $result);
                     redirect('admin/dashboard', 'refresh');
@@ -124,12 +124,12 @@ class UserController extends MY_Controller {
         $arrGet = $this->input->get();
         $arrUserSession = $session['userData'];
         if($this->input->post()){
-            $post = $this->input->post();
-            $details = $post;
-            $details['updated_at'] = date('Y-m-d H:i:s');
-            $result = $this->User->update($details);
+            $arrPost = $this->input->post();
+            $arrDetails = $arrPost;
+            $arrDetails['updated_at'] = date('Y-m-d H:i:s');
+            $result = $this->User->update($arrDetails);
             if ($result) {
-                if($post['is_verified'] == 2){
+                if($arrPost['is_verified'] == 2){
                     $verified = "Approve user";
                 }else{
                     $verified = "Reject user";
@@ -137,37 +137,37 @@ class UserController extends MY_Controller {
                 if($arrUserSession['username'] != ADMINUSERNAME && $arrUserSession['user_type_id'] == 16){
                     $certification_agency_details = $this->CertificationAgency->getCertificationAgencyById($arrUserSession['user_id']);
                     $data_notify = array(
-                                        'user_id' => $post['user_id'],
+                                        'user_id' => $arrPost['user_id'],
                                         'certification_agency_id' => $arrUserSession['user_id'],
                                         'user_type_id' => $certification_agency_details['user_type_id'],
                                         'notification_type' => VERIFY_REGISTRATION,
                                         'notify_type' => NOTIFY_WEB,
-                                        'message' => 'Certification Agency '.$verified .' '.$post['fullname'],
+                                        'message' => 'Certification Agency '.$verified .' '.$arrPost['fullname'],
                                     );
                     $result_notification = $this->Notifications->insert($data_notify);
                 }else{
 
-                    $user_type_details = $this->UserType->getUserTypeById($post['user_type_id']);
+                    $user_type_details = $this->UserType->getUserTypeById($arrPost['user_type_id']);
                     $data_notify = array(
-                                        'user_id' => $post['user_id'],
-                                        'user_type_id' => $post['user_type_id'],
+                                        'user_id' => $arrPost['user_id'],
+                                        'user_type_id' => $arrPost['user_type_id'],
                                         'notification_type' => VERIFY_REGISTRATION,
                                         'notify_type' => NOTIFY_WEB,
-                                        'message' => 'Admin '.$verified.' '.$post['fullname'],
+                                        'message' => 'Admin '.$verified.' '.$arrPost['fullname'],
                                     );
                     $result_notification = $this->Notifications->insert($data_notify);
                 }
-                $this->session->set_flashdata('Message', 'User '.$post['fullname'].' has been updated Succesfully');
+                $this->session->set_flashdata('Message', 'User '.$arrPost['fullname'].' has been updated Succesfully');
                 return redirect('admin/user', 'refresh');
             } else {
                 $this->session->set_flashdata('Error', 'Failed to update product');
-                $arrUserDetails = $this->User->getUserById($post['user_id']);
+                $arrUserDetails = $this->User->getUserById($arrPost['user_id']);
                 $partnerUserTypeDetails = $this->UserType->getUserTypeById( $arrUserDetails['partner_type_id'] );
                 $partnerUserDetails = $this->User->getUserById( $arrUserDetails['partner_user_id'] );
-                $user_crop_details = $this->UserCrop->getUserCropByUserId($post['user_id']);
-                $user_soil_details = $this->UserSoil->getUserSoilByUserId($post['user_id']);
-                $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($post['user_id']);
-                $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($post['user_id']);
+                $user_crop_details = $this->UserCrop->getUserCropsByUserId($arrPost['user_id']);
+                $user_soil_details = $this->UserSoil->getUserSoilByUserId($arrPost['user_id']);
+                $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($arrPost['user_id']);
+                $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($arrPost['user_id']);
                 $data['user_data'] = $arrUserSession;
                 $data['backend'] = true;
                 $data['user_details'] = $arrUserDetails;
@@ -186,7 +186,7 @@ class UserController extends MY_Controller {
 
         }else{
             $arrUserDetails = $this->User->getUserById($arrGet['id']);
-            $user_crop_details = $this->UserCrop->getUserCropByUserId($arrGet['id']);
+            $user_crop_details = $this->UserCrop->getUserCropsByUserId($arrGet['id']);
             $user_soil_details = $this->UserSoil->getUserSoilByUserId($arrGet['id']);
             $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($arrGet['id']);
             $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($arrGet['id']);
@@ -213,9 +213,9 @@ class UserController extends MY_Controller {
         $session = UserSession();
         $arrUserSession = $session['userData'];
         if($this->input->post()){
-            $post = $this->input->post();
+            $arrPost = $this->input->post();
 
-            if($post['user_type_id'] == 2){
+            if($arrPost['user_type_id'] == 2){
                 $fullname_title = 'FPO Name';
             }else{
                 $fullname_title = 'Fullname';
@@ -231,58 +231,50 @@ class UserController extends MY_Controller {
             $this->form_validation->set_rules('story', 'Story', 'trim');
 
             if( ADMINUSERNAME == $arrUserSession['username'] ){
-                if( !empty( $post['password'] ) ) {
+                if( !empty( $arrPost['password'] ) ) {
                     $this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]|matches[confirm_password]');
                     $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[5]');
                 }
             }
 
-            if($post['user_type_id'] != 2 ){
+            if($arrPost['user_type_id'] != 2 ){
                 $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|numeric|exact_length[12]');
             }
             $this->form_validation->set_rules('landline_no', 'Landline Number', 'trim');
             $this->form_validation->set_rules('website', 'Website', 'trim');
 
-            if($post['user_type_id'] == 1 || $post['user_type_id'] == 2 || $post['user_type_id'] == 3 || $post['user_type_id'] == 4){
+            if($arrPost['user_type_id'] == 1 || $arrPost['user_type_id'] == 2 || $arrPost['user_type_id'] == 3 || $arrPost['user_type_id'] == 4){
                 $this->form_validation->set_rules('is_visit_farm', 'Visit Farm', 'trim');
             }
-            if($post['user_type_id'] == 1 || $post['user_type_id'] == 2 ){
+            if($arrPost['user_type_id'] == 1 || $arrPost['user_type_id'] == 2 ){
                 $this->form_validation->set_rules('pancard_number', 'Pan Card Number', 'trim');
             }else{
                 $this->form_validation->set_rules('gst_number', 'GST Number', 'trim');
             }
-            if($post['user_type_id'] != 1 && $post['user_type_id'] != 6 ){
+            if($arrPost['user_type_id'] != 1 && $arrPost['user_type_id'] != 6 ){
                 $this->form_validation->set_rules('ceo_name', 'CEO Name', 'trim');
             }
-            if($post['user_type_id'] != 1 && $post['user_type_id'] != 2 && $post['user_type_id'] != 3 && $post['user_type_id'] != 4 && $post['user_type_id'] != 5 && $post['user_type_id'] != 6){
+            if($arrPost['user_type_id'] != 1 && $arrPost['user_type_id'] != 2 && $arrPost['user_type_id'] != 3 && $arrPost['user_type_id'] != 4 && $arrPost['user_type_id'] != 5 && $arrPost['user_type_id'] != 6){
                 $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim|required');
             }
-            if($post['user_type_id'] == 2){
+            if($arrPost['user_type_id'] == 2){
                 $this->form_validation->set_rules('total_farmer', 'Number of Farmer', 'trim');
             }
-            if($post['user_type_id'] == 5){
+            if($arrPost['user_type_id'] == 5){
                 $this->form_validation->set_rules('type_of_buyer', 'Type of Buyer', 'trim');
             }
-            if($post['user_type_id'] == 1 || $post['user_type_id'] == 2 || $post['user_type_id'] == 3 || $post['user_type_id'] == 4 || $post['user_type_id'] == 5){
+            if($arrPost['user_type_id'] == 1 || $arrPost['user_type_id'] == 2 || $arrPost['user_type_id'] == 3 || $arrPost['user_type_id'] == 4 || $arrPost['user_type_id'] == 5){
                 $this->form_validation->set_rules('certification_id[]', 'Certification', 'trim');
                 $this->form_validation->set_rules('certification_number', 'Certification Number', 'trim');
                 $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
                 $this->form_validation->set_rules('is_test_report', 'Test Report', 'trim');
-//                $this->form_validation->set_rules('Product[name][]', 'Product Name', 'trim');
-//                $this->form_validation->set_rules('Product[description][]', 'Description', 'trim');
-//                $this->form_validation->set_rules('Product[from_date][]', 'From Date', 'trim');
-//                $this->form_validation->set_rules('Product[to_date][]', 'To Date', 'trim');
-//                $this->form_validation->set_rules('Product[quantity_id][]', 'Quantity', 'trim');
-//                $this->form_validation->set_rules('Product[quality][]', 'Quality', 'trim');
-//                $this->form_validation->set_rules('Product[price][]', 'Price', 'trim');
-
             }
             $this->form_validation->set_rules('Bank[bank_name]', 'Bank Name', 'trim');
             $this->form_validation->set_rules('Bank[account_holder_name]', 'Account Holder Name', 'trim');
             $this->form_validation->set_rules('Bank[account_no]', 'Account Number', 'trim');
             $this->form_validation->set_rules('Bank[ifsc_code]', 'Ifsc Code', 'trim');
             if($this->form_validation->run() == TRUE){
-                $details = $post;
+                $arrDetails = $arrPost;
                 if(!empty($_FILES['video']['name'])){
                     $config_video['upload_path']          = './assets/images/gallery/';
                     $config_video['allowed_types']        = '*';
@@ -297,7 +289,7 @@ class UserController extends MY_Controller {
                         $video = '';
                     }
                 }else{
-                    $video = !empty($post['video_hidden'])?$post['video_hidden']:'';
+                    $video = !empty($arrPost['video_hidden'])?$arrPost['video_hidden']:'';
                     $error = '';
                 }
                 if(!empty($_FILES['resume']['name'])){
@@ -308,14 +300,14 @@ class UserController extends MY_Controller {
                     $this->load->library('upload', $config_resume);
                     if($this->upload->do_upload('resume')){
                         $uploadData = $this->upload->data();
-                        $resume = $uploadData['file_name'];
+                        $strResume = $uploadData['file_name'];
                         $error = '';
                     }else{
                         $error = $this->upload->display_errors();
-                        $resume = '';
+                        $strResume = '';
                     }
                 }else{
-                    $resume = !empty($post['resume_hidden'])?$post['resume_hidden']:'';
+                    $strResume = !empty($arrPost['resume_hidden'])?$arrPost['resume_hidden']:'';
                     $error = '';
                 }
                 if(!empty($_FILES['product_catalogue']['name'])){
@@ -326,14 +318,14 @@ class UserController extends MY_Controller {
                     $this->load->library('upload', $config_catalogue);
                     if($this->upload->do_upload('product_catalogue')){
                         $uploadData = $this->upload->data();
-                        $product_catalogue = $uploadData['file_name'];
+                        $strProductCatalogue = $uploadData['file_name'];
                         $error = '';
                     }else{
                         $error = $this->upload->display_errors();
-                        $product_catalogue = '';
+                        $strProductCatalogue = '';
                     }
                 }else{
-                    $product_catalogue = !empty($post['product_catalogue_hidden'])?$post['product_catalogue_hidden']:'';
+                    $strProductCatalogue = !empty($arrPost['product_catalogue_hidden'])?$arrPost['product_catalogue_hidden']:'';
                     $error = '';
                 }
                 if(!empty($_FILES['profile_image']['name'])){
@@ -344,14 +336,14 @@ class UserController extends MY_Controller {
                     $this->load->library('upload', $config);
                     if($this->upload->do_upload('profile_image')){
                         $uploadData = $this->upload->data();
-                        $profile_image = $uploadData['file_name'];
+                        $strProfileImage = $uploadData['file_name'];
                         $error = '';
                     }else{
                         $error = $this->upload->display_errors();
-                        $profile_image = '';
+                        $strProfileImage = '';
                     }
                 }else{
-                    $profile_image = !empty($post['profile_image_hidden'])?$post['profile_image_hidden']:'';
+                    $strProfileImage = !empty($arrPost['profile_image_hidden'])?$arrPost['profile_image_hidden']:'';
                     $error = '';
                 }
                 if(!empty($_FILES['certification_image']['name'])){
@@ -362,14 +354,14 @@ class UserController extends MY_Controller {
                     $this->load->library('upload', $config1);
                     if($this->upload->do_upload('certification_image')){
                         $uploadData = $this->upload->data();
-                        $certification_image = $uploadData['file_name'];
+                        $strCertificationImage = $uploadData['file_name'];
                         $error = '';
                     }else{
                         $error = $this->upload->display_errors();
-                        $certification_image = '';
+                        $strCertificationImage = '';
                     }
                 }else{
-                    $certification_image = !empty($post['certification_image_hidden'])?$post['certification_image_hidden']:'';
+                    $strCertificationImage = !empty($arrPost['certification_image_hidden'])?$arrPost['certification_image_hidden']:'';
                     $error = '';
                 }
                 if(!empty($_FILES['company_image']['name'])){
@@ -379,84 +371,45 @@ class UserController extends MY_Controller {
                     $this->load->library('upload', $config_company);
                     if($this->upload->do_upload('company_image')){
                         $uploadData = $this->upload->data();
-                        $company_image = $uploadData['file_name'];
+                        $strCompanyImage = $uploadData['file_name'];
                         $error = '';
                     }else{
                         $error = $this->upload->display_errors();
-                        $company_image = '';
+                        $strCompanyImage = '';
                     }
                 }else{
-                    $company_image = !empty($post['company_image_hidden'])?$post['company_image_hidden']:'';
+                    $strCompanyImage = !empty($arrPost['company_image_hidden'])?$arrPost['company_image_hidden']:'';
                     $error = '';
                 }
 
-                if(!empty($_FILES['product_images']['name'])){
-                    $count = count($_FILES['product_images']['name']);
-                    $files = $_FILES;
-                    for($i=0; $i<$count; $i++){
-                        if(!empty($files['product_images']['name'][$i])){
-                            $_FILES['product_images']['name'] = $files['product_images']['name'][$i];
-                            $_FILES['product_images']['type'] = $files['product_images']['type'][$i];
-                            $_FILES['product_images']['tmp_name'] = $files['product_images']['tmp_name'][$i];
-                            $_FILES['product_images']['error'] = $files['product_images']['error'][$i];
-                            $_FILES['product_images']['size'] = $files['product_images']['size'][$i];
-                            $config4['upload_path'] = './assets/images/product_images/';
-                            $config4['allowed_types'] = 'gif|jpg|png|jpeg';
-                            $this->load->library('upload', $config4);
-                            $this->upload->initialize($config4);
-                            if($this->upload->do_upload('product_images')){
-                                $uploadData = $this->upload->data();
-                                $product_images[] = $uploadData['file_name'];
-                                $errors[] = '';
-                            }else{
-                                $errors[] = $this->upload->display_errors();
-                                $product_images[] = '';
-                            }
-                        }else{
-                            $product_images[] = !empty($post['product_images_hidden'][$i])?$post['product_images_hidden'][$i]:'';
-                        }
-                    }
-                }else{
-                    $product_images[] = '';
-                    $errors[] = '';
-                }
                 if(empty($error)){
-                    $intUserId = $post['user_id'];
-                    unset($details['product_count']);
-                    unset($details['crop_count']);
-                    unset($details['soil_count']);
-                    unset($details['city_id_hidden']);
-                    unset($details['profile_image_hidden']);
-                    unset($details['certification_image_hidden']);
-                    unset($details['company_image_hidden']);
-                    unset($details['resume_hidden']);
-                    unset($details['video_hidden']);
-                    unset($details['product_catalogue_hidden']);
-                    unset($details['product_images_hidden']);
-                    unset($details['Bank']);
-                    unset($details['Product']);
-                    unset($details['Crop']);
-                    unset($details['Soil']);
-                    unset($details['Micro']);
-                    unset($details['Input']);
-                    unset($details['confirm_password']);
-                    if( !empty( $details['password'] ) ) {
-                        $details['password'] = md5($details['password']);
+                    $intUserId = $arrPost['user_id'];
+                    unset($arrDetails['city_id_hidden']);
+                    unset($arrDetails['profile_image_hidden']);
+                    unset($arrDetails['certification_image_hidden']);
+                    unset($arrDetails['company_image_hidden']);
+                    unset($arrDetails['resume_hidden']);
+                    unset($arrDetails['video_hidden']);
+                    unset($arrDetails['product_catalogue_hidden']);
+                    unset($arrDetails['Bank']);
+                    unset($arrDetails['confirm_password']);
+                    if( !empty( $arrDetails['password'] ) ) {
+                        $arrDetails['password'] = md5($arrDetails['password']);
                     } else {
-                        unset($details['password']);
+                        unset($arrDetails['password']);
                     }
-                    $details['landline_no'] = !empty($details['landline_no'])?$details['landline_no']:0;
-                    $details['profile_image'] = $profile_image;
-                    $details['company_image'] = $company_image;
-                    $details['certification_image'] = $certification_image;
-                    $details['video'] = $video;
-                    $details['product_catalogue'] = $product_catalogue;
-                    $details['resume'] = $resume;
-                    $details['updated_at'] = date('Y-m-d H:i:s');
-                    $result = $this->User->update($details);
+                    $arrDetails['landline_no'] = !empty($arrDetails['landline_no'])?$arrDetails['landline_no']:0;
+                    $arrDetails['profile_image'] = $strProfileImage;
+                    $arrDetails['company_image'] = $strCompanyImage;
+                    $arrDetails['certification_image'] = $strCertificationImage;
+                    $arrDetails['video'] = $video;
+                    $arrDetails['product_catalogue'] = $strProductCatalogue;
+                    $arrDetails['resume'] = $strResume;
+                    $arrDetails['updated_at'] = CURRENT_DATETIME;
+                    $this->User->update($arrDetails);
                     
-                    if( true == isArrVal( $post['certification_id'] ) ) {
-                        foreach( $post['certification_id'] as $intCertificationId ) {
+                    if( true == isArrVal( $arrPost['certification_id'] ) ) {
+                        foreach( $arrPost['certification_id'] as $intCertificationId ) {
                             $arrUserCertificationData = array(
                                 'user_id' => $intUserId,
                                 'certification_id' => $intCertificationId
@@ -469,167 +422,16 @@ class UserController extends MY_Controller {
                             $this->UserCertifications->insertBatch( $arrmixUserCertificationData );
                         }
                     }
-                    if(!empty($post['Product'])){
-                        $this->UserProduct->deleteByUserId($post['user_id']);
-                        $i = 0;
-                        $j = 1;
-                        $post_product = array_filter(array_map('array_filter', $post['Product']));
-                        $count = count($post_product);
-                        for($x=1;$x<=count($post_product['product_id']);$x++){
-                            foreach($post_product as $key_product => $val_product){
-                                foreach($val_product as $key => $val){
-                                    if($key == $i && !empty($val)){
-                                        $product_data[$key_product] = $val;
-                                        if(!empty($product_images)){
-                                            foreach($product_images as $key_image => $val_image){
-                                                if($key_image == $i){
-                                                    $product_data['images'] = $val_image;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                if($count == $j){
-                                    $product_data['from_date'] = date( "Y-m-d", strtotime( str_replace( '/', '-', $product_data['from_date'] ) ) );
-                                    $product_data['to_date'] = date( "Y-m-d", strtotime( str_replace( '/', '-', $product_data['to_date'] ) ) );
-                                    $product_data['user_id'] = $post['user_id'];
-                                    $product_search_details = $this->Product->getProductById($product_data['product_id']);
-                                    $product_data['name'] = $product_search_details['name'];
-                                    $product_result = $this->UserProduct->insert($product_data);
-                                    $i++;
-                                    $j = 1;
-                                    $product_data = array();
-                                }else{
-                                    $j++;
-                                }
-                            }
-                        }
-                    }
-                    $bank_details = $post['Bank'];
-                    $bank_details['user_id'] = $post['user_id'];
-                    $result_bank = $this->UserBank->updateByUserId($bank_details);
-                    if(!empty($post['Crop'])){
-                        $this->UserCrop->deleteByUserId($post['user_id']);
-                        $i = 0;
-                        $j = 1;
-                        $post_crop = array_filter(array_map('array_filter', $post['Crop']));
-                        $count = count($post_crop);
-                        for($x=1;$x<=count($post_crop['crop_id']);$x++){
-                            foreach($post_crop as $key_crop => $val_crop){
-                                foreach($val_crop as $key => $val){
-                                    if($key == $i && !empty($val)){
-                                        $crop_details[$key_crop] = $val;
-                                    }
-                                }
-                                if($count == $j){
-
-                                    $crop_details['user_id'] = $intUserId;
-                                    $crop_details['user_type_id'] = $post['user_type_id'];
-                                    $crop_details['date_sown'] = !empty( $crop_details['date_sown'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_sown'] ) ) ) : '';
-                                    $crop_details['date_harvest'] = !empty( $crop_details['date_harvest'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_harvest'] ) ) ) : '';
-                                    $crop_details['date_inspection'] = !empty( $crop_details['date_inspection'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $crop_details['date_inspection'] ) ) ) : '';
-
-                                    $result_crop = $this->UserCrop->insert($crop_details);
-                                    $i++;
-                                    $j = 1;
-                                    $crop_details = array();
-                                }else{
-                                    $j++;
-                                }
-                            }
-                        }
-                    }
-                    if(!empty($post['Soil'])){
-                        $this->UserSoil->deleteByUserId($post['user_id']);
-                        $i = 0;
-                        $j = 1;
-                        $post_soil = array_filter(array_map('array_filter', $post['Soil']));
-                        $count = count($post_soil);
-                        for($x=1;$x<=max(count($post_soil['element']),count($post_soil['percentage']));$x++){
-                            foreach($post_soil as $key_soil => $val_soil){
-                                foreach($val_soil as $key => $val){
-                                    if($key == $i && !empty($val)){
-                                        $soil_data[$key_soil] = $val;
-                                    }
-                                }
-                                if($count == $j){
-                                    $soil_data['user_id'] = $intUserId;
-                                    $soil_data['user_type_id'] = $post['user_type_id'];
-                                    $soil_result = $this->UserSoil->insert($soil_data);
-                                    $i++;
-                                    $j = 1;
-                                    $soil_data = array();
-                                }else{
-                                    $j++;
-                                }
-                            }
-                        }
-                    }
-                    if(!empty($post['Micro'])){
-                        $this->UserMicroNutrient->deleteByUserId($post['user_id']);
-                        $i = 0;
-                        $j = 1;
-                        $post_micro = array_filter(array_map('array_filter', $post['Micro']));
-                        $count = count($post_micro);
-                        for($x=1;$x<=max(count($post_micro['element']),count($post_micro['percentage']));$x++){
-                            foreach($post_micro as $key_micro => $val_micro){
-                                foreach($val_micro as $key => $val){
-                                    if($key == $i && !empty($val)){
-                                        $micro_data[$key_micro] = $val;
-                                    }
-                                }
-                                if($count == $j){
-                                    $micro_data['user_id'] = $intUserId;
-                                    $micro_data['user_type_id'] = $post['user_type_id'];
-                                    $micro_result = $this->UserMicroNutrient->insert($micro_data);
-                                    $i++;
-                                    $j = 1;
-                                    $micro_data = array();
-                                }else{
-                                    $j++;
-                                }
-                            }
-                        }
-                    }
-                    if( !empty($post['Input'] ) ) {
-                        $this->UserInputOrganic->deleteByUserId($post['user_id']);
-                        $i = 0;
-                        $j = 1;
-                        $postInputOrganic = array_filter( array_map( 'array_filter', $post['Input'] ) );
-                        $count = count( $postInputOrganic );
-                        for ( $x = 1; $x <= count( $postInputOrganic['input_date'] ); $x++ ) {
-                            foreach( $postInputOrganic as $keyInput => $valInput ) {
-                                foreach( $valInput as $key => $val ) {
-                                    if( $key == $i && !empty( $val ) ) {
-                                        $inputData[$keyInput] = $val;
-                                    }
-                                }
-                                if ($count == $j) {
-                                    $inputData['user_id'] = $intUserId;
-                                    $inputData['user_type_id'] = $post['user_type_id'];
-                                    $inputData['input_date'] = !empty( $inputData['input_date'] ) ? date( 'Y-m-d', strtotime( str_replace( '/', '-', $inputData['input_date'] ) ) ) : '0000-00-00';
-                                    $this->UserInputOrganic->insert( $inputData );
-                                    $i++;
-                                    $j = 1;
-                                    $inputData = array();
-                                } else {
-                                    $j++;
-                                }
-                            }
-                        }
-//                        $input_details = $post['Input'];
-//                        $input_details['user_id'] = $intUserId;
-//                        $input_details['user_type_id'] = $post['user_type_id'];
-//                        $input_details['input_date'] = !empty($input_details['input_date']) ? date('Y-m-d', strtotime($input_details['input_date'])) : '0000-00-00';
-
-                    }
-
-                    if($arrUserSession['username'] == ADMINUSERNAME){
-                        $this->session->set_flashdata('Message', $details['fullname']. ' profile has been updated successfully.');
-                        redirect('admin/user');
+                    $arrBankDetails = $arrPost['Bank'];
+                    $arrBankDetails['user_id'] = $arrPost['user_id'];
+                    $this->UserBank->updateByUserId( $arrBankDetails );
+                    
+                    if( $arrUserSession['username'] == ADMINUSERNAME ) {
+                        $this->session->set_flashdata('Message', $arrDetails['fullname']. ' profile has been updated successfully.');
+                        redirect('admin/user/user-list');
                     }else{
                         $this->session->set_flashdata('Message', 'Profile has been updated successfully.');
-                        redirect('admin/user/update-profile?id='.$post['user_id'].'&user_type_id='.$post['user_type_id']);
+                        redirect('admin/user/update-profile?id='.$arrPost['user_id'].'&user_type_id='.$arrPost['user_type_id']);
                     }
                 }else{
                     if(!empty($error)){
@@ -639,11 +441,11 @@ class UserController extends MY_Controller {
                     }else{
                         $this->session->set_flashdata('Error','Something Went Wrong');
                     }
-                    $data_return = $this->profileData($post['user_id'],$post['user_type_id'],$arrUserSession);
+                    $data_return = $this->profileData($arrPost['user_id'],$arrPost['user_type_id'],$arrUserSession);
                     $this->backendLayout($data_return);
                 }
             }else{
-                $data_return = $this->profileData($post['user_id'],$post['user_type_id'],$arrUserSession);
+                $data_return = $this->profileData($arrPost['user_id'],$arrPost['user_type_id'],$arrUserSession);
                 $this->backendLayout($data_return);
             }
         }else{
@@ -654,17 +456,7 @@ class UserController extends MY_Controller {
 
     public function profileData( $intUserId, $intUserTypeId, $arrUserSession ) {
         $arrUserDetails = $this->User->getUserById($intUserId);
-        if($arrUserDetails['user_type_id'] == 1 || $arrUserDetails['user_type_id'] == 2 || $arrUserDetails['user_type_id'] == 4 || $arrUserDetails['user_type_id'] == 3 || $arrUserDetails['user_type_id'] == 5 ){
-            $user_product_details = $this->UserProduct->getUserProductByUserId($intUserId);
-        }else{
-            $user_product_details = '';
-        }
         
-        $user_crop_details = $this->UserCrop->getUserCropByUserId($intUserId);
-        $user_soil_details = $this->UserSoil->getUserSoilByUserId($intUserId);
-        $user_micro_details = $this->UserMicroNutrient->getUserMicroNutrientByUserId($intUserId);
-        $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($intUserId);
-
         $user_bank_details = $this->UserBank->getUserBankByUserId($intUserId);
         $user_type_details = $this->UserType->getUserTypeById($intUserTypeId);
         $arrUserCertificationsList = $this->UserCertifications->getUserCertificationByUserId( $intUserId );
@@ -688,12 +480,8 @@ class UserController extends MY_Controller {
         $data['user_data'] = $arrUserSession;
         $data['backend'] = true;
         $data['user_details'] = $arrUserDetails;
-        $data['user_product_details'] = $user_product_details;
         $data['user_bank_details'] = $user_bank_details;
         $data['user_type_details'] = $user_type_details;
-        $data['user_crop_details'] = $user_crop_details;
-        $data['user_soil_details'] = $user_soil_details;
-        $data['user_micro_details'] = $user_micro_details;
         $data['user_session'] = $arrUserSession;
         $data['title'] = $arrUserDetails['fullname'] ;
         $data['heading'] = $arrUserDetails['fullname'];
@@ -736,15 +524,15 @@ class UserController extends MY_Controller {
         $data['view'] = 'user/change_password';
         if ($this->input->post()) {
             if ($this->form_validation->run('change-password-form') == TRUE) {
-                $post = $this->input->post();
-                $details = $post;
-                unset($details['confirm_password']);
-                $details['password'] = md5($post['password']);
-                $details['user_id'] = $arrUserSession['user_id'];
+                $arrPost = $this->input->post();
+                $arrDetails = $arrPost;
+                unset($arrDetails['confirm_password']);
+                $arrDetails['password'] = md5($arrPost['password']);
+                $arrDetails['user_id'] = $arrUserSession['user_id'];
                 if($arrUserSession['user_type_id'] == 16){
-                    $result = $this->CertificationAgency->update($details);
+                    $result = $this->CertificationAgency->update($arrDetails);
                 }else{
-                    $result = $this->User->update($details);
+                    $result = $this->User->update($arrDetails);
                 }
                 if($result){
                     $this->session->unset_userdata('user_data');
@@ -768,8 +556,8 @@ class UserController extends MY_Controller {
     }
     
     public function delete(){
-        $post = $this->input->post();
-        $result = $this->User->delete($post['user_id']);
+        $arrPost = $this->input->post();
+        $result = $this->User->delete($arrPost['user_id']);
         if($result){
             echo true;
         }else{

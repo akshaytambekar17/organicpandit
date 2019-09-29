@@ -76,7 +76,7 @@
 	                        <?php }  ?>
                         </div>
                         <div class="box-footer center">
-                            <a href="<?= base_url()?>search-buy-product" class="btn btn-primary" >Go to Buy Product</a>
+                            <a href="<?= base_url()?>home" class="btn btn-primary" >Go to Home</a>
                         </div>
                     </div>
                 </div>

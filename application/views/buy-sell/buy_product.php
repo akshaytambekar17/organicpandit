@@ -347,12 +347,13 @@
         function addToCart( ths ) {
             var intProductId = $("#js-add-to-cart-product").data('product_id');
             var intPrice = $("#js-add-to-cart-price").data('total_price');
-	        var intSellProductId = $("#js-add-to-cart-sell-product-id").val();
+            var intSellProductId = $("#js-add-to-cart-sell-product-id").val();
             var strProductName = $("#js-add-to-cart-product").val();
+            var cart_order_type = '<?= CART_ORDER_TYPE_1; ?>';
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>" + "add-to-cart",
-                data: { 'product_id' : intProductId, 'price' : intPrice, 'product_name' : strProductName, 'sell_product_id' : intSellProductId },
+                data: { 'product_id' : intProductId, 'price' : intPrice, 'product_name' : strProductName, 'sell_product_id' : intSellProductId, 'cart_order_type': cart_order_type },
                 success: function( arrmixResult ) {
                     var arrmixResult = $.parseJSON( arrmixResult );
                     $('#js-add-cart-modal').modal('hide');

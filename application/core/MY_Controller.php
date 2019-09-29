@@ -36,6 +36,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model('transaction_model','Transaction');
         $this->load->model('sell_products_images_model','SellProductImage');
         $this->load->model('send_enquiry_buyer_model','SendEnquiryBuyer');
+        $this->load->model('user_ecommerces_model','UserEcommerces');
+        $this->load->model('user_ecommerce_images_model','UserEcommerceImages');
         
     }
 
@@ -158,7 +160,8 @@ class MY_Controller extends CI_Controller {
 
     public function paymentTransaction( $arrmixPaymentDetails ){
 
-        $arrobjEasebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
+        $arrPaymentGatewayConfigDetails = getPaymentGatewayConfigDetails();
+        $arrobjEasebuzzObj = new Easebuzz( $arrPaymentGatewayConfigDetails['key'], $arrPaymentGatewayConfigDetails['salt'], paymentGatewayEnviroment() );
         if( INITIATE_PAYMENT == $arrmixPaymentDetails['api'] ) {
 
             /*  Very Important Notes

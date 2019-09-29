@@ -43,12 +43,12 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <th>User Fullname</th>
-                                        <th>User Type</th>
+                                        <th style="width: 15%">User Fullname</th>
+                                        <th style="width: 10%">User Type</th>
                                         <th>Crop Name</th>
-                                        <th>Crop Inspector Name</th>
+                                        <th style="width: 20%">Crop Inspector Name</th>
                                         <th>Crop Area</th>
-                                        <th>Crop Conditions</th>
+                                        <th style="width: 20%">Crop Conditions</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

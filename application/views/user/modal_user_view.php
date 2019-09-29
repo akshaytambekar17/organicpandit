@@ -162,7 +162,7 @@
             </div>
         </div>
         <?php 
-            $user_product_details = $this->UserProduct->getUserProductByUserId($user_details['user_id']);
+            $user_product_details = $this->UserProduct->getUserProductsByUserId($user_details['user_id']);
             if(!empty($user_product_details)){ 
         ?>
                 <div class="row">
@@ -248,7 +248,7 @@
             </div>
         </div>
         <?php 
-            $user_crop_details = $this->UserCrop->getUserCropByUserId($user_details['user_id']);
+            $user_crop_details = $this->UserCrop->getUserCropsByUserId($user_details['user_id']);
             if(!empty($user_crop_details)){ 
         ?>
             <div class="row">

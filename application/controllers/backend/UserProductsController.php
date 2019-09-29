@@ -76,6 +76,9 @@ class UserProductsController extends MY_Controller {
                     $arrDetails['to_date'] = date( 'Y-m-d', strtotime( $strToDate ) );
                     $arrDetails['from_date'] = date( 'Y-m-d', strtotime( $strFromDate ) );
                     
+                    $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
+                    $arrDetails['user_type_id'] = $arrUserDetails['user_type_id'];
+                    
                     $intUserProductId = $this->UserProduct->insert( $arrDetails );
                     if( true == isIdVal( $intUserProductId ) ) {
                         $this->session->set_flashdata( 'Message', 'Product <b>' . $arrDetails['name'] . '</b> has been added succesfully' );
@@ -148,8 +151,11 @@ class UserProductsController extends MY_Controller {
                     
                     $arrDetails['to_date'] = date( 'Y-m-d', strtotime( $strToDate ) );
                     $arrDetails['from_date'] = date( 'Y-m-d', strtotime( $strFromDate ) );
-                    $boolResult = $this->UserProduct->update( $arrDetails );
                     
+                    $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
+                    $arrDetails['user_type_id'] = $arrUserDetails['user_type_id'];
+                    
+                    $boolResult = $this->UserProduct->update( $arrDetails );
                     if( true == isVal( $boolResult ) ) {
                         $this->session->set_flashdata( 'Message', 'Product <b>' . $arrDetails['name'] . '</b> has been updated succesfully' );
                         return redirect( 'admin/user/user-products', 'refresh' );

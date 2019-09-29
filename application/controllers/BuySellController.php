@@ -55,18 +55,18 @@ class BuySellController extends MY_Controller {
 	            $intCategoryId = '';
 	            $intDeliveryLocationState = '';
 	            if( true == isset( $arrPost['delivery_location'] ) && true == isArrVal( $arrPost['delivery_location'] ) ) {
-		            $strintDeliveryLocation = implode( ',', $arrPost['delivery_location'] );
+                        $strintDeliveryLocation = implode( ',', $arrPost['delivery_location'] );
 	            }
 	            if( true == isset( $arrPost['product_id'] ) ) {
-					$intProductId = $arrPost['product_id'];
+                        $intProductId = $arrPost['product_id'];
 	            }
-				if( true == isset( $arrPost['category_id'] ) ) {
-		            $intCategoryId = $arrPost['category_id'];
+                    if( true == isset( $arrPost['category_id'] ) ) {
+                        $intCategoryId = $arrPost['category_id'];
 	            }
 	            if( true == isset( $arrPost['delivery_location_state'] ) ) {
-		            $intDeliveryLocationState = $arrPost['delivery_location_state'];
+                        $intDeliveryLocationState = $arrPost['delivery_location_state'];
 	            }
-	            $arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity( $intProductId, $intCategoryId, $intDeliveryLocationState, $strintDeliveryLocation );
+                $arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity( $intProductId, $intCategoryId, $intDeliveryLocationState, $strintDeliveryLocation );
                 $data['arrSellProductList'] = $arrSellProductList;
                 $data['intProductId'] = $intProductId;
                 $data['intHiddenCityid'] = '';
@@ -98,12 +98,12 @@ class BuySellController extends MY_Controller {
         $data['arrSellProductDetails'] = $arrSellProductDetails;
 
         if( true == isset( $post['bool_add_to_cart_modal'] ) ) {
-	        echo $this->load->view('buy-sell/modal_add_to_cart', $data);
+            echo $this->load->view('buy-sell/modal_add_to_cart', $data);
         } else if( true == isset( $post['bool_send_enquiry_modal'] ) ) {
-			echo $this->load->view('buy-sell/modal_send_enquiry', $data);
+            echo $this->load->view('buy-sell/modal_send_enquiry', $data);
         } else {
-		    echo $this->load->view('buy-sell/modal_fetch_sell_product_details', $data);
-	    }
+            echo $this->load->view('buy-sell/modal_fetch_sell_product_details', $data);
+        }
     }
 
     public function fetchProductByCategoryId() {

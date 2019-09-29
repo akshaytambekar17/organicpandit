@@ -150,18 +150,7 @@ $config = array(
                         'field' => 'state_id',
                         'label' => 'Select State',
                         'rules' => 'required'
-                ),
-                array(
-                        'field' => 'city_id',
-                        'label' => 'Select City',
-                        'rules' => 'required'
-                ),
-                array(
-                        'field' => 'certification_id',
-                        'label' => 'Select Certification',
-                        'rules' => 'trim'
-                ),
-
+                )
         ),
         'products-form' => array(
                     array(
@@ -480,6 +469,11 @@ $config = array(
     
         'user-product-form' => array(
                 array(
+                        'field' => 'user_id',
+                        'label' => 'User',
+                        'rules' => 'required'
+                ),
+                array(
                         'field' => 'product_id',
                         'label' => 'Product',
                         'rules' => 'required'
@@ -518,6 +512,11 @@ $config = array(
     
         'user-crop-form' => array(
                 array(
+                        'field' => 'user_id',
+                        'label' => 'User',
+                        'rules' => 'required'
+                ),
+                array(
                         'field' => 'crop_id',
                         'label' => 'Crop',
                         'rules' => 'required'
@@ -555,6 +554,121 @@ $config = array(
                 array(
                         'field' => 'other_details',
                         'label' => 'Other Details',
+                        'rules' => 'required'
+                )
+        ),
+        'user-organic-input-ecommerce-form' => array(
+                array(
+                        'field' => 'user_id',
+                        'label' => 'User',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'category_id',
+                        'label' => 'Category',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'sub_category_id',
+                        'label' => 'Category',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'ecommerce_brand_id',
+                        'label' => 'Brand',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'price',
+                        'label' => 'Price',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'dosage',
+                        'label' => 'Dosage',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'weight',
+                        'label' => 'Weight',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'spectrum',
+                        'label' => 'Spectrum',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'compatibility',
+                        'label' => 'Compatibility',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'duration_effect',
+                        'label' => 'Duration of Effect',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'frequency_application',
+                        'label' => 'Frequency of Application',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'applicable_crops',
+                        'label' => 'Applicable Crops',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'final_remarks',
+                        'label' => 'Final Remarks',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'chemical',
+                        'label' => 'Chemical Composition',
+                        'rules' => 'required'
+                )
+        ),
+    
+        'user-shop-ecommerce-form' => array(
+                array(
+                        'field' => 'user_id',
+                        'label' => 'User',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'category_id',
+                        'label' => 'Category',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'product_id',
+                        'label' => 'Product',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'description',
+                        'label' => 'Description',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'price',
+                        'label' => 'Price',
+                        'rules' => 'required|numeric'
+                ),
+                array(
+                        'field' => 'available_quantity',
+                        'label' => 'Available Quantity',
+                        'rules' => 'required||numeric'
+                ),
+                array(
+                        'field' => 'user_ecommerce_status',
+                        'label' => 'Status',
+                        'rules' => 'required'
+                ),
+                array(
+                        'field' => 'stock',
+                        'label' => 'Stock',
                         'rules' => 'required'
                 )
         ),

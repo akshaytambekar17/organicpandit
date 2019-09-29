@@ -3,7 +3,9 @@
     if ( empty( $session['success'] ) ) {
         redirect('admin', 'refresh');
     }
-    $userSession = $session['userData'];
+    $arrUserSession = $session['userData'];
+    $arrUserTypeWithProduct = getUserTypes();
+    $arrUserTypeOtherThenProduct = getUserTypesOtherThenProducts();
 ?>
 <body class="hold-transition skin-purple sidebar-mini fixed">
     <div class="wrapper">
@@ -13,9 +15,9 @@
             <!-- Logo -->
             <a href="index2.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b><?= !empty($userSession)?ucfirst($userSession['username']):'Admin' ?></b></span>
+                <span class="logo-mini"><b><?= !empty($arrUserSession)?ucfirst($arrUserSession['username']):'Admin' ?></b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b><?= !empty($userSession)?ucfirst($userSession['username']):'Admin' ?></b></span>
+                <span class="logo-lg"><b><?= !empty($arrUserSession)?ucfirst($arrUserSession['username']):'Admin' ?></b></span>
             </a>
 
             <!-- Header Navbar: style can be found in header.less -->
@@ -229,25 +231,25 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <?php if(!empty($userSession['profile_image'])){ ?>
-                                    <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="user-image" alt="User Image">
+                                <?php if(!empty($arrUserSession['profile_image'])){ ?>
+                                    <img src="<?= base_url()?>assets/images/gallery/<?= $arrUserSession['profile_image']?>" class="user-image" alt="User Image">
                                 <?php }else{ ?>
                                     <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <?php } ?>
-                                <span class="hidden-xs"><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></span>
+                                <span class="hidden-xs"><?= !empty($arrUserSession )?ucfirst($arrUserSession ['username']):'Admin' ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <?php if(!empty($userSession['profile_image'])){ ?>
-                                        <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="img-circle" alt="User Image">
+                                    <?php if(!empty($arrUserSession['profile_image'])){ ?>
+                                        <img src="<?= base_url()?>assets/images/gallery/<?= $arrUserSession['profile_image']?>" class="img-circle" alt="User Image">
                                     <?php }else{ ?>
                                         <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <?php } ?>
 <!--                                    <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
                                     <p>
-                                        <?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?> - <?= $userSession ['username'] == ADMINUSERNAME?'Administrator':'User' ?>
+                                        <?= !empty($arrUserSession )?ucfirst($arrUserSession ['username']):'Admin' ?> - <?= $arrUserSession ['username'] == ADMINUSERNAME?'Administrator':'User' ?>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -267,12 +269,12 @@
                                 </li>-->
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <?php if($userSession['username'] != ADMINUSERNAME ){ ?>
+                                    <?php if($arrUserSession['username'] != ADMINUSERNAME ){ ?>
                                         <div class="pull-left">
-                                            <?php if($userSession['user_type_id'] == 16 ){ ?>
-                                                <a href="<?= base_url()?>admin/certification-agency/update?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
+                                            <?php if($arrUserSession['user_type_id'] == 16 ){ ?>
+                                                <a href="<?= base_url()?>admin/certification-agency/update?id=<?= $arrUserSession['user_id']?>&user_type_id=<?= $arrUserSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
                                             <?php }else{ ?>
-                                                <a href="<?= base_url()?>admin/user/update-profile?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
+                                                <a href="<?= base_url()?>admin/user/update-profile?id=<?= $arrUserSession['user_id']?>&user_type_id=<?= $arrUserSession['user_type_id']?>" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i>  Edit Profile</a>
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
@@ -298,15 +300,15 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <?php if(!empty($userSession['profile_image'])){ ?>
-                            <img src="<?= base_url()?>assets/images/gallery/<?= $userSession['profile_image']?>" class="img-circle" alt="User Image">
+                        <?php if(!empty($arrUserSession['profile_image'])){ ?>
+                            <img src="<?= base_url()?>assets/images/gallery/<?= $arrUserSession['profile_image']?>" class="img-circle" alt="User Image">
                         <?php }else{ ?>
                             <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                         <?php } ?>
 <!--                        <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
                     </div>
                     <div class="pull-left info">
-                        <p><?= !empty($userSession )?ucfirst($userSession ['username']):'Admin' ?></p>
+                        <p><?= !empty($arrUserSession )?ucfirst($arrUserSession ['username']):'Admin' ?></p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -338,7 +340,7 @@
                     <li>
                         <a href="<?= base_url()?>admin/bid">
                             <i class="fa fa-th"></i> <span>Bids</span>
-                            <?php if($userSession['username'] == 'adminmaster'){ ?>
+                            <?php if($arrUserSession['username'] == 'adminmaster'){ ?>
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-blue">
                                         <?= count($this->Bid->getBidByNotView())?>
@@ -350,7 +352,7 @@
                     <li>
                         <a href="<?= base_url()?>admin/post-requirement">
                             <i class="fa fa-laptop"></i> <span>Post Requirements</span>
-                            <?php if($userSession['username'] == 'adminmaster'){ ?>
+                            <?php if($arrUserSession['username'] == 'adminmaster'){ ?>
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-yellow">
                                         <?= count($this->PostRequirement->getPostRequirementByNotView())?></small>
@@ -358,7 +360,7 @@
                             <?php } ?>
                         </a>
                     </li>
-                    <?php if( $userSession['username'] == 'adminmaster'){ ?>
+                    <?php if( $arrUserSession['username'] == 'adminmaster'){ ?>
                             <li>
                                 <a href="<?= base_url()?>admin/product">
                                     <i class="fa fa-cubes"></i> <span>Product</span>
@@ -420,51 +422,59 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="<?= ( 'user-products' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/user-products">
-                                        <i class="fa fa-circle-o"></i> <span>User Products</span>
-                                    </a>
-                                </li>
-                                <li class="<?= ( 'user-crops' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/user-crops">
-                                        <i class="fa fa-circle-o"></i> <span>Crop Inspections</span>
-                                    </a>
-                                </li>
-                                <li class="<?= ( 'user-soils' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/user-soils">
-                                        <i class="fa fa-circle-o"></i> <span>Soils</span>
-                                    </a>
-                                </li>
-                                <li class="<?= ( 'user-micro-nutrients' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/user-micro-nutrients">
-                                        <i class="fa fa-circle-o"></i> <span>Micro Nutrient</span>
-                                    </a>
-                                </li>
-                                <li class="<?= ( 'product' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/product">
-                                        <i class="fa fa-circle-o"></i> <span>Input and Organic Manure</span>
-                                    </a>
-                                </li>
-                                <li class="<?= ( 'product' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/product">
-                                        <i class="fa fa-circle-o"></i> <span>E-Commerce Organic Input</span>
-                                    </a>
-                                </li>
-                                <li class="<?= ( 'product' == $this->uri->segment(3) ) ? 'active' : '' ?>">
-                                    <a href="<?= base_url() ?>admin/user/product">
-                                        <i class="fa fa-circle-o"></i> <span>E-Commerce Shops</span>
-                                    </a>
-                                </li>
+                                <?php if( ( ADMINUSERNAME ==  $arrUserSession['username'] ) || ( true == in_array( $arrUserSession['user_type_id'] , $arrUserTypeWithProduct ) ) ) { ?>
+                                    <li class="<?= ( 'user-products' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url() ?>admin/user/user-products">
+                                            <i class="fa fa-circle-o"></i> <span>User Products</span>
+                                        </a>
+                                    </li>
+                                <?php } ?>    
+                                <?php if( ( ADMINUSERNAME ==  $arrUserSession['username'] ) || ( true == in_array( $arrUserSession['user_type_id'] , $arrUserTypeOtherThenProduct ) ) ) { ?>
+                                    <li class="<?= ( 'user-crops' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url() ?>admin/user/user-crops">
+                                            <i class="fa fa-circle-o"></i> <span>Crop Inspections</span>
+                                        </a>
+                                    </li>
+                                    <li class="<?= ( 'user-soils' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url() ?>admin/user/user-soils">
+                                            <i class="fa fa-circle-o"></i> <span>Soils</span>
+                                        </a>
+                                    </li>
+                                    <li class="<?= ( 'user-micro-nutrients' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url() ?>admin/user/user-micro-nutrients">
+                                            <i class="fa fa-circle-o"></i> <span>Micro Nutrient</span>
+                                        </a>
+                                    </li>
+                                    <li class="<?= ( 'user-input-organic-manures' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url() ?>admin/user/user-input-organic-manures">
+                                            <i class="fa fa-circle-o"></i> <span>Input and Organic Manure</span>
+                                        </a>
+                                    </li>
+                                <?php } ?>    
+                                <?php if( ( ADMINUSERNAME ==  $arrUserSession['username'] ) || ( ORGANIC_INPUT == $arrUserSession['user_type_id'] ) ) { ?>
+                                    <li class="<?= ( 'user-organic-input-ecommerces' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url() ?>admin/user/user-organic-input-ecommerces">
+                                            <i class="fa fa-circle-o"></i> <span>E-Commerce Organic Input</span>
+                                        </a>
+                                    </li>
+                                <?php } ?>    
+                                <?php if( ( ADMINUSERNAME ==  $arrUserSession['username'] ) || ( SHOPS == $arrUserSession['user_type_id'] ) ) { ?>
+                                    <li class="<?= ( 'user-shop-ecommerces' == $this->uri->segment(3) ) ? 'active' : '' ?>">
+                                        <a href="<?= base_url()?>admin/user/user-shop-ecommerces">
+                                            <i class="fa fa-circle-o"></i> <span>E-Commerce Shops</span>
+                                        </a>
+                                    </li>
+                                <?php } ?>       
                             </ul>
 	                </li>
-                    <?php if( $userSession['username'] == ADMINUSERNAME ) { ?>
+                    <?php if( $arrUserSession['username'] == ADMINUSERNAME ) { ?>
                         <li>
                             <a href="<?= base_url()?>admin/organic-setting">
                                 <i class="fa fa-cog"></i> <span>Organic Setting</span>
                             </a>
                         </li>
                     <?php } ?>
-                    <?php if($userSession['username'] != ADMINUSERNAME ){ ?>
+                    <?php if($arrUserSession['username'] != ADMINUSERNAME ){ ?>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-edit"></i> <span>Profile</span>
@@ -473,10 +483,10 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <?php if($userSession['user_type_id'] == 16 ){ ?>
-                                        <li><a href="<?= base_url()?>admin/certification-agency/update?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>"><i class="fa fa-pencil"></i>  Edit Profile</a></li>
+                                <?php if($arrUserSession['user_type_id'] == 16 ){ ?>
+                                        <li><a href="<?= base_url()?>admin/certification-agency/update?id=<?= $arrUserSession['user_id']?>&user_type_id=<?= $arrUserSession['user_type_id']?>"><i class="fa fa-pencil"></i>  Edit Profile</a></li>
                                 <?php }else{ ?>
-                                        <li><a href="<?= base_url()?>admin/user/update-profile?id=<?= $userSession['user_id']?>&user_type_id=<?= $userSession['user_type_id']?>"><i class="fa fa-pencil"></i> Edit Profile</a></li>
+                                        <li><a href="<?= base_url()?>admin/user/update-profile?id=<?= $arrUserSession['user_id']?>&user_type_id=<?= $arrUserSession['user_type_id']?>"><i class="fa fa-pencil"></i> Edit Profile</a></li>
                                 <?php }?>
                                 <li><a href="<?= base_url()?>change-password"><i class="fa fa-unlock-alt"></i> Change Password</a></li>
 

@@ -110,6 +110,11 @@ $route['fetch-product-by-category-id'] = "backend/SellProductController/fetchPro
 $route['buy-sell/fetch-product-by-category-id'] = "BuySellController/fetchProductByCategoryId";
 $route['send-enquiry-sell-product'] = "BuySellController/sendEnquirySellProduct";
 
+$route['fetch-organic-input-ecommerce-add-to-cart'] = "UserController/fetchOrganicInputEcommerceAddToCart";
+
+$route['user-shop-ecommerces'] = "UserShopEcommercesController";  //done
+$route['fetch-shop-ecommerce-add-to-cart'] = "UserShopEcommercesController/fetchUserShopEcommerceAddToCart";  //done
+
 $route['add-to-cart'] = "UserController/addToCart";
 $route['remove-from-cart'] = "UserController/removeFromCart";
 $route['checkout-cart'] = "UserController/checkoutCart";
@@ -172,6 +177,15 @@ $route['admin/user/user-micro-nutrients/add'] = "backend/UserMicroNutrientsContr
 $route['admin/user/user-micro-nutrients/update'] = "backend/UserMicroNutrientsController/update";
 $route['admin/user/user-micro-nutrients/delete'] = "backend/UserMicroNutrientsController/delete";
 
+$route['admin/user/user-input-organic-manures'] = "backend/UserInputOrganicManureController";
+$route['admin/user/user-input-organic-manures/add'] = "backend/UserInputOrganicManureController/add";
+$route['admin/user/user-input-organic-manures/update'] = "backend/UserInputOrganicManureController/update";
+$route['admin/user/user-input-organic-manures/delete'] = "backend/UserInputOrganicManureController/delete";
+
+$route['admin/user/user-organic-input-ecommerces'] = "backend/UserOrganicInputEcommercesController";
+$route['admin/user/user-organic-input-ecommerces/add'] = "backend/UserOrganicInputEcommercesController/add";
+$route['admin/user/user-organic-input-ecommerces/update'] = "backend/UserOrganicInputEcommercesController/update";
+$route['admin/user/user-organic-input-ecommerces/delete'] = "backend/UserOrganicInputEcommercesController/delete";
 
 $route['admin/certification-agency'] = "backend/CertificationAgencyController";
 $route['admin/certification-agency/delete'] = "backend/CertificationAgencyController/delete";
@@ -184,6 +198,11 @@ $route['admin/organic-setting/update'] = "backend/OrganicSettingController/updat
 $route['admin/organic-setting/add'] = "backend/OrganicSettingController/add";
 
 
+$route['admin/user/user-shop-ecommerces'] = "backend/UserShopEcommercesController";
+$route['admin/user/user-shop-ecommerces/add'] = "backend/UserShopEcommercesController/add";
+$route['admin/user/user-shop-ecommerces/update'] = "backend/UserShopEcommercesController/update";
+$route['admin/user/user-shop-ecommerces/delete'] = "backend/UserShopEcommercesController/delete";
+
 $route['admin/user-registration-dashboard'] = "backend/UserController/userRegistrationDashborad";
 
 $route['orders'] = "backend/OrderController/index";
@@ -193,10 +212,18 @@ $route['transactions'] = "backend/TransactionController/index";
 
 $route['buyer-enquiry-list'] = "backend/SendEnquiryBuyerController/index";
 
+/**
+ * Ajax routing
+ */
+$route['fetch-products-by-category-id'] = 'OrganicPanditController/fetchProductsByCategoryId';
+
+
 /************* api routes *************/
 $route['api/user/login'] = "api/UserController/login";
 $route['api/user/fetch-user-type-list'] = "api/UserController/getUserTypeList";
 $route['api/user/registration'] = "api/UserController/registration";
+
+
 
 
 

@@ -16,17 +16,30 @@ class user_input_organic_ecommerce_model extends CI_Model {
     //put your code here
     public function __construct() {
         parent::__construct();
+        $arrSession = UserSession();
+        $this->arrUserSession = '';
+        if( true == $arrSession['success'] ) {
+            $this->arrUserSession = $arrSession['userData'];
+            if( ADMINUSERNAME == $this->arrUserSession['username'] ){
+                $this->arrUserSession['user_id'] = 1;
+            }
+        }
     }
 
     public function getUsersInputOrganicEcommerce() {
-        $this->db->order_by('id','DESC');
-        return $this->db->get('tbl_users_organic_input_ecommerce')->result_array();
+        $this->db->select( 'tuoie.*, tu.fullname, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_organic_input_ecommerce tuoie' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tuoie.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tuoie.user_type_id' );
+        $this->db->order_by( 'tuoie.id','DESC' );
+        return $this->db->get()->result_array();
     }
-    public function getUsersInputOrganicEcommerceByUserId( $userId ) {
-        $this->db->select('tuoie.*,tu.*');
-        $this->db->from('tbl_users_organic_input_ecommerce tuoie');
-        $this->db->join('tbl_users tu','tu.user_id = tuoie.user_id');
-        $this->db->where('tuoie.user_id',$userId);
+    public function getUsersInputOrganicEcommerceByUserId( $intUserId ) {
+        $this->db->select( 'tuoie.*, tu.*, tut.name as user_type_name' );
+        $this->db->from( 'tbl_users_organic_input_ecommerce tuoie' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tuoie.user_id' );
+        $this->db->join( 'tbl_user_type tut', 'tut.id = tuoie.user_type_id' );
+        $this->db->where( 'tuoie.user_id', $intUserId );
         return $this->db->get()->result_array();
     }
     
@@ -50,27 +63,41 @@ class user_input_organic_ecommerce_model extends CI_Model {
         return $this->db->get('tbl_users_organic_input_ecommerce')->result_array();
     }
     
-    public function getUsersInputOrganicEcommerceById( $id ) {
-        $this->db->where('id',$id);
+    public function getUsersInputOrganicEcommerceById( $intOrganicInputEcommerceId ) {
+        $this->db->where( 'id', $intOrganicInputEcommerceId );
         return $this->db->get('tbl_users_organic_input_ecommerce')->row_array();
     }
-    public function insert($data){
-        $this->db->insert('tbl_users_organic_input_ecommerce', $data);
+    public function insert( $arrInsertData ){
+        $arrInsertData['updated_at'] = CURRENT_DATETIME;
+        if( true == isset( $this->arrUserSession['user_id'] ) ) {
+            $arrInsertData['created_by'] = $this->arrUserSession['user_id'];
+            $arrInsertData['updated_by'] = $this->arrUserSession['user_id'];
+        } else {
+            $arrInsertData['created_by'] = $arrInsertData['user_id'];
+            $arrInsertData['updated_by'] = $arrInsertData['user_id'];
+        }
+        
+        $this->db->insert( 'tbl_users_organic_input_ecommerce', $arrInsertData );
         $last_id = $this->db->insert_id();
         return $last_id;
     }
-    public function update($updateData){
-        $this->db->where('id',$updateData['id']);
-        $this->db->update('tbl_users_organic_input_ecommerce',$updateData);
+    public function update( $arrUpdateData ){
+        $arrUpdateData['updated_at'] = CURRENT_DATETIME;
+        if( true == isset( $this->arrUserSession['user_id'] ) ) { 
+            $arrUpdateData['updated_by'] = $this->arrUserSession['user_id'];
+        } 
+        
+        $this->db->where('id',$arrUpdateData['id']);
+        $this->db->update('tbl_users_organic_input_ecommerce',$arrUpdateData);
         if($this->db->affected_rows()){
             return true;
         }else{
             return false;
         }
     }
-    public function updateByUserId($updateData){
-        $this->db->where('user_id',$updateData['user_id']);
-        $this->db->update('tbl_users_organic_input_ecommerce',$updateData);
+    public function updateByUserId($arrUpdateData){
+        $this->db->where('user_id',$arrUpdateData['user_id']);
+        $this->db->update('tbl_users_organic_input_ecommerce',$arrUpdateData);
         if($this->db->affected_rows()){
             return true;
         }else{

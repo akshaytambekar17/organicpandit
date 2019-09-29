@@ -87,8 +87,8 @@ define('CERTIFICATION_AGENICES',16);
 define('RESTAURANTS',17);
 define('NGO',18);
 
-//define('MERCHANT_KEY','O1D3HUYIC3');
-//define('SALT','RGODULJ8YB');
+define('TEST_MERCHANT_KEY','O1D3HUYIC3');
+define('TEST_SALT','RGODULJ8YB');
 define('MERCHANT_KEY','64KVCDORC9');
 define('SALT','F9GOZVJS1N');
 
@@ -104,5 +104,9 @@ define('TRANSACTION_DATE_API','transaction_date_api');
 define('REFUND','refund');
 define('PAYOUT','payout');
 
+
+define( 'CART_ORDER_TYPE_1', 'BP' );
+define( 'CART_ORDER_TYPE_2', 'EOI' );
+define( 'CART_ORDER_TYPE_3', 'ES' );
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

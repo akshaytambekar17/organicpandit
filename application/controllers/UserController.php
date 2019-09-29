@@ -715,13 +715,16 @@ class UserController extends MY_Controller {
             $data['search_brand'] = isset($post['search_brand']) ? $post['search_brand'] : '';
             if ($this->form_validation->run('search-user-form') == TRUE) {
                 $arrDetails = $post;
-                if (ORGANIC_INPUT == $arrDetails['user_type_id']) {
+                if( ORGANIC_INPUT == $arrDetails['user_type_id']) {
                     $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand($arrDetails);
                 } else {
                     $arrmixUserSearchList = $this->User->getUserBysearchKey($post);
                 }
                 $data['search_user_list'] = $arrmixUserSearchList;
-                $data['city_id_hidden'] = $arrDetails['city_id'];
+                $data['city_id_hidden'] = '';
+                if( true == isset( $arrDetails['city_id'] ) && true == isIdVal( $arrDetails['city_id'] ) ) { 
+                    $data['city_id_hidden'] = $arrDetails['city_id'];
+                }
                 $this->frontendLayout($data);
             } else {
                 $this->frontendLayout($data);
@@ -886,7 +889,7 @@ class UserController extends MY_Controller {
         } else {
             $partnerUserIdHidden = '';
         }
-
+        
         $html = array();
         if (!empty($userDetails)) {
             foreach ($userDetails as $value) {
@@ -955,42 +958,83 @@ class UserController extends MY_Controller {
 
     public function addToCart() {
         $arrPost = $this->input->post();
-        $intSellProductId = $arrPost['sell_product_id'];
-	    $intProductId = $arrPost['product_id'];
-        $intPrice = $arrPost['price'];
-        $intQuantity = CART_QUANTITY;
-        $strProductName = $arrPost['product_name'];
+        
+        $strCartOrderType = $arrPost['cart_order_type'];
+        if( CART_ORDER_TYPE_1 == $strCartOrderType ) {
+            $intSellProductId = $arrPost['sell_product_id'];
+            $intProductId = $arrPost['product_id'];
+            $intPrice = $arrPost['price'];
+            $intQuantity = CART_QUANTITY;
+            $strProductName = $arrPost['product_name'];
+            $intId = $intProductId . '_' .CART_ORDER_TYPE_1;
+            $arrOptions = array(    
+                                'cart_order_type' => CART_ORDER_TYPE_1,
+                                'product_id' => $intProductId,
+                                'sell_product_id' => $intSellProductId   
+                            );
+            $strCartSuccessMessage = 'Your product <b>' . $strProductName . '</b> has been added to cart.';
+            $strCartFailureMessage = 'Product <b>' . $strProductName . '</b>  has already added in cart.'; 
+        } else if( CART_ORDER_TYPE_2  == $strCartOrderType ) {
+            $intOrganicInputEcommerceId = $arrPost['organic_input_ecommerce_id'];
+            $intId = $intOrganicInputEcommerceId  . '_' . CART_ORDER_TYPE_2;
+            $intQuantity = $arrPost['qunatity'];
+            $intPrice = $arrPost['price'];
+            $strProductName = $arrPost['brand'];
+            $arrOptions = array(    
+                                'cart_order_type' => CART_ORDER_TYPE_2,
+                                'organic_input_ecommerce_id' => $intOrganicInputEcommerceId,
+                                'category_id' => $arrPost['category_id'], 
+                                'sub_category_id' => $arrPost['sub_category_id'], 
+                                'brand' => $arrPost['brand'], 
+                            );
+            
+            $strCartSuccessMessage = 'Your E-Commerce product  has been added to cart.';
+            $strCartFailureMessage = 'This product has already added in cart.'; 
+        } else if( CART_ORDER_TYPE_3  == $strCartOrderType ) {
+            $arrUserEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
+            $intUserEcommerceId = $arrPost['user_ecommerce_id'];
+            $intId = $intUserEcommerceId  . '_' . CART_ORDER_TYPE_2;
+            $intQuantity = $arrPost['qunatity'];
+            $intPrice = $arrUserEcommerceDetails['price'];
+            $strProductName = $arrPost['product_name'];
+            $arrOptions = array(    
+                                'cart_order_type' => CART_ORDER_TYPE_3,
+                                'user_ecommerce_id' => $intUserEcommerceId,
+                                'category_id' => $arrPost['category_id'], 
+                                'product_id' => $arrPost['product_id'], 
+                            );
+            
+            $strCartSuccessMessage = 'Your product <b>' . $strProductName . '</b> has been added to cart.';
+            $strCartFailureMessage = 'Product <b>' . $strProductName . '</b>  has already added in cart.'; 
+        }
 
         $arrmixCartList = fetchCartDetails();
         $boolCart = true;
         if( true == isArrVal( $arrmixCartList['cart_list'] ) ) {
             foreach( $arrmixCartList['cart_list'] as $arrCartDetais ) {
-                if( $arrCartDetais['id'] == $intProductId ){
+                if( $arrCartDetais['id'] == $intId ){
                     $boolCart = false;
                 }
             }
         }
 
         if( true == $boolCart ) {
-            $arrCartData = array( 'id'          => $intProductId,
+            $arrCartData = array( 'id'          => $intId,
                                   'qty'         => $intQuantity,
                                   'price'       => $intPrice,
-                                  'price'       => $intPrice,
                                   'name'        => $strProductName,
-                                  'options'     => array('product_id'  => $intProductId,
-	                                                     'sell_product_id' => $intSellProductId
-	                                                    )
+                                  'options'     => $arrOptions
                             );
             if( true == $this->cart->insert( $arrCartData ) ) {
                 $arrResult['success'] = true;
-                $arrResult['message'] = 'Your product <b>' . $strProductName . '</b> has been added to cart';
+                $arrResult['message'] = $strCartSuccessMessage;
             } else {
                 $arrResult['success'] = false;
                 $arrResult['message'] = 'Something went wrong. We cannot add product to cart.';
             }
         } else {
             $arrResult['success'] = false;
-            $arrResult['message'] = 'Product <b>' . $strProductName . '</b>  has already added in cart.';
+            $arrResult['message'] = $strCartFailureMessage ;
         }
 
         echo json_encode( $arrResult );
@@ -1009,7 +1053,12 @@ class UserController extends MY_Controller {
 
         if( true == $this->cart->update( $arrCartData ) ) {
             $arrResult['success'] = true;
-            $arrResult['message'] = 'Your product <b>' . $strProductName . '</b> has been removed from cart';
+            if( true == isStrVal( $strProductName ) ) {
+                $arrResult['message'] = 'Your product <b>' . $strProductName . '</b> has been removed from cart';
+            } else {
+                $arrResult['message'] = 'Your product has been removed from cart';
+            }
+            
         } else {
             $arrResult['success'] = false;
             $arrResult['message'] = 'Something went wrong. We cannot remove product from cart.';
@@ -1046,7 +1095,7 @@ class UserController extends MY_Controller {
 
                 $strTxnId = 'TXNID' . $arrPost['user_id'] . $arrPost['user_type_id'] . strtotime( CURRENT_DATETIME );
                 $arrPaymentDetails = array( 'txnid'         => $strTxnId,
-                                            'amount'        => sprintf("%.2f", $arrPost['total_amount']),
+                                            'amount'        => sprintf("%.2f", $arrmixCartList['total']),
                                             'firstname'     => $arrPost['fullname'],
                                             'email'         => $arrPost['email_id'],
                                             'phone'         => $arrPost['mobile_no'],
@@ -1087,7 +1136,8 @@ class UserController extends MY_Controller {
         $arrUserSession = $arrSession['userData'];
         $arrPost = $this->input->post();
 	    if( true == isArrVal( $arrPost ) ) {
-		    $easebuzzObj = new Easebuzz( MERCHANT_KEY, SALT, paymentGatewayEnviroment() );
+                    $arrPaymentGatewayConfigDetails = getPaymentGatewayConfigDetails();
+		    $easebuzzObj = new Easebuzz( $arrPaymentGatewayConfigDetails['key'], $arrPaymentGatewayConfigDetails['salt'], paymentGatewayEnviroment() );
 		    $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
 		    $arrmixResult = json_decode( $arrResult );
 		    if( isVal( $arrmixResult->status ) ) {
@@ -1125,12 +1175,14 @@ class UserController extends MY_Controller {
 			         * To make the out of stock
 			         ***/
 			        $arrobjproductDetails = json_decode( $arrOrderDetails['product_details'] );
-			        foreach( $arrobjproductDetails as $objProductDetails ) {
-				        $arrSellProductData = array(
-					        'sell_product_id' => $objProductDetails->options->sell_product_id,
-					        'stock' => OUT_STOCK
-				        );
-				        $this->SellProduct->update( $arrSellProductData );
+                                foreach( $arrobjproductDetails as $objProductDetails ) {
+                                        if( CART_ORDER_TYPE_1 == $objProductDetails->options->cart_order_type ) {
+                                            $arrSellProductData = array(
+                                                    'sell_product_id' => $objProductDetails->options->sell_product_id,
+                                                    'stock' => OUT_STOCK
+                                            );
+                                            $this->SellProduct->update( $arrSellProductData );
+                                        }
 			        }
 
 			        $data['boolStatus'] = true;
@@ -1182,4 +1234,24 @@ class UserController extends MY_Controller {
         $this->frontendLayout($data);
 
     }
+    
+    public function fetchOrganicInputEcommerceAddToCart() {
+        $arrPost = $this->input->post();
+
+        $arrOrganicInputEcommerceDetails = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceById( $arrPost['organic_input_ecommerce_id'] );
+	    
+        $arrData['arrEcommerceCategory'] = getEcommerceCategory();
+        $arrData['arrEcommerceSubCategory'] = getEcommerceSubCategory();
+        $arrData['arrOrganicInputEcommerceDetails'] = $arrOrganicInputEcommerceDetails;
+
+        echo $this->load->view( 'modal-box/modal-organic-input-ecommerce-add-to-cart', $arrData );
+        
+    }
+    
+    
+    
+    
+    
+    
+    
 }

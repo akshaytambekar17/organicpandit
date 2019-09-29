@@ -105,3 +105,30 @@ ALTER TABLE `tbl_product`
 --
 ALTER TABLE `tbl_product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+
+
+
+/***
+** New sql query 24-09-2019
+***/
+
+ALTER TABLE `tbl_users` ADD `created_by` INT(11) NOT NULL AFTER `updated_at`, ADD `updated_by` INT NOT NULL AFTER `created_by`;
+
+ALTER TABLE `tbl_users_organic_input_ecommerce` ADD `created_by` INT(11) NOT NULL AFTER `updated_at`, ADD `updated_by` INT(11) NOT NULL AFTER `created_by`;
+
+ALTER TABLE `tbl_users_organic_input_ecommerce` ADD `user_type_id` INT(4) NOT NULL AFTER `user_id`;
+
+UPDATE `tbl_users_organic_input_ecommerce` SET user_type_id = 7;
+
+ALTER TABLE `tbl_users_micro_nutrient` ADD `created_by` INT(11) NOT NULL AFTER `percentage`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;
+
+ALTER TABLE `tbl_users_products` ADD `user_type_id` INT(4) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `tbl_users_products` ADD `created_by` INT(11) NOT NULL AFTER `images`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;
+
+ALTER TABLE `tbl_users_crop` ADD `created_by` INT(11) NOT NULL AFTER `other_details`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;
+
+ALTER TABLE `tbl_users_soil_details` ADD `created_by` INT(11) NOT NULL AFTER `percentage`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;
+
+ALTER TABLE `tbl_users_input_organic` ADD `created_by` INT(1) NOT NULL AFTER `other_details`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;

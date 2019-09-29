@@ -32,7 +32,7 @@ class UserCropsController extends MY_Controller {
         
         $arrData['backend'] = true;
         $arrData['arrCropsList'] = $this->Crop->getActiveCrops();
-        $arrData['arrUsersList'] = $this->User->getUsersByUserType();
+        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
         $arrData['strTitle'] = 'Add Crop';
         $arrData['title'] = 'Add Crop';
@@ -42,19 +42,8 @@ class UserCropsController extends MY_Controller {
 
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
-            if( ADMINUSERNAME == $this->arrUserSession['username'] ) {
-                $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-            }
-            $this->form_validation->set_rules('crop_id', 'Crop', 'trim|required');
-            $this->form_validation->set_rules('area', 'Area', 'trim|required');
-            $this->form_validation->set_rules('date_sown', 'Date of Sown', 'trim|required');
-            $this->form_validation->set_rules('date_harvest', 'Date of Harvest', 'trim|required');
-            $this->form_validation->set_rules('date_inspection', 'Date of Inspection', 'trim|required');
-            $this->form_validation->set_rules('inspector_name', 'Crop Inspector', 'trim|required');
-            $this->form_validation->set_rules('crop_condition', 'Crop Condition', 'trim|required');
-            $this->form_validation->set_rules('other_details', 'Other Details', 'trim|required');
             
-            if( true == $this->form_validation->run() ) {
+            if( true == $this->form_validation->run( 'user-crop-form' ) ) {
                 $arrDetails = $arrPost;
                 
                 $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
@@ -96,7 +85,7 @@ class UserCropsController extends MY_Controller {
         }
         $arrData['backend'] = true;
         $arrData['arrCropsList'] = $this->Crop->getActiveCrops();
-        $arrData['arrUsersList'] = $this->User->getUsersByUserType();
+        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
         $arrData['arrUserCropDetails'] = $arrUserCropDetails;
         $arrData['strTitle'] = 'Update Crop';
@@ -107,19 +96,8 @@ class UserCropsController extends MY_Controller {
 
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
-            if( ADMINUSERNAME == $this->arrUserSession['username'] ) {
-                $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-            }
-            $this->form_validation->set_rules('crop_id', 'Crop', 'trim|required');
-            $this->form_validation->set_rules('area', 'Area', 'trim|required');
-            $this->form_validation->set_rules('date_sown', 'Date of Sown', 'trim|required');
-            $this->form_validation->set_rules('date_harvest', 'Date of Harvest', 'trim|required');
-            $this->form_validation->set_rules('date_inspection', 'Date of Inspection', 'trim|required');
-            $this->form_validation->set_rules('inspector_name', 'Crop Inspector', 'trim|required');
-            $this->form_validation->set_rules('crop_condition', 'Crop Condition', 'trim|required');
-            $this->form_validation->set_rules('other_details', 'Other Details', 'trim|required');
             
-            if( true == $this->form_validation->run() ) {
+            if( true == $this->form_validation->run( 'user-crop-form' ) ) {
                 
                 $arrDetails = $arrPost;
                 
