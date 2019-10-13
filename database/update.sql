@@ -132,3 +132,108 @@ ALTER TABLE `tbl_users_crop` ADD `created_by` INT(11) NOT NULL AFTER `other_deta
 ALTER TABLE `tbl_users_soil_details` ADD `created_by` INT(11) NOT NULL AFTER `percentage`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;
 
 ALTER TABLE `tbl_users_input_organic` ADD `created_by` INT(1) NOT NULL AFTER `other_details`, ADD `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `created_by`, ADD `updated_by` INT(11) NOT NULL AFTER `created_at`, ADD `updated_at` DATETIME NOT NULL AFTER `updated_by`;
+
+ALTER TABLE `tbl_user_ecommerces` CHANGE `available_quantity` `max_quantity` INT(11) NOT NULL;
+
+ALTER TABLE `tbl_user_ecommerces` ADD `min_quantity` INT(11) NOT NULL AFTER `max_quantity`, ADD `delivery_type` VARCHAR(200) NULL AFTER `min_quantity`, ADD `product_unit_id` INT(5) NOT NULL AFTER `delivery_type`, ADD `unit_value` VARCHAR(150) NOT NULL AFTER `product_unit_id`;
+
+--
+-- Table structure for table `tbl_meta_data`
+--
+
+CREATE TABLE `tbl_meta_data` (
+  `meta_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_type_id` int(11) NOT NULL,
+  `user_ecommerce_id` int(11) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` text NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_meta_data`
+--
+ALTER TABLE `tbl_meta_data`
+  ADD PRIMARY KEY (`meta_id`),
+  ADD KEY `fk_meta_user_ecommerce_id` (`user_ecommerce_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_meta_data`
+--
+ALTER TABLE `tbl_meta_data`
+  MODIFY `meta_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_meta_data`
+--
+ALTER TABLE `tbl_meta_data`
+  ADD CONSTRAINT `fk_meta_user_ecommerce_id` FOREIGN KEY (`user_ecommerce_id`) REFERENCES `tbl_user_ecommerces` (`user_ecommerce_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_product_units`
+--
+
+CREATE TABLE `tbl_product_units` (
+  `product_unit_id` int(11) NOT NULL,
+  `unit_name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_product_units`
+--
+
+INSERT INTO `tbl_product_units` (`product_unit_id`, `unit_name`, `created_at`, `updated_at`) VALUES
+(1, 'GM', '2019-10-13 12:02:33', '2019-10-13 12:02:33'),
+(2, 'KG', '2019-10-13 12:02:33', '2019-10-13 12:02:33'),
+(3, 'LITER', '2019-10-13 12:20:21', '2019-10-13 12:20:21'),
+(4, 'UNIT', '2019-10-13 12:20:21', '2019-10-13 12:20:21'),
+(5, 'PIECE', '2019-10-13 12:20:21', '2019-10-13 12:20:21'),
+(6, 'BUNCH', '2019-10-13 12:20:21', '2019-10-13 12:20:21'),
+(7, 'DOZEN', '2019-10-13 12:20:21', '2019-10-13 12:20:21'),
+(8, 'ML(Mili Liter)', '2019-10-13 12:21:15', '2019-10-13 12:21:15'),
+(9, 'WEEK(Subscription)', '2019-10-13 12:21:15', '2019-10-13 12:21:15');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_product_units`
+--
+ALTER TABLE `tbl_product_units`
+  ADD PRIMARY KEY (`product_unit_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_product_units`
+--
+ALTER TABLE `tbl_product_units`
+  MODIFY `product_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+COMMIT;
+    

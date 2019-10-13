@@ -117,3 +117,7 @@ function printLastSql() {
     $ci = & get_instance();
     printDie( $ci->db->last_query() );
 }
+
+function printFormValidationError() {
+    printDie( validation_errors() );
+}

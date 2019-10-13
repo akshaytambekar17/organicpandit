@@ -54,11 +54,17 @@ class user_ecommerces_model extends CI_Model {
     }
 
     public function getUserEcommerceByUserEcommerceId( $intUserEcommerceId ) {
-        $this->db->select( 'tue.*, tuei.*, tp.name as product_name, tcp.name as category_name, tu.fullname, tut.name as user_type_name' );
+        $this->db->select( 
+                        'tue.*, '
+                        . 'tuei.*, tp.name as product_name, '
+                        . 'tcp.name as category_name, '
+                        . 'tu.fullname, tut.name as user_type_name, '
+                        . 'tmd.slug, tmd.meta_title, tmd.meta_keyword, tmd.meta_description' );
         $this->db->from( 'tbl_user_ecommerces tue' );
         $this->db->join( 'tbl_user_ecommerce_images tuei', 'tuei.user_ecommerce_id = tue.user_ecommerce_id' );
         $this->db->join( 'tbl_product tp', 'tp.id = tue.product_id' );
         $this->db->join( 'tbl_product_category tcp', 'tcp.id = tue.category_id' );
+        $this->db->join( 'tbl_meta_data tmd', 'tmd.user_ecommerce_id = tue.user_ecommerce_id' ,'left' );
         $this->db->join( 'tbl_users tu', 'tu.user_id = tue.user_id', 'left' );
         $this->db->join( 'tbl_user_type tut', 'tut.id = tue.user_type_id', 'left' );
         $this->db->where( 'tue.user_ecommerce_id', $intUserEcommerceId );

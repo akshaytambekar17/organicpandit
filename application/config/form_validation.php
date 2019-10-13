@@ -657,9 +657,14 @@ $config = array(
                         'rules' => 'required|numeric'
                 ),
                 array(
-                        'field' => 'available_quantity',
-                        'label' => 'Available Quantity',
-                        'rules' => 'required||numeric'
+                        'field' => 'min_quantity',
+                        'label' => 'Min Quantity',
+                        'rules' => 'required|numeric'
+                ),
+                array(
+                        'field' => 'product_unit_id',
+                        'label' => 'Unit',
+                        'rules' => 'required|numeric'
                 ),
                 array(
                         'field' => 'user_ecommerce_status',

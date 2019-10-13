@@ -38,6 +38,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model('send_enquiry_buyer_model','SendEnquiryBuyer');
         $this->load->model('user_ecommerces_model','UserEcommerces');
         $this->load->model('user_ecommerce_images_model','UserEcommerceImages');
+        $this->load->model('product_units_model','ProductUnits');
+        $this->load->model('meta_data_model','MetaData');
         
     }
 

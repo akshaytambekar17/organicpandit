@@ -85,7 +85,7 @@ max-height: 70px;
 .accBox{
     text-align: center;
     padding: 10px 25px;
-    
+
 }
 .img-circle{
     border-radius: 50%;
@@ -380,8 +380,7 @@ table, th, td {
     padding: 25px 10px;
 }
 
-/******** Organic Input Ecommerce Detaills *********/
-.select2-container--default .select2-selection--single{
-    height:37px !important;
+.modal-cart {
+    color: black;
 }
 
