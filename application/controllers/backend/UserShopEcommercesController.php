@@ -65,7 +65,7 @@ class UserShopEcommercesController extends MY_Controller {
 //            }
             if( true == $this->form_validation->run( 'user-shop-ecommerce-form' ) ) {
                 $arrDetails = $arrPost;
-                if( true== isset( $_FILES['primary_image']['name'] ) ) {
+                if( true == isset( $_FILES['primary_image']['name'] ) && true == isStrVal( $_FILES['primary_image']['name'] ) ) {
                     $config['upload_path'] = './assets/images/product_images/';
                     $config['allowed_types'] = 'gif|jpg|png|jpeg';
                     $config['max_size'] = 2048;
@@ -123,11 +123,14 @@ class UserShopEcommercesController extends MY_Controller {
                         return redirect( 'admin/user/user-shop-ecommerces', 'refresh' );
                     } else {
                         $this->session->set_flashdata( 'Error', 'Failed to add Shop Product' );
+                        $arrData['strFlashError'] = 'Failed to add Shop Products';
                         $this->backendLayout( $arrData );
                     }
                 } else {
-                        $this->session->set_flashdata('Error', $strError );
-                        $this->backendLayout( $arrData );
+                    
+                    $this->session->set_flashdata('Error', $strError );
+                    $arrData['strFlashError'] = $strError;
+                    $this->backendLayout( $arrData );
                 }
             } else {
             	$this->backendLayout( $arrData );
