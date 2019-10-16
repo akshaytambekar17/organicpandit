@@ -236,4 +236,37 @@ ALTER TABLE `tbl_product_units`
 ALTER TABLE `tbl_product_units`
   MODIFY `product_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
-    
+
+
+/**
+* 16-October-2019
+*/
+ALTER TABLE `tbl_users` ADD `country_id` INT(11) NOT NULL AFTER `landline_no`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ci_sessions`
+--
+
+CREATE TABLE `ci_sessions` (
+  `session_id` varchar(255) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `last_activity` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `user_data` blob NOT NULL,
+  `user_agent` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `ci_sessions`
+--
+ALTER TABLE `ci_sessions`
+  ADD PRIMARY KEY (`session_id`),
+  ADD KEY `ci_sessions_timestamp` (`last_activity`);
+COMMIT;
+
+UPDATE tbl_users SET country_id = 101    

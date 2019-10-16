@@ -216,6 +216,7 @@ $route['buyer-enquiry-list'] = "backend/SendEnquiryBuyerController/index";
  * Ajax routing
  */
 $route['fetch-products-by-category-id'] = 'OrganicPanditController/fetchProductsByCategoryId';
+$route['fetch-states-by-country-id'] = 'OrganicPanditController/fetchStatesByCountryId';
 
 
 /************* api routes *************/

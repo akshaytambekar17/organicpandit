@@ -342,3 +342,36 @@ function getUserTypesOtherThenProducts() {
      **/
     return [ FARMER, FPO ];
 }
+
+function getCartProductDataWithBoolCartOrderType( $arrCartProductList ) {
+
+    if( true == isArrVal( $arrCartProductList ) ) {
+        $boolCartOrderType1 = false;
+        $boolCartOrderType2 = false;
+        $boolCartOrderType3 = false;
+        
+        foreach( (array) $arrCartProductList as $arrCartProductDetails ) {
+            $arrCartProductDetails = (array) $arrCartProductDetails;
+            $arrCartProductOptionsDetails = (array) $arrCartProductDetails['options'];
+            
+            if( CART_ORDER_TYPE_1 == $arrCartProductOptionsDetails['cart_order_type'] ) {
+                $boolCartOrderType1 = true;
+            } else if( CART_ORDER_TYPE_2 == $arrCartProductOptionsDetails['cart_order_type'] ) {
+                $boolCartOrderType2 = true;
+            } else if( CART_ORDER_TYPE_3 == $arrCartProductOptionsDetails['cart_order_type'] ) {
+                $boolCartOrderType3 = true;
+            }
+            
+            $arrCartProductData =  $arrCartProductDetails;
+            $arrCartProductData['options'] = $arrCartProductOptionsDetails;
+            $arrmixCartProductList['cart_product_list'][] = $arrCartProductData;
+        }
+        $arrmixCartProductList['is_cart_order_type_1'] = $boolCartOrderType1;
+        $arrmixCartProductList['is_cart_order_type_2'] = $boolCartOrderType2;
+        $arrmixCartProductList['is_cart_order_type_3'] = $boolCartOrderType3;
+
+        return $arrmixCartProductList;
+    } else {
+        return array();
+    }
+}

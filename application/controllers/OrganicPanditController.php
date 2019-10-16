@@ -18,24 +18,44 @@ class OrganicPanditController extends MY_Controller {
         printDie( "This is Common Controller" );
     }
     
-    public function fetchDistrictListByStateId() {
-//        $arrPost = $this->input->post();
-//        $arrDistrictsList = $this->Districts->getDistrictByStateId( $arrPost['state_id'] );
-//        $intDistrictId = isset( $arrPost['hidden_district_id'] ) ? $arrPost['hidden_district_id'] : '';
-//        
-//        $strHtml = array();
-//        if( true == isArrVal( $arrDistrictsList ) ) {
-//            foreach( $arrDistrictsList as $arrDistrictDetails ) {
-//                $strSelected = '';
-//                if( $intDistrictId == $arrDistrictDetails['district_id']) {
-//                    $strSelected = 'selected="selected"';
-//                }
-//                
-//                $data2 = ' <option value="' . $arrDistrictDetails['district_id'] . '" ' . set_select( 'district_id', $arrDistrictDetails['district_id'] ) . ' ' . $strSelected . ' > ' . $arrDistrictDetails['district_name'] . '</option>';
-//                $strHtml[] = $data2;
-//            }
-//        }
-//        echo json_encode( $strHtml );
+    public function fetchCitiesByStateId() {
+        $arrPost = $this->input->post();
+        $arrCitiesList = $this->Districts->getCityByStateId( $arrPost['state_id'] );
+        $intCityId = isset( $arrPost['hidden_city_id'] ) ? $arrPost['hidden_city_id'] : '';
+        
+        $strHtml = array();
+        if( true == isArrVal( $arrCitiesList ) ) {
+            foreach( $arrCitiesList as $arrCityDetails ) {
+                $strSelected = '';
+                if( $intCityId == $arrCityDetails['id']) {
+                    $strSelected = 'selected="selected"';
+                }
+                
+                $strHtmlData = ' <option value="' . $arrCityDetails['id'] . '" ' . set_select( 'city_id', $arrCityDetails['id'] ) . ' ' . $strSelected . ' > ' . $arrCityDetails['name'] . '</option>';
+                $strHtml[] = $strHtmlData;
+            }
+        }
+        echo json_encode( $strHtml );
+    }
+    
+    public function fetchStatesByCountryId() {
+        $arrPost = $this->input->post();
+        $arrStatesList = $this->State->getStatesByCountryId( $arrPost['state_id'] );
+        $intStateId = isset( $arrPost['hidden_state_id'] ) ? $arrPost['hidden_state_id'] : '';
+        
+        $strHtml = array();
+        if( true == isArrVal( $arrStatesList ) ) {
+            foreach( $arrStatesList as $arrStateDetails ) {
+                $strSelected = '';
+                if( $intStateId == $arrStateDetails['id']) {
+                    $strSelected = 'selected="selected"';
+                }
+                
+                $strHtmlData = ' <option value="' . $arrStateDetails['id'] . '" ' . set_select( 'state_id', $arrStateDetails['id'] ) . ' ' . $strSelected . ' > ' . $arrStateDetails['name'] . '</option>';
+                $strHtml[] = $strHtmlData;
+            }
+        }
+        echo json_encode( $strHtml );
     }
     
     public function fetchProductsByCategoryId() {

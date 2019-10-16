@@ -21,9 +21,15 @@ class State_model extends CI_Model {
     public function getStates() {
         return $this->db->get('states')->result_array();
     }
+    
     public function getStateById($id) {
         $this->db->where('id',$id);
         return $this->db->get('states')->row_array();
+    }
+    
+    public function getStatesByCountryId( $intCountryId ) {
+        $this->db->where( 'country_id', $intCountryId );
+        return $this->db->get( 'states' )->result_array();
     }
     
     public function add($data){

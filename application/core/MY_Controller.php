@@ -23,6 +23,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('user_input_organic_model','UserInputOrganic');
         $this->load->model('user_input_organic_ecommerce_model','UserInputOrganicEcommerce');
         $this->load->model('user_certifications_model','UserCertifications');
+        $this->load->model('country_model','Country');
         $this->load->model('state_model','State');
         $this->load->model('city_model','City');
         $this->load->model('notifications_model','Notifications');
