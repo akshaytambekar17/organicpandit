@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="username" >Username</label>
-                            <input type="text" name="username"  class="form-control" id="username" placeholder="Username" value="<?= !empty($user_details['username'])?$user_details['username']:set_value('username') ?>">
+                            <input type="text" name="username"  class="form-control" id="username" placeholder="Username" value="<?= !empty($user_details['username'])?$user_details['username']:set_value('username') ?>" readonly="readonly">
                             <span class="has-error"><?php echo form_error('username'); ?></span>
                         </div>
                     </div>

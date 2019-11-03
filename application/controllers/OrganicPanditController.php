@@ -20,14 +20,14 @@ class OrganicPanditController extends MY_Controller {
     
     public function fetchCitiesByStateId() {
         $arrPost = $this->input->post();
-        $arrCitiesList = $this->Districts->getCityByStateId( $arrPost['state_id'] );
-        $intCityId = isset( $arrPost['hidden_city_id'] ) ? $arrPost['hidden_city_id'] : '';
+        $arrCitiesList = $this->City->getCitiesByStateId( $arrPost['state_id'] );
+        $intHiddenCityId = isset( $arrPost['hidden_city_id'] ) ? $arrPost['hidden_city_id'] : '';
         
         $strHtml = array();
         if( true == isArrVal( $arrCitiesList ) ) {
             foreach( $arrCitiesList as $arrCityDetails ) {
                 $strSelected = '';
-                if( $intCityId == $arrCityDetails['id']) {
+                if( $intHiddenCityId == $arrCityDetails['id']) {
                     $strSelected = 'selected="selected"';
                 }
                 
@@ -40,14 +40,14 @@ class OrganicPanditController extends MY_Controller {
     
     public function fetchStatesByCountryId() {
         $arrPost = $this->input->post();
-        $arrStatesList = $this->State->getStatesByCountryId( $arrPost['state_id'] );
-        $intStateId = isset( $arrPost['hidden_state_id'] ) ? $arrPost['hidden_state_id'] : '';
+        $arrStatesList = $this->State->getStatesByCountryId( $arrPost['country_id'] );
+        $intHiddenStateId = isset( $arrPost['hidden_state_id'] ) ? $arrPost['hidden_state_id'] : '';
         
         $strHtml = array();
         if( true == isArrVal( $arrStatesList ) ) {
             foreach( $arrStatesList as $arrStateDetails ) {
                 $strSelected = '';
-                if( $intStateId == $arrStateDetails['id']) {
+                if( $intHiddenStateId == $arrStateDetails['id']) {
                     $strSelected = 'selected="selected"';
                 }
                 

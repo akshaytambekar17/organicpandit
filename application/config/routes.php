@@ -156,6 +156,7 @@ $route['admin/user/user-list'] = "backend/UserController/userList";
 $route['admin/user/delete'] = "backend/UserController/delete";
 $route['admin/user/view'] = "backend/UserController/view";
 $route['admin/user/update-profile'] = "backend/UserController/updateProfile";
+$route['admin/user/add'] = "backend/UserController/add";
 
 $route['admin/user/user-products'] = "backend/UserProductsController";
 $route['admin/user/user-products/add'] = "backend/UserProductsController/add";
@@ -217,6 +218,8 @@ $route['buyer-enquiry-list'] = "backend/SendEnquiryBuyerController/index";
  */
 $route['fetch-products-by-category-id'] = 'OrganicPanditController/fetchProductsByCategoryId';
 $route['fetch-states-by-country-id'] = 'OrganicPanditController/fetchStatesByCountryId';
+$route['fetch-cities-by-state-id'] = 'OrganicPanditController/fetchCitiesByStateId';
+$route['fetch-registration-user-type-details'] = 'backend/UserController/fetchRegistrationUserTypeDetails';
 
 
 /************* api routes *************/

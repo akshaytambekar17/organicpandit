@@ -31,17 +31,42 @@ function validateQuantity( intQuantity ) {
     }
 
 }
-function getDistrictByState( intStateId ){
-    var intHiddenDistrictId = $("#js-hidden-district-id").val();
+
+function numberValidation( objEvent ){
+    if( ( objEvent.which != 46 || $( this ).val().indexOf('.') != -1 ) && ( objEvent.which < 48 || objEvent.which > 57 )  && objEvent.which != 8 ) {
+        objEvent.preventDefault();
+    }
+}
+
+function getCitiesByState( intStateId ) {
+    var intHiddenCityId = $("#js-hidden-city-id").val();
     $.ajax({
         type: "POST",
-        url:  getBaseUrl() + 'fetch-district-list-by-state-id',
-        data: { 'state_id' : intStateId, 'hidden_district_id' : intHiddenDistrictId },
+        url:  getBaseUrl() + 'fetch-cities-by-state-id',
+        data: { 'state_id' : intStateId, 'hidden_city_id' : intHiddenCityId },
         dataType: "html",
         success: function(result){
             var html = $.parseJSON(result);
-            $("#js-district-id").html('<option disabled selected> Select District</option>');
-            $("#js-district-id").append(html);
+            $( "#js-city-id" ).html('<option disabled selected> Select City</option>');
+            $( "#js-city-id" ).append(html);
+        }
+    });
+}
+
+function getStatesByCountry( intCountryId ) {
+    var intHiddenStateId = $("#js-hidden-state-id").val();
+    $.ajax({
+        type: "POST",
+        url:  getBaseUrl() + 'fetch-states-by-country-id',
+        data: { 'country_id' : intCountryId, 'hidden_state_id' : intHiddenStateId },
+        dataType: "html",
+        success: function( objResult ){
+            var strHtml = $.parseJSON( objResult );
+            $( "#js-state-id" ).html( '<option disabled selected> Select State</option>' );
+            $( "#js-state-id" ).append( strHtml );
+            
+            $( '#js-city-id').html('');
+            $( '#js-city-id').append( '<option disabled selected> Select City</option>' );
         }
     });
 }

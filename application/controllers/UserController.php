@@ -837,6 +837,7 @@ class UserController extends MY_Controller {
 
     public function fetchOrganicInputEcommerceDetails() {
         $post = $this->input->post();
+        
         $userDetails = $this->User->getUserById($post['user_id']);
         $ecommerceDetails = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceById($post['id']);
 
@@ -845,7 +846,7 @@ class UserController extends MY_Controller {
 
         $ecommerceDetails['category_name'] = !empty($arrCategory) ? $arrCategory[$ecommerceDetails['category_id']] : 'NA';
         $ecommerceDetails['sub_category_name'] = !empty($arrSubCategory) ? $arrSubCategory[$ecommerceDetails['sub_category_id']] : 'NA';
-
+        
         $data['userDetails'] = $userDetails;
         $data['ecommerceDetails'] = $ecommerceDetails;
 
@@ -1239,7 +1240,8 @@ class UserController extends MY_Controller {
         $arrPost = $this->input->post();
 
         $arrOrganicInputEcommerceDetails = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceById( $arrPost['organic_input_ecommerce_id'] );
-	    
+	
+        $arrData['arrUserSession'] = $this->session->userdata('user_data');
         $arrData['arrEcommerceCategory'] = getEcommerceCategory();
         $arrData['arrEcommerceSubCategory'] = getEcommerceSubCategory();
         $arrData['arrOrganicInputEcommerceDetails'] = $arrOrganicInputEcommerceDetails;

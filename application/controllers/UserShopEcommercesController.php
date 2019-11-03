@@ -52,6 +52,7 @@ class UserShopEcommercesController extends MY_Controller {
 
         $arrUserEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
 	    
+        $arrData['arrUserSession'] = $this->arrUserSession;
         $arrData['arrUserEcommerceDetails'] = $arrUserEcommerceDetails;
 
         echo $this->load->view( 'modal-box/modal-user-shop-ecommerce-add-to-cart', $arrData );

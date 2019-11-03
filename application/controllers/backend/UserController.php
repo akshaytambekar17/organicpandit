@@ -22,6 +22,12 @@ class UserController extends MY_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('login_model','Login');
+//        $arrSession = UserSession();
+//        if( false == $arrSession['success'] ) {
+//            redirect( 'home', 'refresh' );
+//        } else {
+//            $this->arrUserSession = $arrSession['userData'];
+//        }
     }
 
     public function index() {
@@ -65,6 +71,8 @@ class UserController extends MY_Controller {
         }else{
             $data['arrUsersList'] = $this->User->getUserByPartnerUserId( $arrUserSession['user_id'] );
         }
+        
+        $data['arrUserTypeList'] = $this->UserType->getUserTypes();
         
         $data['title'] = 'User Registration';
         $data['heading'] = 'User Registration';
@@ -111,7 +119,7 @@ class UserController extends MY_Controller {
         }
     }
 
-    public function view(){
+    public function view() {
         $session = UserSession();
         if ( empty( $session['success'] ) ) {
             redirect('admin', 'refresh');
@@ -207,8 +215,248 @@ class UserController extends MY_Controller {
             $this->backendLayout($data);
         }
     }
+    
+    public function add() {
+        
+        $arrGet = $this->input->get();
+        $arrSession = UserSession();
+        if( false == $arrSession['success'] ) {
+            redirect( 'home', 'refresh' );
+        } else {
+            $arrUserSession = $arrSession['userData'];
+        }
+        $intUserTypeId = $arrGet['user_type_id'];
+        $arrData['arrUserSession'] = $arrUserSession;
+        $arrData['intUserTypeId'] = $intUserTypeId;
+        $arrData['arrUserTypeList'] = $this->UserType->getUserTypes();
+        $arrUserTypeDetails = $this->UserType->getUserTypeById( $intUserTypeId );
+        $arrData['arrUserTypeDetails'] = $arrUserTypeDetails;
+        $arrData['arrCountriesList'] = $this->Country->getCountries();
+        $arrData['arrAgenciesList'] = $this->Agency->getAgencies();
+        $arrData['arrCertitificationAgenicesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+        $arrData['arrProductList'] = $this->Product->getActiveProducts();
+        $arrData['arrData'] = $arrData;
+        
+        $arrData['backend'] = true;
+        $arrData['strTitle'] = 'Add User';
+        $arrData['title'] = 'Add User';
+        $arrData['strHeading'] = 'Add User';
+        $arrData['view'] = 'user/registration/form-details';
+        
+        if( $this->input->post() ) {
+            $arrPost = $this->input->post();
+            if( true == isset( $arrPost['user_type_id'] ) && FPO == $arrPost['user_type_id'] ) {
+                $strFullnameTitle = 'FPO Name';
+            } else {
+                $strFullnameTitle = 'Fullname';
+            }
+            $this->form_validation->set_rules( 'partner_type_id', 'Partner Type', 'trim' );
+            $this->form_validation->set_rules( 'partner_user_id', 'Partner Name', 'trim' );
+            $this->form_validation->set_rules( 'user_type_id', 'User Type', 'trim|required' );
+            $this->form_validation->set_rules( 'fullname', $strFullnameTitle, 'trim|required' );
+            $this->form_validation->set_rules( 'username', 'Username', 'trim|required|is_unique[tbl_users.username]' );
+            $this->form_validation->set_message( 'is_unique', 'The Username already exists.' );
+            $this->form_validation->set_rules( 'email_id', 'Email Id', 'trim|required' );
+            $this->form_validation->set_rules( 'password', 'Password', 'trim|required|min_length[5]|matches[confirm_password]' );
+            $this->form_validation->set_rules( 'confirm_password', 'Confirm Password', 'trim|required|min_length[5]' );
+            $this->form_validation->set_rules( 'mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]' );
 
-    public function updateProfile(){
+            if( empty( $_FILES['profile_image']['name'] ) ) {
+                $this->form_validation->set_rules( 'profile_image', 'Profile Image', 'trim|required' );
+            }
+            $this->form_validation->set_rules( 'country_id', 'Country', 'trim|required' );
+            $this->form_validation->set_rules( 'state_id', 'State', 'trim|required' );
+            $this->form_validation->set_rules( 'city_id', 'City', 'trim|required' );
+            $this->form_validation->set_rules( 'address', 'Address', 'trim|required' );
+            /* if ($arrPost['user_type_id'] != 2) {
+              $this->form_validation->set_rules('aadhar_number', 'Aadhar Number', 'trim|required|numeric|exact_length[12]');
+              } */
+            if( true == isset( $arrPost['user_type_id'] ) && ( $arrPost['user_type_id'] == 1 || $arrPost['user_type_id'] == 2 || $arrPost['user_type_id'] == 3 || $arrPost['user_type_id'] == 4 || $arrPost['user_type_id'] == 5 ) ) {
+                $this->form_validation->set_rules('certification_id[]', 'Certification', 'required');
+                //$this->form_validation->set_rules('certification_number', 'Certification Number', 'trim');
+                $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
+            }
+            
+            $this->form_validation->set_rules( 'Bank[bank_name]', 'Bank Name', 'trim' );
+            $this->form_validation->set_rules( 'Bank[account_holder_name]', 'Account Holder Name', 'trim' );
+            $this->form_validation->set_rules( 'Bank[account_no]', 'Account Number', 'trim' );
+            $this->form_validation->set_rules( 'Bank[ifsc_code]', 'Ifsc Code', 'trim' );
+
+            
+            if( true == $this->form_validation->run() ) {
+                $arrDetails = $arrPost;
+                $arrError = array();
+                if( !empty( $_FILES['video']['name'] ) ) {
+                    $arrConfigVideo['upload_path'] = './assets/images/gallery/';
+                    $arrConfigVideo['allowed_types'] = '*';
+                    $arrConfigVideo['max_size'] = 102400;
+                    $this->load->library( 'upload', $arrConfigVideo );
+                    if( $this->upload->do_upload( 'video' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strVideo = $arrUploadData['file_name'];
+                    } else {
+                        $arrError[] = $this->upload->display_errors();
+                        $strVideo = '';
+                    }
+                } else {
+                    $strVideo = '';
+                }
+                
+                if( !empty( $_FILES['resume']['name'] ) ) {
+                    $arrConfigResume['upload_path'] = './assets/images/gallery/';
+                    $arrConfigResume['allowed_types'] = 'docx|pdf|csv|xls|xlsx';
+                    $arrConfigResume['max_size'] = 102400;
+
+                    $this->load->library( 'upload', $arrConfigResume );
+                    if($this->upload->do_upload( 'resume' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strResume = $arrUploadData['file_name'];
+                    } else {
+                        $arrError[] = $this->upload->display_errors();
+                        $strResume = '';
+                    }
+                } else {
+                    $strResume = '';
+                }
+                
+                if( !empty( $_FILES['product_catalogue']['name'] ) ) {
+                    $arrConfigCatalogue['upload_path'] = './assets/images/gallery/';
+                    $arrConfigCatalogue['allowed_types'] = 'docx|pdf|csv|xls|xlsx';
+                    $arrConfigCatalogue['max_size'] = 102400;
+
+                    $this->load->library( 'upload', $arrConfigCatalogue );
+                    if( $this->upload->do_upload( 'product_catalogue' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strProductCatalogue = $arrUploadData['file_name'];
+                    } else {
+                        $arrError[] = $this->upload->display_errors();
+                        $strProductCatalogue = '';
+                    }
+                } else {
+                    $strProductCatalogue = '';
+                }
+                
+                if( !empty( $_FILES['profile_image']['name'] ) ) {
+                    $arrConfigProfileImage['upload_path'] = './assets/images/gallery/';
+                    $arrConfigProfileImage['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $arrConfigProfileImage['max_size'] = 2048;
+
+                    $this->load->library( 'upload', $arrConfigProfileImage );
+                    if( $this->upload->do_upload( 'profile_image' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strProfileImage = $arrUploadData['file_name'];
+                    } else {
+                        $arrError[] = $this->upload->display_errors();
+                        $strProfileImage = '';
+                    }
+                } else {
+                    $strProfileImage = '';
+                }
+                
+                if( !empty( $_FILES['certification_image']['name'] ) ) {
+                    $arrConfigProfileImage['upload_path'] = './assets/images/gallery/';
+                    $arrConfigCertificationImage['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $arrConfigCertificationImage['max_size'] = 2048;
+
+                    $this->load->library('upload', $arrConfigCertificationImage);
+                    if ($this->upload->do_upload('certification_image')) {
+                        $arrUploadData = $this->upload->data();
+                        $strCertificationImage = $arrUploadData['file_name'];
+                    } else {
+                        $arrError[] = $this->upload->display_errors();
+                        $strCertificationImage = '';
+                    }
+                } else {
+                    $strCertificationImage = '';
+                }
+
+                if( !empty( $_FILES['company_image']['name'] ) ) {
+                    $arrConfigCompanyImage['upload_path'] = './assets/images/gallery/';
+                    $arrConfigCompanyImage['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $arrConfigCompanyImage['max_size'] = 2048;
+                    
+                    $this->load->library( 'upload', $arrConfigCompanyImage );
+                    if( $this->upload->do_upload( 'company_image' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strCompanyImage = $arrUploadData['file_name'];
+                    } else {
+                        $arrError[] = $this->upload->display_errors();
+                        $strCompanyImage = '';
+                    }
+                } else {
+                    $strCompanyImage = '';
+                }
+
+                if( false == isArrVal( $arrError ) ) {
+                    unset($arrDetails['confirm_password']);
+                    unset($arrDetails['Bank']);
+                    unset($arrDetails['certification_id']);
+                    
+                    $arrDetails['landline_no'] = ( false == isStrVal( $arrDetails['landline_no'] ) ) ? $arrDetails['landline_no'] : 0;
+                    $arrDetails['password'] = md5($arrDetails['password']);
+                    $arrDetails['profile_image'] = $strProfileImage;
+                    $arrDetails['company_image'] = $strCompanyImage;
+                    $arrDetails['certification_image'] = $strCertificationImage;
+                    $arrDetails['video'] = $strVideo;
+                    $arrDetails['product_catalogue'] = $strProductCatalogue;
+                    $arrDetails['resume'] = $strResume;
+                    $arrDetails['status'] = ENABLED;
+                    $arrDetails['is_deleted'] = 0;
+                    $arrDetails['is_verified'] = 1;
+                    
+                    $intUserId = $this->User->insert( $arrDetails );
+                    if( true == isArrVal( $arrPost['certification_id'] ) ) {
+                        foreach( $arrPost['certification_id'] as $intCertificationId ) {
+                            $arrUserCertificationData = array(
+                                                            'user_id' => $intUserId,
+                                                            'certification_id' => $intCertificationId
+                                                        );
+                            $arrmixUserCertificationData[] = $arrUserCertificationData;
+                            $arrUserCertificationData = array();
+                        }
+                        if( true == isArrVal( $arrmixUserCertificationData ) ) {
+                            $this->UserCertifications->insertBatch($arrmixUserCertificationData);
+                        }
+                    }
+
+                    if( true == isArrVal( $arrPost['Bank'] ) ) {
+                        $arrBankInsertDetails = $arrPost['Bank'];
+                        $arrBankInsertDetails['user_id'] = $intUserId;
+                        $this->UserBank->insert( $arrBankInsertDetails );
+                    }
+
+                    $arrUserTypeDetails = $this->UserType->getUserTypeById($arrPost['user_type_id']);
+                    
+                    $arrNotifyInsertDetails = array(
+                        'user_id' => $intUserId,
+                        'user_type_id' => $arrPost['user_type_id'],
+                        'notification_type' => REGISTRATION,
+                        'notify_type' => NOTIFY_WEB,
+                        'message' => 'New ' . $arrUserTypeDetails['name'] . ' ' . $arrPost['fullname'] . ' has been register',
+                    );
+
+                    $this->Notifications->insert( $arrNotifyInsertDetails );
+
+                    $this->session->set_flashdata( 'Message', 'Registration Successfully. Please login to continue' );
+                    redirect( 'admin/user/user-list', 'refresh' );
+                } else {
+                    if( true == isArrVal( $arrError ) ) {
+                        $this->session->set_flashdata( 'Error', "File cannot be upload - " . implode( ",", $arrError ) );
+                        $arrData['strValidationErrorMessage'] = "File cannot be upload - " . implode( ",", $arrError );
+                    } else {
+                        $this->session->set_flashdata( 'Error', 'Something Went Wrong' );
+                    }
+                    $this->backendLayout( $arrData );
+                }
+            } else {
+               $this->backendLayout( $arrData );
+            }
+        } else {
+            $this->backendLayout( $arrData );
+        }
+    }
+
+    public function updateProfile() {
         $arrGet = $this->input->get();
         $session = UserSession();
         $arrUserSession = $session['userData'];
@@ -564,4 +812,14 @@ class UserController extends MY_Controller {
             echo false;
         }
    }
+   
+    public function fetchRegistrationUserTypeDetails() {
+        $arrPost = $this->input->post();
+        $arrUserTypeDetails = $this->UserType->getUserTypeById( $arrPost['user_type_id'] );
+        $arrData['arrUserTypeDetails'] = $arrUserTypeDetails;
+        $arrData['arrCountriesList'] = $this->Country->getCountries();
+        $arrData['arrAgenciesList'] = $this->Agency->getAgencies();
+        $arrData['arrCertitificationAgenicesList'] = $this->CertificationAgency->getCertificationAgenciesVerified();
+        $arrData['arrProductList'] = $this->Product->getActiveProducts(); 
+    }
 }

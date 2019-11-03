@@ -153,7 +153,7 @@
                                                 ?>  
                                                             <tr>
                                                                 <td><?= $arrEcommerceCategory[$arrCartDetails['options']['category_id']] ?></td>
-                                                                <td><?= $arrEcommerceCategory[$arrCartDetails['options']['sub_category_id']] ?></td>
+                                                                <td><?= $arrEcommerceSubCategory[$arrCartDetails['options']['sub_category_id']] ?></td>
                                                                 <td><?= $arrCartDetails['options']['brand'] ?></td>
                                                                 <td><?= $arrCartDetails['price'] ?></td>
                                                                 <td><?= $arrCartDetails['qty'] ?></td>

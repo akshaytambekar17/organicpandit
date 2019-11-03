@@ -22,8 +22,8 @@ class user_type_model extends CI_Model {
         //$this->db->order_by('id','DESC');
         return $this->db->get('tbl_user_type')->result_array();
     }
-    public function getUserTypeById($id) {
-        $this->db->where('id',$id);
+    public function getUserTypeById( $intUserTypeId )  {
+        $this->db->where( 'id', $intUserTypeId );
         return $this->db->get('tbl_user_type')->row_array();
     }
     public function add($data){

@@ -22,9 +22,9 @@ class city_model extends CI_Model {
         //$this->db->order_by('id','DESC');
         return $this->db->get('cities')->result_array();
     }
-    public function getCitiesByStateId($state_id) {
-        $this->db->where('state_id',$state_id);
-        return $this->db->get('cities')->result_array();
+    public function getCitiesByStateId( $intStateId ) {
+        $this->db->where( 'state_id', $intStateId );
+        return $this->db->get( 'cities' )->result_array();
     }
     public function getCityById($id) {
         $this->db->where('id',$id);

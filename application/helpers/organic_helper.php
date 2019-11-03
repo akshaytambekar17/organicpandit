@@ -271,6 +271,48 @@ function ViewProfile($userTypeDetails,$user_details){
     }
 }
 
+function ViewUserRegistration( $arrUserTypeDetails, $arrData ){
+    $ci=& get_instance();
+    
+    if( FARMER == $arrUserTypeDetails['id'] ) {
+        return $ci->load->view( 'backend/user/registration/farmer', $arrData );
+    }else if( FPO == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/fpo', $arrData );
+    }else if( TRADER == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/trader', $arrData );
+    }else if( PROCESSOR == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/processor', $arrData );
+    }else if( BUYER == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/buyer', $arrData );
+    }else if( ORGANIC_CONSULTANT == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/organic_consultant', $arrData );
+    }else if( ORGANIC_INPUT == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/organic_input', $arrData );
+    }else if( PACKAGING == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/packing_company', $arrData );
+    }else if( LOGISTICS == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/logistic_company', $arrData );
+    }else if( FARM_EQUIPMENT == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/farm_equipment', $arrData );
+    }else if( EXHIBITOR == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/exhibitor', $arrData );
+    }else if( SHOPS == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/shops', $arrData );
+    }else if( LABS == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/labs', $arrData );
+    }else if( GOVERNMENT_AGENICES == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/government_agencies', $arrData );
+    }else if( INSTITUTION == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/institutions', $arrData );
+    }else if( RESTAURANTS == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/restaurant', $arrData );
+    }else if( NGO == $arrUserTypeDetails['id'] ){
+        return $ci->load->view( 'backend/user/registration/ngo', $arrData );
+    }else{
+        return $ci->load->view( 'backend/user/registration/certification_agencies', $arrData );
+    }
+}
+
 function fetchCartDetails() {
         //$this->cart->destroy();
     $ci = & get_instance();

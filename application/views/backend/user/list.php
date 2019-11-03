@@ -38,9 +38,11 @@
                 <div class="box">
                     <div class="box-header">
 <!--                        <h3 class="box-title">Data Table With Full Features</h3>-->
-<!--                        <div class="pull-right">
-                            <a href="<?= base_url()?>category/add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</a>
-                        </div>-->
+                        <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
+                            <div class="pull-right">
+                                <a href="javascript:void(0)" class="btn btn-success" onclick="modalUserTypeList( this )"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
+                            </div>
+                        <?php } ?>    
                     </div>
                   <!-- /.box-header -->
                     <div class="box-body">
@@ -144,6 +146,36 @@
         </div>
     </div>  
 </div>
+
+<div class="modal fade user-type-list-modal" id="js-user-type-list-modal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select User Type</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="control-label label-required" for="user_type_id">User Type</label><br>
+                        <select class="form-control select2" name="user_type_id" id="js-user-type-id">
+                            <option selected="selected" disabled="disabled" >Select User Type</option>
+                            <?php foreach( $arrUserTypeList as $arrUserTypeDetails ) { ?>
+                                    <option value="<?= $arrUserTypeDetails['id'] ?>"><?= $arrUserTypeDetails['name'] ?></option>
+                            <?php } ?>
+                        </select>
+                        <br>
+                        <span class="has-error js-error-user-type-id"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="js-user-type-confirm-button" class="btn btn-success" >Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>  
+</div>
 <script>
     $(document).ready(function () {
         $("#confirm_btn").on('click',function(){
@@ -174,6 +206,16 @@
                 }
             });
         });
+        
+        $( '#js-user-type-confirm-button' ).on('click',function() { 
+            var intUserTypeId = $( '#js-user-type-id' ).val();
+            if( null != intUserTypeId && 'null' != intUserTypeId && '' != intUserTypeId ) { 
+                window.location.href = "<?= base_url()?>admin/user/add?user_type_id=" + intUserTypeId;
+            } else {
+                $( '.js-error-user-type-id' ).text( 'Please select User Type' );
+            }
+        } );
+        
         $('#js-user-registration-list').dataTable( {
             aaSorting: [[0, "desc"]],
             dom: 'Bfrtip',
@@ -187,5 +229,9 @@
         var id = $(ths).data('user_id');
         $("#id_modal").val(id);
         $('#deleteConfirmationModal').modal('show');
+    }
+    
+    function modalUserTypeList( ths ){
+        $( '#js-user-type-list-modal' ).modal( 'show' );
     }
 </script>
