@@ -38,6 +38,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('SHOW_SEARCH_VIEW_DETAILS_KEY', 'show_search_view_details');
 define('SHOW_SEARCH_VIEW_ENQUIRY_KEY', 'show_search_view_enquiry');
+define('SHOW_USER_DETAILS', 'show_user_details');
 
 define('CURRENT_DATETIME',date('Y-m-d H:i:s'));
 

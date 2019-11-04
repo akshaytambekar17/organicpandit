@@ -705,6 +705,7 @@ class UserController extends MY_Controller {
         $data['state_list'] = $this->State->getStates();
         $data['organicSettingViewDetails'] = $this->OrganicSetting->getOrganicSettingByKey(SHOW_SEARCH_VIEW_DETAILS_KEY);
         $data['organicSettingViewEnquiry'] = $this->OrganicSetting->getOrganicSettingByKey(SHOW_SEARCH_VIEW_ENQUIRY_KEY);
+        $data['arrOrganicSettingUserDetails'] = $this->OrganicSetting->getOrganicSettingByKey( SHOW_USER_DETAILS );
         $data['product_list'] = $this->Product->getProducts();
         $data['title'] = 'Search ' . $user_type_details['name'];
         $data['heading'] = 'Search ' . $user_type_details['name'];
@@ -831,7 +832,8 @@ class UserController extends MY_Controller {
         $city = $this->City->getCityById($user_details['city_id']);
         $user_details['city'] = $city['name'];
         $data['user_details'] = $user_details;
-        //echo json_encode($user_details);
+        $data['arrOrganicSettingUserDetails'] = $this->OrganicSetting->getOrganicSettingByKey( SHOW_USER_DETAILS );
+        
         echo $this->load->view('user/modal_user_view', $data);
     }
 

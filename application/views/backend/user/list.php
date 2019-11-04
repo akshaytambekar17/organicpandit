@@ -38,11 +38,11 @@
                 <div class="box">
                     <div class="box-header">
 <!--                        <h3 class="box-title">Data Table With Full Features</h3>-->
-                        <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
+                        <?php //if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
                             <div class="pull-right">
                                 <a href="javascript:void(0)" class="btn btn-success" onclick="modalUserTypeList( this )"><i class="fa fa-plus" aria-hidden="true"></i> Add User</a>
                             </div>
-                        <?php } ?>    
+                        <?php //} ?>    
                     </div>
                   <!-- /.box-header -->
                     <div class="box-body">

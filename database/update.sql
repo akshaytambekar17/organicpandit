@@ -270,3 +270,10 @@ ALTER TABLE `ci_sessions`
 COMMIT;
 
 UPDATE tbl_users SET country_id = 101    
+
+
+/**
+* 04-11-2019
+*/
+
+INSERT INTO `tbl_organic_setting` (`id`, `key`, `value`, `title`, `created_at`, `updated_at`) VALUES (NULL, 'show_user_details', '2', 'Show User Details', '2019-04-03 00:08:37', '2019-04-03 00:08:37');

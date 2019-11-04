@@ -132,12 +132,14 @@
                                             </h4>
                                             
                                         </div>
-                                        <div class="col-md-2">
-                                            <h4>Email Id</h4>
-                                            <b><?= $value['email_id']; ?></b>
-                                            <h4>Mobile number</h4>
-                                            <b><?= $value['mobile_no']; ?></b>
-                                        </div>
+                                        <?php if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) {  ?>
+                                            <div class="col-md-2">
+                                                <h4>Email Id</h4>
+                                                <b><?= $value['email_id']; ?></b>
+                                                <h4>Mobile number</h4>
+                                                <b><?= $value['mobile_no']; ?></b>
+                                            </div>
+                                        <?php } ?>
                                         <div class="col-md-1">
                                             <h4>Story</h4>
                                             <b><?= $value['story']; ?></b>
