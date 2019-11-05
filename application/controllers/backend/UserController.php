@@ -65,9 +65,14 @@ class UserController extends MY_Controller {
 //                redirect('home', 'refresh');
 //            }
         }
+        $arrGet = $this->input->get();
         $arrUserSession = $session['userData'];
         if( ADMINUSERNAME == $arrUserSession['username'] ){
-            $data['arrUsersList'] = $this->User->getUsers();
+            if( true == isset( $arrGet['user_type_id'] ) ) {
+                $data['arrUsersList'] = $this->User->getUserByUserTypeId( $arrGet['user_type_id'] );
+            } else {
+                $data['arrUsersList'] = $this->User->getUsers();
+            }
         }else{
             $data['arrUsersList'] = $this->User->getUserByPartnerUserId( $arrUserSession['user_id'] );
         }
@@ -473,6 +478,7 @@ class UserController extends MY_Controller {
             $this->form_validation->set_message('is_unique', 'The Username already exists.');
             $this->form_validation->set_rules('email_id', 'Email Id', 'trim|required');
             $this->form_validation->set_rules('mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]');
+            $this->form_validation->set_rules('country_id', 'Country', 'trim|required');
             $this->form_validation->set_rules('state_id', 'State', 'trim|required');
             $this->form_validation->set_rules('city_id', 'City', 'trim|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -725,6 +731,7 @@ class UserController extends MY_Controller {
         $data['agencies_list'] = $this->Agency->getAgencies();
         $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgenciesVerified();
         $data['crop_list'] = $this->Crop->getActiveCrops();
+        $data['arrCountriesList'] = $this->Country->getCountries();
         $data['user_data'] = $arrUserSession;
         $data['backend'] = true;
         $data['user_details'] = $arrUserDetails;

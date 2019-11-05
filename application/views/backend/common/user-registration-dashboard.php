@@ -93,7 +93,7 @@
                             }
                             
                         ?>
-                        <a href="<?= base_url()?>admin/user<?= $paramter; ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="<?= base_url()?>admin/user/user-list<?= $paramter; ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             <?php } ?>

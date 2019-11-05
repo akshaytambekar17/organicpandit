@@ -86,30 +86,41 @@
                         <span class="has-error"><?php echo form_error('agency_id'); ?></span>
                         
                     </div>-->
-                    <div class="row">    
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label label-required" for="country_id">Select Country</label>
+                            <select class="form-control select2" name="country_id" id="js-country-id">
+                                <option disabled="disabled" selected="selected" >Select Country</option>
+                                <?php foreach( $arrCountriesList as $arrCountryDetails ) { ?>
+                                    <option value="<?= $arrCountryDetails['id'] ?>" <?= set_select('country_id', $arrCountryDetails['id']); ?> ><?= $arrCountryDetails['name'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('country_id'); ?></span>
+                        </div>
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="state_id">Select State</label>
-                            <select class="form-control select2" name="state_id" id="state_id">
+                            <select class="form-control select2" name="state_id" id="js-state-id">
                                 <option disabled="disabled" selected="selected">Select State</option>
-                                <?php foreach ($state_list as $value) { ?>
-                                    <option value="<?= $value['id'] ?>" <?= set_select('state_id', $value['id']); ?>><?= $value['name'] ?></option>
-                                <?php } ?>
                             </select>
                             <span class="has-error"><?php echo form_error('state_id'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="city_id">Select City</label>
-                            <select class="form-control select2" name="city_id" id="city_id">
+                            <select class="form-control select2" name="city_id" id="js-city-id">
                                 <option disabled="disabled" selected="selected">Select City</option>
                             </select>
                             <span class="has-error"><?php echo form_error('city_id'); ?></span>
                         </div>
-                        <div class="form-group col-md-4">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="form-group col-md-12">
                             <label class="control-label label-required" for="address">Address</label>
                             <input type="text" name="address"  class="form-control" id="address" placeholder="Address" value="<?= set_value('address') ?>">
                             <span class="has-error"><?php echo form_error('address'); ?></span>
                         </div>
                     </div>
+    
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label class="control-label" for="story">Story</label>

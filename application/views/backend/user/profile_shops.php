@@ -57,38 +57,44 @@
                             <span class="has-error"><?php echo form_error('aadhar_number'); ?></span>
                         </div>
                     </div>
-                    <div class="row">    
+                    <div class="row">
                         <div class="form-group col-md-4">
-                            <label class="control-label label-required" for="state_id">Select State</label>
-                            <select class="form-control select2" name="state_id" id="state_id">
-                                <option disabled="disabled" selected="selected">Select State</option>
-                                <?php foreach ($state_list as $value) { 
-                                        if(!empty($user_details['state_id'])){
-                                            $selected = $user_details['state_id'] == $value['id']?'selected="selected"':'';                                
-                                        }else{
-                                            $selected = '';
+                            <label class="control-label label-required" for="country_id">Select Country</label>
+                            <select class="form-control select2" name="country_id" id="js-country-id">
+                                <option disabled="disabled" selected="selected" >Select Country</option>
+                                <?php foreach( $arrCountriesList as $arrCountryDetails ) { 
+                                        $strSelected = '';
+                                        if( ( true == isset( $user_details['country_id'] ) ) && $arrCountryDetails['id'] == $user_details['country_id']  ) {
+                                            $strSelected = 'selected="selected"';                                
                                         }
                                 ?>
-                                    <option value="<?= $value['id'] ?>" <?= set_select('state_id', $value['id']); ?> <?= $selected?>><?= $value['name'] ?></option>
+                                    <option value="<?= $arrCountryDetails['id'] ?>" <?= $strSelected; ?> <?= set_select('country_id', $arrCountryDetails['id']); ?> ><?= $arrCountryDetails['name'] ?></option>
                                 <?php } ?>
+                            </select>
+                            <span class="has-error"><?php echo form_error('country_id'); ?></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label label-required" for="state_id">Select State</label>
+                            <select class="form-control select2" name="state_id" id="js-state-id">
+                                <option disabled="disabled" selected="selected">Select State</option>
                             </select>
                             <span class="has-error"><?php echo form_error('state_id'); ?></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="city_id">Select City</label>
-                            <select class="form-control select2" name="city_id" id="city_id">
+                            <select class="form-control select2" name="city_id" id="js-city-id" data-test="1">
                                 <option disabled="disabled" selected="selected">Select City</option>
                             </select>
-                            <input type="hidden" name="city_id_hidden" value="<?= $user_details['city_id']?>" id="city-id-hidden">
                             <span class="has-error"><?php echo form_error('city_id'); ?></span>
                         </div>
+                    </div>
+                    
+                    <div class="row">
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="address">Address</label>
                             <input type="text" name="address"  class="form-control" id="address" placeholder="Address" value="<?= !empty($user_details['address'])?$user_details['address']:set_value('address') ?>">
                             <span class="has-error"><?php echo form_error('address'); ?></span>
-                        </div>
-                    </div>
-                    <div class="row">
+                        </div>                        
                         <div class="form-group col-md-4">
                             <label>Website</label>
                             <input type="text" name="website" class="form-control" id="website" placeholder="Website" value="<?= !empty($user_details['website'])?$user_details['website']:set_value('website') ?>">

@@ -145,14 +145,7 @@
                     $("#total_price").val(0);
                 }
             });
-            $("#state_id").on('change',function(){
-                var state_id = $(this).val();
-                getCitiesByState(state_id);
-            });
-            var state_id = $("#state_id").val();
-            if(state_id != ''){
-                getCitiesByState(state_id);
-            }
+            
             $(".addButton").on('click',function() {
                 var todayDate = currentDate();
                 var count = $("#product-count").val();
@@ -274,21 +267,26 @@
             $("#last-next-button").on('click',function(){
                 $("#submit").show();
             });
-        });
-
-        function getCitiesByState(state_id){
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url(); ?>" + "getcities-by-state",
-                data: { 'state_id' : state_id },
-                dataType: "html",
-                success: function(result){
-                    var html = $.parseJSON(result);
-                    $("#city_id").html('<option disabled selected> Select City</option>');
-                    $("#city_id").append(html);
-                }
+            
+            var intCountryId = $( '#js-country-id' ).val();
+            if( null != intCountryId && 'null' != intCountryId && '' != intCountryId ) {
+                getFrontendStatesByCountry( intCountryId );
+            }
+            $(document).on('change', '#js-country-id', function() {
+                var intCountryId = $( this ).val();
+                getFrontendStatesByCountry( intCountryId );
             });
-        }
+            
+            var intStateId = $( '#js-state-id' ).val();
+            if( null != intStateId && 'null' != intStateId && '' != intStateId ) { 
+                getFrontendCitiesByState( intStateId );
+            }
+            
+            $(document).on( 'change', '#js-state-id', function(){
+                var intStateId = $( this ).val();
+                getFrontendCitiesByState( intStateId );
+            });
+        });
 
         function getPartnerUserDetails(ths){
             var partner_type_id = $(ths).val();

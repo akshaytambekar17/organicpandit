@@ -71,6 +71,39 @@ function getStatesByCountry( intCountryId ) {
     });
 }
 
+function getFrontendCitiesByState( intStateId ) {
+    var intHiddenCityId = $("#js-hidden-city-id").val();
+    $.ajax({
+        type: "POST",
+        url:  getBaseUrl() + 'fetch-frontend-cities-by-state-id',
+        data: { 'state_id' : intStateId, 'hidden_city_id' : intHiddenCityId },
+        dataType: "html",
+        success: function(result){
+            var html = $.parseJSON(result);
+            $( "#js-city-id" ).html('<option disabled selected> Select City</option>');
+            $( "#js-city-id" ).append(html);
+        }
+    });
+}
+
+function getFrontendStatesByCountry( intCountryId ) {
+    var intHiddenStateId = $("#js-hidden-state-id").val();
+    $.ajax({
+        type: "POST",
+        url:  getBaseUrl() + 'fetch-frontend-states-by-country-id',
+        data: { 'country_id' : intCountryId, 'hidden_state_id' : intHiddenStateId },
+        dataType: "html",
+        success: function( objResult ){
+            var strHtml = $.parseJSON( objResult );
+            $( "#js-state-id" ).html( '<option disabled selected> Select State</option>' );
+            $( "#js-state-id" ).append( strHtml );
+            
+            $( '#js-city-id').html('');
+            $( '#js-city-id').append( '<option disabled selected> Select City</option>' );
+        }
+    });
+}
+
 function fetchProductsByCategory( $intCategoryId ) {
     var intHiddenProductId = $( '#js-hidden-product-id' ).val();
     $.ajax({

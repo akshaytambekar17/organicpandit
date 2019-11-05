@@ -198,6 +198,11 @@ $route['admin/organic-setting/delete'] = "backend/OrganicSettingController/delet
 $route['admin/organic-setting/update'] = "backend/OrganicSettingController/update";
 $route['admin/organic-setting/add'] = "backend/OrganicSettingController/add";
 
+$route['admin/blogs'] = "backend/BlogController";
+$route['admin/blogs/add'] = "backend/BlogController/add";
+$route['admin/blogs/update'] = "backend/BlogController/update";
+$route['admin/blogs/delete'] = "backend/BlogController/delete";
+
 
 $route['admin/user/user-shop-ecommerces'] = "backend/UserShopEcommercesController";
 $route['admin/user/user-shop-ecommerces/add'] = "backend/UserShopEcommercesController/add";
@@ -220,6 +225,8 @@ $route['fetch-products-by-category-id'] = 'OrganicPanditController/fetchProducts
 $route['fetch-states-by-country-id'] = 'OrganicPanditController/fetchStatesByCountryId';
 $route['fetch-cities-by-state-id'] = 'OrganicPanditController/fetchCitiesByStateId';
 $route['fetch-registration-user-type-details'] = 'backend/UserController/fetchRegistrationUserTypeDetails';
+$route['fetch-frontend-states-by-country-id'] = 'UserController/fetchFrontendStatesByCountryId';
+$route['fetch-frontend-cities-by-state-id'] = 'UserController/fetchFrontendCitiesByStateId';
 
 
 /************* api routes *************/

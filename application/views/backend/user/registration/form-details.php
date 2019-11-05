@@ -149,11 +149,6 @@
                     setDate: todayDate
             });
             
-            $( "#js-state-id" ).on('change',function(){
-                var intStateId = $( this ).val();
-                getCitiesByState( intStateId );
-            });
-            
             $( "#js-email-id" ).on('focusout',function(){
                 var strEmail = $( this ).val();
                 var result = validateEmail( strEmail );
@@ -176,6 +171,11 @@
                 var intCountryId = $( this ).val();
                 getStatesByCountry( intCountryId );
             });
+            
+            var intStateId = $( '#js-state-id' ).val();
+            if( null != intStateId && 'null' != intStateId && '' != intStateId ) { 
+                getCitiesByState( intStateId );
+            }
             
             $(document).on( 'change', '#js-state-id', function(){
                 var intStateId = $( this ).val();

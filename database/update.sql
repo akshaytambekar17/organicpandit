@@ -277,3 +277,46 @@ UPDATE tbl_users SET country_id = 101
 */
 
 INSERT INTO `tbl_organic_setting` (`id`, `key`, `value`, `title`, `created_at`, `updated_at`) VALUES (NULL, 'show_user_details', '2', 'Show User Details', '2019-04-03 00:08:37', '2019-04-03 00:08:37');
+
+/**
+* 05-11-2019
+*/
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_blogs`
+--
+
+CREATE TABLE `tbl_blogs` (
+  `blog_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `blog_image` varchar(255) NOT NULL,
+  `blog_status` int(3) NOT NULL COMMENT '1=Disabled, 2=Enabled',
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_blogs`
+--
+ALTER TABLE `tbl_blogs`
+  ADD PRIMARY KEY (`blog_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_blogs`
+--
+ALTER TABLE `tbl_blogs`
+  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;

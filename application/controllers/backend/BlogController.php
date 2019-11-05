@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UserSoilsController extends MY_Controller {
+class BlogController extends MY_Controller {
 
     function __construct() {
         parent::__construct();
@@ -16,15 +16,11 @@ class UserSoilsController extends MY_Controller {
 
     public function index() {
         $arrData['backend'] = true;
-        $arrData['strTitle'] = 'Soil List';
-        $arrData['title'] = 'Soil List';
-        $arrData['strHeading'] = 'Soil List';
-        $arrData['view'] = 'user-soil/list';
-        if( ADMINUSERNAME == $this->arrUserSession['username'] ){ 
-            $arrData['arrUserSoilsList'] = $this->UserSoil->getUserSoil();
-        } else {
-            $arrData['arrUserSoilsList'] = $this->UserSoil->getUserSoilByUserId( $this->arrUserSession['user_id'] );
-        }    
+        $arrData['strTitle'] = 'Blogs List';
+        $arrData['title'] = 'Blogs List';
+        $arrData['strHeading'] = 'Blogs List';
+        $arrData['view'] = 'blog/list';
+        $arrData['arrBlogsList'] = $this->Blog->getBlogs();
         
         $this->backendLayout( $arrData );
     }

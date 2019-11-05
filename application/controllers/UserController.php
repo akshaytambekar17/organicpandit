@@ -54,6 +54,7 @@ class UserController extends MY_Controller {
         $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgenciesVerified();
         $data['product_list'] = $this->Product->getActiveProducts();
         $data['crop_list'] = $this->Crop->getActiveCrops();
+        $data['arrCountriesList'] = $this->Country->getCountries();
         $data['title'] = $user_type_details['name'] . ' Registration';
         $data['heading'] = $user_type_details['name'] . ' Register Form';
         $data['hide_footer'] = true;
@@ -79,6 +80,7 @@ class UserController extends MY_Controller {
             if (empty($_FILES['profile_image']['name'])) {
                 $this->form_validation->set_rules('profile_image', 'Profile Image', 'trim|required');
             }
+            $this->form_validation->set_rules( 'country_id', 'Country', 'trim|required' );
             $this->form_validation->set_rules('state_id', 'State', 'trim|required');
             $this->form_validation->set_rules('city_id', 'City', 'trim|required');
             $this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -1253,7 +1255,45 @@ class UserController extends MY_Controller {
     }
     
     
+    public function fetchFrontendCitiesByStateId() {
+        $arrPost = $this->input->post();
+        $arrCitiesList = $this->City->getCitiesByStateId( $arrPost['state_id'] );
+        $intHiddenCityId = isset( $arrPost['hidden_city_id'] ) ? $arrPost['hidden_city_id'] : '';
+        
+        $strHtml = array();
+        if( true == isArrVal( $arrCitiesList ) ) {
+            foreach( $arrCitiesList as $arrCityDetails ) {
+                $strSelected = '';
+                if( $intHiddenCityId == $arrCityDetails['id']) {
+                    $strSelected = 'selected="selected"';
+                }
+                
+                $strHtmlData = ' <option value="' . $arrCityDetails['id'] . '" ' . set_select( 'city_id', $arrCityDetails['id'] ) . ' ' . $strSelected . ' > ' . $arrCityDetails['name'] . '</option>';
+                $strHtml[] = $strHtmlData;
+            }
+        }
+        echo json_encode( $strHtml );
+    }
     
+    public function fetchFrontendStatesByCountryId() {
+        $arrPost = $this->input->post();
+        $arrStatesList = $this->State->getStatesByCountryId( $arrPost['country_id'] );
+        $intHiddenStateId = isset( $arrPost['hidden_state_id'] ) ? $arrPost['hidden_state_id'] : '';
+        
+        $strHtml = array();
+        if( true == isArrVal( $arrStatesList ) ) {
+            foreach( $arrStatesList as $arrStateDetails ) {
+                $strSelected = '';
+                if( $intHiddenStateId == $arrStateDetails['id']) {
+                    $strSelected = 'selected="selected"';
+                }
+                
+                $strHtmlData = ' <option value="' . $arrStateDetails['id'] . '" ' . set_select( 'state_id', $arrStateDetails['id'] ) . ' ' . $strSelected . ' > ' . $arrStateDetails['name'] . '</option>';
+                $strHtml[] = $strHtmlData;
+            }
+        }
+        echo json_encode( $strHtml );
+    }
     
     
     

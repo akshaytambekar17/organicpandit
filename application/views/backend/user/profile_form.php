@@ -131,6 +131,8 @@
                             </div>
                             <input type="hidden" name="user_type_id" value="<?= $user_type_details['id']?>" >
                             <input type="hidden" name="user_id" value="<?= $user_details['user_id']?>" >
+                            <input type="hidden" id="js-hidden-state-id" value="<?= ( true == isset( $user_details['state_id'] ) )? $user_details['state_id'] : '' ?>" >
+                            <input type="hidden" id="js-hidden-city-id" value="<?= ( true == isset( $user_details['city_id'] ) )? $user_details['city_id'] : '' ?>" >
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-success" id="submit">Submit</button>
                                 <?php if($user_session['username'] == ADMINUSERNAME){ 
@@ -179,15 +181,7 @@
                     $("#total_price").val(0);
                 }
             });
-            $("#state_id").on('change',function(){
-                var state_id = $(this).val();
-                getCitiesByState(state_id);
-            });
-            var state_id = $("#state_id").val();
-            var city_id_hidden = $("#city-id-hidden").val();
-            if(state_id != ''){
-                getCitiesByState(state_id,city_id_hidden);
-            }
+            
             $(".addButton").on('click',function() {
                 var count = $("#product-count").val();
                 var total_count = parseInt(count) + 1; 
@@ -274,6 +268,25 @@
             var partnerTypeId = $( "#js-partner-type" ).val();
             var partnerUserId = $( "#js-partner-user-id-hidden" ).val();
             getPartnerUserDetails( partnerTypeId, partnerUserId );
+            
+            var intCountryId = $( '#js-country-id' ).val();
+            if( null != intCountryId && 'null' != intCountryId && '' != intCountryId ) {
+                getStatesByCountry( intCountryId );
+            }
+            $(document).on('change', '#js-country-id', function() {
+                var intCountryId = $( this ).val();
+                getStatesByCountry( intCountryId );
+            });
+            
+            var intStateId = $( '#js-hidden-state-id' ).val();
+            if( null != intStateId && 'null' != intStateId && '' != intStateId ) { 
+                getCitiesByState( intStateId );
+            }
+            
+            $(document).on( 'change', '#js-state-id', function(){
+                var intStateId = $( this ).val();
+                getCitiesByState( intStateId );
+            });
         });
         
         function currentDate() {
@@ -303,19 +316,6 @@
             });
         }
         
-        function getCitiesByState(state_id,city_id_hidden = ''){
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url(); ?>" + "getcities-by-state",
-                data: { 'state_id' : state_id,'city_id_hidden' : city_id_hidden },
-                dataType: "html",
-                success: function(result){
-                    var html = $.parseJSON(result);
-                    $("#city_id").html('<option disabled selected> Select City</option>');
-                    $("#city_id").append(html);
-                }
-            });
-        }
         function removeButton(ths){
             var $row  = $(ths).parents('.product-group');
             // Remove element containing the option
