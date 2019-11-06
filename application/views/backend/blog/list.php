@@ -60,7 +60,7 @@
                                                 <td><?= $arrBlogDetails['description']; ?></td>
                                                 <td><?= ( ENABLED == $arrBlogDetails['blog_status'] ) ? 'Enabled' : 'Disabled' ?></td>
                                                 <td>
-                                                    <a href="<?= base_url()?>admin/blogs/update?id=<?= $arrBlogDetails['blog_id']?>"  name="update-soil" data-toggle="tooltip" title="Update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                                    <a href="<?= base_url()?>admin/blogs/update?blog_id=<?= $arrBlogDetails['blog_id']?>"  name="update-soil" data-toggle="tooltip" title="Update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                                     <a href="javascript:void(0)" data-blog_id="<?= $arrBlogDetails['blog_id'] ?>" name="delete-soil" data-toggle="tooltip" title="Delete" onclick="showDeleteModal(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                                 </td>
                                             </tr>

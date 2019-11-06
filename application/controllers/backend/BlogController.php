@@ -20,7 +20,7 @@ class BlogController extends MY_Controller {
         $arrData['title'] = 'Blogs List';
         $arrData['strHeading'] = 'Blogs List';
         $arrData['view'] = 'blog/list';
-        $arrData['arrBlogsList'] = $this->Blog->getBlogs();
+        $arrData['arrBlogsList'] = $this->Blogs->getBlogs();
         
         $this->backendLayout( $arrData );
     }
@@ -28,33 +28,30 @@ class BlogController extends MY_Controller {
     public function add() {
         
         $arrData['backend'] = true;
-        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
-        $arrData['strTitle'] = 'Add Soil';
-        $arrData['title'] = 'Add Soil';
-        $arrData['strHeading'] = 'Add Soil';
-        $arrData['strSubmitValue'] = 'Add Soil';
-        $arrData['view'] = 'user-soil/form-details';
+        $arrData['strTitle'] = 'Add Blog';
+        $arrData['title'] = 'Add Blog';
+        $arrData['strHeading'] = 'Add Blog';
+        $arrData['strSubmitValue'] = 'Add Blog';
+        $arrData['view'] = 'blog/form-details';
 
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
             
-            $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-            $this->form_validation->set_rules('element', 'Element', 'trim|required');
-            $this->form_validation->set_rules('percentage', 'Percentage', 'trim|required');
+            $this->form_validation->set_rules('title', 'Title', 'trim|required');
+            $this->form_validation->set_rules('description', 'Description', 'trim|required');
+            $this->form_validation->set_rules('blog_image', 'Image', 'trim|required');
+            $this->form_validation->set_rules('blog_status', 'Status', 'trim|required');
             
             if( true == $this->form_validation->run() ) {
                 $arrDetails = $arrPost;
                 
-                $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
-                $arrDetails['user_type_id'] = $arrUserDetails['user_type_id'];
-                
-                $intUserSoilId = $this->UserSoil->insert( $arrDetails );
-                if( true == isIdVal( $intUserSoilId ) ) {
-                    $this->session->set_flashdata( 'Message', 'Soil has been added succesfully' );
-                    return redirect( 'admin/user/user-soils', 'refresh' );
+                $intBlogId = $this->Blogs->insert( $arrDetails );
+                if( true == isIdVal( $intBlogId ) ) {
+                    $this->session->set_flashdata( 'Message', 'New Blog has been added succesfully' );
+                    return redirect( 'admin/blogs', 'refresh' );
                 } else {
-                    $this->session->set_flashdata( 'Error', 'Failed to add soil' );
+                    $this->session->set_flashdata( 'Error', 'Failed to add blog' );
                     $this->backendLayout( $arrData );
                 }
             } else {
@@ -69,40 +66,39 @@ class BlogController extends MY_Controller {
     public function update() {
         $arrGet = $this->input->get();
 
-        $arrUserSoilDetails = $this->UserSoil->getUserSoilByUserSoilId( $arrGet['id'] );
-        if( false == isArrVal( $arrUserSoilDetails ) ) {
+        $arrBlogDetails = $this->Blogs->getBlogByBlogId( $arrGet['blog_id'] );
+        if( false == isArrVal( $arrBlogDetails ) ) {
             $this->session->set_flashdata( 'Error', 'Soil not found.' );
-            redirect( 'admin/user/user-soils', 'refresh' );
+            redirect( 'admin/blogs', 'refresh' );
         }
         $arrData['backend'] = true;
-        $arrData['arrUsersList'] = $this->User->getUsersByUserTypeOtherThenProducts();
         $arrData['arrUserSessionDetails'] = $this->arrUserSession;
-        $arrData['arrUserSoilDetails'] = $arrUserSoilDetails;
-        $arrData['strTitle'] = 'Update Soil';
-        $arrData['title'] = 'Update Soil';
-        $arrData['strHeading'] = 'Update Soil';
-        $arrData['strSubmitValue'] = 'Update Soil';
-        $arrData['view'] = 'user-soil/form-details';
+        $arrData['arrBlogDetails'] = $arrBlogDetails;
+        $arrData['strTitle'] = 'Update Blog';
+        $arrData['title'] = 'Update Blog';
+        $arrData['strHeading'] = 'Update Blog';
+        $arrData['strSubmitValue'] = 'Update Blog';
+        $arrData['view'] = 'blog/form-details';
 
         if( $this->input->post() ) {
             $arrPost = $this->input->post();
             if( ADMINUSERNAME == $this->arrUserSession['username'] ) {
                 $this->form_validation->set_rules('user_id', 'User', 'trim|required');
             }
-            $this->form_validation->set_rules('element', 'Element', 'trim|required');
-            $this->form_validation->set_rules('percentage', 'Percentage', 'trim|required');
+            $this->form_validation->set_rules('title', 'Title', 'trim|required');
+            $this->form_validation->set_rules('description', 'Description', 'trim|required');
+            $this->form_validation->set_rules('blog_status', 'Status', 'trim|required');
             
             if( true == $this->form_validation->run() ) {
                 
                 $arrDetails = $arrPost;
-                $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
-                $arrDetails['user_type_id'] = $arrUserDetails['user_type_id'];
                 
-                $boolResult = $this->UserSoil->update( $arrDetails );
+                
+                $boolResult = $this->Blogs->update( $arrDetails );
 
                 if( true == isVal( $boolResult ) ) {
                     $this->session->set_flashdata( 'Message', 'Soil has been updated succesfully' );
-                    return redirect( 'admin/user/user-soils', 'refresh' );
+                    return redirect( 'admin/blogs', 'refresh' );
                 } else {
                     $this->session->set_flashdata( 'Error', 'Failed to update Soil ' );
                     $this->backendLayout( $arrData );
@@ -118,7 +114,7 @@ class BlogController extends MY_Controller {
 
     public function delete() {
         $arrPost = $this->input->post();
-        $boolResult = $this->UserSoil->delete( $arrPost['id'] );
+        $boolResult = $this->Blogs->delete( $arrPost['id'] );
         if( true == isStrVal( $boolResult ) ) {
             echo true;
         } else {
