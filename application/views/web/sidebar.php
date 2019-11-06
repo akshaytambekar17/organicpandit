@@ -469,6 +469,12 @@
 	                </li>
                     <?php if( $arrUserSession['username'] == ADMINUSERNAME ) { ?>
                         <li>
+                            <a href="<?= base_url()?>admin/blogs">
+                                <i class="fa fa-rss-square"></i> <span>Blogs</span>
+                            </a>
+                        </li>
+                        
+                        <li>
                             <a href="<?= base_url()?>admin/organic-setting">
                                 <i class="fa fa-cog"></i> <span>Organic Setting</span>
                             </a>

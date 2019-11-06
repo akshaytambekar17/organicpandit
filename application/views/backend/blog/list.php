@@ -87,7 +87,7 @@
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <div class="text-center popup-content">  
-                    <h5> By clicking on <span>"YES"</span>, Soil will be deleted permanently. Do you wish to proceed?</h5><br><br>
+                    <h4> By clicking on <span>"YES"</span>, Blog will be deleted permanently. Do you wish to proceed?</h4><br><br>
                     <input  type="hidden" id="js-modal-blog-id"> 
                     <button type="button" id="js-confirm-button" class="btn btn-success modal-box-button" >Yes</button>
                     <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
@@ -102,11 +102,11 @@
             var intBlogId = $("#js-modal-blog-id").val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>" + "admin/user/user-soils/delete",
+                url: "<?php echo base_url(); ?>" + "admin/blogs/delete",
                 data: { 'blog_id' : intBlogId },
-                success: function(result){
+                success: function( boolResult ){
                     $('#js-delete-confirmation-modal').modal('hide');
-                    if( result ) {
+                    if( boolResult ) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         $('.js-alert-message-box').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> Blog has been deleted successfully. <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {

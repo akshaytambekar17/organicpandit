@@ -26,7 +26,7 @@ class blogs_model extends CI_Model {
         }
     }
     
-    public function getBlog() {
+    public function getBlogs() {
         $this->db->order_by( 'blog_id', 'DESC' );
         return $this->db->get( 'tbl_blogs' )->result_array();
     }
