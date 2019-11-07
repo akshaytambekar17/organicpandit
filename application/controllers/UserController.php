@@ -750,6 +750,7 @@ class UserController extends MY_Controller {
         $arrmixUserDetails['city'] = $arrCityDetails['name'];
         $arrUserTypeDetails = $this->UserType->getUserTypeById($arrmixUserDetails['user_type_id']);
         $arrmixUserDetails['user_type_name'] = $arrUserTypeDetails['name'];
+        $data['arrOrganicSettingUserDetails'] = $this->OrganicSetting->getOrganicSettingByKey( SHOW_USER_DETAILS );
         $data['user_details'] = $arrmixUserDetails;
 
         $data['title'] = $arrmixUserDetails['fullname'];

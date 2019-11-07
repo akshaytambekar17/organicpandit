@@ -69,14 +69,16 @@ class UserController extends MY_Controller {
         $arrUserSession = $session['userData'];
         if( ADMINUSERNAME == $arrUserSession['username'] ){
             if( true == isset( $arrGet['user_type_id'] ) ) {
-                $data['arrUsersList'] = $this->User->getUserByUserTypeId( $arrGet['user_type_id'] );
+                 $arrUsersList = $this->User->getUserByUserTypeId( $arrGet['user_type_id'] );
             } else {
-                $data['arrUsersList'] = $this->User->getUsers();
+                $arrUsersList = $this->User->getUsers();
             }
         }else{
-            $data['arrUsersList'] = $this->User->getUserByPartnerUserId( $arrUserSession['user_id'] );
+            $arrUsersList = $this->User->getUserByPartnerUserId( $arrUserSession['user_id'] );
         }
         
+        $data['arrUsersList'] = $arrUsersList;  
+        $data['arrJsonUsersList'] = json_encode( $arrUsersList );  
         $data['arrUserTypeList'] = $this->UserType->getUserTypes();
         
         $data['title'] = 'User Registration';

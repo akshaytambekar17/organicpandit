@@ -111,6 +111,10 @@
                         <div class="box-header"></div>
                         <div class="box-body">
                             <?php if(!empty($search_user_list)){
+                                    $boolShowUserDetails = false;
+                                    if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) { 
+                                        $boolShowUserDetails = true;
+                                    }
                                     foreach($search_user_list as $value){
                             ?>
                                 <div class="box box-warning post-panel">
@@ -126,13 +130,13 @@
                                                 <?php
                                                     $state_details = $this->State->getStateById($value['state_id']);
                                                     $city_details = $this->City->getCityById($value['city_id']);
-                                                    echo $value['address'].",".$city_details['name'].",".$state_details['name'];
+                                                    echo $city_details['name'].",".$state_details['name'];
                                                 ?>
 
                                             </h4>
                                             
                                         </div>
-                                        <?php if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) {  ?>
+                                        <?php if( true == $boolShowUserDetails ) {  ?>
                                             <div class="col-md-2">
                                                 <h4>Email Id</h4>
                                                 <b><?= $value['email_id']; ?></b>
@@ -140,7 +144,7 @@
                                                 <b><?= $value['mobile_no']; ?></b>
                                             </div>
                                         <?php } ?>
-                                        <div class="col-md-1">
+                                        <div class="<?= ( true == $boolShowUserDetails ) ? 'col-md-1' : 'col-md-3'  ?>">
                                             <h4>Story</h4>
                                             <b><?= $value['story']; ?></b>
                                         </div>
@@ -317,14 +321,14 @@
         $(document).ready(function () {
             $("#state_id").on('change',function(){
                 var state_id = $(this).val();
-                getCitiesByState(state_id);
+                getSearchUserCitiesByState(state_id);
             });
             var state_id = $("#state_id").val();
             if(state_id != ''){
-                getCitiesByState(state_id);
+                getSearchUserCitiesByState(state_id);
             }
         });
-        function getCitiesByState( intStateId ){
+        function getSearchUserCitiesByState( intStateId ){
             var intCityIdHidden = $(".js-city-id-hidden").val();
             
             $.ajax({

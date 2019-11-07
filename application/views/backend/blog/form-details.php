@@ -91,3 +91,9 @@
         </div>
     </section>
 </div>
+
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('js-ck-editor');
+    });    
+</script>

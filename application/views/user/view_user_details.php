@@ -45,57 +45,61 @@
                                             <label>Username</label>
                                             <h4><?= $user_details['username']?></h4>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Email Id</label>
-                                            <h4><?= $user_details['email_id']?></h4>
-                                        </div>
+                                        <?php if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) {  ?>
+                                            <div class="form-group col-md-4">
+                                                <label>Email Id</label>
+                                                <h4><?= $user_details['email_id']?></h4>
+                                            </div>
+                                        <?php } ?>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-4">
-                                            <label>Mobile Number</label>
-                                            <h4><?= $user_details['mobile_no']?></h4>
+                                    <?php if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) {  ?>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Mobile Number</label>
+                                                <h4><?= $user_details['mobile_no']?></h4>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Landline Number</label>
+                                                <h4><?= $user_details['landline_no']?></h4>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Landline Number</label>
-                                            <h4><?= $user_details['landline_no']?></h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Address</label>
+                                                <h4><?= $user_details['address']?></h4>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>State</label>
+                                                <h4><?php
+                                                        $state_details = $this->State->getStateById($user_details['state_id']);
+                                                        echo $state_details['name'];
+                                                    ?>
+                                                </h4>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>City</label>
+                                                <h4><?php
+                                                        $city_details = $this->City->getCityById($user_details['city_id']);
+                                                        echo $city_details['name'];
+                                                    ?>
+                                                </h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-4">
-                                            <label>Address</label>
-                                            <h4><?= $user_details['address']?></h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>GST Number</label>
+                                                <h4><?= !empty($user_details['gst_number'])?$user_details['gst_number']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Aadhar Number</label>
+                                                <h4><?= !empty($user_details['aadhar_number'])?$user_details['aadhar_number']:"NA"?></h4>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Pancard Number</label>
+                                                <h4><?= !empty($user_details['pancard_number'])?$user_details['pancard_number']:"NA"?></h4>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label>State</label>
-                                            <h4><?php
-                                                    $state_details = $this->State->getStateById($user_details['state_id']);
-                                                    echo $state_details['name'];
-                                                ?>
-                                            </h4>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>City</label>
-                                            <h4><?php
-                                                    $city_details = $this->City->getCityById($user_details['city_id']);
-                                                    echo $city_details['name'];
-                                                ?>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-4">
-                                            <label>GST Number</label>
-                                            <h4><?= !empty($user_details['gst_number'])?$user_details['gst_number']:"NA"?></h4>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Aadhar Number</label>
-                                            <h4><?= !empty($user_details['aadhar_number'])?$user_details['aadhar_number']:"NA"?></h4>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Pancard Number</label>
-                                            <h4><?= !empty($user_details['pancard_number'])?$user_details['pancard_number']:"NA"?></h4>
-                                        </div>
-                                    </div>
+                                    <?php } ?>
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             <label>Story</label>

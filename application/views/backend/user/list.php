@@ -50,75 +50,23 @@
                             <table class="table table-striped table-bordered table-hover" id="js-user-registration-list">
                                 <thead>
                                     <tr>
-                                        <th class="hidden">Id</th>
-                                        <th>Partner User Type</th>
-                                        <th>Partner Fullname</th>
-                                        <th>Fullname</th>
+                                        <th>Id</th>
                                         <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
-                                            <th>User Type</th>
+                                            <th>Partner User Type</th>
+                                            <th>Partner Fullname</th>
                                         <?php } ?>
-                                        <th>Email Id</th>
-                                        <th>Mobile number</th>
+                                        <th>Fullname</th>
+                                        <th>User Type</th>
+                                        <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
+                                            <th>Email Id</th>
+                                            <th>Mobile number</th>
+                                        <?php } ?>    
                                         <th>Verified</th>
                                         <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] || $arrUserSessionDetails['user_type_id'] == 16 ){ ?>
                                                 <th>Action</th>
                                         <?php }?>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                <?php
-                                    if( true == isArrVal( $arrUsersList ) ) {
-                                        foreach( $arrUsersList as $arrUserDetails ) {
-                                            
-                                ?>
-                                            <tr class="gradeX" id="order-<?= $arrUserDetails['user_id'] ?>">
-                                                <td class="hidden"><?= $arrUserDetails['user_id']; ?></td>
-                                                <td>
-                                                    <?php
-                                                        if( ADMINUSERNAME == $arrUserSessionDetails['username'] ) {
-                                                            echo ( true == isVal( $arrUserDetails['partner_type_name'] ) ) ? $arrUserDetails['partner_type_name'] : '--';
-                                                        }else {
-                                                            echo $arrUserDetails['user_type_name'];
-                                                        }
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                        if( ADMINUSERNAME == $arrUserSessionDetails['username'] ) {
-                                                            echo ( true == isVal( $arrUserDetails['partner_fullname'] ) ) ? $arrUserDetails['partner_fullname'] : '--';
-                                                        }else {
-                                                            echo $arrUserDetails['fullname'];
-                                                        }
-                                                    ?>
-                                                </td>
-                                                <td><?= $arrUserDetails['fullname']?></td>
-                                                <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ){ ?>
-                                                    <td><?= $arrUserDetails['user_type_name'];?></td>
-                                                <?php } ?>
-                                                <td><?= $arrUserDetails['email_id'];?></td>
-                                                <td><?= $arrUserDetails['mobile_no'];?></td>
-                                                <td><?= ($arrUserDetails['is_verified'] == 2)?'Verified':'Not Verified';?></td>
-                                                <?php if(!empty($arrUserSessionDetails['user_type_id']) && $arrUserSessionDetails['user_type_id'] == 16 ){ ?>
-                                                    <td style="text-align: center">
-                                                        <?php if($arrUserSessionDetails['user_id'] == $arrUserDetails['agency_id']){ ?>
-                                                            <a href="<?= site_url('admin/user/view?id='.$arrUserDetails['user_id'])?>" class="view-product" data-id="<?= $arrUserDetails['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i> </a>
-                                                        <?php } ?>        
-                                                    </td>
-                                                <?php }
-                                                    if($arrUserSessionDetails['username'] == ADMINUSERNAME){ 
-                                                ?>
-                                                        <td>
-                                                            <a href="<?= site_url('admin/user/update-profile?id='.$arrUserDetails['user_id'].'&user_type_id='.$arrUserDetails['user_type_id'])?>" class="view-product" data-id="<?= $arrUserDetails['user_id'] ?>" name="view-product"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                                            <a href="<?= site_url('admin/user/view?id='.$arrUserDetails['user_id'])?>" class="view-product" data-id="<?= $arrUserDetails['user_id'] ?>" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="javascript:void(0)" class="delete-user" data-user_id="<?= $arrUserDetails['user_id'] ?>" name="delete-user" onclick="userDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a><br>
-                                                        </td>
-                                                <?php } ?>    
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                </tbody>            
                             </table>
                         </div>  
                       
@@ -178,6 +126,46 @@
 </div>
 <script>
     $(document).ready(function () {
+        var arrmixUserList = [];
+        <?php if( true == isStrVal( $arrJsonUsersList ) ) { ?>
+                
+                var arrUserList = <?= $arrJsonUsersList ?> ;
+                $.each( arrUserList, function( index, arrUserDetails ) {
+                    <?php if( ADMINUSERNAME == $arrUserSessionDetails['username'] ) { ?>
+                            arrmixUserList.push( [
+                                arrUserDetails.user_id,
+                                ( arrUserDetails.partner_type_name ) ? arrUserDetails.partner_type_name : '--' ,
+                                ( arrUserDetails.partner_fullname ) ? arrUserDetails.partner_fullname : '--' ,
+                                arrUserDetails.fullname,
+                                arrUserDetails.user_type_name,
+                                arrUserDetails.email_id,
+                                arrUserDetails.mobile_no,
+                                ( 2 == arrUserDetails.is_verified ) ? 'Verified' : 'Not Verified' ,
+                                '<a href="<?= base_url()?>admin/user/update-profile?id=' + arrUserDetails.user_id + '&user_type_id=' + arrUserDetails.user_type_id + '" class="view-product" data-id="' + arrUserDetails.user_id + '" name="view-product"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>&nbsp;<a href="<?= base_url()?>admin/user/view?id=' + arrUserDetails.user_id + '" class="view-product" data-id="' + arrUserDetails.user_id + '" name="view-product"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;<a href="javascript:void(0)" class="delete-user" data-user_id="' + arrUserDetails.user_id + '" name="delete-user" onclick="userDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a><br>'    
+                            ] );
+                    <?php } else { ?>
+                            arrmixUserList.push( [
+                                arrUserDetails.user_id,
+                                arrUserDetails.user_type_name,
+                                arrUserDetails.fullname,
+                                ( 2 == arrUserDetails.is_verified ) ? 'Verified' : 'Not Verified' ,
+                            ] );
+                    <?php } ?>    
+                });
+        <?php } ?>
+        
+        
+        $('#js-user-registration-list').dataTable( {
+                data:           arrmixUserList,
+                deferRender:    true,
+                scrollCollapse: true,
+                scroller:       true,
+                aaSorting: [[0, "desc"]],
+                columnDefs: [
+                    { width: "13%", targets: 1 },
+                ]
+        } );
+        
         $("#confirm_btn").on('click',function(){
             var user_id = $("#id_modal").val();
             $.ajax({
@@ -214,14 +202,6 @@
             } else {
                 $( '.js-error-user-type-id' ).text( 'Please select User Type' );
             }
-        } );
-        
-        $('#js-user-registration-list').dataTable( {
-            aaSorting: [[0, "desc"]],
-            dom: 'Bfrtip',
-            buttons: [
-                'csvHtml5', 'pdfHtml5'
-            ]
         } );
         
     });
