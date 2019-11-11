@@ -87,9 +87,22 @@
                                     <h2 class="post-title">
                                         <?= $arrBlogDetails['title'] ?>
                                     </h2>
-                                    <h3 class="post-subtitle">
-                                        <?= $arrBlogDetails['description'] ?>
-                                    </h3>
+                                    <h4 class="post-subtitle">
+                                        <?php
+                                            $strDescription = strip_tags( $arrBlogDetails['description'] );
+                                            if( strlen( $strDescription ) > 200 ) {
+                                                // truncate string
+                                                $strDescriptionCut = substr( $strDescription, 0, 200 );
+                                                $strEndPoint = strrpos( $strDescriptionCut, ' ' );
+                                                        
+                                                //if the string doesn't contain any space then it will cut without word basis.
+                                                $strDescription = $strEndPoint ? substr( $strDescriptionCut, 0, $strEndPoint ) : substr( $strDescriptionCut, 0 );
+                                                $strDescription .= '.....';
+                                            }
+                                            echo $strDescription;
+                                        ?>
+                                        
+                                    </h4>
                                 </a>
                                 <p class="post-meta">Posted by
                                     <a href="#">Oragnic Team</a>
