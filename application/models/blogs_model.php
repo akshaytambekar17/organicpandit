@@ -31,6 +31,12 @@ class blogs_model extends CI_Model {
         return $this->db->get( 'tbl_blogs' )->result_array();
     }
     
+    public function getActiveBlogs() {
+        $this->db->where( 'blog_status', ENABLED );
+        $this->db->order_by( 'blog_id', 'DESC' );
+        return $this->db->get( 'tbl_blogs' )->result_array();
+    }
+    
     public function getBlogByBlogId( $intBlogId ) {
         $this->db->where( 'blog_id', $intBlogId );
         return $this->db->get( 'tbl_blogs' )->row_array();
