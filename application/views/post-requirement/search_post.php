@@ -247,11 +247,11 @@
         $(document).ready(function () {
             $("#state_id").on('change',function(){
                 var state_id = $(this).val();
-                getCitiesByState(state_id);
+                getSearchPostCitiesByState(state_id);
             });
             var state_id = $("#state_id").val();
             if(state_id != ''){
-                getCitiesByState(state_id);
+                getSearchPostCitiesByState(state_id);
             }
             $("#confirm_btn").on('click',function(){
                 var post_id = $("#post_requirement_id").val();
@@ -284,7 +284,7 @@
                 });
             });
         });
-        function getCitiesByState(state_id){
+        function getSearchPostCitiesByState(state_id){
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>" + "getcities-by-state",

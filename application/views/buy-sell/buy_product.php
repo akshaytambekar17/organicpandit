@@ -245,12 +245,12 @@
             }
 
             $("#js-delivery-location-state").on('change',function(){
-                    var intStateId = $(this).val();
-                    getCitiesByState( intStateId );
+                var intStateId = $(this).val();
+                getBuyProductCitiesByState( intStateId );
             });
             var intStateId = $("#js-delivery-location-state").val();
             if( '' != intStateId ){
-                    getCitiesByState( intStateId );
+                getBuyProductCitiesByState( intStateId );
             }
         });
 
@@ -269,7 +269,7 @@
             });
         }
 
-        function getCitiesByState( intStateId ){
+        function getBuyProductCitiesByState( intStateId ){
                 var intCityIdHidden = $(".js-hidden-delivery-location").val();
 				$.ajax({
                         type: "POST",

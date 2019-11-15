@@ -121,6 +121,9 @@ $route['checkout-cart'] = "UserController/checkoutCart";
 $route['paynow'] = "UserController/paynow";
 $route['payment-response'] = "UserController/paymentResponse";
 
+$route['blogs'] = "BlogController";
+$route['blog-details'] = "BlogController/blogDetails";
+
 /************* New Implementation Admin Panel **************/
 
 $route['admin'] = "backend/UserController/login";

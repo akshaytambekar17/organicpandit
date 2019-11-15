@@ -1,3 +1,4 @@
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <div class="content-wrapper">
     <section class="content-header">
         <h1><?= $strHeading; ?></h1>
@@ -91,3 +92,9 @@
         </div>
     </section>
 </div>
+
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('js-ck-editor');
+    });    
+</script>
