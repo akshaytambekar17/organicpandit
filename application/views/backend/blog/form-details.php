@@ -55,7 +55,7 @@
                             
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label class="control-label label-required">Profile</label>
+                                    <label class="control-label label-required">Blog Image</label>
                                     <input type="file" name="blog_image" id="js-profile-image" class="form-control">
                                     <?php if( true == isset( $arrBlogDetails['blog_image'] ) && ( true == isStrVal( $arrBlogDetails['blog_image'] ) ) ) { ?>
                                             <br>
