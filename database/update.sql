@@ -320,3 +320,14 @@ ALTER TABLE `tbl_blogs`
 ALTER TABLE `tbl_blogs`
   MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+
+/**
+* 17-11-2019
+*/
+
+ALTER TABLE `tbl_blogs` ADD `blog_category_id` INT(11) NOT NULL AFTER `blog_id`;
+
+ALTER TABLE `tbl_blogs` ADD `meta_title` VARCHAR(255) NOT NULL AFTER `blog_status`, ADD `meta_description` TEXT NOT NULL AFTER `meta_title`, ADD `meta_keyword` VARCHAR(255) NOT NULL AFTER `meta_description`;
+
+UPDATE `tbl_blogs` SET `blog_category_id`= 1;

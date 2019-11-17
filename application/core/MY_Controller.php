@@ -42,6 +42,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model('product_units_model','ProductUnits');
         $this->load->model('meta_data_model','MetaData');
         $this->load->model('blogs_model','Blogs');
+        $this->load->model('blog_categories_model','BlogCategories');
+        $this->load->model('lab_reports_model','LabReports');
         
     }
 

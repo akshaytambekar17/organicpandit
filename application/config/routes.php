@@ -124,6 +124,8 @@ $route['payment-response'] = "UserController/paymentResponse";
 $route['blogs'] = "BlogController";
 $route['blog-details'] = "BlogController/blogDetails";
 
+$route['lab-report-details'] = "LabReportController/view";
+
 /************* New Implementation Admin Panel **************/
 
 $route['admin'] = "backend/UserController/login";
@@ -220,6 +222,12 @@ $route['order/view'] = "backend/OrderController/view";
 $route['transactions'] = "backend/TransactionController/index";
 
 $route['buyer-enquiry-list'] = "backend/SendEnquiryBuyerController/index";
+
+$route['admin/lab-reports'] = "backend/LabReportController";
+$route['admin/lab-reports/add'] = "backend/LabReportController/add";
+$route['admin/lab-reports/update'] = "backend/LabReportController/update";
+$route['admin/lab-reports/delete'] = "backend/LabReportController/delete";
+
 
 /**
  * Ajax routing

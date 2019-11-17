@@ -56,7 +56,7 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
                         <div class="site-heading">
-                            <h1>Organic Blogs</h1>
+                            <h1>Organic Publications</h1>
 <!--                            <span class="subheading">A Blog Theme by Start Bootstrap</span>-->
                         </div>
                     </div>
@@ -65,7 +65,7 @@
         </header>
 
         <!-- Main Content -->
-        <div class="container">
+        <div class="container-fluid">
             <?php if( true == isStrVal( $this ->session->flashdata( 'Error' ) ) ) { 
                     $strErrorMessage = $this ->session->flashdata( 'Error' );
             ?>
@@ -77,7 +77,21 @@
                 </div>
             <?php } ?>
             <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="col-lg-3 col-md-3 mx-auto">
+                    <h4>Categories</h4>
+                    <input type="text" id="js-blog-category-id" class="blog-category-input" onkeyup="filterBlogcategory()" placeholder="Search for category.." title="Type in a category">
+
+                    <ul id="blog-category-ul">
+                        <?php foreach( $arrBlogCategoriesList as $arrBlogCategoryDetails ) { ?>
+                        <li>
+                            <a class="<?= ( ( true == isset( $intBlogCategoryId ) ) && ( $intBlogCategoryId == $arrBlogCategoryDetails['blog_category_id'] ) ) ? 'blog-category-li-selected' : '' ?>" href="<?= base_url()?>blogs?blog_category_id=<?= $arrBlogCategoryDetails['blog_category_id'] ?>">
+                                <?= $arrBlogCategoryDetails['blog_category_name'] ?>
+                            </a>
+                        </li>
+                        <?php } ?>    
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-md-9 mx-auto">
                     <?php 
                         if( true == isArrVal( $arrBlogsList ) ) {
                             foreach( $arrBlogsList as $arrBlogDetails ) {  
@@ -111,9 +125,9 @@
                             <hr>
                     <?php } } else { ?>    
                             <div class="post-preview">
-                                <h2 class="post-title">
-                                   No Blogs. New Blogs will adding soon....!
-                                </h2>
+                                <h3 class="post-title">
+                                    No Publications. New Publication will adding soon <?= ( ( true == isset( $arrBlogCategoryData ) )&&  ( true == isArrVal( $arrBlogCategoryData ) ) ) ? ' for ' . $arrBlogCategoryData['blog_category_name'] : '' ?>!
+                                </h3>
                             </div>
                     <?php } ?>    
                     <!-- Pager -->
@@ -173,6 +187,23 @@
             $(".alert").delay(5000).slideUp(200, function() {
                 $(this).alert('close');
             });
+            function filterBlogcategory() {
+                var input, filter, ul, li, a, i, txtValue;
+                input = document.getElementById("js-blog-category-id");
+                filter = input.value.toUpperCase();
+                ul = document.getElementById("blog-category-ul");
+                li = ul.getElementsByTagName("li");
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    txtValue = a.textContent || a.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            }
+            
         </script>
     </body>
 

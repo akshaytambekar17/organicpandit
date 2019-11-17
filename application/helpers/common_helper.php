@@ -121,3 +121,8 @@ function printLastSql() {
 function printFormValidationError() {
     printDie( validation_errors() );
 }
+
+function convertDateFormatToStandardFormat( $strDate ) {
+    $strDate = str_replace( '/', '-', $strDate );
+    return date( 'Y-m-d', strtotime( $strDate ) );
+}

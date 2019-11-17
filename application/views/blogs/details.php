@@ -4,7 +4,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
+        <meta name="description" content="<?= true == isStrVal( $arrBlogDetails['meta_title'] ) ? $arrBlogDetails['meta_title'] : '' ?>">
+        <meta name="keywords" content="<?= true == isStrVal( $arrBlogDetails['meta_keyword'] ) ? $arrBlogDetails['meta_keyword'] : '' ?>">
         <meta name="author" content="">
 
         <title><?= $strTitle ?></title>
@@ -40,7 +41,7 @@
                             <a class="nav-link" href="<?php echo base_url(); ?>home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url(); ?>blogs">Blogs</a>
+                            <a class="nav-link" href="<?php echo base_url(); ?>blogs">Publications</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo base_url(); ?>about">About</a>

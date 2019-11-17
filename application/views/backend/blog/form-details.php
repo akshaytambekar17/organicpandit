@@ -4,7 +4,7 @@
         <h1><?= $strHeading; ?></h1>
         <ol class="breadcrumb">
             <li><a href="<?= base_url()?>admin/dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-            <li><a href="<?= base_url()?>admin/blogs">Blogs List</a></li>
+            <li><a href="<?= base_url()?>admin/blogs">Publications List</a></li>
             <li class="active"><a href="javascript:void(0)"><?= $strHeading; ?></a></li>
         </ol>
     </section>
@@ -39,6 +39,23 @@
                     </div>
                     <form method="post" enctype="multipart/form-data" action="<?= ( true == isset( $arrBlogDetails ) ) ? base_url() . 'admin/blogs/update?blog_id=' . $arrBlogDetails['blog_id'] : base_url() . 'admin/blogs/add' ?>" name="blog-form">
                         <div class="box-body">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label label-required" for="blog_category_id">Select Category</label>
+                                    <select class="form-control select2" name="blog_category_id">
+                                        <option disabled="disabled" selected="selected" >Select Category</option>
+                                        <?php foreach( $arrBlogCategoriesList as $arrBlogCategoryDetails ) { 
+                                                $strSelected = '';
+                                                if( true == isset( $arrBlogDetails['blog_category_id'] ) && $arrBlogCategoryDetails['blog_category_id'] == $arrBlogDetails['blog_category_id'] ) {
+                                                    $strSelected = 'selected="selected"';
+                                                }
+                                        ?>        
+                                            <option value="<?= $arrBlogCategoryDetails['blog_category_id'] ?>" <?= $strSelected; ?> ><?= $arrBlogCategoryDetails['blog_category_name']?></option>
+                                        <?php } ?>    
+                                    </select>
+                                    <span class="has-error"><?php echo form_error('blog_category_id'); ?></span>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label class="control-label label-required">Title</label>
@@ -77,6 +94,30 @@
                                     <span class="has-error"><?php echo form_error('blog_status'); ?></span>
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Meta Title</label>
+                                    <input type="text" name="meta_title"  class="form-control" placeholder="Meta Title" value="<?= ( true == isset( $arrBlogDetails['meta_title'] ) ) ? $arrBlogDetails['meta_title'] : set_value( 'meta_title' )?>" >
+                                    <span class="has-error"><?php echo form_error('meta_title'); ?></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label" for="meta_description">Meta Description</label><br>
+                                    <textarea name="meta_description" rows="4" cols="100"><?= true == isset( $arrBlogDetails['meta_description'] ) ? $arrBlogDetails['meta_description'] : set_value('meta_description') ?></textarea>
+                                    <span class="has-error"><?php echo form_error('meta_description'); ?></span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Meta Keyword</label>
+                                    <input type="text" name="meta_keyword"  class="form-control" placeholder="Meta Keyword" value="<?= ( true == isset( $arrBlogDetails['meta_keyword'] ) ) ? $arrBlogDetails['meta_keyword'] : set_value( 'meta_keyword' )?>" >
+                                    <span class="has-error"><?php echo form_error('meta_keyword'); ?></span>
+                                </div>
+                            </div>
+                            
                         </div>
                         <?php if( true == isset( $arrBlogDetails['blog_id'] ) ) { ?>
                                 <input type="hidden" name="blog_id" value="<?= $arrBlogDetails['blog_id']?>">

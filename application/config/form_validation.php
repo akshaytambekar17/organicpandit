@@ -12,123 +12,123 @@ $config = array(
                 array(
                         'field' => 'email_id',
                         'label' => 'Email',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'password',
                         'label' => 'Password',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
         ),
         'admin-login' => array(
                 array(
                         'field' => 'username',
                         'label' => 'Username',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'password',
                         'label' => 'Password',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
         ),
         'email' => array(
                 array(
                         'field' => 'emailaddress',
                         'label' => 'EmailAddress',
-                        'rules' => 'required|valid_email'
+                        'rules' => 'trim|required|valid_email'
                 ),
                 array(
                         'field' => 'name',
                         'label' => 'Name',
-                        'rules' => 'required|alpha'
+                        'rules' => 'trim|required|alpha'
                 ),
                 array(
                         'field' => 'title',
                         'label' => 'Title',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'message',
                         'label' => 'MessageBody',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 )
         ),
         'post-requirement-form' => array(
                 array(
                         'field' => 'company_name',
                         'label' => 'Company name',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'product_id',
                         'label' => 'Product Name',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'quality_specification',
                         'label' => 'Quality Specification',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'from_date',
                         'label' => 'From Date',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'to_date',
                         'label' => 'To Date',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'required|numeric|greater_than[1]|less_than[2000]'
+                        'rules' => 'trim|required|numeric|greater_than[1]|less_than[2000]'
                 ),
                 array(
                         'field' => 'quantity',
                         'label' => 'Quantity',
-                        'rules' => 'required|numeric|greater_than[1]|less_than[100000]'
+                        'rules' => 'trim|required|numeric|greater_than[1]|less_than[100000]'
                 ),
                 array(
                         'field' => 'total_price',
                         'label' => 'Total Price',
-                        'rules' => 'required|numeric|greater_than[1]'
+                        'rules' => 'trim|required|numeric|greater_than[1]'
                 ),
                 array(
                         'field' => 'delivery_address',
                         'label' => 'Delivery Address',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'state_id',
                         'label' => 'Select State',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'city_id',
                         'label' => 'Select City',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'pincode',
                         'label' => 'Pincode',
-                        'rules' => 'required|numeric|exact_length[6]'
+                        'rules' => 'trim|required|numeric|exact_length[6]'
                 ),
                 array(
                         'field' => 'payment_terms',
                         'label' => 'Payment Terms',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'is_logistic',
                         'label' => 'Logistic',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'certification_id',
                         'label' => 'Select Certification',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
 
         ),
@@ -136,12 +136,12 @@ $config = array(
                 array(
                         'field' => 'state_id',
                         'label' => 'Select State',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'city_id',
                         'label' => 'Select City',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
 
         ),
@@ -149,54 +149,54 @@ $config = array(
                 array(
                         'field' => 'state_id',
                         'label' => 'Select State',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 )
         ),
         'products-form' => array(
                     array(
                             'field' => 'product_category_id',
                             'label' => 'Category',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'name',
                             'label' => 'Product name',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'description',
                             'label' => 'Description',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
 //                    array(
 //                            'field' => 'from_date',
 //                            'label' => 'From Date',
-//                            'rules' => 'required'
+//                            'rules' => 'trim|required'
 //                    ),
 //                    array(
 //                            'field' => 'to_date',
 //                            'label' => 'To Date',
-//                            'rules' => 'required'
+//                            'rules' => 'trim|required'
 //                    ),
 //                    array(
 //                            'field' => 'quantity',
 //                            'label' => 'Quantity',
-//                            'rules' => 'required|numeric'
+//                            'rules' => 'trim|required|numeric'
 //                    ),
 //                    array(
 //                            'field' => 'price',
 //                            'label' => 'Price',
-//                            'rules' => 'required|numeric'
+//                            'rules' => 'trim|required|numeric'
 //                    ),
 //                    array(
 //                            'field' => 'quality',
 //                            'label' => 'Quality',
-//                            'rules' => 'required'
+//                            'rules' => 'trim|required'
 //                    ),
                     array(
                             'field' => 'status',
                             'label' => 'Status',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     )
             ),
 
@@ -205,12 +205,12 @@ $config = array(
                     array(
                             'field' => 'name',
                             'label' => 'Category Name',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'status',
                             'label' => 'Status',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     )
             ),
 
@@ -218,80 +218,80 @@ $config = array(
                     array(
                             'field' => 'name',
                             'label' => 'Name',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'description',
                             'label' => 'Description',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'status',
                             'label' => 'Status',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     )
             ),
             'change-password-form' => array(
                     array(
                             'field' => 'password',
                             'label' => 'Password',
-                            'rules' => 'required|min_length[5]|matches[confirm_password]'
+                            'rules' => 'trim|required|min_length[5]|matches[confirm_password]'
                     ),
                     array(
                             'field' => 'confirm_password',
                             'label' => 'Confirm Password',
-                            'rules' => 'required|min_length[5]'
+                            'rules' => 'trim|required|min_length[5]'
                     ),
             ),
             'contact-us' => array(
                     array(
                             'field' => 'name',
                             'label' => 'Name',
-                            'rules' => 'required|alpha'
+                            'rules' => 'trim|required|alpha'
                     ),
                     array(
                             'field' => 'email_id',
                             'label' => 'Email Id',
-                            'rules' => 'required|valid_email'
+                            'rules' => 'trim|required|valid_email'
                     ),
                     array(
                             'field' => 'mobile_no',
                             'label' => 'Mobile number',
-                            'rules' => 'required|numeric|exact_length[10]'
+                            'rules' => 'trim|required|numeric|exact_length[10]'
                     ),
                     array(
                             'field' => 'query',
                             'label' => 'Message',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
             ),
             'setting-form' => array(
                     array(
                             'field' => 'title',
                             'label' => 'Title',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'key',
                             'label' => 'key',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
                     array(
                             'field' => 'value',
                             'label' => 'Status',
-                            'rules' => 'required'
+                            'rules' => 'trim|required'
                     ),
             ),
 	        'sell-product-form' => array(
 		        array(
 			        'field' => 'category_id',
 			        'label' => 'Category',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        ),
 		        array(
 			        'field' => 'product_id',
 			        'label' => 'Product',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        ),
 		        array(
 			        'field' => 'product_description',
@@ -301,17 +301,17 @@ $config = array(
 		        array(
 			        'field' => 'sell_quantity',
 			        'label' => 'Quantity',
-			        'rules' => 'required||numeric|greater_than_equal_to[1]|less_than_equal_to[1000]'
+			        'rules' => 'trim|required||numeric|greater_than_equal_to[1]|less_than_equal_to[1000]'
 		        ),
 		        array(
 			        'field' => 'price',
 			        'label' => 'Price',
-			        'rules' => 'required||numeric'
+			        'rules' => 'trim|required||numeric'
 		        ),
 		        array(
 			        'field' => 'total_price',
 			        'label' => 'Total Price',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        ),
 		        array(
 			        'field' => 'variety',
@@ -346,7 +346,7 @@ $config = array(
 		        array(
 			        'field' => 'certification_id',
 			        'label' => 'Certification',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        ),
 		        array(
 			        'field' => 'grain_length',
@@ -366,12 +366,12 @@ $config = array(
 		        array(
 			        'field' => 'delivery_location_state',
 			        'label' => 'State',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        ),
 		        array(
 			        'field' => 'delivery_location[]',
 			        'label' => 'City',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        ),
 		        array(
 			        'field' => 'lead_time',
@@ -396,7 +396,7 @@ $config = array(
 		        array(
 			        'field' => 'stock',
 			        'label' => 'Stock',
-			        'rules' => 'required'
+			        'rules' => 'trim|required'
 		        )
 	        ),
         'search-buy-product-form' => array(
@@ -428,42 +428,42 @@ $config = array(
 	        array(
 		        'field' => 'fullname',
 		        'label' => 'Fullname',
-		        'rules' => 'required'
+		        'rules' => 'trim|required'
 	        ),
 	        array(
 		        'field' => 'email_id',
 		        'label' => 'Email Id',
-		        'rules' => 'required'
+		        'rules' => 'trim|required'
 	        ),
 	        array(
 		        'field' => 'mobile_no',
 		        'label' => 'Mobile Number',
-		        'rules' => 'required|numeric|exact_length[10]'
+		        'rules' => 'trim|required|numeric|exact_length[10]'
 	        ),
 	        array(
 		        'field' => 'state_id',
 		        'label' => 'State',
-		        'rules' => 'required'
+		        'rules' => 'trim|required'
 	        ),
 	        array(
 		        'field' => 'city_id',
 		        'label' => 'City',
-		        'rules' => 'required'
+		        'rules' => 'trim|required'
 	        ),
 	        array(
 		        'field' => 'pincode',
 		        'label' => 'Pincode',
-		        'rules' => 'required|numeric|exact_length[6]'
+		        'rules' => 'trim|required|numeric|exact_length[6]'
 	        ),
 	        array(
 		        'field' => 'address',
 		        'label' => 'Address',
-		        'rules' => 'required'
+		        'rules' => 'trim|required'
 	        ),
 	        array(
 		        'field' => 'payment_method',
 		        'label' => 'Payment Method',
-		        'rules' => 'required'
+		        'rules' => 'trim|required'
 	        )
         ),
     
@@ -471,42 +471,42 @@ $config = array(
                 array(
                         'field' => 'user_id',
                         'label' => 'User',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'product_id',
                         'label' => 'Product',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'description',
                         'label' => 'Description',
-                        'rules' => 'required|alpha_numeric_spaces'
+                        'rules' => 'trim|required|alpha_numeric_spaces'
                 ),
                 array(
                         'field' => 'from_date',
                         'label' => 'From Date',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'to_date',
                         'label' => 'To Date',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'quantity_id',
                         'label' => 'Quantity',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'quality',
                         'label' => 'Quality',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'required|numeric'
+                        'rules' => 'trim|required|numeric'
                 )
         ),
     
@@ -514,119 +514,119 @@ $config = array(
                 array(
                         'field' => 'user_id',
                         'label' => 'User',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'crop_id',
                         'label' => 'Crop',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'area',
                         'label' => 'Area',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'date_sown',
                         'label' => 'Date of Sown',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'date_harvest',
                         'label' => 'Date of Harvest',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'date_inspection',
                         'label' => 'Date of Inspection',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'inspector_name',
                         'label' => 'Inspector Name',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'crop_conditon',
                         'label' => 'Crop Condition',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'other_details',
                         'label' => 'Other Details',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 )
         ),
         'user-organic-input-ecommerce-form' => array(
                 array(
                         'field' => 'user_id',
                         'label' => 'User',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'category_id',
                         'label' => 'Category',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'sub_category_id',
                         'label' => 'Category',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'ecommerce_brand_id',
                         'label' => 'Brand',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'dosage',
                         'label' => 'Dosage',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'weight',
                         'label' => 'Weight',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'spectrum',
                         'label' => 'Spectrum',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'compatibility',
                         'label' => 'Compatibility',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'duration_effect',
                         'label' => 'Duration of Effect',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'frequency_application',
                         'label' => 'Frequency of Application',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'applicable_crops',
                         'label' => 'Applicable Crops',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'final_remarks',
                         'label' => 'Final Remarks',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'chemical',
                         'label' => 'Chemical Composition',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 )
         ),
     
@@ -634,47 +634,104 @@ $config = array(
                 array(
                         'field' => 'user_id',
                         'label' => 'User',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'category_id',
                         'label' => 'Category',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'product_id',
                         'label' => 'Product',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'description',
                         'label' => 'Description',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'required|numeric'
+                        'rules' => 'trim|required|numeric'
                 ),
                 array(
                         'field' => 'min_quantity',
                         'label' => 'Min Quantity',
-                        'rules' => 'required|numeric'
+                        'rules' => 'trim|required|numeric'
                 ),
                 array(
                         'field' => 'product_unit_id',
                         'label' => 'Unit',
-                        'rules' => 'required|numeric'
+                        'rules' => 'trim|required|numeric'
                 ),
                 array(
                         'field' => 'user_ecommerce_status',
                         'label' => 'Status',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
                 ),
                 array(
                         'field' => 'stock',
                         'label' => 'Stock',
-                        'rules' => 'required'
+                        'rules' => 'trim|required'
+                )
+        ),
+        'lab-report-form' => array(
+                array(
+                        'field' => 'category_id',
+                        'label' => 'Category',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'product_id',
+                        'label' => 'Product',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'lab_name',
+                        'label' => 'Lab Name',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'date_of_sampling',
+                        'label' => 'Date of Sampling',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'shipment_number',
+                        'label' => 'Shipment Number',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'quantity',
+                        'label' => 'Quantity',
+                        'rules' => 'trim|required|numeric'
+                ),
+                array(
+                        'field' => 'exporter',
+                        'label' => 'Exporter',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'invoice_number',
+                        'label' => 'Invoice Number',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'sampling_location',
+                        'label' => 'Sampling Location',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'type_of_sample',
+                        'label' => 'Type of Sample',
+                        'rules' => 'trim|required'
+                ),
+                array(
+                        'field' => 'seal_number',
+                        'label' => 'Seal Number',
+                        'rules' => 'trim|required'
                 )
         ),
 
