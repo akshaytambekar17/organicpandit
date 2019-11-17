@@ -473,6 +473,11 @@
                                 <i class="fa fa-rss-square"></i> <span>Publications</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="<?= base_url()?>admin/lab-reports">
+                                <i class="fa fa-line-chart"></i> <span>Lab Reports</span>
+                            </a>
+                        </li>
                         
                         <li>
                             <a href="<?= base_url()?>admin/organic-setting">
