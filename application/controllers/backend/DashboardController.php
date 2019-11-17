@@ -45,6 +45,7 @@ class DashboardController extends MY_Controller {
                 $data['user_type_list'] = $this->UserType->getUserTypes();
                 $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgencies();
                 $data['user_list'] = $this->User->getUsers();
+                $data['arrLabReportsList'] = $this->LabReports->getLabReports();
             }else{
                 $data['bid_list'] = $this->Bid->getBidByUserId($userSession['user_id']);
                 $data['post_requirement_list'] = $this->PostRequirement->getAllPostRequirementByUserId($userSession['user_id']);
