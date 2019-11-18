@@ -40,16 +40,41 @@ class LabReportController extends MY_Controller {
             $arrPost = $this->input->post();
             
             if( true == $this->form_validation->run( 'lab-report-form' ) ) {
-                $arrDetails = $arrPost;
-                $arrDetails['date_of_sampling'] = convertDateFormatToStandardFormat( $arrDetails['date_of_sampling'] );
-                $intLabReportId = $this->LabReports->insert( $arrDetails );
-                if( true == isIdVal( $intLabReportId ) ) {
-                    $this->session->set_flashdata( 'Message', 'New Lab Report has been added succesfully' );
-                    return redirect( 'admin/lab-reports', 'refresh' );
+                $strError = '';
+                if( true == isset( $_FILES['upload_lab_report']['name'] ) && ( true == isStrVal( $_FILES['upload_lab_report']['name'] ) ) ) {
+                    $arrConfigBlogImage['upload_path'] = './assets/lab-reports/';
+                    $arrConfigBlogImage['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|docx|csv';
+                    $arrConfigBlogImage['max_size'] = 2048;
+
+                    $this->load->library( 'upload', $arrConfigBlogImage );
+                    if( $this->upload->do_upload( 'upload_lab_report' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strUploadLabReport = $arrUploadData['file_name'];
+                    } else {
+                        $strError = $this->upload->display_errors();
+                        $strUploadLabReport = '';
+                    }
                 } else {
-                    $this->session->set_flashdata( 'Error', 'Failed to add Lab Reports' );
-                    $this->backendLayout( $arrData );
+                    $strUploadLabReport = '';
                 }
+                
+                if( false == isStrVal( $strError ) ) {
+                    $arrDetails = $arrPost;
+                    $arrDetails['upload_lab_report'] = $strUploadLabReport;
+                    $arrDetails['date_of_sampling'] = convertDateFormatToStandardFormat( $arrDetails['date_of_sampling'] );
+                    $intLabReportId = $this->LabReports->insert( $arrDetails );
+                    if( true == isIdVal( $intLabReportId ) ) {
+                        $this->session->set_flashdata( 'Message', 'New Lab Report has been added succesfully' );
+                        return redirect( 'admin/lab-reports', 'refresh' );
+                    } else {
+                        $this->session->set_flashdata( 'Error', 'Failed to add Lab Reports' );
+                        $this->backendLayout( $arrData );
+                    }
+                } else {
+                    $this->session->set_flashdata( 'Error', $strError );
+                    $arrData['strErrorMessage'] = $strError;
+                    $this->backendLayout( $arrData );
+                }       
             } else {
                 $this->backendLayout( $arrData );
             }    
@@ -79,18 +104,43 @@ class LabReportController extends MY_Controller {
             $arrPost = $this->input->post();
             
             if( true == $this->form_validation->run( 'lab-report-form' ) ) {
-                
-                $arrDetails = $arrPost;
-                $arrDetails['date_of_sampling'] = convertDateFormatToStandardFormat( $arrDetails['date_of_sampling'] );
-                $boolResult = $this->LabReports->update( $arrDetails );
+                $strError = '';
+                if( true == isset( $_FILES['upload_lab_report']['name'] ) && ( true == isStrVal( $_FILES['upload_lab_report']['name'] ) ) ) {
+                    $arrConfigBlogImage['upload_path'] = './assets/lab-reports/';
+                    $arrConfigBlogImage['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|docx|csv';
+                    $arrConfigBlogImage['max_size'] = 2048;
 
-                if( true == isVal( $boolResult ) ) {
-                    $this->session->set_flashdata( 'Message', 'Lab Report has been updated succesfully' );
-                    return redirect( 'admin/lab-reports', 'refresh' );
+                    $this->load->library( 'upload', $arrConfigBlogImage );
+                    if( $this->upload->do_upload( 'upload_lab_report' ) ) {
+                        $arrUploadData = $this->upload->data();
+                        $strUploadLabReport = $arrUploadData['file_name'];
+                    } else {
+                        $strError = $this->upload->display_errors();
+                        $strUploadLabReport = '';
+                    }
                 } else {
-                    $this->session->set_flashdata( 'Error', 'Failed to update Lab Report' );
-                    $this->backendLayout( $arrData );
+                    $strUploadLabReport = ( true == isStrVal( $arrPost['upload_lab_report_hidden'] ) ) ? $arrPost['upload_lab_report_hidden'] : '';
                 }
+                
+                if( false == isStrVal( $strError ) ) {
+                    $arrDetails = $arrPost;
+                    unset( $arrDetails['upload_lab_report_hidden'] );
+                    $arrDetails['upload_lab_report'] = $strUploadLabReport;
+                    $arrDetails['date_of_sampling'] = convertDateFormatToStandardFormat( $arrDetails['date_of_sampling'] );
+                    $boolResult = $this->LabReports->update( $arrDetails );
+
+                    if( true == isVal( $boolResult ) ) {
+                        $this->session->set_flashdata( 'Message', 'Lab Report has been updated succesfully' );
+                        return redirect( 'admin/lab-reports', 'refresh' );
+                    } else {
+                        $this->session->set_flashdata( 'Error', 'Failed to update Lab Report' );
+                        $this->backendLayout( $arrData );
+                    }
+                } else {
+                    $this->session->set_flashdata( 'Error', $strError );
+                    $arrData['strErrorMessage'] = $strError;
+                    $this->backendLayout( $arrData );
+                }    
             } else {
                 $this->backendLayout( $arrData );
             }

@@ -34,7 +34,13 @@
                                             <h4><?= ( true == isStrVal( $arrLabReportDetails['product_id'] ) ) ? $arrLabReportDetails['product_name'] : 'NA' ?></h4>
                                         </div>
                                     </div>
-                            
+                                     
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label>Description</label>
+                                            <h4><?= ( true == isVal( $arrLabReportDetails['description'] ) ) ? $arrLabReportDetails['description'] : 'NA' ?></h4>
+                                        </div>    
+                                    </div>    
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label>Date of Sampling</label>
@@ -49,7 +55,7 @@
                                             <h4><?= ( true == isVal( $arrLabReportDetails['quantity'] ) ) ? $arrLabReportDetails['quantity'] : 'NA' ?></h4>
                                         </div>    
                                     </div>
-                            
+                                    
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label>Exporter</label>
@@ -73,8 +79,18 @@
                                         <div class="form-group col-md-4">
                                             <label>Seal Number</label>
                                             <h4><?= ( true == isVal( $arrLabReportDetails['seal_number'] ) ) ? $arrLabReportDetails['seal_number'] : 'NA' ?></h4>
-                                        </div>    
+                                        </div>
                                     </div>
+                            
+                                    <?php if( true == isset( $arrLabReportDetails['upload_lab_report'] ) && ( true == isStrVal( $arrLabReportDetails['upload_lab_report'] ) ) ) { ?>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Download Lab Report</label><br>
+                                                <a href="<?= base_url()?>assets/lab-reports/<?= $arrLabReportDetails['upload_lab_report']?>" download>Download</a>
+                                            </div>
+                                        </div>    
+                                    <?php } ?>
+                            
                             <?php } else { ?>
                                 <div class="row">
                                     <div class="form-group col-md-12 center">

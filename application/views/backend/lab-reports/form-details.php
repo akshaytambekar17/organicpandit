@@ -84,6 +84,15 @@
                                     <span class="has-error"><?php echo form_error('shipment_number'); ?></span>
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label label-required">Description</label>
+                                    <input type="text" name="description"  class="form-control" placeholder="Description" value="<?= ( true == isset( $arrLabReportDetails['description'] ) ) ? $arrLabReportDetails['description'] : set_value( 'description' )?>" >
+                                    <span class="has-error"><?php echo form_error('description'); ?></span>
+                                </div>
+                            </div>
+                            
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label class="control-label label-required">Quantity</label>
@@ -119,13 +128,25 @@
                                     <span class="has-error"><?php echo form_error('seal_number'); ?></span>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label label-required">Upload Lab Report</label>
+                                    <input type="file" name="upload_lab_report" id="js-profile-image" class="form-control">
+                                    <?php if( true == isset( $arrLabReportDetails['upload_lab_report'] ) && ( true == isStrVal( $arrLabReportDetails['upload_lab_report'] ) ) ) { ?>
+                                            <br>
+                                            <a href="<?= base_url()?>assets/lab-reports/<?= $arrLabReportDetails['upload_lab_report']?>" download>Download Report</a>
+                                            <input type="hidden" name="upload_lab_report_hidden" value="<?= $arrLabReportDetails['upload_lab_report'] ?>">
+                                    <?php } ?>
+                                    <span class="has-error"><?php echo form_error('upload_lab_report'); ?></span>
+                                </div>
+                            </div>
                         </div>
                         <?php if( true == isset( $arrLabReportDetails['lab_report_id'] ) ) { ?>
                                 <input type="hidden" name="lab_report_id" value="<?= $arrLabReportDetails['lab_report_id']?>">
                         <?php } ?>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-success" id="submit"><?= $strSubmitValue; ?></button>
-                            <a href="<?php echo base_url(); ?>admin/blogs" class="btn btn-warning">Cancel</a>
+                            <a href="<?php echo base_url(); ?>admin/lab-reports" class="btn btn-warning">Cancel</a>
                         </div>
                     </form>
                 </div>

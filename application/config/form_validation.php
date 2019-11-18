@@ -704,6 +704,11 @@ $config = array(
                         'rules' => 'trim|required'
                 ),
                 array(
+                        'field' => 'description',
+                        'label' => 'Description',
+                        'rules' => 'trim|required'
+                ),
+                array(
                         'field' => 'quantity',
                         'label' => 'Quantity',
                         'rules' => 'trim|required|numeric'
