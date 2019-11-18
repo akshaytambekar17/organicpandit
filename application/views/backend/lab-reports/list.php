@@ -33,7 +33,7 @@
                 <div class="box">
                     <div class="box-header">
                         <div class="pull-right">
-                            <a href="<?= base_url()?>admin/blogs/add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Publication</a>
+                            <a href="<?= base_url()?>admin/lab-reports/add" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Lab Report</a>
                         </div>
                     </div>
                   <!-- /.box-header -->
@@ -43,25 +43,35 @@
                                 <thead>
                                     <tr>
                                         <th class="hidden">Id</th>
-                                        <th>Title</th>
                                         <th>Category</th>
-                                        <th>Status</th>
+                                        <th>Product</th>
+                                        <th>Lab Name</th>
+                                        <th>Date of Sampling</th>
+                                        <th>Quantity</th>
+                                        <th>Link</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    if( true == isArrVal( $arrBlogsList ) ) {
-                                        foreach( $arrBlogsList as $arrBlogDetails ) {
+                                    if( true == isArrVal( $arrLabReportsList ) ) {
+                                        foreach( $arrLabReportsList as $arrLabReportDetails ) {
                                 ?>
                                             <tr class="gradeX">
-                                                <td class="hidden"><?= $arrBlogDetails['id']; ?></td>
-                                                <td><?= $arrBlogDetails['title']; ?></td>
-                                                <td><?= $arrBlogDetails['blog_category_name']; ?></td>
-                                                <td><?= ( ENABLED == $arrBlogDetails['blog_status'] ) ? 'Enabled' : 'Disabled' ?></td>
+                                                <td class="hidden"><?= $arrLabReportDetails['lab_report_id']; ?></td>
+                                                <td><?= $arrLabReportDetails['category_name']; ?></td>
+                                                <td><?= $arrLabReportDetails['product_name']; ?></td>
+                                                <td><?= $arrLabReportDetails['lab_name']; ?></td>
+                                                <td><?= date( 'd/m/Y', strtotime( $arrLabReportDetails['date_of_sampling'] ) ); ?></td>
+                                                <td><?= $arrLabReportDetails['quantity']; ?></td>
                                                 <td>
-                                                    <a href="<?= base_url()?>admin/blogs/update?blog_id=<?= $arrBlogDetails['blog_id']?>"  name="update-soil" data-toggle="tooltip" title="Update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                                    <a href="javascript:void(0)" data-blog_id="<?= $arrBlogDetails['blog_id'] ?>" name="delete-soil" data-toggle="tooltip" title="Delete" onclick="showDeleteModal(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                                    <a href="<?= base_url()?>lab-report-details?lab_report_id=<?= $arrLabReportDetails['lab_report_id'];?>" target="_blank">
+                                                        <?= base_url() . 'lab-report-details?lab_report_id=' . $arrLabReportDetails['lab_report_id']  ?>
+                                                    </a>    
+                                                </td>
+                                                <td>
+                                                    <a href="<?= base_url()?>admin/lab-reports/update?lab_report_id=<?= $arrLabReportDetails['lab_report_id']?>"  name="update-lab-report" data-toggle="tooltip" title="Update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                                    <a href="javascript:void(0)" data-lab_report_id="<?= $arrLabReportDetails['lab_report_id'] ?>" name="delete-lab-report" data-toggle="tooltip" title="Delete" onclick="showDeleteModal(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                                 </td>
                                             </tr>
                                 <?php
@@ -87,8 +97,8 @@
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <div class="text-center popup-content">  
-                    <h4> By clicking on <span>"YES"</span>, Publication will be deleted permanently. Do you wish to proceed?</h4><br><br>
-                    <input  type="hidden" id="js-modal-blog-id"> 
+                    <h4> By clicking on <span>"YES"</span>, Lab Report will be deleted permanently. Do you wish to proceed?</h4><br><br>
+                    <input  type="hidden" id="js-modal-lab-report-id"> 
                     <button type="button" id="js-confirm-button" class="btn btn-success modal-box-button" >Yes</button>
                     <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
                 </div>
@@ -99,22 +109,22 @@
 <script>
     $(document).ready(function () {
         $("#js-confirm-button").on('click',function() {
-            var intBlogId = $("#js-modal-blog-id").val();
+            var intLabReportId = $("#js-modal-lab-report-id").val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url(); ?>" + "admin/blogs/delete",
-                data: { 'blog_id' : intBlogId },
+                url: "<?php echo base_url(); ?>" + "admin/lab-reports/delete",
+                data: { 'lab_report_id' : intLabReportId },
                 success: function( boolResult ){
                     $('#js-delete-confirmation-modal').modal('hide');
                     if( boolResult ) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.js-alert-message-box').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> Publication has been deleted successfully. <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.js-alert-message-box').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> Lab report has been deleted successfully. <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });
                         setTimeout(function(){ 
                             location.reload();
-                        }, 3000);
+                        }, 2000);
                     }else{
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         $('.js-alert-message-box').parent().before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i>  Someting went wrong. Please try again...! <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -129,8 +139,8 @@
     });
     
     function showDeleteModal(ths){
-        var intBlogId = $(ths).data('blog_id');
-        $("#js-modal-blog-id").val( intBlogId );
+        var intLabReportId = $(ths).data('lab_report_id');
+        $("#js-modal-lab-report-id").val( intLabReportId );
         $('#js-delete-confirmation-modal').modal('show');
     }
 </script>

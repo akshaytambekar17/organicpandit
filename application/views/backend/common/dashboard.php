@@ -130,6 +130,21 @@
                     <a href="<?= base_url()?>admin/user-registration-dashboard" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <?php if(!empty($user_details['username']) && $user_details['username'] == ADMINUSERNAME){ ?>
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3><?= count( $arrLabReportsList )?></h3>
+                            <p>Lab Reports</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-line-chart"></i>
+                        </div>
+                        <a href="<?= base_url()?>admin/lab-reports" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            <?php } ?>
             
             <!-- ./col -->
 <!--            <div class="col-lg-3 col-xs-6">

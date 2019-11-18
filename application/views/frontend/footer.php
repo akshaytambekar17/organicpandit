@@ -9,7 +9,7 @@
                         <h5>GET STARTED</h5>
                         <ul>
                             <li><a href="<?= base_url()?>">Home</a></li>
-                            <li><a href="<?= base_url()?>blogs">Blogs</a></li>
+                            <li><a href="<?= base_url()?>blogs">Publications</a></li>
                             <li><a href="<?= base_url()?>signup">Sign up</a></li>
                         </ul>
                     </div>

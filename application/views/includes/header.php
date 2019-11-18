@@ -1,4 +1,10 @@
-
+<?php
+    $arrSession = UserSession();
+    $arrUserSession = '';
+    if( true == $arrSession['success'] ) {
+        $arrUserSession = $arrSession['userData'];
+    } 
+?>
 
 <nav class="navbar navbar-inverse nav-custom">
     <div class="container-fluid">
@@ -115,7 +121,7 @@
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <?php echo $user_data['fullname']; ?>
+                            <?php echo ( true == isset( $user_data['fullname'] ) ) ? $user_data['fullname'] : 'Admin Master'; ?>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
@@ -127,7 +133,7 @@
                                             <img src="<?= base_url()?>assets/web/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                         <?php } ?>
                                     </span>
-                                    <p><?php echo $user_data['fullname']; ?></p>
+                                    <p><?php echo ( true == isset( $user_data['fullname'] ) ) ? $user_data['fullname'] : 'Admin Master'; ?></p>
                                     <a class="btn btn-xs btn-success" href="<?php echo base_url(); ?>admin/dashboard">My Account</a>
                                     <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>account/logout">Logout</a>
                                 </div>

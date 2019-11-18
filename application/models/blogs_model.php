@@ -27,19 +27,38 @@ class blogs_model extends CI_Model {
     }
     
     public function getBlogs() {
-        $this->db->order_by( 'blog_id', 'DESC' );
-        return $this->db->get( 'tbl_blogs' )->result_array();
+        $this->db->select( "tb.*,tbc.blog_category_name" );
+        $this->db->from( 'tbl_blogs tb' );
+        $this->db->join( 'tbl_blog_categories tbc', 'tbc.blog_category_id = tb.blog_category_id' );
+        $this->db->order_by( 'tb.blog_id', 'DESC' );
+        return $this->db->get()->result_array();
     }
     
     public function getActiveBlogs() {
-        $this->db->where( 'blog_status', ENABLED );
-        $this->db->order_by( 'blog_id', 'DESC' );
-        return $this->db->get( 'tbl_blogs' )->result_array();
+        $this->db->select( "tb.*,tbc.blog_category_name" );
+        $this->db->from( 'tbl_blogs tb' );
+        $this->db->join( 'tbl_blog_categories tbc', 'tbc.blog_category_id = tb.blog_category_id' );
+        $this->db->where( 'tb.blog_status', ENABLED );
+        $this->db->order_by( 'tb.blog_id', 'DESC' );
+        return $this->db->get()->result_array();
     }
     
     public function getBlogByBlogId( $intBlogId ) {
-        $this->db->where( 'blog_id', $intBlogId );
-        return $this->db->get( 'tbl_blogs' )->row_array();
+        $this->db->select( "tb.*,tbc.blog_category_name" );
+        $this->db->from( 'tbl_blogs tb' );
+        $this->db->join( 'tbl_blog_categories tbc', 'tbc.blog_category_id = tb.blog_category_id' );
+        $this->db->where( 'tb.blog_id', $intBlogId );
+        $this->db->order_by( 'tb.blog_id', 'DESC' );
+        return $this->db->get()->row_array();
+    }
+    
+    public function getBlogByBlogCategoryId( $intBlogCategoryId ) {
+        $this->db->select( "tb.*,tbc.blog_category_name" );
+        $this->db->from( 'tbl_blogs tb' );
+        $this->db->join( 'tbl_blog_categories tbc', 'tbc.blog_category_id = tb.blog_category_id' );
+        $this->db->where( 'tb.blog_category_id', $intBlogCategoryId );
+        $this->db->order_by( 'tb.blog_id', 'DESC' );
+        return $this->db->get()->result_array();
     }
     
     public function insert( $arrInsertData ){
