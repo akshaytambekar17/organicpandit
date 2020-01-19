@@ -103,6 +103,15 @@ class user_model extends CI_Model {
         $this->db->where('password',  md5( $password ) );
         return $this->db->get()->row_array();
     }
+    public function getUserLoginByUsernameByPasswordByUserTypeId( $strUsername, $strPassword, $intUserTypeId ) {
+        $this->db->select( "u.*,ut.name as user_type_name,");
+        $this->db->from( 'tbl_users u');
+        $this->db->join( 'tbl_user_type ut','ut.id = u.user_type_id');
+        $this->db->where( 'u.user_type_id', $intUserTypeId );
+        $this->db->where( 'u.username', $strUsername );
+        $this->db->where( 'u.password',  md5( $strPassword ) );
+        return $this->db->get()->row_array();
+    }
     
     public function getUserFarmers() {
         $this->db->order_by('id','DESC');

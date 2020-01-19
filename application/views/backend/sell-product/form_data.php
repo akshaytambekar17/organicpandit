@@ -356,12 +356,12 @@
         }
 
 	    $("#js-delivery-location-state").on('change',function(){
-		    var intStateId = $(this).val();
-		    getCitiesByState( intStateId );
+                var intStateId = $(this).val();
+                getDeliveryCitiesByState( intStateId );
 	    });
 	    var intStateId = $("#js-delivery-location-state").val();
 	    if( '' != intStateId ){
-		    getCitiesByState( intStateId );
+                getDeliveryCitiesByState( intStateId );
 	    }
 
 	    $("#js-sell-quantity").on('focusout',function(){
@@ -401,18 +401,18 @@
         });
     }
 
-    function getCitiesByState( intStateId ){
-	    var intstrHiddenCityId = $(".js-hidden-delivery-location").val();
-	    $.ajax({
-		    type: "POST",
-		    url: "<?php echo base_url(); ?>" + "fetch-cities-by-state-id",
-		    data: { 'state_id' : intStateId, 'hidden_city_id' : intstrHiddenCityId },
-		    dataType: "html",
-		    success: function(result){
-			    var html = $.parseJSON(result);
-			    $("#js-delivery-location").html('<option disabled selected> Select City</option>');
-			    $("#js-delivery-location").append(html);
-		    }
-	    });
+    function getDeliveryCitiesByState( intStateId ){
+        var intstrHiddenCityId = $(".js-hidden-delivery-location").val();
+        $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "fetch-cities-by-state-id",
+                data: { 'state_id' : intStateId, 'hidden_city_id' : intstrHiddenCityId },
+                dataType: "html",
+                success: function(result){
+                    var html = $.parseJSON(result);
+                    $("#js-delivery-location").html('<option disabled selected> Select City</option>');
+                    $("#js-delivery-location").append(html);
+                }
+        });
     }
 </script>

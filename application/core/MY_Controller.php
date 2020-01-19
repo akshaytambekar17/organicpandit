@@ -160,8 +160,8 @@ class MY_Controller extends CI_Controller {
         return $result;
     }
 
-    public function response( $data ) {
-        echo json_encode( $data );
+    public function response( $arrData ) {
+        echo json_encode( $arrData );
     }
 
     public function paymentTransaction( $arrmixPaymentDetails ){

@@ -338,3 +338,10 @@ UPDATE `tbl_blogs` SET `blog_category_id`= 1;
 ALTER TABLE `tbl_lab_reports` ADD `description` TEXT NOT NULL AFTER `lab_name`;
 
 ALTER TABLE `tbl_lab_reports` ADD `upload_lab_report` VARCHAR(255) NOT NULL AFTER `seal_number`;
+
+
+/**
+* 19-01-2020
+*/
+
+ALTER TABLE `tbl_users` CHANGE `created_at` `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;

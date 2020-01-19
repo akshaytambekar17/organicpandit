@@ -241,14 +241,13 @@ $route['fetch-frontend-cities-by-state-id'] = 'UserController/fetchFrontendCitie
 
 
 /************* api routes *************/
-$route['api/user/login'] = "api/UserController/login";
-$route['api/user/fetch-user-type-list'] = "api/UserController/getUserTypeList";
-$route['api/user/registration'] = "api/UserController/registration";
+$route['api-v1/user/login'] = 'api-v1/UserController/login';
+$route['api-v1/user/registration'] = 'api-v1/UserController/registration';
 
-
-
-
-
+$route['api-v1/fetch-user-type-list'] = 'api-v1/OrganicController/fetchUserTypeList';
+$route['api-v1/fetch-countries'] = 'api-v1/OrganicController/fetchCountries';
+$route['api-v1/fetch-states'] = 'api-v1/OrganicController/fetchStates';
+$route['api-v1/fetch-cities'] = 'api-v1/OrganicController/fetchCities';
 
 
 /* End of file routes.php */
