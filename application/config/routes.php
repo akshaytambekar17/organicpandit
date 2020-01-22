@@ -248,6 +248,8 @@ $route['api-v1/fetch-user-type-list'] = 'api-v1/OrganicController/fetchUserTypeL
 $route['api-v1/fetch-countries'] = 'api-v1/OrganicController/fetchCountries';
 $route['api-v1/fetch-states'] = 'api-v1/OrganicController/fetchStates';
 $route['api-v1/fetch-cities'] = 'api-v1/OrganicController/fetchCities';
+$route['api-v1/fetch-certifications'] = 'api-v1/OrganicController/fetchCertifications';
+$route['api-v1/fetch-certification-agencies'] = 'api-v1/OrganicController/fetchCertificationAgencies';
 
 
 /* End of file routes.php */

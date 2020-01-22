@@ -15,6 +15,7 @@ class OrganicController extends MY_Controller {
         
         if( true == isArrVal( $arrUserTypeList ) ) {
             $arrResult['success'] = true;
+            $arrResult['message'] = 'Data found for User Types';
             $arrResult['data'] = $arrUserTypeList;
         }else{
             $arrResult['success'] = false;
@@ -30,6 +31,7 @@ class OrganicController extends MY_Controller {
         
         if( true == isArrVal( $arrCountriesList ) ) {
             $arrResult['success'] = true;
+            $arrResult['message'] = 'Data found for Countries';
             $arrResult['data'] = $arrCountriesList;
         }else{
             $arrResult['success'] = false;
@@ -50,6 +52,7 @@ class OrganicController extends MY_Controller {
         
         if( true == isArrVal( $arrStatesList ) ) {
             $arrResult['success'] = true;
+            $arrResult['message'] = 'Data found for States';
             $arrResult['data'] = $arrStatesList;
         }else{
             $arrResult['success'] = false;
@@ -70,10 +73,41 @@ class OrganicController extends MY_Controller {
         
         if( true == isArrVal( $arrCitiesList ) ) {
             $arrResult['success'] = true;
+            $arrResult['message'] = 'Data found for Cities';
             $arrResult['data'] = $arrCitiesList;
         }else{
             $arrResult['success'] = false;
             $arrResult['message'] = 'No Cities data found';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
+    public function fetchCertifications(){
+        
+        if( true == isArrVal( getCertifications() ) ) {
+            $arrResult['success'] = true;
+            $arrResult['message'] = 'Data found for Certfications';
+            $arrResult['data'] = getCertifications();
+        }else{
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'No Certifiations data found';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
+    public function fetchCertificationAgencies(){
+        
+        $arrCertificationAgencies = $this->CertificationAgency->getCertificationAgenciesVerified();
+
+        if( true == isArrVal( $arrCertificationAgencies ) ) {
+            $arrResult['success'] = true;
+            $arrResult['message'] = 'Data found for Certfication Agenices';
+            $arrResult['data'] = $arrCertificationAgencies;
+        }else{
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'No Certifiations data found';
         }
         
         $this->response( $arrResult );
