@@ -159,4 +159,140 @@ class UserController extends MY_Controller {
 //        }
 //        $this->response($arrResult);
 //    }
+    
+    public function getUsersList() {
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['user_type_id'] ) && true == isIdVal( $arrPost['user_type_id'] ) && true == isset( $arrPost['state_id'] ) && true == isIdVal( $arrPost['state_id'] ) ) {
+            
+            if( ORGANIC_INPUT == $arrPost['user_type_id']) {
+                $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrPost );
+            } else {
+                $arrmixUserSearchList = $this->User->getUserBysearchKey( $arrPost );
+            }
+            
+            if( true == isArrVal( $arrmixUserSearchList ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Successfully fetch data for Users';
+                $arrResult['data'] = $arrmixUserSearchList;
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'No users data found';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'User type and State is required';
+        }
+        
+        $this->response( $arrResult );
+        
+    }
+    
+    public function getUserDetails() {
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['user_id'] ) && true == isIdVal( $arrPost['user_id'] ) ) {
+            
+            $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
+            if( true == isArrVal( $arrUserDetails ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Successfully fetch user data';
+                $arrResult['data'] = $arrUserDetails;
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'No data found';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'User Id is required';
+        }
+        
+        $this->response( $arrResult );
+        
+    }
+    
+    public function getUserOrganicInputList() {
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['user_id'] ) && true == isIdVal( $arrPost['user_id'] ) ) {
+            
+            $arrmixUserOrganicInputList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'] );
+            if( true == isArrVal( $arrmixUserOrganicInputList ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Successfully fetch data for User organic input';
+                $arrResult['data'] = $arrmixUserOrganicInputList;
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'No users data found';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'User Id is required';
+        }
+        
+        $this->response( $arrResult );
+        
+    }
+    
+    public function getUserOrganicInputDetails() {
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['user_organic_input_id'] ) && true == isIdVal( $arrPost['user_organic_input_id'] ) ) {
+            
+            $arrUserOrganicInputDetails = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceById( $arrPost['user_organic_input_id'] );
+            if( true == isArrVal( $arrUserOrganicInputDetails ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Successfully fetch data for User organic input';
+                $arrResult['data'] = $arrUserOrganicInputDetails;
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'No ecommerce data found';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'Organic Input Ecommerce is required';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
+    public function getUserShopEcommerceList() {
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['user_id'] ) && true == isIdVal( $arrPost['user_id'] ) ) {
+            
+            $arrmixUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'] );
+            if( true == isArrVal( $arrmixUserShopEcommerceList ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Successfully fetch data for User Shop Ecommerce';
+                $arrResult['data'] = $arrmixUserShopEcommerceList;
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'No user shops data found';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'User Id is required';
+        }
+        
+        $this->response( $arrResult );
+        
+    }
+    
+    public function getUserShopEcommerceDetails() {
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['user_ecommerce_id'] ) && true == isIdVal( $arrPost['user_ecommerce_id'] ) ) {
+            
+            $arrUserShopEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
+            if( true == isArrVal( $arrUserShopEcommerceDetails ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Successfully fetch data for User Shop';
+                $arrResult['data'] = $arrUserShopEcommerceDetails;
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'No ecommerce data found';
+            }
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'Shop Ecommerce is required';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
 }

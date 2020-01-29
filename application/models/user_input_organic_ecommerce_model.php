@@ -64,8 +64,11 @@ class user_input_organic_ecommerce_model extends CI_Model {
     }
     
     public function getUsersInputOrganicEcommerceById( $intOrganicInputEcommerceId ) {
-        $this->db->where( 'id', $intOrganicInputEcommerceId );
-        return $this->db->get('tbl_users_organic_input_ecommerce')->row_array();
+        $this->db->select( 'tuoie.*,tu.*' );
+        $this->db->from( 'tbl_users_organic_input_ecommerce tuoie' );
+        $this->db->join( 'tbl_users tu', 'tu.user_id = tuoie.user_id' );
+        $this->db->where( 'tuoie.id', $intOrganicInputEcommerceId );
+        return $this->db->get()->row_array();
     }
     public function insert( $arrInsertData ){
         $arrInsertData['updated_at'] = CURRENT_DATETIME;

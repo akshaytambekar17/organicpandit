@@ -80,6 +80,7 @@ class user_ecommerces_model extends CI_Model {
         $this->db->join( 'tbl_users tu', 'tu.user_id = tue.user_id', 'left' );
         $this->db->join( 'tbl_user_type tut', 'tut.id = tue.user_type_id', 'left' );
         $this->db->where( 'tue.user_id', $intUserId );
+        $this->db->order_by( 'tue.user_ecommerce_id', 'desc' );
         return $this->db->get()->result_array();
     }
 

@@ -243,6 +243,11 @@ $route['fetch-frontend-cities-by-state-id'] = 'UserController/fetchFrontendCitie
 /************* api routes *************/
 $route['api-v1/user/login'] = 'api-v1/UserController/login';
 $route['api-v1/user/registration'] = 'api-v1/UserController/registration';
+$route['api-v1/user/fetch-users-list'] = 'api-v1/UserController/getUsersList';
+$route['api-v1/user/fetch-user'] = 'api-v1/UserController/getUserDetails';
+$route['api-v1/user/fetch-user-organic-input-list'] = 'api-v1/UserController/getUserOrganicInputList';
+$route['api-v1/user/fetch-user-organic-input'] = 'api-v1/UserController/getUserOrganicInputDetails';
+$route['api-v1/user/fetch-user-shops-list'] = 'api-v1/UserController/getUserShopEcommerceList';
 
 $route['api-v1/fetch-user-type-list'] = 'api-v1/OrganicController/fetchUserTypeList';
 $route['api-v1/fetch-countries'] = 'api-v1/OrganicController/fetchCountries';

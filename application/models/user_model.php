@@ -65,11 +65,11 @@ class user_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
-    public function getUserById($id) {
-        $this->db->select("u.*,ut.name as user_type_name,");
-        $this->db->from('tbl_users u');
-        $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
-        $this->db->where('user_id',$id);
+    public function getUserById( $intUserId ) {
+        $this->db->select( "u.*,ut.name as user_type_name" );
+        $this->db->from( 'tbl_users u' );
+        $this->db->join( 'tbl_user_type ut', 'ut.id = u.user_type_id' );
+        $this->db->where( 'user_id', $intUserId );
         return $this->db->get()->row_array();
     }
     
@@ -129,7 +129,7 @@ class user_model extends CI_Model {
         $this->db->where('is_view',0);
         return $this->db->get('tbl_bid')->result_array();
     }
-    public function getUserBysearchKey($data) {
+    public function getUserBysearchKey( $data ) {
         if(!empty($data['state_id']) && !empty($data['city_id'])){
             $this->db->where('state_id',$data['state_id']);
             $this->db->where('city_id',$data['city_id']);
@@ -139,6 +139,8 @@ class user_model extends CI_Model {
         }
         $this->db->where('user_type_id',$data['user_type_id']);
         //$this->db->where('is_verified',2);
+        $this->db->order_by( 'user_id','desc' );
+        
         return $this->db->get('tbl_users')->result_array();
     }
     
