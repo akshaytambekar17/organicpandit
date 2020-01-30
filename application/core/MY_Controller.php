@@ -163,6 +163,14 @@ class MY_Controller extends CI_Controller {
     public function response( $arrData ) {
         echo json_encode( $arrData );
     }
+    
+    public function calculateOffset( $intPageNo ) {
+        if( true == isIdVal( $intPageNo ) ) {
+            return ( LIMIT * ( $intPageNo - 1 ) );
+        }else {
+            return DEFAULT_OFFEST;
+        }
+    }
 
     public function paymentTransaction( $arrmixPaymentDetails ){
 

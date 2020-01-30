@@ -129,7 +129,7 @@ class user_model extends CI_Model {
         $this->db->where('is_view',0);
         return $this->db->get('tbl_bid')->result_array();
     }
-    public function getUserBysearchKey( $data ) {
+    public function getUserBysearchKey( $data, $intLimit = '', $intOffset = 0 ) {
         if(!empty($data['state_id']) && !empty($data['city_id'])){
             $this->db->where('state_id',$data['state_id']);
             $this->db->where('city_id',$data['city_id']);
@@ -141,10 +141,14 @@ class user_model extends CI_Model {
         //$this->db->where('is_verified',2);
         $this->db->order_by( 'user_id','desc' );
         
+        if( true == isIdVal( $intLimit ) ) {
+            $this->db->limit( $intLimit, $intOffset );
+        }
+        
         return $this->db->get('tbl_users')->result_array();
     }
     
-    public function getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrData ) {
+    public function getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrData, $intLimit = '', $intOffset = 0 ) {
         
         $this->db->select("u.*,uoie.*");
         $this->db->from('tbl_users u');
@@ -157,6 +161,11 @@ class user_model extends CI_Model {
         if( true == isset( $arrData['search_brand'] ) && true == isVal( $arrData['search_brand'] ) ){
             $this->db->like('uoie.ecommerce_brand_id',$arrData['search_brand']);
         }
+        
+        if( true == isIdVal( $intLimit ) ) {
+            $this->db->limit( $intLimit, $intOffset );
+        }
+        
         return $this->db->get()->result_array();
     }
     

@@ -9,7 +9,7 @@ class UserController extends MY_Controller {
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
     }
     
-    public function login(){
+    public function login() {
         $arrPost = $this->input->post();
 	
         if( true == isset( $arrPost['user_type_id'] ) ) {
@@ -164,10 +164,15 @@ class UserController extends MY_Controller {
         $arrPost = $this->input->post();
         if( true == isset( $arrPost['user_type_id'] ) && true == isIdVal( $arrPost['user_type_id'] ) && true == isset( $arrPost['state_id'] ) && true == isIdVal( $arrPost['state_id'] ) ) {
             
+            $intOffset = DEFAULT_OFFEST;
+            if( true == isset( $arrPost['page_no'] ) && true == isIdVal( $arrPost['page_no'] ) ) {
+                $intOffset = $this->calculateOffset( $arrPost['page_no'] );
+            }
+            
             if( ORGANIC_INPUT == $arrPost['user_type_id']) {
-                $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrPost );
+                $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrPost, LIMIT, $intOffset );
             } else {
-                $arrmixUserSearchList = $this->User->getUserBysearchKey( $arrPost );
+                $arrmixUserSearchList = $this->User->getUserBysearchKey( $arrPost, LIMIT, $intOffset );
             }
             
             if( true == isArrVal( $arrmixUserSearchList ) ) {
@@ -213,7 +218,12 @@ class UserController extends MY_Controller {
         $arrPost = $this->input->post();
         if( true == isset( $arrPost['user_id'] ) && true == isIdVal( $arrPost['user_id'] ) ) {
             
-            $arrmixUserOrganicInputList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'] );
+            $intOffset = DEFAULT_OFFEST;
+            if( true == isset( $arrPost['page_no'] ) && true == isIdVal( $arrPost['page_no'] ) ) {
+                $intOffset = $this->calculateOffset( $arrPost['page_no'] );
+            }
+            
+            $arrmixUserOrganicInputList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
             if( true == isArrVal( $arrmixUserOrganicInputList ) ) {
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for User organic input';
@@ -256,7 +266,12 @@ class UserController extends MY_Controller {
         $arrPost = $this->input->post();
         if( true == isset( $arrPost['user_id'] ) && true == isIdVal( $arrPost['user_id'] ) ) {
             
-            $arrmixUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'] );
+            $intOffset = DEFAULT_OFFEST;
+            if( true == isset( $arrPost['page_no'] ) && true == isIdVal( $arrPost['page_no'] ) ) {
+                $intOffset = $this->calculateOffset( $arrPost['page_no'] );
+            }
+            
+            $arrmixUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
             if( true == isArrVal( $arrmixUserShopEcommerceList ) ) {
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for User Shop Ecommerce';

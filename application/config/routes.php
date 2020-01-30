@@ -256,6 +256,12 @@ $route['api-v1/fetch-states'] = 'api-v1/OrganicController/fetchStates';
 $route['api-v1/fetch-cities'] = 'api-v1/OrganicController/fetchCities';
 $route['api-v1/fetch-certifications'] = 'api-v1/OrganicController/fetchCertifications';
 $route['api-v1/fetch-certification-agencies'] = 'api-v1/OrganicController/fetchCertificationAgencies';
+$route['api-v1/fetch-products'] = 'api-v1/OrganicController/fetchProducts';
+$route['api-v1/fetch-categories'] = 'api-v1/OrganicController/fetchCategories';
+
+$route['api-v1/post-requirement/fetch-total-worth'] = 'api-v1/PostRequirementController/getTotalWorth';
+$route['api-v1/post-requirement/fetch-post-requirement-list'] = 'api-v1/PostRequirementController/getPostRequirementList';
+$route['api-v1/post-requirement/fetch-post-requirement'] = 'api-v1/PostRequirementController/getPostRequirementDetails';
 
 
 /* End of file routes.php */

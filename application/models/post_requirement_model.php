@@ -64,7 +64,7 @@ class post_requirement_model extends CI_Model {
         $this->db->where('pr.id',$id);
         return $this->db->get()->row_array();
     }
-    public function getPostBysearchKey($data) {
+    public function getPostBysearchKey( $data, $intLimit = '', $intOffset = 0 ) {
         if(!empty($data['state_id']) && !empty($data['city_id'])){
             $this->db->where('state_id',$data['state_id']);
             $this->db->where('city_id',$data['city_id']);
@@ -76,6 +76,10 @@ class post_requirement_model extends CI_Model {
             $this->db->where('certification_id',$data['certification_id']);
         }
         $this->db->where('is_verified',2);
+        if( true == isIdVal( $intLimit ) ) {
+            $this->db->limit( $intLimit, $intOffset );
+        }
+        $this->db->order_by( 'id', 'DESC' );
         return $this->db->get('tbl_post_requirement')->result_array();
     }
     

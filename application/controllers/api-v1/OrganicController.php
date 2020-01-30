@@ -113,4 +113,36 @@ class OrganicController extends MY_Controller {
         $this->response( $arrResult );
     }
     
+    public function fetchCategories() {
+        
+        $arrProductCategoriesList = $this->ProductCategory->getActiveProductCategorys();
+
+        if( true == isArrVal( $arrProductCategoriesList ) ) {
+            $arrResult['success'] = true;
+            $arrResult['message'] = 'Successfully fetch categories list data';
+            $arrResult['data'] = $arrProductCategoriesList;
+        }else{
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'No data found';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
+    public function fetchProducts() {
+        
+        $arrProductList = $this->Product->getActiveProducts();
+
+        if( true == isArrVal( $arrProductList ) ) {
+            $arrResult['success'] = true;
+            $arrResult['message'] = 'Successfully fetch product list data';
+            $arrResult['data'] = $arrProductList;
+        }else{
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'No data found';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
 }

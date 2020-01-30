@@ -109,5 +109,9 @@ define('PAYOUT','payout');
 define( 'CART_ORDER_TYPE_1', 'BP' );
 define( 'CART_ORDER_TYPE_2', 'EOI' );
 define( 'CART_ORDER_TYPE_3', 'ES' );
+
+define( 'LIMIT', 10 );
+define( 'DEFAULT_OFFEST', 0 );
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

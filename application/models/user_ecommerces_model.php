@@ -71,7 +71,7 @@ class user_ecommerces_model extends CI_Model {
         return $this->db->get()->row_array();
     }
 
-    public function getUserEcommerceByUserId( $intUserId ) {
+    public function getUserEcommerceByUserId( $intUserId, $intLimit = '', $intOffset = 0  ) {
         $this->db->select( 'tue.*, tuei.*, tp.name as product_name, tcp.name as category_name, tu.fullname, tut.name as user_type_name' );
         $this->db->from( 'tbl_user_ecommerces tue' );
         $this->db->join( 'tbl_user_ecommerce_images tuei', 'tuei.user_ecommerce_id = tue.user_ecommerce_id' );
@@ -81,6 +81,9 @@ class user_ecommerces_model extends CI_Model {
         $this->db->join( 'tbl_user_type tut', 'tut.id = tue.user_type_id', 'left' );
         $this->db->where( 'tue.user_id', $intUserId );
         $this->db->order_by( 'tue.user_ecommerce_id', 'desc' );
+        if( true == isIdVal( $intLimit ) ) {
+            $this->db->limit( $intLimit, $intOffset );
+        }
         return $this->db->get()->result_array();
     }
 

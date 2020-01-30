@@ -34,12 +34,15 @@ class user_input_organic_ecommerce_model extends CI_Model {
         $this->db->order_by( 'tuoie.id','DESC' );
         return $this->db->get()->result_array();
     }
-    public function getUsersInputOrganicEcommerceByUserId( $intUserId ) {
+    public function getUsersInputOrganicEcommerceByUserId( $intUserId, $intLimit = '', $intOffset = 0 ) {
         $this->db->select( 'tuoie.*, tu.*, tut.name as user_type_name' );
         $this->db->from( 'tbl_users_organic_input_ecommerce tuoie' );
         $this->db->join( 'tbl_users tu', 'tu.user_id = tuoie.user_id' );
         $this->db->join( 'tbl_user_type tut', 'tut.id = tuoie.user_type_id' );
         $this->db->where( 'tuoie.user_id', $intUserId );
+        if( true == isIdVal( $intLimit ) ) {
+            $this->db->limit( $intLimit, $intOffset );
+        }
         return $this->db->get()->result_array();
     }
     
