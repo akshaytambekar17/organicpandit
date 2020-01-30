@@ -248,6 +248,7 @@ $route['api-v1/user/fetch-user'] = 'api-v1/UserController/getUserDetails';
 $route['api-v1/user/fetch-user-organic-input-list'] = 'api-v1/UserController/getUserOrganicInputList';
 $route['api-v1/user/fetch-user-organic-input'] = 'api-v1/UserController/getUserOrganicInputDetails';
 $route['api-v1/user/fetch-user-shops-list'] = 'api-v1/UserController/getUserShopEcommerceList';
+$route['api-v1/user/fetch-user-shop'] = 'api-v1/UserController/getUserShopEcommerceDetails';
 
 $route['api-v1/fetch-user-type-list'] = 'api-v1/OrganicController/fetchUserTypeList';
 $route['api-v1/fetch-countries'] = 'api-v1/OrganicController/fetchCountries';
