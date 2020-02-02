@@ -113,5 +113,11 @@ define( 'CART_ORDER_TYPE_3', 'ES' );
 define( 'LIMIT', 10 );
 define( 'DEFAULT_OFFEST', 0 );
 
+define( 'GALLERY_IMAGE_PATH', 'assets/images/gallery/' );
+define( 'USER_PRODUCT_IMAGE_PATH', 'assets/images/product_images/' );
+define( 'ORGANIC_INPUT_ECOMMERCE_IMAGE_PATH', 'assets/images/ecommerce_images/' );
+define( 'APP_SLIDER_IMAGE_PATH', 'assets/design/img/' );
+
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

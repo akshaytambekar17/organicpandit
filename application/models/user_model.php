@@ -66,10 +66,11 @@ class user_model extends CI_Model {
     }
     
     public function getUserById( $intUserId ) {
-        $this->db->select( "u.*,ut.name as user_type_name" );
+        $this->db->select( "u.*,ut.name as user_type_name, ubd.*" );
         $this->db->from( 'tbl_users u' );
         $this->db->join( 'tbl_user_type ut', 'ut.id = u.user_type_id' );
-        $this->db->where( 'user_id', $intUserId );
+        $this->db->join( 'tbl_users_bank_details ubd', 'ubd.user_id = u.user_id', 'left' );
+        $this->db->where( 'u.user_id', $intUserId );
         return $this->db->get()->row_array();
     }
     

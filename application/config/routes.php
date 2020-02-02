@@ -228,6 +228,11 @@ $route['admin/lab-reports/add'] = "backend/LabReportController/add";
 $route['admin/lab-reports/update'] = "backend/LabReportController/update";
 $route['admin/lab-reports/delete'] = "backend/LabReportController/delete";
 
+$route['admin/app-slider-images'] = "backend/AppSliderImagesController";
+$route['admin/app-slider-images/add'] = "backend/AppSliderImagesController/add";
+$route['admin/app-slider-images/update'] = "backend/AppSliderImagesController/update";
+$route['admin/app-slider-images/delete'] = "backend/AppSliderImagesController/delete";
+
 
 /**
  * Ajax routing
@@ -258,6 +263,7 @@ $route['api-v1/fetch-certifications'] = 'api-v1/OrganicController/fetchCertifica
 $route['api-v1/fetch-certification-agencies'] = 'api-v1/OrganicController/fetchCertificationAgencies';
 $route['api-v1/fetch-products'] = 'api-v1/OrganicController/fetchProducts';
 $route['api-v1/fetch-categories'] = 'api-v1/OrganicController/fetchCategories';
+$route['api-v1/fetch-app-slider-images'] = 'api-v1/OrganicController/fetchAppSliderImages';
 
 $route['api-v1/post-requirement/fetch-total-worth'] = 'api-v1/PostRequirementController/getTotalWorth';
 $route['api-v1/post-requirement/fetch-post-requirement-list'] = 'api-v1/PostRequirementController/getPostRequirementList';

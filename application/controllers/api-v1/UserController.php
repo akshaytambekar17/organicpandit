@@ -124,42 +124,6 @@ class UserController extends MY_Controller {
         $this->response( $arrResult );
     }
     
-//    public function sendNotification_post(){
-//        
-//        $post = $this->input->post();
-//        
-//        $details['title'] = $post['title'];
-//        $details['description'] = $post['description'];
-//        $details['id'] = 1;
-//        $type = "Testing for Counsellor";
-//        $location_ids = 0;
-//        $fcmData = array(
-//                    'alert' => '',
-//                    'badge' =>1,
-//                    'title' => $details['title'],
-//                    'body' => strip_tags($details['description']),
-//                    'notification_type' => $type,
-//                    'id'=> $details['id'],
-//                    'image_path'=> !empty($details['image'])?$details['image']:'',
-//                    'location_ids'=>$location_ids
-//        );
-//        $registrationIds = array();
-//        $fcmList =  $this->PushNotificationDevices->getPushNotificationDevices(); 
-//        if(!empty($fcmList)){
-//            foreach($fcmList as $fcm){
-//                array_push($registrationIds,$fcm['token']);
-//            }
-//            $this->sendPushNotification($fcmData,$registrationIds);
-//            $arrResult['success'] = true;
-//            $arrResult['message'] = 'Notification has been send succcessfully.';
-//            
-//        }else{
-//            $arrResult['success'] = false;
-//            $arrResult['message'] = 'No FCM token present.';
-//        }
-//        $this->response($arrResult);
-//    }
-    
     public function getUsersList() {
         $arrPost = $this->input->post();
         if( true == isset( $arrPost['user_type_id'] ) && true == isIdVal( $arrPost['user_type_id'] ) && true == isset( $arrPost['state_id'] ) && true == isIdVal( $arrPost['state_id'] ) ) {
@@ -198,6 +162,60 @@ class UserController extends MY_Controller {
             
             $arrUserDetails = $this->User->getUserById( $arrPost['user_id'] );
             if( true == isArrVal( $arrUserDetails ) ) {
+                $arrAgencyDetails = $this->CertificationAgency->getCertificationAgencyById( $arrUserDetails['agency_id'] );
+                $arrUserProductList = $this->UserProduct->getUserProductsByUserId( $arrUserDetails['user_id'] );
+                $arrUserCropList = $this->UserCrop->getUserCropsByUserId( $arrUserDetails['user_id'] );
+                $arrUserSoilList = $this->UserSoil->getUserSoilByUserId( $arrUserDetails['user_id'] );
+                $arrUserMicroList = $this->UserMicroNutrient->getUserMicroNutrientByUserId( $arrUserDetails['user_id'] );
+                $arrUserInputList = $this->UserInputOrganic->getUserInputOrganicByUserId( $arrUserDetails['user_id'] );
+
+                $arrmixUserProductList = [];
+                $arrmixUserSoilList = [];
+                $arrmixUserMicroList = [];
+                if( true == isArrVal( $arrUserProductList ) ) {
+                    $arrQuantitesList = getQuantities();    
+                    foreach( $arrUserProductList as $arrUserProductDetails ) {
+                        $arrUserProductDetails['quantity_name'] = $arrQuantitesList[$arrUserProductDetails['quantity_id']];
+                        $arrUserProductDetails['images'] = ( true == isVal( $arrUserProductDetails['images'] ) ) ? base_url() . USER_PRODUCT_IMAGE_PATH . $arrUserProductDetails['images'] : '';
+
+                        $arrmixUserProductList[] = $arrUserProductDetails;
+                    }
+                }
+
+                if( true == isArrVal( $arrUserSoilList ) ) {
+                    $arrSoilElementList = getSoilElement();    
+                    $arrSoilPercentageList = getSoilPercentage();    
+                    foreach( $arrUserSoilList as $arrUserSoilDetails ) {
+                        $arrUserSoilDetails['element_name'] = $arrSoilElementList[$arrUserSoilDetails['element']];                    
+                        $arrUserSoilDetails['percentage_name'] = $arrSoilPercentageList[$arrUserSoilDetails['percentage']];                    
+
+                        $arrmixUserSoilList[] = $arrUserSoilDetails;
+                    }
+                }
+
+                if( true == isArrVal( $arrUserMicroList ) ) {
+                    $arrMicroElementList = getMicroElement();    
+                    $arrMicroPercentageList = getMicroPercentage();    
+                    foreach( $arrUserMicroList as $arrUserMicroDetails ) {
+                        $arrUserMicroDetails['element_name'] = $arrMicroElementList[$arrUserMicroDetails['element']];                    
+                        $arrUserMicroDetails['percentage_name'] = $arrMicroPercentageList[$arrUserMicroDetails['percentage']];                    
+
+                        $arrmixUserMicroList[] = $arrUserMicroDetails;
+                    }
+                }
+                $arrUserDetails['ceo_name'] = ( NULL == $arrUserDetails['ceo_name'] ) ? 'NA' : $arrUserDetails['ceo_name'];
+                $arrUserDetails['organization_name'] = ( NULL == $arrUserDetails['organization_name'] ) ? 'NA' : $arrUserDetails['organization_name'];
+                $arrUserDetails['profile_image'] = base_url() . GALLERY_IMAGE_PATH . $arrUserDetails['profile_image'];
+                if( true == isArrVal( $arrAgencyDetails ) ) {
+                    $arrUserDetails['agency_name'] = $arrAgencyDetails['name'];
+                }
+                $arrUserDetails['user_product_list'] = $arrmixUserProductList;
+                $arrUserDetails['user_crop_list'] = $arrUserCropList;
+                $arrUserDetails['user_soil_list'] = $arrmixUserSoilList;
+                $arrUserDetails['user_micro_list'] = $arrmixUserMicroList;
+                $arrUserDetails['user_input_list'] = $arrUserInputList;
+            
+            
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch user data';
                 $arrResult['data'] = $arrUserDetails;
@@ -223,7 +241,19 @@ class UserController extends MY_Controller {
                 $intOffset = $this->calculateOffset( $arrPost['page_no'] );
             }
             
-            $arrmixUserOrganicInputList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
+            $arrUserOrganicInputList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
+            $arrOrganicInputEcommerceCategoryList = getEcommerceCategory();
+            $arrOrganicInputEcommerceSubCategoryList = getEcommerceSubCategory();
+            $arrmixUserOrganicInputList = [];
+            
+            foreach( $arrUserOrganicInputList as $arrUserOrganicInputDetails ) {
+                $arrUserOrganicInputDetails['category_name'] = $arrOrganicInputEcommerceCategoryList[$arrUserOrganicInputDetails['category_id']];
+                $arrUserOrganicInputDetails['sub_category_name'] = $arrOrganicInputEcommerceSubCategoryList[$arrUserOrganicInputDetails['sub_category_id']];
+                $arrUserOrganicInputDetails['images'] = ( true == isVal( $arrUserOrganicInputDetails['images'] ) ) ? base_url() . ORGANIC_INPUT_ECOMMERCE_IMAGE_PATH . $arrUserOrganicInputDetails['images'] : '';
+                
+                $arrmixUserOrganicInputList[] = $arrUserOrganicInputDetails;
+            }
+            
             if( true == isArrVal( $arrmixUserOrganicInputList ) ) {
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for User organic input';

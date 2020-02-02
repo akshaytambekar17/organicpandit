@@ -468,18 +468,24 @@
                             </ul>
 	                </li>
                     <?php if( $arrUserSession['username'] == ADMINUSERNAME ) { ?>
-                        <li>
+                        <li class="<?= ( 'blogs' == $this->uri->segment(2) ) ? 'active' : '' ?>">
                             <a href="<?= base_url()?>admin/blogs">
                                 <i class="fa fa-rss-square"></i> <span>Publications</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="<?= ( 'lab-reports' == $this->uri->segment(2) ) ? 'active' : '' ?>">
                             <a href="<?= base_url()?>admin/lab-reports">
                                 <i class="fa fa-line-chart"></i> <span>Lab Reports</span>
                             </a>
                         </li>
                         
-                        <li>
+                        <li class="<?= ( 'app-slider-images' == $this->uri->segment(2) ) ? 'active' : '' ?>">
+                            <a href="<?= base_url()?>admin/app-slider-images">
+                                <i class="fa fa-picture-o"></i> <span>App Slider Images</span>
+                            </a>
+                        </li>
+                        
+                        <li class="<?= ( 'organic-setting' == $this->uri->segment(2) ) ? 'active' : '' ?>">
                             <a href="<?= base_url()?>admin/organic-setting">
                                 <i class="fa fa-cog"></i> <span>Organic Setting</span>
                             </a>
