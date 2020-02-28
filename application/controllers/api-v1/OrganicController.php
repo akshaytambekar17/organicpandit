@@ -145,4 +145,24 @@ class OrganicController extends MY_Controller {
         $this->response( $arrResult );
     }
     
+    public function fetchAppSliderImages() {
+        
+        $arrAppSliderImagesList = $this->AppSliderImages->getAppSliderImages();
+        if( true == isArrVal( $arrAppSliderImagesList ) ) {
+            foreach( $arrAppSliderImagesList as $arrAppSliderImagesDetails ) {
+                $arrAppSliderImagesDetails['slider_image'] = base_url() . APP_SLIDER_IMAGE_PATH . $arrAppSliderImagesDetails['slider_image'];
+                $arrmixAppSliderImagesList[] = $arrAppSliderImagesDetails;
+            }
+        
+            $arrResult['success'] = true;
+            $arrResult['message'] = 'Successfully fetch slider image list data';
+            $arrResult['data'] = $arrmixAppSliderImagesList;
+        }else{
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'No data found';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
 }

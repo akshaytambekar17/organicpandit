@@ -65,22 +65,27 @@ class post_requirement_model extends CI_Model {
         return $this->db->get()->row_array();
     }
     public function getPostBysearchKey( $data, $intLimit = '', $intOffset = 0 ) {
+        
+        $this->db->select("pr.*,pf.name as product_name");
+        $this->db->from('tbl_post_requirement pr');
+        $this->db->join('tbl_product pf','pf.id = pr.product_id');
+        
         if(!empty($data['state_id']) && !empty($data['city_id'])){
-            $this->db->where('state_id',$data['state_id']);
-            $this->db->where('city_id',$data['city_id']);
+            $this->db->where('pr.state_id',$data['state_id']);
+            $this->db->where('pr.city_id',$data['city_id']);
         }
         if(!empty($data['product_id'])){
-            $this->db->where('product_id',$data['product_id']);
+            $this->db->where('pr.product_id',$data['product_id']);
         }
         if(!empty($data['certification_id'])){
-            $this->db->where('certification_id',$data['certification_id']);
+            $this->db->where('pr.certification_id',$data['certification_id']);
         }
-        $this->db->where('is_verified',2);
+        $this->db->where('pr.is_verified',2);
         if( true == isIdVal( $intLimit ) ) {
             $this->db->limit( $intLimit, $intOffset );
         }
-        $this->db->order_by( 'id', 'DESC' );
-        return $this->db->get('tbl_post_requirement')->result_array();
+        $this->db->order_by( 'pr.id', 'DESC' );
+        return $this->db->get()->result_array();
     }
     
     public function getTotalWorth(){

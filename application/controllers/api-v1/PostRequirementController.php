@@ -121,7 +121,13 @@ class PostRequirementController extends MY_Controller {
                 $intOffset = $this->calculateOffset( $arrPost['page_no'] );
             }
             
-            $arrmixPostRequirementList = $this->PostRequirement->getPostBysearchKey( $arrPost, LIMIT, $intOffset );
+            $arrPostRequirementList = $this->PostRequirement->getPostBysearchKey( $arrPost, LIMIT, $intOffset );
+            foreach( $arrPostRequirementList as $arrPostRequirementDetails ) {
+                $arrBidList = $this->Bid->getBidByPostRequirementId( $arrPostRequirementDetails['id'] );
+                $arrPostRequirementDetails['total_bids'] = count( $arrBidList );
+                
+                $arrmixPostRequirementList[] = $arrPostRequirementDetails;
+            }
             if( true == isArrVal( $arrmixPostRequirementList ) ) {
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for Post requirement';
