@@ -66,10 +66,11 @@ class user_model extends CI_Model {
     }
     
     public function getUserById( $intUserId ) {
-        $this->db->select( "u.*,ut.name as user_type_name" );
+        $this->db->select( "u.*,ut.name as user_type_name, ubd.*" );
         $this->db->from( 'tbl_users u' );
         $this->db->join( 'tbl_user_type ut', 'ut.id = u.user_type_id' );
-        $this->db->where( 'user_id', $intUserId );
+        $this->db->join( 'tbl_users_bank_details ubd', 'ubd.user_id = u.user_id', 'left' );
+        $this->db->where( 'u.user_id', $intUserId );
         return $this->db->get()->row_array();
     }
     
@@ -129,18 +130,19 @@ class user_model extends CI_Model {
         $this->db->where('is_view',0);
         return $this->db->get('tbl_bid')->result_array();
     }
-    public function getUserBysearchKey( $data, $intLimit = '', $intOffset = 0 ) {
-        if(!empty($data['state_id']) && !empty($data['city_id'])){
-            $this->db->where('state_id',$data['state_id']);
-            $this->db->where('city_id',$data['city_id']);
+    public function getUserBysearchKey( $arrData, $intLimit = '', $intOffset = 0 ) {
+        if( true == isset( $arrData['state_id'] ) && true == isIdVal( $arrData['state_id'] ) ){
+            $this->db->where( 'state_id', $arrData['state_id'] );
         }
-        if(!empty($data['certification_id'])){
-            $this->db->where('certification_id',$data['certification_id']);
+        if( true == isset( $arrData['city_id'] ) && true == isIdVal( $arrData['city_id'] ) ) {
+            $this->db->where( 'city_id', $arrData['city_id'] );
         }
-        $this->db->where('user_type_id',$data['user_type_id']);
-        //$this->db->where('is_verified',2);
-        $this->db->order_by( 'user_id','desc' );
+        if( true == isset( $arrData['certification_id'] ) && true == isIdVal( $arrData['certification_id'] ) ) {
+            $this->db->where( 'certification_id', $arrData['certification_id'] );
+        }
         
+        $this->db->where( 'user_type_id', $arrData['user_type_id'] );
+        $this->db->order_by( 'user_id','desc' );
         if( true == isIdVal( $intLimit ) ) {
             $this->db->limit( $intLimit, $intOffset );
         }
