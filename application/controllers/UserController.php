@@ -77,7 +77,7 @@ class UserController extends MY_Controller {
             $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|min_length[5]');
             $this->form_validation->set_rules('mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]');
 
-            if (empty($_FILES['profile_image']['name'])) {
+            if( empty($_FILES['profile_image']['name'] ) && 11 != $post['user_type_id'] ) {
                 $this->form_validation->set_rules('profile_image', 'Profile Image', 'trim|required');
             }
             $this->form_validation->set_rules( 'country_id', 'Country', 'trim|required' );
@@ -105,7 +105,11 @@ class UserController extends MY_Controller {
                 $this->form_validation->set_rules('ceo_name', 'CEO Name', 'trim');
             }
             if ($post['user_type_id'] != 1 && $post['user_type_id'] != 2 && $post['user_type_id'] != 3 && $post['user_type_id'] != 4 && $post['user_type_id'] != 5 && $post['user_type_id'] != 6) {
-                $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim');
+                if( 11 == $post['user_type_id'] ) {
+                    $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim');
+                } else {
+                    $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim|required');
+                }    
             }
             if ($post['user_type_id'] == 2) {
                 $this->form_validation->set_rules('total_farmer', 'Number of Farmer', 'trim');
@@ -157,7 +161,7 @@ class UserController extends MY_Controller {
                   $this->form_validation->set_rules('Input[other_details]', 'Other Details', 'trim'); */
             }
 
-            if (7 == $post['user_type_id']) {
+            if( 7 == $post['user_type_id']) {
                 /* $this->form_validation->set_rules('Ecommerce[category_id][]', 'Select Category', 'trim');
                   $this->form_validation->set_rules('Ecommerce[sub_category_id][]', 'Select SubCategory', 'trim');
                   $this->form_validation->set_rules('Ecommerce[brand][]', 'Brand', 'trim');
@@ -168,6 +172,13 @@ class UserController extends MY_Controller {
                   $this->form_validation->set_rules('Ecommerce[weight][]', 'Weight', 'trim'); */
             }
 
+            if( 11 == $post['user_type_id'] ) {
+                $this->form_validation->set_rules( 'date_of_exhibition', 'Date of exhibition', 'trim|required' );
+                $this->form_validation->set_rules( 'about_exhibition', 'About Exhibition', 'trim|required' );
+                $this->form_validation->set_rules( 'participate', 'Who Should Participate', 'trim|required' );
+                $this->form_validation->set_rules( 'visitor_fees', 'Visitor Fees', 'trim|required' );
+            }
+            
             if ($this->form_validation->run() == TRUE) {
                 $details = $post;
                 if (!empty($_FILES['video']['name'])) {
@@ -307,7 +318,7 @@ class UserController extends MY_Controller {
                     $errors[] = '';
                     $product_images[] = '';
                 }
-
+                
                 if (!empty($_FILES['ecommerce_images']['name'])) {
                     $count = count($_FILES['ecommerce_images']['name']);
                     $files = $_FILES;
@@ -335,6 +346,38 @@ class UserController extends MY_Controller {
                 } else {
                     $errors[] = '';
                     $ecommerce_images[] = '';
+                }
+                
+                if( true == isset( $_FILES['exhibition_images']['name'] ) && true == isVal( $_FILES['exhibition_images']['name'] ) ) {
+                    $intCount = count( $_FILES['exhibition_images']['name'] );
+                    $arrFiles = $_FILES;
+                    for( $intCounter = 0; $intCounter < $intCount; $intCounter++ ) {
+                        if( true == isset( $_FILES['exhibition_images']['name'][$intCounter] ) && true == isVal( $_FILES['exhibition_images']['name'][$intCounter] ) ) {
+                            $_FILES['exhibition_images']['name'] = $arrFiles['exhibition_images']['name'][$intCounter];
+                            $_FILES['exhibition_images']['type'] = $arrFiles['exhibition_images']['type'][$intCounter];
+                            $_FILES['exhibition_images']['tmp_name'] = $arrFiles['exhibition_images']['tmp_name'][$intCounter];
+                            $_FILES['exhibition_images']['error'] = $arrFiles['exhibition_images']['error'][$intCounter];
+                            $_FILES['exhibition_images']['size'] = $arrFiles['exhibition_images']['size'][$intCounter];
+                            
+                            $arrConfigExhibitionImages['upload_path'] = './assets/images/exhibition_images/';
+                            $arrConfigExhibitionImages['allowed_types'] = 'gif|jpg|png|jpeg';
+                            
+                            $this->load->library( 'upload', $arrConfigExhibitionImages );
+                            $this->upload->initialize( $arrConfigExhibitionImages );
+                            
+                            if( $this->upload->do_upload('exhibition_images') ) {
+                                $arrUploadFileData = $this->upload->data();
+                                $arrstrExhibitionImages[] = $arrUploadFileData['file_name'];
+                                $errors[] = '';
+                            } else {
+                                $errors[] = $this->upload->display_errors();
+                                $arrstrExhibitionImages[] = '';
+                            }
+                        }
+                    }
+                } else {
+                    $errors[] = '';
+                    $arrstrExhibitionImages[] = '';
                 }
 
                 if (empty($error)) {
@@ -379,6 +422,9 @@ class UserController extends MY_Controller {
                         if (true == isArrVal($arrmixUserCertificationData)) {
                             $this->UserCertifications->insertBatch($arrmixUserCertificationData);
                         }
+                    }
+                    if( 11 == $post['user_type_id'] ) {
+                        
                     }
 
                     if (!empty($post['Product'])) {

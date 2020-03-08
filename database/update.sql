@@ -345,3 +345,96 @@ ALTER TABLE `tbl_lab_reports` ADD `upload_lab_report` VARCHAR(255) NOT NULL AFTE
 */
 
 ALTER TABLE `tbl_users` CHANGE `created_at` `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+/**
+* 08-03-2020
+*/
+
+--
+-- Table structure for table `tbl_user_exhibitions`
+--
+
+CREATE TABLE `tbl_user_exhibitions` (
+  `user_exhibition_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date_of_exhibition` date NOT NULL,
+  `about_exhibition` varchar(255) NOT NULL,
+  `participate` varchar(255) NOT NULL,
+  `visitor_fees` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_user_exhibitions`
+--
+ALTER TABLE `tbl_user_exhibitions`
+  ADD PRIMARY KEY (`user_exhibition_id`),
+  ADD KEY `fk_exhibition_user_id` (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_user_exhibitions`
+--
+ALTER TABLE `tbl_user_exhibitions`
+  MODIFY `user_exhibition_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_user_exhibitions`
+--
+ALTER TABLE `tbl_user_exhibitions`
+  ADD CONSTRAINT `fk_exhibition_user_id` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_exhibition_images`
+--
+
+CREATE TABLE `tbl_user_exhibition_images` (
+  `user_exhibition_image_id` int(11) NOT NULL,
+  `user_exhibition_id` int(11) NOT NULL,
+  `images` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_user_exhibition_images`
+--
+ALTER TABLE `tbl_user_exhibition_images`
+  ADD PRIMARY KEY (`user_exhibition_image_id`),
+  ADD KEY `fkt_user_exhibition_images_id` (`user_exhibition_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_user_exhibition_images`
+--
+ALTER TABLE `tbl_user_exhibition_images`
+  MODIFY `user_exhibition_image_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_user_exhibition_images`
+--
+ALTER TABLE `tbl_user_exhibition_images`
+  ADD CONSTRAINT `fkt_user_exhibition_image_id` FOREIGN KEY (`user_exhibition_image_id`) REFERENCES `tbl_user_exhibitions` (`user_exhibition_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+COMMIT;
