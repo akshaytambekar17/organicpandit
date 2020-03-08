@@ -26,83 +26,41 @@ class PostRequirementController extends MY_Controller {
     
     public function insert() {
         $arrPost = $this->input->post();
-        
-        $this->form_validation->set_rules( 'user_type_id', 'User Type', 'trim|required' );
-        $this->form_validation->set_rules( 'fullname', 'Fullname', 'trim|required' );
-        $this->form_validation->set_rules( 'email_id', 'Email Id', 'trim|required' );
-        $this->form_validation->set_rules( 'mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]' );
-        $this->form_validation->set_rules( 'username', 'Username', 'trim|required|is_unique[tbl_users.username]' );
-        $this->form_validation->set_message( 'is_unique', 'The Username already exists.' );
-        $this->form_validation->set_rules( 'password', 'Password', 'trim|required|min_length[5]|matches[confirm_password]' );
-        $this->form_validation->set_rules( 'confirm_password', 'Confirm Password', 'trim|required|min_length[5]' );
-        $this->form_validation->set_rules( 'country_id', 'Country', 'trim|required' );
-        $this->form_validation->set_rules( 'state_id', 'State', 'trim|required' );
-        $this->form_validation->set_rules( 'city_id', 'City', 'trim|required' );
-        $this->form_validation->set_rules( 'address', 'Address', 'trim|required' );
-        $this->form_validation->set_rules( 'certification_id', 'Certification', 'trim|required' );
-        $this->form_validation->set_rules( 'agency_id', 'Certification Agency', 'trim|required' );
-        
-        if ( true == $this->form_validation->run() ) { 
+        //printDie( 'in' );    
+        if( true == $this->form_validation->run( 'post-requirement-form' ) ) {
             $arrDetails = $arrPost;
-            if( true == isset( $_FILES['profile_image']['name'] ) ) {
-                $arrConfigProfileImage['upload_path'] = './assets/images/gallery/';
-                $arrConfigProfileImage['allowed_types'] = 'gif|jpg|png|jpeg';
-                $arrConfigProfileImage['max_size'] = 2048;
+            $arrDetails['from_date'] = date( "Y-m-d", strtotime( $arrDetails['from_date'] ) );
+            $arrDetails['to_date'] = date( "Y-m-d", strtotime( $arrDetails['to_date'] ) );
+            $arrDetails['is_verified'] = 1;
+            $arrDetails['is_seen'] = 0;
+            $arrDetails['is_view'] = 0;
+            $arrDetails['is_deleted'] = 0;
+            $arrDetails['post_code'] = '';
+            $arrDetails['updated_at'] = CURRENT_DATETIME;
+            $arrDetails['created_at'] = CURRENT_DATETIME;
 
-                $this->load->library( 'upload', $arrConfigProfileImage );
-                if( $this->upload->do_upload( 'profile_image' ) ) {
-                    $arrUploadData = $this->upload->data();
-                    $strProfileImage = $arrUploadData['file_name'];
-                    $strError = '';
-                } else {
-                    $strError = $this->upload->display_errors();
-                    $strProfileImage = '';
-                }
-            } else {
-                $strProfileImage = '';
-                $strError = '';
-            }
-            if( false == isStrVal( $strError ) ) {
-                
-                unset( $arrDetails['confirm_password'] );
-                unset( $arrDetails['certification_id'] );
-                $arrDetails['profile_image'] = $strProfileImage;
-                $arrDetails['status'] = ENABLED;
-                
-                $intUserId = $this->User->insert( $arrDetails );
-                if( true == isIdVal( $intUserId ) ) {
-                    $arrCeritificationIds = explode( ',', $arrPost['certification_id'] );
-                    foreach( $arrCeritificationIds as $intCertificationId ) {
-                        $arrUserCertificationData = [
-                            'user_id' => $intUserId,
-                            'certification_id' => $intCertificationId
-                        ];
-                        $arrmixUserCertificationData[] = $arrUserCertificationData;
-                        $arrUserCertificationData = array();
-                    }
-                    
-                    $this->UserCertifications->insertBatch( $arrmixUserCertificationData );
-                    
-                    $arrUserTypeDetails = $this->UserType->getUserTypeById( $arrPost['user_type_id'] );
-                    $arrNotificationInsertData =  [
-                        'user_id' => $intUserId,
-                        'user_type_id' => $arrPost['user_type_id'],
-                        'notification_type' => REGISTRATION,
-                        'notify_type' => NOTIFY_WEB,
-                        'message' => 'New ' . $arrUserTypeDetails['name'] . ' ' . $arrPost['fullname'] . ' has been register through app',
-                    ];
+            $intPostRequirementId = $this->PostRequirement->add( $arrDetails );
+            $arrUserDetails = $this->User->getUserById( $arrDetails['user_id'] );
 
-                    $this->Notifications->insert( $arrNotificationInsertData );
-                    $arrResult['success'] = true;
-                    $arrResult['message'] = 'Registration has been done successfully. Please continue with login.';
-                } else {
-                    $arrResult['success'] = false;
-                    $arrResult['message'] = 'Registration has been failed. Pleaes try again later';
-                }
+            $arrInsertData = [
+                'user_id' => $arrUserDetails['user_id'],
+                'user_type_id' => $arrUserDetails['user_type_id'],
+                'notification_type' => POST,
+                'notify_type' => NOTIFY_WEB,
+                'message' => 'New Post has been added by ' . $arrUserDetails['fullname'] . ' through APP',
+            ];
+
+            $this->Notifications->insert( $arrInsertData );
+
+            if( true == isIdVal( $intPostRequirementId ) ) {
+                $arrResult['success'] = true;
+                $arrResult['message'] = 'Your Post has been created successfully and sent to support for verfication.Please stay with us';
+
             } else {
                 $arrResult['success'] = false;
-                $arrResult['message'] = 'Error while uploading Image. Error : ' . strip_tags( $strError );
+                $arrResult['message'] = 'Something went wrong. Post not created. Please try again later or You can add through Portal';
             }
+
         } else {
             $arrResult['success'] = false;
             $arrResult['message'] = 'Validation Errors';

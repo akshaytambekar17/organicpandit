@@ -83,12 +83,12 @@ $config = array(
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'trim|required|numeric|greater_than[1]|less_than[2000]'
+                        'rules' => 'trim|required|numeric|greater_than[0]|less_than[2000]'
                 ),
                 array(
                         'field' => 'quantity',
                         'label' => 'Quantity',
-                        'rules' => 'trim|required|numeric|greater_than[1]|less_than[100000]'
+                        'rules' => 'trim|required|numeric|greater_than[0]|less_than[100000]'
                 ),
                 array(
                         'field' => 'total_price',

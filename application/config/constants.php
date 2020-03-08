@@ -116,7 +116,7 @@ define( 'DEFAULT_OFFEST', 0 );
 define( 'GALLERY_IMAGE_PATH', 'assets/images/gallery/' );
 define( 'USER_PRODUCT_IMAGE_PATH', 'assets/images/product_images/' );
 define( 'ORGANIC_INPUT_ECOMMERCE_IMAGE_PATH', 'assets/images/ecommerce_images/' );
-define( 'APP_SLIDER_IMAGE_PATH', 'assets/design/img/' );
+define( 'APP_SLIDER_IMAGE_PATH', 'assets/images/app-slider-images/' );
 
 
 /* End of file constants.php */

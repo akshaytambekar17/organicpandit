@@ -268,6 +268,7 @@ $route['api-v1/fetch-app-slider-images'] = 'api-v1/OrganicController/fetchAppSli
 $route['api-v1/post-requirement/fetch-total-worth'] = 'api-v1/PostRequirementController/getTotalWorth';
 $route['api-v1/post-requirement/fetch-post-requirement-list'] = 'api-v1/PostRequirementController/getPostRequirementList';
 $route['api-v1/post-requirement/fetch-post-requirement'] = 'api-v1/PostRequirementController/getPostRequirementDetails';
+$route['api-v1/post-requirement/insert'] = 'api-v1/PostRequirementController/insert';
 
 
 /* End of file routes.php */

@@ -300,9 +300,19 @@ class UserController extends MY_Controller {
             if( true == isset( $arrPost['page_no'] ) && true == isIdVal( $arrPost['page_no'] ) ) {
                 $intOffset = $this->calculateOffset( $arrPost['page_no'] );
             }
-            
-            $arrmixUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
-            if( true == isArrVal( $arrmixUserShopEcommerceList ) ) {
+            $arrUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
+            if( true == isArrVal( $arrUserShopEcommerceList ) ) {
+                
+                $arrmixUserShopEcommerceList = [];
+                foreach( $arrUserShopEcommerceList as $arrUserShopEcommerceDetails ) {
+                    $arrUserShopEcommerceDetails['primary_image'] = ( true == isVal( $arrUserShopEcommerceDetails['primary_image'] ) ) ? base_url() . USER_PRODUCT_IMAGE_PATH . $arrUserShopEcommerceDetails['primary_image'] : '';
+                    $arrUserShopEcommerceDetails['other_image1'] = ( true == isVal( $arrUserShopEcommerceDetails['other_image1'] ) ) ? base_url() . USER_PRODUCT_IMAGE_PATH . $arrUserShopEcommerceDetails['other_image1'] : '';
+                    $arrUserShopEcommerceDetails['other_image2'] = ( true == isVal( $arrUserShopEcommerceDetails['other_image2'] ) ) ? base_url() . USER_PRODUCT_IMAGE_PATH . $arrUserShopEcommerceDetails['other_image2'] : '';
+                    $arrUserShopEcommerceDetails['other_image3'] = ( true == isVal( $arrUserShopEcommerceDetails['other_image2'] ) ) ? base_url() . USER_PRODUCT_IMAGE_PATH . $arrUserShopEcommerceDetails['other_image3'] : '';
+
+                    $arrmixUserShopEcommerceList[] = $arrUserShopEcommerceDetails;
+                }
+               
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for User Shop Ecommerce';
                 $arrResult['data'] = $arrmixUserShopEcommerceList;
