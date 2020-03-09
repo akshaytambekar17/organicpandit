@@ -106,9 +106,9 @@ class UserController extends MY_Controller {
             }
             if ($post['user_type_id'] != 1 && $post['user_type_id'] != 2 && $post['user_type_id'] != 3 && $post['user_type_id'] != 4 && $post['user_type_id'] != 5 && $post['user_type_id'] != 6) {
                 if( 11 == $post['user_type_id'] ) {
-                    $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim');
-                } else {
                     $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim|required');
+                } else {
+                    $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim');
                 }    
             }
             if ($post['user_type_id'] == 2) {
@@ -395,6 +395,10 @@ class UserController extends MY_Controller {
                     unset($details['Micro']);
                     unset($details['Input']);
                     unset($details['certification_id']);
+                    unset($details['date_of_exhibition']);
+                    unset($details['about_exhibition']);
+                    unset($details['participate']);
+                    unset($details['visitor_fees']);
                     $details['landline_no'] = !empty($details['landline_no']) ? $details['landline_no'] : 0;
                     $details['password'] = md5($details['password']);
                     $details['profile_image'] = $profile_image;
@@ -423,8 +427,28 @@ class UserController extends MY_Controller {
                             $this->UserCertifications->insertBatch($arrmixUserCertificationData);
                         }
                     }
+
                     if( 11 == $post['user_type_id'] ) {
+                        $arrInsertExhibitionData = [
+                            'user_id' => $user_id,
+                            'date_of_exhibition' => date( 'Y-m-d', strtotime( str_replace('/', '-', $post['date_of_exhibition'] ) ) ),
+                            'about_exhibition' => $post['about_exhibition'],
+                            'participate' => $post['participate'],
+                            'visitor_fees' => $post['visitor_fees']
+                        ];
                         
+                        $intUserExhibitionId = $this->UserExhibitions->insert( $arrInsertExhibitionData );
+
+                        if( true == isIdVal( $intUserExhibitionId ) && true == isArrVal( $arrstrExhibitionImages ) ) {
+                            foreach( $arrstrExhibitionImages as $strExhibitionImage ) {
+                                $arrInsertExhibitionImagesData[] = [
+                                    'user_exhibition_id' => $intUserExhibitionId,
+                                    'exhibition_images' => $strExhibitionImage,
+                                ];
+                            }
+
+                            $this->UserExhibitionImages->insertBatch( $arrInsertExhibitionImagesData );
+                        }
                     }
 
                     if (!empty($post['Product'])) {

@@ -105,105 +105,138 @@
                                         </h4>
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>GST Number</label>
-                                        <h4><?= !empty($user_details['gst_number'])?$user_details['gst_number']:"NA"?></h4>
+                                        <label>Date of Exhibition</label>
+                                        <h4><?= ( true == isset( $arrUserExhibitionDetails['date_of_exhibition'] ) && true == isVal( $arrUserExhibitionDetails['date_of_exhibition'] ) ) ? date( 'd/m/Y', strtotime( $arrUserExhibitionDetails['date_of_exhibition'] ) ) : 'NA' ?></h4>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Aadhar Number</label>
-                                        <h4><?= !empty($user_details['aadhar_number'])?$user_details['aadhar_number']:"NA"?></h4>
+                                        <label>About Exhibition</label>
+                                        <h4><?= ( true == isset( $arrUserExhibitionDetails['about_exhibition'] ) && true == isVal( $arrUserExhibitionDetails['about_exhibition'] ) ) ? $arrUserExhibitionDetails['about_exhibition'] : 'NA' ?></h4>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Pancard Number</label>
-                                        <h4><?= !empty($user_details['pancard_number'])?$user_details['pancard_number']:"NA"?></h4>
+                                        <label>Who Should Participate</label>
+                                        <h4><?= ( true == isset( $arrUserExhibitionDetails['participate'] ) && true == isVal( $arrUserExhibitionDetails['participate'] ) ) ? $arrUserExhibitionDetails['participate'] : 'NA' ?></h4>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label>Story</label>
-                                        <h4><?= $user_details['story']?></h4>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label>Certification Agency</label>
-                                        <h4><?php
-                                                $agency_details = $this->CertificationAgency->getAgencyById($user_details['agency_id']);
-                                                if(!empty($agency_details)){
-                                                    echo $agency_details['name'];
-                                                }else{
-                                                    echo 'NA';
-                                                }
-                                            ?>
-                                        </h4>
-                                    </div>
-                                </div>
+                                
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Profile Image</label>
-                                        <h4>
-                                            <img src="<?= base_url()?>assets/images/gallery/<?= $user_details['profile_image']?>" width="70px" height="70px">
-                                        </h4>
+                                        <label>Visitor Fees</label>
+                                        <h4><?= ( true == isset( $arrUserExhibitionDetails['visitor_fees'] ) && true == isVal( $arrUserExhibitionDetails['visitor_fees'] ) ) ? $arrUserExhibitionDetails['visitor_fees'] : 'NA' ?></h4>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Company Image</label>
-                                        <h4>
-                                            <?php if(!empty($user_details['company_image'])){ ?>
-                                                <img src="<?= base_url()?>assets/images/gallery/<?= $user_details['company_image']?>" width="70px" height="70px">
-                                            <?php }else{ ?>
-                                                    NA
-                                            <?php } ?>    
-
-                                        </h4>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label>Certification Image</label>
-                                        <h4>
-                                            <?php if(!empty($user_details['certification_image'])){ ?>
-                                                <img src="<?= base_url()?>assets/images/gallery/<?= $user_details['certification_image']?>" width="70px" height="70px">
-                                            <?php }else{ ?>
-                                                    NA
-                                            <?php } ?>    
-
-                                        </h4>
+                                        <label>Uploaded Images</label>
+                                        <?php if( true == isset( $arrstrExhibitionImages ) && true == isArrVal( $arrstrExhibitionImages ) ) { ?>
+                                                <br>
+                                                <?php foreach( $arrstrExhibitionImages as $strExhibitionImage ) { ?>
+                                                    <img src="<?= base_url()?>assets/images/exhibition_images/<?= $strExhibitionImage; ?>" width="70px" height="70px" style="margin: 0px 10px">    
+                                                <?php } ?>
+                                        <?php } ?>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label>Product Catalogue File</label>
-                                        <h4>
-                                            <?php if(!empty($user_details['product_catalogue'])){ ?>
-                                            <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['product_catalogue']?>" download><h5>Download <?= $user_details['product_catalogue']?></h5></a>
-                                            <?php }else{ ?>
-                                                    NA
-                                            <?php } ?>    
-
-                                        </h4>
+                                <?php if( 11 != $user_details['user_type_id'] ) { ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label>GST Number</label>
+                                            <h4><?= !empty($user_details['gst_number'])?$user_details['gst_number']:"NA"?></h4>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Aadhar Number</label>
+                                            <h4><?= !empty($user_details['aadhar_number'])?$user_details['aadhar_number']:"NA"?></h4>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Pancard Number</label>
+                                            <h4><?= !empty($user_details['pancard_number'])?$user_details['pancard_number']:"NA"?></h4>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label>Resume File</label>
-                                        <h4>
-                                            <?php if(!empty($user_details['resume'])){ ?>
-                                            <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['resume']?>" download ><h5>Download <?= $user_details['resume']?></h5></a>
-                                            <?php }else{ ?>
-                                                    NA
-                                            <?php } ?>    
-
-                                        </h4>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>Story</label>
+                                            <h4><?= $user_details['story']?></h4>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label>Video File</label>
-                                        <h4>
-                                            <?php if(!empty($user_details['video'])){ ?>
-                                            <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['video']?>" download ><h5>Download <?= $user_details['video']?></h5></a>
-                                            <?php }else{ ?>
-                                                    NA
-                                            <?php } ?>    
-
-                                        </h4>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>Certification Agency</label>
+                                            <h4><?php
+                                                    $agency_details = $this->CertificationAgency->getAgencyById($user_details['agency_id']);
+                                                    if(!empty($agency_details)){
+                                                        echo $agency_details['name'];
+                                                    }else{
+                                                        echo 'NA';
+                                                    }
+                                                ?>
+                                            </h4>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label>Profile Image</label>
+                                            <h4>
+                                                <img src="<?= base_url()?>assets/images/gallery/<?= $user_details['profile_image']?>" width="70px" height="70px">
+                                            </h4>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Company Image</label>
+                                            <h4>
+                                                <?php if(!empty($user_details['company_image'])){ ?>
+                                                    <img src="<?= base_url()?>assets/images/gallery/<?= $user_details['company_image']?>" width="70px" height="70px">
+                                                <?php }else{ ?>
+                                                        NA
+                                                <?php } ?>    
+
+                                            </h4>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Certification Image</label>
+                                            <h4>
+                                                <?php if(!empty($user_details['certification_image'])){ ?>
+                                                    <img src="<?= base_url()?>assets/images/gallery/<?= $user_details['certification_image']?>" width="70px" height="70px">
+                                                <?php }else{ ?>
+                                                        NA
+                                                <?php } ?>    
+
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label>Product Catalogue File</label>
+                                            <h4>
+                                                <?php if(!empty($user_details['product_catalogue'])){ ?>
+                                                <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['product_catalogue']?>" download><h5>Download <?= $user_details['product_catalogue']?></h5></a>
+                                                <?php }else{ ?>
+                                                        NA
+                                                <?php } ?>    
+
+                                            </h4>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Resume File</label>
+                                            <h4>
+                                                <?php if(!empty($user_details['resume'])){ ?>
+                                                <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['resume']?>" download ><h5>Download <?= $user_details['resume']?></h5></a>
+                                                <?php }else{ ?>
+                                                        NA
+                                                <?php } ?>    
+
+                                            </h4>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Video File</label>
+                                            <h4>
+                                                <?php if(!empty($user_details['video'])){ ?>
+                                                <a href="<?= base_url()?>assets/images/gallery/<?= $user_details['video']?>" download ><h5>Download <?= $user_details['video']?></h5></a>
+                                                <?php }else{ ?>
+                                                        NA
+                                                <?php } ?>    
+
+                                            </h4>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                                 <?php 
                                     $user_product_details = $this->UserProduct->getUserProductsByUserId($user_details['user_id']);
                                     if(!empty($user_product_details)){ 

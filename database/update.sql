@@ -404,7 +404,7 @@ COMMIT;
 CREATE TABLE `tbl_user_exhibition_images` (
   `user_exhibition_image_id` int(11) NOT NULL,
   `user_exhibition_id` int(11) NOT NULL,
-  `images` varchar(255) NOT NULL
+  `exhibition_images` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -438,3 +438,5 @@ ALTER TABLE `tbl_user_exhibition_images`
 ALTER TABLE `tbl_user_exhibition_images`
   ADD CONSTRAINT `fkt_user_exhibition_image_id` FOREIGN KEY (`user_exhibition_image_id`) REFERENCES `tbl_user_exhibitions` (`user_exhibition_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
+
+ALTER TABLE `tbl_user_exhibition_images` DROP FOREIGN KEY `fkt_user_exhibition_image_id`; ALTER TABLE `tbl_user_exhibition_images` ADD CONSTRAINT `fkt_user_exhibition_image_id` FOREIGN KEY (`user_exhibition_id`) REFERENCES `tbl_user_exhibitions`(`user_exhibition_id`) ON DELETE CASCADE ON UPDATE NO ACTION;

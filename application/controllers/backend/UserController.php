@@ -173,7 +173,7 @@ class UserController extends MY_Controller {
                     $result_notification = $this->Notifications->insert($data_notify);
                 }
                 $this->session->set_flashdata('Message', 'User '.$arrPost['fullname'].' has been updated Succesfully');
-                return redirect('admin/user', 'refresh');
+                return redirect('admin/user/user-list', 'refresh');
             } else {
                 $this->session->set_flashdata('Error', 'Failed to update product');
                 $arrUserDetails = $this->User->getUserById($arrPost['user_id']);
@@ -207,11 +207,26 @@ class UserController extends MY_Controller {
             $user_input_details = $this->UserInputOrganic->getUserInputOrganicByUserId($arrGet['id']);
             $partnerUserTypeDetails = $this->UserType->getUserTypeById( $arrUserDetails['partner_type_id'] );
             $partnerUserDetails = $this->User->getUserById( $arrUserDetails['partner_user_id'] );
+
+            if( 11 == $arrUserDetails['user_type_id'] ) {
+                $arrUserExhibitionDetails = $this->UserExhibitions->getUserExhibitionByUserId( $arrGet['id'] );
+                $data['arrUserExhibitionDetails'] = $arrUserExhibitionDetails;
+                $data['arrstrExhibitionImages'] = [];
+                if( true == isArrVal( $arrUserExhibitionDetails ) ) {
+                    $arrUserExhibitionImagesList = $this->UserExhibitionImages->getUserExhibitionImagesByUserExhibitionId( $arrUserExhibitionDetails['user_exhibition_id'] );
+                    if( true == isArrVal( $arrUserExhibitionImagesList ) ) {
+                        foreach( $arrUserExhibitionImagesList as $arrUserExhibitionImagesDetails ) {
+                            $data['arrstrExhibitionImages'][] = $arrUserExhibitionImagesDetails['exhibition_images'];
+                        }
+                    } 
+
+                }
+            }
             $data['user_data'] = $arrUserSession;
             $data['backend'] = true;
             $data['user_details'] = $arrUserDetails;
-            $data['partnerUserTypeName'] = $partnerUserTypeDetails['name'];
-            $data['partnerUserName'] = $partnerUserDetails['fullname'];
+            $data['partnerUserTypeName'] = ( true == isset( $partnerUserTypeDetails['name'] ) ) ? $partnerUserTypeDetails['name'] : 'NA';
+            $data['partnerUserName'] = ( true == isset( $partnerUserTypeDetails['fullname'] ) ) ? $partnerUserTypeDetails['fullname'] : 'NA';
             $data['user_crop_details'] = $user_crop_details;
             $data['user_soil_details'] = $user_soil_details;
             $data['user_micro_details'] = $user_micro_details;
@@ -282,6 +297,14 @@ class UserController extends MY_Controller {
                 $this->form_validation->set_rules('certification_id[]', 'Certification', 'required');
                 //$this->form_validation->set_rules('certification_number', 'Certification Number', 'trim');
                 $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
+            }
+            
+            if( 11 == $arrPost['user_type_id'] ) {
+                $this->form_validation->set_rules('organization_name', 'Organization Name', 'trim|required');
+                $this->form_validation->set_rules( 'date_of_exhibition', 'Date of exhibition', 'trim|required' );
+                $this->form_validation->set_rules( 'about_exhibition', 'About Exhibition', 'trim|required' );
+                $this->form_validation->set_rules( 'participate', 'Who Should Participate', 'trim|required' );
+                $this->form_validation->set_rules( 'visitor_fees', 'Visitor Fees', 'trim|required' );
             }
             
             $this->form_validation->set_rules( 'Bank[bank_name]', 'Bank Name', 'trim' );
@@ -394,10 +417,46 @@ class UserController extends MY_Controller {
                     $strCompanyImage = '';
                 }
 
+                if( true == isset( $_FILES['exhibition_images']['name'] ) && true == isVal( $_FILES['exhibition_images']['name'] ) ) {
+                    $intCount = count( $_FILES['exhibition_images']['name'] );
+                    $arrFiles = $_FILES;
+                    for( $intCounter = 0; $intCounter < $intCount; $intCounter++ ) {
+                        if( true == isset( $_FILES['exhibition_images']['name'][$intCounter] ) && true == isVal( $_FILES['exhibition_images']['name'][$intCounter] ) ) {
+                            $_FILES['exhibition_images']['name'] = $arrFiles['exhibition_images']['name'][$intCounter];
+                            $_FILES['exhibition_images']['type'] = $arrFiles['exhibition_images']['type'][$intCounter];
+                            $_FILES['exhibition_images']['tmp_name'] = $arrFiles['exhibition_images']['tmp_name'][$intCounter];
+                            $_FILES['exhibition_images']['error'] = $arrFiles['exhibition_images']['error'][$intCounter];
+                            $_FILES['exhibition_images']['size'] = $arrFiles['exhibition_images']['size'][$intCounter];
+                            
+                            $arrConfigExhibitionImages['upload_path'] = './assets/images/exhibition_images/';
+                            $arrConfigExhibitionImages['allowed_types'] = 'gif|jpg|png|jpeg';
+                            
+                            $this->load->library( 'upload', $arrConfigExhibitionImages );
+                            $this->upload->initialize( $arrConfigExhibitionImages );
+                            
+                            if( $this->upload->do_upload('exhibition_images') ) {
+                                $arrUploadFileData = $this->upload->data();
+                                $arrstrExhibitionImages[] = $arrUploadFileData['file_name'];
+                                $errors[] = '';
+                            } else {
+                                $errors[] = $this->upload->display_errors();
+                                $arrstrExhibitionImages[] = '';
+                            }
+                        }
+                    }
+                } else {
+                    $errors[] = '';
+                    $arrstrExhibitionImages[] = '';
+                }
+                
                 if( false == isArrVal( $arrError ) ) {
                     unset($arrDetails['confirm_password']);
                     unset($arrDetails['Bank']);
                     unset($arrDetails['certification_id']);
+                    unset($arrDetails['date_of_exhibition']);
+                    unset($arrDetails['about_exhibition']);
+                    unset($arrDetails['participate']);
+                    unset($arrDetails['visitor_fees']);
                     
                     $arrDetails['landline_no'] = ( false == isStrVal( $arrDetails['landline_no'] ) ) ? $arrDetails['landline_no'] : 0;
                     $arrDetails['password'] = md5($arrDetails['password']);
@@ -425,6 +484,30 @@ class UserController extends MY_Controller {
                             $this->UserCertifications->insertBatch($arrmixUserCertificationData);
                         }
                     }
+                    
+                    if( 11 == $arrPost['user_type_id'] ) {
+                        $arrInsertExhibitionData = [
+                            'user_id' => $intUserId,
+                            'date_of_exhibition' => date( 'Y-m-d', strtotime( str_replace('/', '-', $arrPost['date_of_exhibition'] ) ) ),
+                            'about_exhibition' => $arrPost['about_exhibition'],
+                            'participate' => $arrPost['participate'],
+                            'visitor_fees' => $arrPost['visitor_fees']
+                        ];
+                        
+                        $intUserExhibitionId = $this->UserExhibitions->insert( $arrInsertExhibitionData );
+
+                        if( true == isIdVal( $intUserExhibitionId ) && true == isArrVal( $arrstrExhibitionImages ) ) {
+                            foreach( $arrstrExhibitionImages as $strExhibitionImage ) {
+                                $arrInsertExhibitionImagesData[] = [
+                                    'user_exhibition_id' => $intUserExhibitionId,
+                                    'exhibition_images' => $strExhibitionImage,
+                                ];
+                            }
+
+                            $this->UserExhibitionImages->insertBatch( $arrInsertExhibitionImagesData );
+                        }
+                    }
+                    
 
                     if( true == isArrVal( $arrPost['Bank'] ) ) {
                         $arrBankInsertDetails = $arrPost['Bank'];
@@ -525,6 +608,14 @@ class UserController extends MY_Controller {
                 $this->form_validation->set_rules('agency_id', 'Certification Agency', 'trim|required');
                 $this->form_validation->set_rules('is_test_report', 'Test Report', 'trim');
             }
+            
+            if( 11 == $arrPost['user_type_id'] ) {
+                $this->form_validation->set_rules( 'date_of_exhibition', 'Date of exhibition', 'trim|required' );
+                $this->form_validation->set_rules( 'about_exhibition', 'About Exhibition', 'trim|required' );
+                $this->form_validation->set_rules( 'participate', 'Who Should Participate', 'trim|required' );
+                $this->form_validation->set_rules( 'visitor_fees', 'Visitor Fees', 'trim|required' );
+            }
+            
             $this->form_validation->set_rules('Bank[bank_name]', 'Bank Name', 'trim');
             $this->form_validation->set_rules('Bank[account_holder_name]', 'Account Holder Name', 'trim');
             $this->form_validation->set_rules('Bank[account_no]', 'Account Number', 'trim');
@@ -638,6 +729,38 @@ class UserController extends MY_Controller {
                     $error = '';
                 }
 
+                if( true == isset( $_FILES['exhibition_images']['name'] ) && true == isVal( $_FILES['exhibition_images']['name'] ) ) {
+                    $intCount = count( $_FILES['exhibition_images']['name'] );
+                    $arrFiles = $_FILES;
+                    for( $intCounter = 0; $intCounter < $intCount; $intCounter++ ) {
+                        if( true == isset( $_FILES['exhibition_images']['name'][$intCounter] ) && true == isVal( $_FILES['exhibition_images']['name'][$intCounter] ) ) {
+                            $_FILES['exhibition_images']['name'] = $arrFiles['exhibition_images']['name'][$intCounter];
+                            $_FILES['exhibition_images']['type'] = $arrFiles['exhibition_images']['type'][$intCounter];
+                            $_FILES['exhibition_images']['tmp_name'] = $arrFiles['exhibition_images']['tmp_name'][$intCounter];
+                            $_FILES['exhibition_images']['error'] = $arrFiles['exhibition_images']['error'][$intCounter];
+                            $_FILES['exhibition_images']['size'] = $arrFiles['exhibition_images']['size'][$intCounter];
+                            
+                            $arrConfigExhibitionImages['upload_path'] = './assets/images/exhibition_images/';
+                            $arrConfigExhibitionImages['allowed_types'] = 'gif|jpg|png|jpeg';
+                            
+                            $this->load->library( 'upload', $arrConfigExhibitionImages );
+                            $this->upload->initialize( $arrConfigExhibitionImages );
+                            
+                            if( $this->upload->do_upload('exhibition_images') ) {
+                                $arrUploadFileData = $this->upload->data();
+                                $arrstrExhibitionImages[] = $arrUploadFileData['file_name'];
+                                $errors[] = '';
+                            } else {
+                                $errors[] = $this->upload->display_errors();
+                                $arrstrExhibitionImages[] = '';
+                            }
+                        }
+                    }
+                } else {
+                    $errors = '';
+                    $arrstrExhibitionImages = ( true == isset( $arrPost['exhibition_images_hidden'] )  && true == isVal( $arrPost['exhibition_images_hidden'] ) ) ? explode( ',', $arrPost['exhibition_images_hidden'] ) : [];
+                }
+
                 if(empty($error)){
                     $intUserId = $arrPost['user_id'];
                     unset($arrDetails['city_id_hidden']);
@@ -654,6 +777,14 @@ class UserController extends MY_Controller {
                     } else {
                         unset($arrDetails['password']);
                     }
+                    
+                    unset($arrDetails['user_exhibition_id']);
+                    unset($arrDetails['exhibition_images_hidden']);
+                    unset($arrDetails['date_of_exhibition']);
+                    unset($arrDetails['about_exhibition']);
+                    unset($arrDetails['participate']);
+                    unset($arrDetails['visitor_fees']);
+                    
                     $arrDetails['landline_no'] = !empty($arrDetails['landline_no'])?$arrDetails['landline_no']:0;
                     $arrDetails['profile_image'] = $strProfileImage;
                     $arrDetails['company_image'] = $strCompanyImage;
@@ -682,6 +813,30 @@ class UserController extends MY_Controller {
                     $arrBankDetails['user_id'] = $arrPost['user_id'];
                     $this->UserBank->updateByUserId( $arrBankDetails );
                     
+                    if( 11 == $arrPost['user_type_id'] ) {
+                        $arrUpdateExhibitionData = [
+                            'user_exhibition_id' => $arrPost['user_exhibition_id'],
+                            'user_id' => $intUserId,
+                            'date_of_exhibition' => date( 'Y-m-d', strtotime( str_replace('/', '-', $arrPost['date_of_exhibition'] ) ) ),
+                            'about_exhibition' => $arrPost['about_exhibition'],
+                            'participate' => $arrPost['participate'],
+                            'visitor_fees' => $arrPost['visitor_fees']
+                        ];
+                        
+                        $this->UserExhibitions->update( $arrUpdateExhibitionData );
+                        if( true == isArrVal( $arrstrExhibitionImages ) ) {
+                            $this->UserExhibitionImages->deleteByUserExhibitionId( $arrPost['user_exhibition_id'] );
+                            
+                            foreach( $arrstrExhibitionImages as $strExhibitionImage ) {
+                                $arrInsertExhibitionImagesData[] = [
+                                    'user_exhibition_id' => $arrPost['user_exhibition_id'],
+                                    'exhibition_images' => $strExhibitionImage,
+                                ];
+                            }
+                            $this->UserExhibitionImages->insertBatch( $arrInsertExhibitionImagesData );
+                        }
+                        
+                    }
                     if( $arrUserSession['username'] == ADMINUSERNAME ) {
                         $this->session->set_flashdata('Message', $arrDetails['fullname']. ' profile has been updated successfully.');
                         redirect('admin/user/user-list');
@@ -723,6 +878,20 @@ class UserController extends MY_Controller {
                 $arrstrCertificationName[] = $arrCertificationList[ $arrUserCertificationDetails['certification_id'] ];
             }
             $strUserCertificationName = implode( ',', $arrstrCertificationName );
+        }
+        if( 11 == $intUserTypeId ) {
+            $arrUserExhibitionDetails = $this->UserExhibitions->getUserExhibitionByUserId( $intUserId );
+            $data['arrUserExhibitionDetails'] = $arrUserExhibitionDetails;
+            $data['arrstrExhibitionImages'] = [];
+            if( true == isArrVal( $arrUserExhibitionDetails ) ) {
+                $arrUserExhibitionImagesList = $this->UserExhibitionImages->getUserExhibitionImagesByUserExhibitionId( $arrUserExhibitionDetails['user_exhibition_id'] );
+                if( true == isArrVal( $arrUserExhibitionImagesList ) ) {
+                    foreach( $arrUserExhibitionImagesList as $arrUserExhibitionImagesDetails ) {
+                        $data['arrstrExhibitionImages'][] = $arrUserExhibitionImagesDetails['exhibition_images'];
+                    }
+                } 
+               
+            }
         }
         $data['strUserCertificationName'] = $strUserCertificationName;
         $data['userInputOrganicList'] = $this->UserInputOrganic->getUserInputOrganicByUserId( $intUserId );

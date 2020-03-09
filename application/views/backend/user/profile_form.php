@@ -136,7 +136,7 @@
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-success" id="submit">Submit</button>
                                 <?php if($user_session['username'] == ADMINUSERNAME){ 
-                                        $href = base_url().'admin/user';
+                                        $href = base_url().'admin/user/user-list';
                                     }else{
                                         $href = base_url().'admin/dashboard';
                                     }

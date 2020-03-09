@@ -45,6 +45,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model('blog_categories_model','BlogCategories');
         $this->load->model('lab_reports_model','LabReports');
         $this->load->model( 'app_slider_images_model', 'AppSliderImages' );
+        $this->load->model( 'user_exhibitions_model', 'UserExhibitions' );
+        $this->load->model( 'user_exhibition_images_model', 'UserExhibitionImages' );
         
     }
 
