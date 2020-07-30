@@ -21,10 +21,11 @@ class transaction_model extends CI_Model {
     }
 
     public function getTransactions() {
-	    $this->db->select('tt.*, tos.*');
-	    $this->db->from('tbl_transaction tt');
-	    $this->db->join('tbl_orders tos', 'tos.order_id = tt.order_id', 'left');
-        $this->db->order_by('transaction_id', 'DESC');
+        $this->db->select( 'tt.*, tos.order_no, tups.purchase_subscription_number' );
+        $this->db->from( 'tbl_transaction tt' );
+        $this->db->join( 'tbl_orders tos', 'tos.order_id = tt.order_id', 'left' );
+        $this->db->join( 'tbl_user_purchase_subscriptions tups', 'tups.user_purchase_subscription_id = tt.user_purchase_subscription_id', 'left' );
+        $this->db->order_by( 'transaction_id', 'DESC' );
         return $this->db->get()->result_array();
     }
 
@@ -33,13 +34,16 @@ class transaction_model extends CI_Model {
         return $this->db->get('tbl_transaction')->row_array();
     }
 
-	public function getTransactionsByUserId( $intUserId ) {
-		$this->db->select('tt.*, tos.*');
-		$this->db->from('tbl_transaction tt');
-		$this->db->join('tbl_orders tos', 'tos.order_id = tt.order_id', 'left');
-		$this->db->where('tos.user_id', $intUserId);
-		return $this->db->get()->result_array();
-	}
+    public function getTransactionsByUserId( $intUserId ) {
+        $this->db->select( 'tt.*, tos.order_no, tups.purchase_subscription_number' );
+        $this->db->from( 'tbl_transaction tt' );
+        $this->db->join( 'tbl_orders tos', 'tos.order_id = tt.order_id', 'left' );
+        $this->db->join( 'tbl_user_purchase_subscriptions tups', 'tups.user_purchase_subscription_id = tt.user_purchase_subscription_id', 'left');
+        $this->db->where( 'tos.user_id', $intUserId );
+        $this->db->or_where( 'tups.user_id', $intUserId );
+        
+        return $this->db->get()->result_array();
+    }
 
     public function insert($data) {
         $this->db->insert('tbl_transaction', $data);

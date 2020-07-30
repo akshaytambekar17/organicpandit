@@ -92,7 +92,16 @@ $route['bid/create'] = "BidController/create";
 
 $route['signup'] = "UserController/signup";
 $route['registration'] = "UserController/registration";
+$route['validate-otp'] = "UserController/actionValidateOtp";
+$route['resend-otp'] = "UserController/actionResendOtp";
 $route['registration-certification-agency'] = "UserController/registrationCertificationAgency";
+
+$route['subscription-plan'] = "SubscriptionPlanController/actionSubscriptionPlan";
+$route['purchase-subscription-plan'] = "SubscriptionPlanController/actionPurchaseSubscriptionPlan";
+$route['purchase-subscription-payment-response'] = "SubscriptionPlanController/actionPurchaseSubscriptionPaymentResponse";
+
+$route['logout'] = "UserController/actionLogout";
+
 
 $route['search-enquiry'] = "UserController/searchEnquiry";
 
@@ -233,6 +242,9 @@ $route['admin/app-slider-images/add'] = "backend/AppSliderImagesController/add";
 $route['admin/app-slider-images/update'] = "backend/AppSliderImagesController/update";
 $route['admin/app-slider-images/delete'] = "backend/AppSliderImagesController/delete";
 
+$route['admin/user-purchase-subscriptions'] = "backend/UserPurchaseSubscriptionsController/actionList";
+$route['admin/user-purchase-subscriptions/view'] = "backend/OrderController/actionview";
+
 
 /**
  * Ajax routing
@@ -248,12 +260,14 @@ $route['fetch-frontend-cities-by-state-id'] = 'UserController/fetchFrontendCitie
 /************* api routes *************/
 $route['api-v1/user/login'] = 'api-v1/UserController/login';
 $route['api-v1/user/registration'] = 'api-v1/UserController/registration';
+$route['api-v1/user/forgot-password'] = 'api-v1/UserController/forgotPassword';
 $route['api-v1/user/fetch-users-list'] = 'api-v1/UserController/getUsersList';
 $route['api-v1/user/fetch-user'] = 'api-v1/UserController/getUserDetails';
 $route['api-v1/user/fetch-user-organic-input-list'] = 'api-v1/UserController/getUserOrganicInputList';
 $route['api-v1/user/fetch-user-organic-input'] = 'api-v1/UserController/getUserOrganicInputDetails';
 $route['api-v1/user/fetch-user-shops-list'] = 'api-v1/UserController/getUserShopEcommerceList';
 $route['api-v1/user/fetch-user-shop'] = 'api-v1/UserController/getUserShopEcommerceDetails';
+$route['api-v1/user/send-enquiry'] = 'api-v1/UserController/sendEnquiry';
 
 $route['api-v1/fetch-user-type-list'] = 'api-v1/OrganicController/fetchUserTypeList';
 $route['api-v1/fetch-countries'] = 'api-v1/OrganicController/fetchCountries';
@@ -268,7 +282,13 @@ $route['api-v1/fetch-app-slider-images'] = 'api-v1/OrganicController/fetchAppSli
 $route['api-v1/post-requirement/fetch-total-worth'] = 'api-v1/PostRequirementController/getTotalWorth';
 $route['api-v1/post-requirement/fetch-post-requirement-list'] = 'api-v1/PostRequirementController/getPostRequirementList';
 $route['api-v1/post-requirement/fetch-post-requirement'] = 'api-v1/PostRequirementController/getPostRequirementDetails';
-$route['api-v1/post-requirement/insert'] = 'api-v1/PostRequirementController/insert';
+$route['api-v1/post-requirement/apply-bid'] = 'api-v1/PostRequirementController/applyBid';
+
+$route['api-v1/buy-sell-product/fetch-buy-sell-product-list'] = 'api-v1/BuySellController/fetchBuySellProductList';
+$route['api-v1/buy-sell-product/fetch-buy-sell-product-details'] = 'api-v1/BuySellController/fetchBuySellProductDetails';
+$route['api-v1/buy-sell-product/send-enquiry'] = 'api-v1/BuySellController/sendEnquiry';
+
+$route['api-v1/order/add'] = 'api-v1/OrderController/actionAddOrder';
 
 
 /* End of file routes.php */

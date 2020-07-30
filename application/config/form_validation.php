@@ -83,12 +83,12 @@ $config = array(
                 array(
                         'field' => 'price',
                         'label' => 'Price',
-                        'rules' => 'trim|required|numeric|greater_than[0]|less_than[2000]'
+                        'rules' => 'trim|required|numeric|greater_than[1]|less_than[2000]'
                 ),
                 array(
                         'field' => 'quantity',
                         'label' => 'Quantity',
-                        'rules' => 'trim|required|numeric|greater_than[0]|less_than[100000]'
+                        'rules' => 'trim|required|numeric|greater_than[1]|less_than[100000]'
                 ),
                 array(
                         'field' => 'total_price',
@@ -739,6 +739,40 @@ $config = array(
                         'rules' => 'trim|required'
                 )
         ),
+        'user-send-enquiry' => array(
+                array(
+                    'field' => 'fullname',
+                    'label' => 'Fullname',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'email',
+                    'label' => 'Email Id',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'mobile_no',
+                    'label' => 'Mobile Number',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'description',
+                    'label' => 'Description',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'user_id',
+                    'label' => 'User',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'user_type_id',
+                    'label' => 'User Type',
+                    'rules' => 'trim|required'
+                )
+            
+        ),
+    
 
 
 );

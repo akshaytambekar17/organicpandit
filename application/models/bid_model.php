@@ -41,8 +41,8 @@ class bid_model extends CI_Model {
     
     public function insert($data){
         $this->db->insert('tbl_bid', $data);
-        $last_id = $this->db->insert_id();
-        return $last_id;
+        $intBidId = $this->db->insert_id();
+        return $intBidId;
     }
     public function update($updateData){
         $this->db->where('id',$updateData['id']);

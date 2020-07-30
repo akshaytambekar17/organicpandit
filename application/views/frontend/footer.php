@@ -11,6 +11,7 @@
                             <li><a href="<?= base_url()?>">Home</a></li>
                             <li><a href="<?= base_url()?>blogs">Publications</a></li>
                             <li><a href="<?= base_url()?>signup">Sign up</a></li>
+                            <li><a href="<?= base_url()?>subscription-plan">Subscription Plan</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-2">

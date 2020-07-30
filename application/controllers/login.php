@@ -28,34 +28,32 @@ class Login extends MY_Controller {
 
     function login_validation() {
         $this->load->library('form_validation');
-        $post =$this->input->post();
-        if( !empty( $post['user_type_id'] ) ) { 
+        
+        $arrmixRequestData = $this->input->post();
+        
+        if( true == isIdVal( $arrmixRequestData['user_type_id'] ) ) { 
             
-            $data = array('user_type_id' => $post['user_type_id'],
-                          'username' => $post['username'],
-                          'password' => $post['password']
-                        );
-            $arrUserDetailsResult = $this->login_model->getUsersByEmailIdPassword($data);
-            if( !empty( $arrUserDetailsResult ) ) { 
-                $userDetails = array(
-                    'usertype' => $arrUserDetailsResult['user_type_id'],
-                    'username' => $arrUserDetailsResult['username'],
-                    'id' => $arrUserDetailsResult['user_id'],
-                );
-                $this->session->set_userdata('user_data', $arrUserDetailsResult);
-                $result['success'] = true;
-                $result['userData'] = $userDetails;
+            $arrmixUserDetails = $this->login_model->getUsersByEmailIdPassword( $arrmixRequestData );
+            
+            if( true == isArrVal( $arrmixUserDetails ) ) { 
+                if( true == $arrmixUserDetails['is_validate_otp'] ) {
+                    $this->session->set_userdata( 'user_data', $arrmixUserDetails );
+                    $arrmixResponseData['success'] = true;
+                    $arrmixResponseData['userData'] = $arrmixUserDetails;
+                } else{
+                    $arrmixResponseData['success'] = false;
+                    $arrmixResponseData['message'] = 'Your account has been not validate. Please verify your mobile number using OTP or contact to support team.';
+                }
             } else {
-                $this->session->set_flashdata('error', 'Invalid Username and Password');
-                $result['success'] = false;
-                $result['message'] = 'Invalid Username and Password';
+                $arrmixResponseData['success'] = false;
+                $arrmixResponseData['message'] = 'Invalid Username and Password';
             }
         } else {
-            $this->session->set_flashdata('error', 'Please select the User Type');
-            $result['success'] = false;
-            $result['message'] = 'Please select the User Type';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'Invalid User Type';
         }
-        echo json_encode( $result );
+        
+        $this->response( $arrmixResponseData );
     }
 
 }

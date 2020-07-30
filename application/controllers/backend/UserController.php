@@ -552,7 +552,7 @@ class UserController extends MY_Controller {
         $arrUserSession = $session['userData'];
         if($this->input->post()){
             $arrPost = $this->input->post();
-
+            
             if($arrPost['user_type_id'] == 2){
                 $fullname_title = 'FPO Name';
             }else{
@@ -620,9 +620,10 @@ class UserController extends MY_Controller {
             $this->form_validation->set_rules('Bank[account_holder_name]', 'Account Holder Name', 'trim');
             $this->form_validation->set_rules('Bank[account_no]', 'Account Number', 'trim');
             $this->form_validation->set_rules('Bank[ifsc_code]', 'Ifsc Code', 'trim');
-            if($this->form_validation->run() == TRUE){
+            if( true == $this->form_validation->run() ) {
                 $arrDetails = $arrPost;
-                if(!empty($_FILES['video']['name'])){
+                
+                if(!empty($_FILES['video']['name'])) {
                     $config_video['upload_path']          = './assets/images/gallery/';
                     $config_video['allowed_types']        = '*';
                     $config_video['max_size']             = 102400;
@@ -784,6 +785,7 @@ class UserController extends MY_Controller {
                     unset($arrDetails['about_exhibition']);
                     unset($arrDetails['participate']);
                     unset($arrDetails['visitor_fees']);
+                    unset($arrDetails['certification_id']);
                     
                     $arrDetails['landline_no'] = !empty($arrDetails['landline_no'])?$arrDetails['landline_no']:0;
                     $arrDetails['profile_image'] = $strProfileImage;
@@ -856,6 +858,7 @@ class UserController extends MY_Controller {
                     $this->backendLayout($data_return);
                 }
             }else{
+                printDie( 'Form Valdation false' );
                 $data_return = $this->profileData($arrPost['user_id'],$arrPost['user_type_id'],$arrUserSession);
                 $this->backendLayout($data_return);
             }
@@ -875,7 +878,9 @@ class UserController extends MY_Controller {
         $arrCertificationList = getCertifications();
         if( true == isArrVal( $arrUserCertificationsList ) ) {
             foreach( $arrUserCertificationsList as $arrUserCertificationDetails ) {
-                $arrstrCertificationName[] = $arrCertificationList[ $arrUserCertificationDetails['certification_id'] ];
+                if( 0 != $arrUserCertificationDetails['certification_id'] ) {
+                    $arrstrCertificationName[] = $arrCertificationList[ $arrUserCertificationDetails['certification_id'] ];
+                }
             }
             $strUserCertificationName = implode( ',', $arrstrCertificationName );
         }
@@ -893,6 +898,7 @@ class UserController extends MY_Controller {
                
             }
         }
+        
         $data['strUserCertificationName'] = $strUserCertificationName;
         $data['userInputOrganicList'] = $this->UserInputOrganic->getUserInputOrganicByUserId( $intUserId );
         $data['userTypeList'] = $this->UserType->getUserTypes();

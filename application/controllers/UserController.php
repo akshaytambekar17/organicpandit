@@ -5,9 +5,15 @@ if (!defined('BASEPATH'))
 
 class UserController extends MY_Controller {
 
+    public $arrmixUserSession;
+    
     function __construct() {
         parent::__construct();
-        //$this->load->model('farmer_model');
+        
+        $this->arrmixUserSession = [];
+        if( true == isArrVal( $this->session->userdata('user_data') ) ) {
+            $this->arrmixUserSession = $this->session->userdata('user_data');
+        }
     }
 
     public function index() {
@@ -382,6 +388,8 @@ class UserController extends MY_Controller {
 
                 if (empty($error)) {
                     //printDie($details);
+                    
+                    $intOTP = $this->generateOTP();
                     unset($details['confirm_password']);
                     unset($details['product_count']);
                     unset($details['crop_count']);
@@ -410,6 +418,7 @@ class UserController extends MY_Controller {
                     $details['status'] = 2;
                     $details['is_deleted'] = 0;
                     $details['is_verified'] = 1;
+                    $details['otp'] = $intOTP;
                     $details['created_at'] = date('Y-m-d H:i:s');
                     $details['updated_at'] = date('Y-m-d H:i:s');
 
@@ -656,9 +665,14 @@ class UserController extends MY_Controller {
                     );
 
                     $this->Notifications->insert($dataNotify);
+                    
+                    if( true == isIdVal( $details['mobile_no'] ) ) {
+                        $strMessage = 'Hello ' . $details['fullname'] . ',%0aThank you for registration, to complete the process use the below OTP. %0aYour OTP is ' . $intOTP . '.%0a%0aThank you.%0aTeam Organic Pandit.';
+                        $this->sendSms( $details['mobile_no'], $strMessage );
+                    }
 
-                    $this->session->set_flashdata('Message', 'Registration Successfully. Please login to continue');
-                    redirect('login');
+                    $this->session->set_flashdata('Message', 'OTP has been sent to your registered mobile number. Please enter the OTP to complete the registration process.');
+                    redirect( 'validate-otp?user_id=' . $user_id );
                 } else {
                     if (!empty($error)) {
                         $this->session->set_flashdata('Error', "File cannot be upload - " . $error);
@@ -985,12 +999,20 @@ class UserController extends MY_Controller {
     }
 
     public function searchEnquiry() {
-        $post = $this->input->post();
+        $arrmixPostData = $this->input->post();
 
-        $details = $post;
-        $details['updated_at'] = CURRENT_DATETIME;
-        $result = $this->SearchEnquiry->insert($details);
-        if ($result) {
+        $arrmixInsertData = $arrmixPostData;
+        $arrmixInsertData['updated_at'] = CURRENT_DATETIME;
+        
+        $arrmixUserDetails = $this->User->getUserById( $arrmixPostData['user_id'] );
+       
+        if( true == isIdVal( $arrmixUserDetails['mobile_no'] ) ) {
+            $strMessage = $arrmixPostData['fullname'] . ' has enquiry regarding your product. Please login to Organic Pandit portal and get the details.%0a%0aThank you.%0aTeam Organic Pandit.';
+            $this->sendSms( $arrmixUserDetails['mobile_no'], $strMessage );
+        }
+        $intSearchEnquiryId = $this->SearchEnquiry->insert( $arrmixInsertData );
+        
+        if( true == isIdVal( $intSearchEnquiryId ) ) {
             echo true;
         } else {
             echo false;
@@ -1069,7 +1091,7 @@ class UserController extends MY_Controller {
         } else if( CART_ORDER_TYPE_3  == $strCartOrderType ) {
             $arrUserEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
             $intUserEcommerceId = $arrPost['user_ecommerce_id'];
-            $intId = $intUserEcommerceId  . '_' . CART_ORDER_TYPE_2;
+            $intId = $intUserEcommerceId  . '_' . CART_ORDER_TYPE_3;
             $intQuantity = $arrPost['qunatity'];
             $intPrice = $arrUserEcommerceDetails['price'];
             $strProductName = $arrPost['product_name'];
@@ -1251,7 +1273,9 @@ class UserController extends MY_Controller {
 			         * To make the out of stock
 			         ***/
 			        $arrobjproductDetails = json_decode( $arrOrderDetails['product_details'] );
+                                $arrmixOrderProductName = [];
                                 foreach( $arrobjproductDetails as $objProductDetails ) {
+                                        $arrmixOrderProductName[] = $objProductDetails->name;
                                         if( CART_ORDER_TYPE_1 == $objProductDetails->options->cart_order_type ) {
                                             $arrSellProductData = array(
                                                     'sell_product_id' => $objProductDetails->options->sell_product_id,
@@ -1268,7 +1292,12 @@ class UserController extends MY_Controller {
 			        $data['strAddedOn'] = $arrmixResult->data->addedon;
 			        $data['arrOrderDetails'] = $arrOrderDetails;
 
-			        $to = ADMINEMAILID;
+                                if( true == isIdVal( $arrOrderDetails['mobile_no]'] ) ) {
+                                    $strMessage = 'Hi ' . $arrOrderDetails['fullname'] . ' your order has been placed against the product ' . implode( ',', $arrmixOrderProductName ) . ' with the amount ' . $arrOrderDetails['total_amount'] . ' .%0aThank you for purchasing our product.%0a%0aTeam OrganicPandit.';
+                                    $this>sendSms( $arrOrderDetails['mobile_no]'], $strMessage );
+                                }
+                                
+                                $to = ADMINEMAILID;
 			        $subject = "New Order has been placed";
 			        $message = $this->load->view('Email/order_admin',$data,TRUE);
 			        $this->sendEmail($to, $subject, $message);
@@ -1325,7 +1354,6 @@ class UserController extends MY_Controller {
         
     }
     
-    
     public function fetchFrontendCitiesByStateId() {
         $arrPost = $this->input->post();
         $arrCitiesList = $this->City->getCitiesByStateId( $arrPost['state_id'] );
@@ -1366,7 +1394,108 @@ class UserController extends MY_Controller {
         echo json_encode( $strHtml );
     }
     
+
+    public function actionValidateOtp() {
+        
+        if( true == isArrVal( $this->arrmixUserSession ) ) {
+            redirect( 'home' );
+        }
+        
+        $arrmixRequestData = $this->input->get();
+        
+        $arrmixUserDetails = $this->User->getUserById( $arrmixRequestData['user_id'] );
+        
+        if( true == isArrVal( $arrmixUserDetails ) ) {
+            if( true == $arrmixUserDetails['is_validate_otp'] ) {
+                $this->session->set_flashdata( 'Error', 'Your account is already validated. Please continue with the login.');
+                redirect( 'login' );
+            }
+        } else {
+            $this->session->set_flashdata( 'Error', 'Invalid User.');
+            redirect( 'login' );
+        }
+            
+        $arrmixData = [];
+        
+        $arrmixData['title'] = 'Validate OTP';
+        $arrmixData['heading'] = 'Validate OTP';
+        $arrmixData['hide_footer'] = true;
+        $arrmixData['view'] = 'user/validate-otp';
+        
+        $arrmixData['arrmixUserDetails'] = $arrmixUserDetails;
+        
+        if( $this->input->post() ) {
+            $arrmixRequestData = $this->input->post();
+            
+            $this->form_validation->set_rules( 'otp', 'OTP', 'trim|required|numeric|exact_length[6]');
+            if( true == $this->form_validation->run() ) {
+                $arrmixUserDetails = $this->User->getUserById( $arrmixRequestData['user_id'] );
+                if( $arrmixRequestData['otp'] == $arrmixUserDetails['otp'] ) {
+                    $arrmixUpdateData = [
+                        'is_validate_otp' => 1,
+                        'user_id' => $arrmixUserDetails['user_id'],
+                        'updated_by' => $arrmixUserDetails['user_id']
+                    ];
+                    $this->User->update( $arrmixUpdateData );
+                    
+                    $this->session->set_flashdata( 'Message', 'Your account has been validated. Please conitune with the login.');
+                    redirect( 'login' );
+                } else {
+                    $this->session->set_flashdata( 'Error', 'Invalid OTP. Please enter the valid OTP.');
+                }
+            }
+        }
+        
+        $this->frontendLayout( $arrmixData );
+        
+    }
     
+    public function actionResendOtp() {
+        
+        if( true == isArrVal( $this->arrmixUserSession ) ) {
+            redirect( 'home' );
+        }
+        
+        $arrmixRequestData = $this->input->post();
+        
+        $arrmixUserDetails = $this->User->getUserById( $arrmixRequestData['user_id'] );
+        
+        $arrmixResponseData = [];
+        $arrmixResponseData['success'] = false;
+        $arrmixResponseData['message'] = 'Something went wrong. Please try later.';
+        
+        if( true == isArrVal( $arrmixUserDetails ) ) {
+            if( true == $arrmixUserDetails['is_validate_otp'] ) {
+                $arrmixResponseData['success'] = false;
+                $arrmixResponseData['message'] = 'Your account is already validated. Please continue with the login.';
+            } else {
+                $intOTP = $this->generateOTP();
+                if( true == isIdVal( $arrmixUserDetails['mobile_no'] ) ) {
+                    $strMessage = 'Hello ' . $arrmixUserDetails['fullname'] . ',%0a%0aYour new OTP is ' . $intOTP . '.%0a%0aThank you.%0aTeam Organic Pandit.';
+                    $this->sendSms( $arrmixUserDetails['mobile_no'], $strMessage );
+                }
+                
+                $arrmixUpdateData = [
+                    'otp' => $intOTP,
+                    'user_id' => $arrmixUserDetails['user_id'],
+                    'updated_by' => $arrmixUserDetails['user_id']
+                ];
+                $this->User->update( $arrmixUpdateData );
+                
+                $arrmixResponseData['success'] = true;
+                $arrmixResponseData['message'] = 'OTP has been sent to your registered mobile number.';
+            }
+        } else {
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'Invalid User.';
+        }
+            
+        $this->response( $arrmixResponseData );
+    }
     
+    public function actionLogout() {
+        $this->session->unset_userdata('user_data');
+        return redirect( 'login' );
+    }
     
 }

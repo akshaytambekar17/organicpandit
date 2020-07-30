@@ -28,19 +28,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <h3 class="text-center text-green pb-30">Login to Your Account</h3>
                     <div class="login-container">
                         <?php if ($message = $this->session->flashdata('Message')) { ?>
-                            <div class="col-md-12 ">
-                                <div class="alert alert-dismissible alert-success">
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <?= $message ?>
-                                </div>
+                            <div class="alert alert-dismissible alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <?= $message ?>
                             </div>
+                          
                         <?php } ?> 
                         <?php if ($message = $this->session->flashdata('Error')) { ?>
-                            <div class="col-md-12 ">
-                                <div class="alert alert-dismissible alert-danger">
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <?= $message ?>
-                                </div>
+                            <div class="alert alert-dismissible alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <?= $message ?>
                             </div>
                         <?php } ?>  
                         <form class="form-horizontal" id="loginForm" method="POST">
@@ -53,29 +50,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <option value="<?= $value['id'] ?>" <?= set_select('user_type_id', $value['id']); ?>><?= $value['name'] ?></option>
                                         <?php } ?>
                                     </select>
-<!--                                    <select class="form-control" id="usertype" name="usertype">
-                                        <option>Select User </option>
-                                        <option value="farmer">Farmer</option>
-                                        <option value="fpo">FPO</option>
-                                        <option value="trader">Trader</option>
-                                        <option value="processor">Processor</option>
-                                        <option value="buyer">Buyer</option>
-                                        <option value="org_consultant">Organic consultant</option>
-                                        <option value="org_input">Organic Input Company</option>
-                                        <option value="packaging">Packaging</option>
-                                        <option value="logistic">Logistic</option>
-                                        <option value="farm_equipment">Farm  Equipment</option>
-                                        <option value="exhibitors">Exhibitors</option>
-                                        <option value="shops">Shops</option>
-                                        <option value="labs">Labs</option>
-                                        <option value="gov_agency">Gov. agency</option>
-                                        <option value="institutions">Institutions</option>
-                                        <option value="others">Others</option>
-                                        <option value="restaurant">Restaurant</option>
-                                        <option value="ngo">NGO</option>
-                                        <option value="certification">Certification</option>
-
-                                    </select>-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -92,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                             <div class="form-group"> 
                                 <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn btn-black">Submit</button>
+                                    <button type="submit" class="btn btn-black js-submit">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -157,13 +131,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 success: function (response) {
                                     var response = $.parseJSON(response);
                                     if ( false == response['success'] ) {
+                                        $( '.js-submit' ).attr( "disabled", false );
+                                        $( '.js-submit' ).removeClass( 'disabled' );
                                         swal({
                                             title: "Fail!",
                                             text: response['message'],
                                             type: "warning",
                                             showCancelButton: false,
-                                            timer: 2000
+                                            timer: 5000
                                         });
+                                        
                                     } else {
                                         swal({
                                             title: "Success!",

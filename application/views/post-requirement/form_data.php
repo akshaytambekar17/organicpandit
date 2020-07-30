@@ -195,25 +195,25 @@
 		});
 		$("#state_id").on('change',function(){
 			var state_id = $(this).val();
-			getCitiesByState(state_id);
+			getCitiesByPostState(state_id);
 		});
 		var state_id = $("#state_id").val();
 		if(state_id != ''){
-			getCitiesByState(state_id);
+                    getCitiesByPostState(state_id);
 		}
 	});
-	function getCitiesByState(state_id){
-		$.ajax({
-			type: "POST",
-			url: "<?php echo base_url(); ?>" + "getcities-by-state",
-			data: { 'state_id' : state_id },
-			dataType: "html",
-			success: function(result){
-				var html = $.parseJSON(result);
-				$("#city_id").html('<option disabled selected> Select City</option>');
-				$("#city_id").append(html);
-			}
-		});
+	function getCitiesByPostState(state_id){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "getcities-by-state",
+                data: { 'state_id' : state_id },
+                dataType: "html",
+                success: function(result){
+                        var html = $.parseJSON(result);
+                        $("#city_id").html('<option disabled selected> Select City</option>');
+                        $("#city_id").append(html);
+                }
+            });
 	}
 
 </script>

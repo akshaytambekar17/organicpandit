@@ -32,6 +32,7 @@ class UserShopEcommercesController extends MY_Controller {
     public function index() {
         $arrGet = $this->input->get();
         $arrUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrGet['user_id'] );
+        
         if( false == isArrVal( $arrUserShopEcommerceList ) ) {
             $this->session->set_flashdata( 'Error', 'No Products are availabel' );
             return redirect( 'search-user?id=' . SHOPS, 'refresh' );
@@ -52,7 +53,6 @@ class UserShopEcommercesController extends MY_Controller {
 
         $arrUserEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
 	    
-        $arrData['arrUserSession'] = $this->arrUserSession;
         $arrData['arrUserEcommerceDetails'] = $arrUserEcommerceDetails;
 
         echo $this->load->view( 'modal-box/modal-user-shop-ecommerce-add-to-cart', $arrData );

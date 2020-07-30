@@ -128,7 +128,6 @@ class LabReportController extends MY_Controller {
                     $arrDetails['upload_lab_report'] = $strUploadLabReport;
                     $arrDetails['date_of_sampling'] = convertDateFormatToStandardFormat( $arrDetails['date_of_sampling'] );
                     $boolResult = $this->LabReports->update( $arrDetails );
-
                     if( true == isVal( $boolResult ) ) {
                         $this->session->set_flashdata( 'Message', 'Lab Report has been updated succesfully' );
                         return redirect( 'admin/lab-reports', 'refresh' );

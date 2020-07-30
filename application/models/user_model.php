@@ -66,7 +66,7 @@ class user_model extends CI_Model {
     }
     
     public function getUserById( $intUserId ) {
-        $this->db->select( "u.*,ut.name as user_type_name, ubd.*" );
+        $this->db->select( "u.*,ut.name as user_type_name, ubd.id, ubd.account_holder_name, ubd.bank_name, ubd.account_no, ubd.ifsc_code" );
         $this->db->from( 'tbl_users u' );
         $this->db->join( 'tbl_user_type ut', 'ut.id = u.user_type_id' );
         $this->db->join( 'tbl_users_bank_details ubd', 'ubd.user_id = u.user_id', 'left' );
@@ -74,8 +74,17 @@ class user_model extends CI_Model {
         return $this->db->get()->row_array();
     }
     
+    public function getUserByUsername( $strUsername ) {
+        $this->db->select( "u.*,ut.name as user_type_name, ubd.id, ubd.account_holder_name, ubd.bank_name, ubd.account_no, ubd.ifsc_code" );
+        $this->db->from( 'tbl_users u' );
+        $this->db->join( 'tbl_user_type ut', 'ut.id = u.user_type_id' );
+        $this->db->join( 'tbl_users_bank_details ubd', 'ubd.user_id = u.user_id', 'left' );
+        $this->db->where( 'u.username', $strUsername );
+        return $this->db->get()->row_array();
+    }
+    
     public function getUserByPartnerUserId( $partnerUserId ) {
-        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->select("u.*,ut.name as user_type_name");
         $this->db->from('tbl_users u');
         $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
         $this->db->where('u.partner_user_id',$partnerUserId);
@@ -97,7 +106,7 @@ class user_model extends CI_Model {
     }
     
     public function getUserLoginByUsernamePassword( $username, $password ) {
-        $this->db->select("u.*,ut.name as user_type_name,");
+        $this->db->select("u.*,ut.name as user_type_name");
         $this->db->from('tbl_users u');
         $this->db->join('tbl_user_type ut','ut.id = u.user_type_id');
         $this->db->where('username', $username );
@@ -105,7 +114,7 @@ class user_model extends CI_Model {
         return $this->db->get()->row_array();
     }
     public function getUserLoginByUsernameByPasswordByUserTypeId( $strUsername, $strPassword, $intUserTypeId ) {
-        $this->db->select( "u.*,ut.name as user_type_name,");
+        $this->db->select( "u.*,ut.name as user_type_name");
         $this->db->from( 'tbl_users u');
         $this->db->join( 'tbl_user_type ut','ut.id = u.user_type_id');
         $this->db->where( 'u.user_type_id', $intUserTypeId );

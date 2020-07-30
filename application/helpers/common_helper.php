@@ -126,3 +126,10 @@ function convertDateFormatToStandardFormat( $strDate ) {
     $strDate = str_replace( '/', '-', $strDate );
     return date( 'Y-m-d', strtotime( $strDate ) );
 }
+
+function generateRandomAlphaNumericString( $intCount = 7 ) {
+    
+    $strAlphaNumeric = '0123456789abcdefghijklmnopqrstuvwxyz';
+    
+    return substr( str_shuffle( $strAlphaNumeric ), 0, $intCount );
+}

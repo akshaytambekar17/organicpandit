@@ -47,6 +47,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model( 'app_slider_images_model', 'AppSliderImages' );
         $this->load->model( 'user_exhibitions_model', 'UserExhibitions' );
         $this->load->model( 'user_exhibition_images_model', 'UserExhibitionImages' );
+        $this->load->model( 'subscription_plans_model', 'SubscriptionPlans' );
+        $this->load->model( 'user_purchase_subscriptions_model', 'UserPurchaseSubscriptions' );
         
     }
 
@@ -88,70 +90,49 @@ class MY_Controller extends CI_Controller {
         return $object;
     }
 
-    public function sendSms($mobileno, $textmessage) {
-//Your authentication key
-        $authKey = "149798ARBQ5C3uSC958f9edd0";
-//Multiple mobiles numbers separated by comma
-        $mobileNumber = $mobileno;
-//Sender ID,While using route4 sender id should be 6 characters long.
-        $senderId = "ShiftMe";
-//Your message to send, Add URL encoding here.
-        $message = urlencode($textmessage);
-//Define route
-        $route = "1";
-//Prepare you post parameters
-        $postData = array(
-            'authkey' => $authKey,
-            'mobiles' => $mobileNumber,
-            'message' => $message,
-            'sender' => $senderId,
-            'route' => $route
-        );
-//API URL
-        $url = "https://control.msg91.com/api/sendhttp.php";
-// init the resource
-        $ch = curl_init();
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $postData
-                //,CURLOPT_FOLLOWLOCATION => true
-        ));
-//Ignore SSL certificate verification
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-//get response
-        $output = curl_exec($ch);
-//Print error if any
-        if (curl_errno($ch)) {
-//            echo 'error:' . curl_error($ch);
-            return FALSE;
-        }
-        curl_close($ch);
-        return TRUE;
-//        echo $output;
+    public function sendSms( $intMobileNumber, $strMessage ) {
+        
+        $objCurlInit = curl_init();
+        $strUsername = SMS_USERNAME;
+        $strPassword = SMS_PASSWORD;
+        $strSenderId = SMS_SENDER_ID; 
+        
+        $strCurrentData = CURRENT_DATETIME;
+        $strPostFields = "userid=$strUsername&password=$strPassword&sender=$strSenderId&mobileno=$intMobileNumber&msg=$strMessage&msgtype=0&sendon=$strCurrentData";
+        
+        curl_setopt( $objCurlInit, CURLOPT_URL,  "http://web.sms2india.in/websms/sendsms.aspx?");
+        curl_setopt( $objCurlInit, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt( $objCurlInit, CURLOPT_POST, 1);
+        curl_setopt( $objCurlInit, CURLOPT_POSTFIELDS, $strPostFields );
+        //Ignore SSL certificate verification
+        curl_setopt( $objCurlInit, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt( $objCurlInit, CURLOPT_SSL_VERIFYPEER, 0);
+        $strResponse = curl_exec( $objCurlInit );
+        curl_close( $objCurlInit );
+        return $strResponse;
+        
     }
 
     public function sendEmail($to,$subject,$message){
-	    $this->load->library('encrypt');
+        $this->load->library('encrypt');
         $this->load->library('email');
         $config = array();
-        $config['protocol'] = 'ssmtp';
-        $config['smtp_host'] = 'ssl://ssmtp.gmail.com';
-        $config['smtp_user'] = 'akshaytambekar17@gmail.com';
-        $config['smtp_pass'] = '1793_@kshu';
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'p3plcpnl0542.prod.phx3.secureserver.net';
+        $config['smtp_user'] = MAIL_USERNAME;
+        $config['smtp_pass'] = MAIL_PASSWORD;
         $config['smtp_port'] = 465;
+        $config['smtp_crypto'] = 'ssl';
         $config['charset']   = 'utf-8';
         $config['newline']   = "\r\n";
         $config['mailtype'] = 'html';
         $config['wordwrap'] = TRUE;
         $this->email->initialize($config);
-        $this->email->from('akshaytambekar17@gmail.com', 'Organic Pandit');
+        $this->email->from( MAIL_USERNAME, 'Organic Pandit');
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($message);
-
+        
         if($this->email->send()){
             $result['success'] = true;
             $result['message'] = "Email has been sent Successfully";
@@ -262,6 +243,18 @@ class MY_Controller extends CI_Controller {
 //        $data['view'] = 'user/payment_response';
 //
 //        $this->frontendLayout($data);
+    }
+    
+    public function generateOTP() {
+        $intGeneratorNumber = "1357902468"; 
+  
+        $intOTP = ""; 
+
+        for( $intCounter = 1; $intCounter <= 6; $intCounter++ ) { 
+            $intOTP .= substr( $intGeneratorNumber, ( rand()%( strlen( $intGeneratorNumber ) ) ), 1 ); 
+        } 
+
+        return $intOTP; 
     }
 
 }

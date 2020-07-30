@@ -367,6 +367,16 @@ function paymentGatewayResponseUrl() {
     return $arrUrl;
 }
 
+function purchaseSubscriptionPaymentGatewayResponseUrl() {
+    
+    $arrUrl['surl'] = base_url() . 'purchase-subscription-payment-response';
+    $arrUrl['furl'] = base_url() . 'purchase-subscription-payment-response';
+    
+    return $arrUrl;
+}
+
+
+
 function boolTemporaryRemove() {
     return true;
 }

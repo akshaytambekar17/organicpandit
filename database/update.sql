@@ -440,3 +440,19 @@ ALTER TABLE `tbl_user_exhibition_images`
 COMMIT;
 
 ALTER TABLE `tbl_user_exhibition_images` DROP FOREIGN KEY `fkt_user_exhibition_image_id`; ALTER TABLE `tbl_user_exhibition_images` ADD CONSTRAINT `fkt_user_exhibition_image_id` FOREIGN KEY (`user_exhibition_id`) REFERENCES `tbl_user_exhibitions`(`user_exhibition_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+
+
+/**
+* 26-07-2020
+*/
+
+ALTER TABLE `tbl_users` ADD `otp` INT(11) NOT NULL AFTER `is_verified`, ADD `is_validate_otp` INT(2) NOT NULL DEFAULT '0' COMMENT '0 = Not Validate, 1 = Validate' AFTER `otp`;
+
+UPDATE tbl_users SET is_validate_otp = 1;
+
+ALTER TABLE `tbl_users` ADD `is_subscription` INT(2) NOT NULL COMMENT '0 = Not Subscription, 1 = Subscription' AFTER `is_validate_otp`;
+
+ALTER TABLE `tbl_transaction` ADD `deduction_percentage` VARCHAR(50) NULL AFTER `total_amount`;
+
+ALTER TABLE `tbl_transaction` ADD `user_purchase_subscription_id` INT(11) NOT NULL AFTER `order_id`;

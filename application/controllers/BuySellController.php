@@ -139,16 +139,20 @@ class BuySellController extends MY_Controller {
 	    $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $intSellProductId );
 
 	    $data['arrSellProductDetails'] = $arrSellProductDetails;
-		$data['strBuyerName'] = $arrUserSession['fullname'];
-	    $data['strSellerName'] = $arrUserSession['fullname'];
-		$data['description'] = $strDescription;
+            $data['strBuyerName'] = $arrUserSession['fullname'];
+	    $data['strSellerName'] = $arrSellProductDetails['fullname'];
+            $data['description'] = $strDescription;
 
 	    $arrSendEnquiryData = $arrPost;
 	    $arrSendEnquiryData['buyer_id'] = $arrUserSession['user_id'];
 
 	    $intSendEnquiryBuyerId = $this->SendEnquiryBuyer->insert( $arrSendEnquiryData );
-
-	    if( true == isVal( $intSendEnquiryBuyerId ) ) {
+            if( true == isVal( $intSendEnquiryBuyerId ) ) {
+                        
+                    if( true == isIdVal( $arrSellProductDetails['mobile_no'] ) ) {
+                        $strSMSMessage = 'Hi ' . $arrSellProductDetails['fullname'] . ', you have enquiry from buyer ' . $arrUserSession['fullname'] . ' regarding product ' . $arrSellProductDetails['product_name'] . ', to find the more details please login to portal.%0a%0aThank you.%0aTeam OrganicPandit.';
+                        $this->sendSms( $arrSellProductDetails['mobile_no'], $strSMSMessage );
+                    }
 		    $to = ADMINEMAILID;
 		    $subject = "New enquiry has been sent by the buyer.";
 		    $message = $this->load->view('Email/send_enquiry_admin',$data,TRUE);

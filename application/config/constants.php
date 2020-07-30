@@ -41,9 +41,16 @@ define('SHOW_SEARCH_VIEW_ENQUIRY_KEY', 'show_search_view_enquiry');
 define('SHOW_USER_DETAILS', 'show_user_details');
 
 define('CURRENT_DATETIME',date('Y-m-d H:i:s'));
+define('CURRENT_DATE',date( 'Y-m-d' ) );
 
 define('ADMINUSERNAME', 'adminmaster');
 define('ADMINEMAILID', 'akshaytambekar17@gmail.com');
+//define('ADMINEMAILID', 'nvsoni007@gmail.com');
+define('ADMIN_ID', 1 );
+
+define( 'MAIL_USERNAME', 'support@organicpandit.com' );
+define( 'MAIL_PASSWORD', 'support@1234' );
+
 define('REGISTRATION', 1);
 define('POST', 2);
 define('BID', 3);
@@ -57,6 +64,9 @@ define('NOTIFY_WEB', 4);
 define('ENABLED',2);
 define('DISABLED',1);
 
+define( 'VERIFIED', 2 );
+define( 'NOT_VERIFIED', 1 );
+
 define('IN_STOCK',2);
 define('OUT_STOCK',1);
 
@@ -65,9 +75,10 @@ define('CART_QUANTITY',1);
 define('PAYMENT_METHOD_CASH',1);
 define('PAYMENT_METHOD_ONLINE',2);
 
-define('ORDER_PAYMENT_STATUS_PENDING',1);
-define('ORDER_PAYMENT_STATUS_COMPLETED',2);
-define('ORDER_PAYMENT_STATUS_USER_CANCELLED',3);
+define( 'ORDER_PAYMENT_STATUS_PENDING', 1 );
+define( 'ORDER_PAYMENT_STATUS_COMPLETED', 2 );
+define( 'ORDER_PAYMENT_STATUS_USER_CANCELLED', 3 );
+define('ORDER_PAYMENT_STATUS_FAILED', 4 );
 
 define('FARMER',1);
 define('FPO',2);
@@ -90,6 +101,7 @@ define('NGO',18);
 
 define('TEST_MERCHANT_KEY','O1D3HUYIC3');
 define('TEST_SALT','RGODULJ8YB');
+
 define('MERCHANT_KEY','64KVCDORC9');
 define('SALT','F9GOZVJS1N');
 
@@ -118,6 +130,13 @@ define( 'USER_PRODUCT_IMAGE_PATH', 'assets/images/product_images/' );
 define( 'ORGANIC_INPUT_ECOMMERCE_IMAGE_PATH', 'assets/images/ecommerce_images/' );
 define( 'APP_SLIDER_IMAGE_PATH', 'assets/images/app-slider-images/' );
 
+
+define( 'SMS_USERNAME', 'zudof123' );
+define( 'SMS_PASSWORD', 'zudof123' );
+define( 'SMS_SENDER_ID', 'Zudofs' );
+
+define( 'SUBSCRIBED',1 );
+define( 'NOT_SUBSCRIBED', 0 );
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

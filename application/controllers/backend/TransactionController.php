@@ -46,7 +46,7 @@ class TransactionController extends MY_Controller {
         } else {
             $data['arrmixTransactionList'] = $this->Transaction->getTransactionsByUserId( $userSession['user_id'] );
         }
-
+        
         $this->backendLayout($data);
     }
 

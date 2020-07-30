@@ -18,50 +18,51 @@ class DashboardController extends MY_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+        public $arrmixUserSession;
+        
         function __construct() {
             parent::__construct();
-            $session = UserSession();
-            if ( empty( $session['success'] ) ) {
-                redirect('admin', 'refresh');
-            }else {
-                $userSession = $session['userData'];
-//                if( ADMINUSERNAME != $userSession['username'] ){
-//                    redirect('home', 'refresh');
-//                }
+            
+            if( false == isArrVal( $this->session->userdata('user_data') ) ) {
+                redirect( 'home', 'refresh' );
             }
+            
+            $this->arrmixUserSession = $this->session->userdata('user_data');
         }
 	public function index()
 	{
-            $session = UserSession();
-            $userSession = $session['userData'];
-            $data['title'] = 'Dashboard'; 
-            $data['heading'] = 'Organic Pandit';
-            $data['backend'] = true;
-            $data['view'] = 'common/dashboard';
-            if($userSession['username'] == 'adminmaster'){
-                $data['bid_list'] = $this->Bid->getBids();
-                $data['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
-                $data['product_list'] = $this->Product->getProducts();
-                $data['user_type_list'] = $this->UserType->getUserTypes();
-                $data['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgencies();
-                $data['user_list'] = $this->User->getUsers();
-                $data['arrLabReportsList'] = $this->LabReports->getLabReports();
-            }else{
-                $data['bid_list'] = $this->Bid->getBidByUserId($userSession['user_id']);
-                $data['post_requirement_list'] = $this->PostRequirement->getAllPostRequirementByUserId($userSession['user_id']);
-                $data['user_list'] = $this->User->getUserByPartnerUserId( $userSession['user_id'] );
-            }
-            $data['total_worth'] = $this->PostRequirement->getTotalWorth();
+            $arrmixData = [];
+            $arrmixData['title'] = 'Dashboard'; 
+            $arrmixData['heading'] = 'Organic Pandit';
+            $arrmixData['backend'] = true;
+            $arrmixData['view'] = 'common/dashboard';
             
-            if($userSession['username'] == ADMINUSERNAME){
-                $data['user_details'] = $userSession;
+            if( ADMINUSERNAME == $this->arrmixUserSession['username'] ) {
+                $arrmixData['bid_list'] = $this->Bid->getBids();
+                $arrmixData['post_requirement_list'] = $this->PostRequirement->getPostRequirements();
+                $arrmixData['product_list'] = $this->Product->getProducts();
+                $arrmixData['user_type_list'] = $this->UserType->getUserTypes();
+                $arrmixData['certification_agencies_list'] = $this->CertificationAgency->getCertificationAgencies();
+                $arrmixData['user_list'] = $this->User->getUsers();
+                $arrmixData['arrLabReportsList'] = $this->LabReports->getLabReports();
             }else{
-                if($userSession['user_type_id'] == 16){
-                    $data['user_details'] = $this->CertificationAgency->getCertificationAgencyById($userSession['user_id']);
+                $arrmixData['bid_list'] = $this->Bid->getBidByUserId($this->arrmixUserSession['user_id']);
+                $arrmixData['post_requirement_list'] = $this->PostRequirement->getAllPostRequirementByUserId($this->arrmixUserSession['user_id']);
+                $arrmixData['user_list'] = $this->User->getUserByPartnerUserId( $this->arrmixUserSession['user_id'] );
+            }
+            
+            $arrmixData['total_worth'] = $this->PostRequirement->getTotalWorth();
+            
+            if( ADMINUSERNAME == $this->arrmixUserSession['username'] ){
+                $arrmixData['user_details'] = $this->arrmixUserSession;
+            }else{
+                if( CERTIFICATION_AGENICES == $this->arrmixUserSession['user_type_id'] ) {
+                    $arrmixData['user_details'] = $this->CertificationAgency->getCertificationAgencyById($this->arrmixUserSession['user_id']);
                 }else{
-                    $data['user_details'] = $this->User->getUserById($userSession['user_id']);
+                    $arrmixData['user_details'] = $this->User->getUserById($this->arrmixUserSession['user_id']);
                 }
             }
-            $this->backendLayout($data);
+            
+            $this->backendLayout($arrmixData);
         }
 }

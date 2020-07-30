@@ -112,7 +112,7 @@
                         <div class="form-group col-md-4">
                             <label class="control-label label-required" for="exhibition_images">Upload Images</label>
                             <input type="file" name="exhibition_images[]" class="form-control" multiple="multiple">
-                            <?php if( true == isset( $arrstrExhibitionImages ) && true == isArrVal( $arrstrExhibitionImages ) ) { ?>
+                             <?php if( true == isset( $arrstrExhibitionImages ) && true == isArrVal( $arrstrExhibitionImages ) ) { ?>
                                     <br>
                                     <?php foreach( $arrstrExhibitionImages as $strExhibitionImage ) { ?>
                                     <img src="<?= base_url()?>assets/images/exhibition_images/<?= $strExhibitionImage; ?>" width="70px" height="70px" style="margin: 0px 10px">    

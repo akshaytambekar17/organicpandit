@@ -43,7 +43,7 @@ class BlogController extends MY_Controller {
             $this->form_validation->set_rules('title', 'Title', 'trim|required');
             $this->form_validation->set_rules('description', 'Description', 'trim|required');
             if( empty( $_FILES['blog_image']['name'] ) ) {
-                $this->form_validation->set_rules('blog_image', 'Blog Image', 'trim|required');
+                $this->form_validation->set_rules('blog_image', 'Image', 'trim|required');
             }
             $this->form_validation->set_rules('blog_status', 'Status', 'trim|required');
             $this->form_validation->set_rules('meta_title', 'Meta Title', 'trim');

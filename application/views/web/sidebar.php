@@ -384,28 +384,34 @@
                                     </span>
                                 </a>
                             </li>
+                            
                     <?php } ?>
-                    <li>
+                    <li class="<?= ( 'sell-product' == $this->uri->segment(1) ) ? 'active' : '' ?>">
                         <a href="<?= base_url()?>sell-product">
                             <i class="fa fa-cart-arrow-down"></i> <span>Sell Product</span>
 
                         </a>
                     </li>
-	                <li>
-                            <a href="<?= base_url() ?>orders">
-                                <i class="fa fa-cart-plus"></i> <span>Orders</span>
+                    <li class="<?= ( 'orders' == $this->uri->segment(1) ) ? 'active' : '' ?>">
+                        <a href="<?= base_url() ?>orders">
+                            <i class="fa fa-cart-plus"></i> <span>Orders</span>
+                        </a>
+                    </li>
+                    <li class="<?= ( 'user-purchase-subscriptions' == $this->uri->segment(2) ) ? 'active' : '' ?>">
+                        <a href="<?= base_url() ?>admin/user-purchase-subscriptions">
+                            <i class="fa fa-cart-plus"></i> <span>User Subscriptions</span>
+                        </a>
+                    </li>
+                    <li class="<?= ( 'transactions' == $this->uri->segment(1) ) ? 'active' : '' ?>">
+                        <a href="<?= base_url()?>transactions">
+                            <i class="fa fa-money" aria-hidden="true"></i> <span>Transaction</span>
+                        </a>
+                    </li>
+                    <li class="<?= ( 'buyer-enquiry-list' == $this->uri->segment(1) ) ? 'active' : '' ?>">
+                            <a href="<?= base_url()?>buyer-enquiry-list">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i> <span>Buyer Enquires</span>
                             </a>
-	                </li>
-	                <li>
-		                <a href="<?= base_url()?>transactions">
-			                <i class="fa fa-money" aria-hidden="true"></i> <span>Transaction</span>
-		                </a>
-	                </li>
-	                <li>
-		                <a href="<?= base_url()?>buyer-enquiry-list">
-			                <i class="fa fa-info-circle" aria-hidden="true"></i> <span>Buyer Enquires</span>
-		                </a>
-	                </li>
+                    </li>
 	                <li class="treeview <?= ( 'user' == $this->uri->segment(2) ) ? 'active' : '' ?> " >
                             <a href="javascript:void(0)">
                                 <i class="ion ion-person-add"></i> <span>Users</span>

@@ -38,6 +38,7 @@
                                     <tr>
                                         <th class="hidden">Id</th>
                                         <th>Order number</th>
+                                        <th>Subscription Plan number</th>
                                         <th>Transaction Id</th>
                                         <th>Status</th>
                                         <th>Error</th>
@@ -55,14 +56,28 @@
                                 ?>
                                             <tr class="gradeX" id="order-<?= $arrTransactionDetails['transaction_id'] ?>">
                                                 <td class="hidden"><?= $arrTransactionDetails['transaction_id']; ?></td>
-	                                            <td><a href="<?= base_url()?>order/view?order_id=<?= $arrTransactionDetails['order_id'] ?>" data-toggle="tooltip" title="View">
-		                                                <?= $arrTransactionDetails['order_no'];?>
-		                                            </a>
-	                                            </td>
-	                                            <td><?= $arrTransactionDetails['txnid'];?></td>
+                                                <td>
+                                                    <?php if( 0 != $arrTransactionDetails['order_id'] ) { ?>
+                                                        <a href="<?= base_url()?>order/view?order_id=<?= $arrTransactionDetails['order_id'] ?>" data-toggle="tooltip" title="View">
+                                                            <?= $arrTransactionDetails['order_no'];?>
+                                                        </a>
+                                                    <?php } else { ?>
+                                                        NA   
+                                                    <?php } ?>
+                                                </td>
+                                                <td>
+                                                    <?php if( 0 != $arrTransactionDetails['user_purchase_subscription_id'] ) { ?>
+                                                        <a href="<?= base_url()?>admin/user-purchase-subscriptions" data-toggle="tooltip" title="View">
+                                                            <?= $arrTransactionDetails['purchase_subscription_number'];?>
+                                                        </a>    
+                                                    <?php } else { ?>
+                                                        NA   
+                                                    <?php } ?>
+                                                </td>
+                                                <td><?= $arrTransactionDetails['txnid'];?></td>
                                                 <td><?= $arrTransactionDetails['status']; ?></td>
                                                 <td><?= $arrTransactionDetails['error'] ?></td>
-	                                            <td><?= $arrTransactionDetails['error_message'] ?></td>
+                                                <td><?= $arrTransactionDetails['error_message'] ?></td>
                                                 <td><?= $arrTransactionDetails['total_amount']; ?></td>
                                                 <td><?= $arrTransactionDetails['added_on']; ?></td>
                                                 <!--<td>

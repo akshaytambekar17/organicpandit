@@ -132,8 +132,8 @@
                                                 <h4>Total Number of Bids : 
                                                     <span id="no-of-bid-<?= $value['id']?>">
                                                     <?php 
-                                                        $bids_data = $this->Bid->getBidByPostRequirementId($value['id']);
-                                                        echo (!empty($bids_data) && count($bids_data)>0)? count($bids_data):0;
+                                                        $arrBidList = $this->Bid->getBidByPostRequirementId($value['id']);                                                       
+                                                        echo ( true == isArrVal( $arrBidList ) ) ? count( $arrBidList ) : 0;
                                                     ?> 
                                                     </span>
                                                 </h4>

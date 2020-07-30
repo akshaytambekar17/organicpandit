@@ -249,7 +249,7 @@ class SellProductController extends MY_Controller {
         $get = $this->input->get();
         if( $this->input->post() ) {
             $post = $this->input->post();
-	        $data['strErrorImage'] = '';
+            $data['strErrorImage'] = '';
             if ($this->form_validation->run('sell-product-form') == TRUE) {
                 $arrPostSellProductDetails = $post;
 	            if( !empty( $_FILES['primary_image']['name'] ) ) {

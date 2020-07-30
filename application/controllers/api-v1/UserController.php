@@ -56,7 +56,8 @@ class UserController extends MY_Controller {
         
         if ( true == $this->form_validation->run() ) { 
             $arrDetails = $arrPost;
-            if( true == isset( $_FILES['profile_image']['name'] ) ) {
+            
+            if( true == isset( $_FILES['profile_image']['name'] ) && true == isVal( $_FILES['profile_image']['name'] ) ) {
                 $arrConfigProfileImage['upload_path'] = './assets/images/gallery/';
                 $arrConfigProfileImage['allowed_types'] = 'gif|jpg|png|jpeg';
                 $arrConfigProfileImage['max_size'] = 2048;
@@ -80,20 +81,28 @@ class UserController extends MY_Controller {
                 unset( $arrDetails['certification_id'] );
                 $arrDetails['profile_image'] = $strProfileImage;
                 $arrDetails['status'] = ENABLED;
+                $arrDetails['password'] = md5( $arrDetails['password'] );
                 
                 $intUserId = $this->User->insert( $arrDetails );
                 if( true == isIdVal( $intUserId ) ) {
-                    $arrCeritificationIds = explode( ',', $arrPost['certification_id'] );
-                    foreach( $arrCeritificationIds as $intCertificationId ) {
-                        $arrUserCertificationData = [
-                            'user_id' => $intUserId,
-                            'certification_id' => $intCertificationId
-                        ];
-                        $arrmixUserCertificationData[] = $arrUserCertificationData;
-                        $arrUserCertificationData = array();
+                    $arrmixUserCertificationData = [];
+                    if( true == isVal( $arrPost['certification_id'] ) ) {
+                        $arrCeritificationIds = explode( ',', $arrPost['certification_id'] );
+                        foreach( $arrCeritificationIds as $intCertificationId ) {
+                            if( 0 != $intCertificationId ) {
+                                $arrUserCertificationData = [
+                                    'user_id' => $intUserId,
+                                    'certification_id' => $intCertificationId
+                                ];
+                                $arrmixUserCertificationData[] = $arrUserCertificationData;
+                            }
+
+                        }
                     }
                     
-                    $this->UserCertifications->insertBatch( $arrmixUserCertificationData );
+                    if( true == isArrVal( $arrmixUserCertificationData ) ) {
+                        $this->UserCertifications->insertBatch( $arrmixUserCertificationData );
+                    }
                     
                     $arrUserTypeDetails = $this->UserType->getUserTypeById( $arrPost['user_type_id'] );
                     $arrNotificationInsertData =  [
@@ -117,7 +126,7 @@ class UserController extends MY_Controller {
             }
         } else {
             $arrResult['success'] = false;
-            $arrResult['message'] = 'Validation Errors';
+            $arrResult['message'] = 'Validation Errors : ' . implode( ',', $this->form_validation->error_array() );
             $arrResult['error'] = $this->form_validation->error_array();
         }
         
@@ -135,13 +144,17 @@ class UserController extends MY_Controller {
             
             if( ORGANIC_INPUT == $arrPost['user_type_id']) {
                 $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrPost, LIMIT, $intOffset );
+                $arrmixUserCount = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrPost );
             } else {
                 $arrmixUserSearchList = $this->User->getUserBysearchKey( $arrPost, LIMIT, $intOffset );
+                $arrmixUserCount = $this->User->getUserBysearchKey( $arrPost );
             }
             
             if( true == isArrVal( $arrmixUserSearchList ) ) {
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for Users';
+                $arrResult['total_count'] = count( $arrmixUserCount );
+                $arrResult['total_page'] = round( count( $arrmixUserCount ) / LIMIT );
                 $arrResult['data'] = $arrmixUserSearchList;
             } else {
                 $arrResult['success'] = false;
@@ -242,6 +255,7 @@ class UserController extends MY_Controller {
             }
             
             $arrUserOrganicInputList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
+            $arrUserOrganicInputListCount = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId( $arrPost['user_id'] );
             $arrOrganicInputEcommerceCategoryList = getEcommerceCategory();
             $arrOrganicInputEcommerceSubCategoryList = getEcommerceSubCategory();
             $arrmixUserOrganicInputList = [];
@@ -257,6 +271,8 @@ class UserController extends MY_Controller {
             if( true == isArrVal( $arrmixUserOrganicInputList ) ) {
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for User organic input';
+                $arrResult['total_count'] = count( $arrUserOrganicInputListCount );
+                $arrResult['total_page'] = round( count( $arrUserOrganicInputListCount ) / LIMIT);
                 $arrResult['data'] = $arrmixUserOrganicInputList;
             } else {
                 $arrResult['success'] = false;
@@ -301,6 +317,8 @@ class UserController extends MY_Controller {
                 $intOffset = $this->calculateOffset( $arrPost['page_no'] );
             }
             $arrUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'], LIMIT, $intOffset );
+            $arrUserShopEcommerceListCount = $this->UserEcommerces->getUserEcommerceByUserId( $arrPost['user_id'] );
+            
             if( true == isArrVal( $arrUserShopEcommerceList ) ) {
                 
                 $arrmixUserShopEcommerceList = [];
@@ -315,6 +333,8 @@ class UserController extends MY_Controller {
                
                 $arrResult['success'] = true;
                 $arrResult['message'] = 'Successfully fetch data for User Shop Ecommerce';
+                $arrResult['total_count'] = count( $arrUserShopEcommerceListCount );
+                $arrResult['total_page'] = round( count( $arrUserShopEcommerceListCount ) / LIMIT );
                 $arrResult['data'] = $arrmixUserShopEcommerceList;
             } else {
                 $arrResult['success'] = false;
@@ -348,6 +368,102 @@ class UserController extends MY_Controller {
         }
         
         $this->response( $arrResult );
+    }
+    
+    public function forgotPassword() {
+        
+        $arrPost = $this->input->post();
+        if( true == isset( $arrPost['username'] ) && true == isVal( $arrPost['username'] ) ) {
+            $arrUserDetails = $this->User->getUserByUsername( $arrPost['username'] );
+            if( true == isArrVal( $arrUserDetails ) ) {
+                $strRandomString = generateRandomAlphaNumericString();
+                
+                $arrMailData['arrUserDetails'] = $arrUserDetails;
+                $arrMailData['strRandomString'] = $strRandomString;
+                
+                $strTo = $arrUserDetails['email_id'];
+                $strSubject = "Organic Pandit Password Reset.";
+                $strMessage = $this->load->view( 'Email/forgot_password', $arrMailData, TRUE );
+                $arrMailResult = $this->sendEmail( $strTo, $strSubject, $strMessage );
+                if( true == $arrMailResult['success'] ) {
+                    $arrUpdateData = [
+                        'password' => md5( $strRandomString ),
+                        'user_id' => $arrUserDetails['user_id']
+                    ];
+                    
+                    $this->User->update( $arrUpdateData );
+                    
+                    $arrResult['success'] = true;
+                    $arrResult['message'] = 'You password has been sent to your regsiterd Email Id ' . $arrUserDetails['email_id'];
+                    
+                } else {
+                    $arrResult['success'] = false;
+                    $arrResult['message'] = 'Mail cannot sent Something went wrong. Pleaes contact to Support Team to reset password.';
+                }
+                
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'The username ' . $arrPost['username'] . ' is not available. Please enter valid username';
+            }
+            
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'Username is required';
+        }
+        
+        $this->response( $arrResult );
+    }
+    
+    public function sendEnquiry() {
+        $arrmixPostData = $this->input->post();
+
+        if ( true == $this->form_validation->run( 'user-send-enquiry' ) ) {
+            
+            $arrmixUserDetails = $this->User->getUserById( $arrmixPostData['user_id'] );
+            if( true == isArrVal( $arrmixUserDetails  ) ) {
+                
+                $arrmixInsertData = $arrmixPostData;
+                $arrmixInsertData['updated_at'] = CURRENT_DATETIME;
+                
+                $intSearchEnquiryId = $this->SearchEnquiry->insert( $arrmixInsertData );
+                if( true == isIdVal( $intSearchEnquiryId ) ) {
+
+                    if( true == isIdVal( $arrmixUserDetails['mobile_no'] ) ) {
+                        $strMessage = $arrmixPostData['fullname'] . ' has enquiry regarding your product. Please login to Organic Pandit portal and get the details.%0a%0aThank you.%0aTeam Organic Pandit.';
+                        $this->sendSms( $arrmixUserDetails['mobile_no'], $strMessage );
+                    }
+
+                    $arrmixData['arrmixUserDetails'] = $arrmixUserDetails;
+                    $arrmixData['arrmixPostData'] = $arrmixPostData;
+
+                    $to = ADMINEMAILID;
+                    $subject = "New enquiry has been sent in the Organic Pandit.";
+                    $message = $this->load->view( 'Email/search_enquiry_admin', $arrmixData, TRUE );
+                    $this->sendEmail( $to, $subject, $message );
+
+                    $to = $arrmixUserDetails['email_id'];
+                    $subject = "You have enquiry in the Organic Pandit.";
+                    $message = $this->load->view( 'Email/search_enquiry_receiver', $arrmixData, TRUE );
+                    $this->sendEmail($to, $subject, $message);
+
+                    $arrResult['success'] = true;
+                    $arrResult['message'] = 'Details has been sent to sender successfully.';
+
+                } else {
+                    $arrResult['success'] = false;
+                    $arrResult['message'] = 'Something went wrong. Please try later.';
+                }
+            } else {
+                $arrResult['success'] = false;
+                $arrResult['message'] = 'User details not found which you want to send to data users. Please select the valid user.';
+            }    
+        } else {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'Validation Errors: ' . implode( ',', $this->form_validation->error_array() );
+        }
+        
+        $this->response( $arrResult );
+        
     }
     
 }
