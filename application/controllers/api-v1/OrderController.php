@@ -1,12 +1,9 @@
 <?php
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class OrderController extends MY_Controller {
+class OrderController extends OrganicServicePortalController {
     
     function __construct() {
         parent::__construct();
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
     }
         
     public function getTotalWorth() {
@@ -26,43 +23,80 @@ class OrderController extends MY_Controller {
     
     public function actionAddOrder() {
         
-        $arrmixPost = $this->input->post();
-        $arrmixPost['payment_method'] = PAYMENT_METHOD_ONLINE;
-        if( true == $this->form_validation->run( 'paynow-form' ) ) { 
-            $arrmixInsertData = $arrmixPost;
+        $arrmixRequestData = $this->getRequestParameterDetails();
+        
+        if( true == $this->validateParameters( 'api-paynow-form', $arrmixRequestData ) ) {
+            
+            $arrmixInsertData = $arrmixRequestData;
             $arrmixInsertData['order_payment_status'] = ORDER_PAYMENT_STATUS_PENDING;
-            $intCurrentInsertedOrderId = $this->Orders->insert( $arrmixInsertData );
+            $arrmixInsertData['product_details'] = json_encode( $arrmixInsertData['product_details'] );
+            
+            //$intCurrentInsertedOrderId = $this->Orders->insert( $arrmixInsertData );
+            $intCurrentInsertedOrderId = 1;
             $strOrderNo = 'ORDERNO00' . $intCurrentInsertedOrderId;
             $arrUpdateData = array( 'order_id' => $intCurrentInsertedOrderId,
                                     'order_no' => $strOrderNo
                                 );
-            $this->Orders->update( $arrUpdateData );
-            $arrUrl = paymentGatewayResponseUrl();
+            //$this->Orders->update( $arrUpdateData );
+            $arrstrUrl = paymentGatewayResponseUrl();
+            $arrmixPaymentGatewayConfigDetails = getPaymentGatewayConfigDetails();
 
-            $strTxnId = 'TXNID' . $arrmixPost['user_id'] . $arrmixPost['user_type_id'] . strtotime( CURRENT_DATETIME );
-            $arrPaymentDetails = array( 'txnid'         => $strTxnId,
-                                        'amount'        => sprintf("%.2f", $$arrmixInsertData['total_amount']),
-                                        'firstname'     => $arrmixPost['fullname'],
-                                        'email'         => $arrmixPost['email_id'],
-                                        'phone'         => $arrmixPost['mobile_no'],
-                                        'productinfo'   => $strOrderNo,
-                                        'surl'          => $arrUrl['surl'],
-                                        'furl'          => $arrUrl['furl'],
-                                        'udf1'          => $intCurrentInsertedOrderId,
-                                        'udf2'          => '',
-                                        'udf3'          => '',
-                                        'udf4'          => '',
-                                        'udf5'          => '',
-                                        'address1'      => '',
-                                        'address2'      => '',
-                                        'city'          => '',
-                                        'state'         => '',
-                                        'country'       => '',
-                                        'zipcode'       => $arrmixPost['pincode'],
-                                );
-            $arrmixPaymentDetails['payment_details'] = $arrPaymentDetails;
+            $strTxnId = 'TXNID' . $arrmixRequestData['user_id'] . $arrmixRequestData['user_type_id'] . strtotime( CURRENT_DATETIME );
+            $arrmixPaymentData = [  
+                'txnid'       => $strTxnId,
+                'amount'      => sprintf("%.1f", $arrmixRequestData['total_amount']),
+                'firstname'   => $arrmixRequestData['fullname'],
+                'email'       => $arrmixRequestData['email_id'],
+                'phone'       => $arrmixRequestData['mobile_no'],
+                'productinfo' => $strOrderNo,
+                'surl'        => $arrstrUrl['surl'],
+                'furl'        => $arrstrUrl['furl'],
+                'udf1'        => $intCurrentInsertedOrderId,
+                'udf2'        => '',
+                'udf3'        => '',
+                'udf4'        => '',
+                'udf5'        => '',
+                'address1'    => '',
+                'address2'    => '',
+                'city'        => '',
+                'state'       => '',
+                'country'     => '',
+                'zipcode'     => $arrmixRequestData['pincode'],
+                'key'         => $arrmixPaymentGatewayConfigDetails['key'],
+                'salt'        => $arrmixPaymentGatewayConfigDetails['salt'],
+            ];
+            
+            $arrmixHashData = [
+                $arrmixPaymentGatewayConfigDetails['key'],
+                $arrmixPaymentData['txnid'],
+                $arrmixPaymentData['amount'],
+                $arrmixPaymentData['productinfo'],
+                $arrmixPaymentData['firstname'],
+                $arrmixPaymentData['email'],
+                $arrmixPaymentData['udf1'],
+                $arrmixPaymentData['udf2'],
+                $arrmixPaymentData['udf3'],
+                $arrmixPaymentData['udf4'],
+                $arrmixPaymentData['udf5'],
+                $arrmixPaymentData['address1'],
+                $arrmixPaymentData['address2'],
+                $arrmixPaymentData['city'],
+                $arrmixPaymentData['state'],
+                $arrmixPaymentData['country'],
+                $arrmixPaymentGatewayConfigDetails['salt'],
+                $arrmixPaymentGatewayConfigDetails['key']
+            ];
+            
+            $strHash = hash( "sha512", implode( '|', $arrmixHashData ) );
+//            $this->encryption->create_key(16);
+//            $strHash = $this->encryption->encrypt( implode( '|', $arrmixHashData ) );
+            
+            $arrmixPaymentData['unique_id'] = $arrmixRequestData['user_id'];
+            $arrmixPaymentData['payment_method'] = $arrmixRequestData['payment_method'];
+            $arrmixPaymentData['hash'] = $strHash;
+            
+            $arrmixPaymentDetails['payment_details'] = $arrmixPaymentData;
             $arrmixPaymentDetails['api'] = INITIATE_PAYMENT;
-            $arrmixPaymentDetails['order_details'] = $arrmixInsertData;
             
             $arrmixResult['success'] = true;
             $arrmixResult['message'] = 'Order has been successfully place.';
@@ -70,10 +104,14 @@ class OrderController extends MY_Controller {
         } else {
             $arrmixResult['success'] = false;
             $arrmixResult['message'] = 'Validation Errors';
-            $arrmixResult['error'] = $this->form_validation->error_array();
+            $arrmixResult['error'] = $this->getValidationErrors();
         }        
         
-        $this->response( $arrmixResult );
+        return $arrmixResult;
+    }
+    
+    public static function createService() {
+        return new OrderController();
     }
     
 }

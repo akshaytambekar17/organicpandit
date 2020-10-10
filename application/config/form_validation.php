@@ -466,6 +466,59 @@ $config = array(
 		        'rules' => 'trim|required'
 	        )
         ),
+        'api-paynow-form' => array(
+
+	        array(
+		        'field' => 'user_id',
+		        'label' => 'UserId',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'user_type_id',
+		        'label' => 'UserTypeId',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'fullname',
+		        'label' => 'Fullname',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'email_id',
+		        'label' => 'Email Id',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'mobile_no',
+		        'label' => 'Mobile Number',
+		        'rules' => 'trim|required|numeric|exact_length[10]'
+	        ),
+	        array(
+		        'field' => 'state_id',
+		        'label' => 'State',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'city_id',
+		        'label' => 'City',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'pincode',
+		        'label' => 'Pincode',
+		        'rules' => 'trim|required|numeric|exact_length[6]'
+	        ),
+	        array(
+		        'field' => 'address',
+		        'label' => 'Address',
+		        'rules' => 'trim|required'
+	        ),
+	        array(
+		        'field' => 'payment_method',
+		        'label' => 'Payment Method',
+		        'rules' => 'trim|required'
+	        )
+        ),
     
         'user-product-form' => array(
                 array(

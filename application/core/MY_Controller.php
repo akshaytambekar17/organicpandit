@@ -1,11 +1,12 @@
 <?php
 include_once('easebuzz/easebuzz_payment_gateway.php');
+
 class MY_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
         $this->load->database();
-        $this->load->library(array('form_validation'));
+        $this->load->library(array('form_validation','encryption'));
         $this->load->helper(array('url', 'language','form'));
         $this->load->model('login_model','Login');
         $this->load->model('contact_us_model','ContactUs');
@@ -76,6 +77,10 @@ class MY_Controller extends CI_Controller {
 
     public function frontendLayoutHome($data) {
         includesHeaderFooterHome($data);
+    }
+    
+    public function ecommerceFrontendLayout( $arrmixData ) {
+        includesEcommerceFrontend( $arrmixData );
     }
 
     function curlReq($url, $vars) {

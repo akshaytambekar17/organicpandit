@@ -456,3 +456,12 @@ ALTER TABLE `tbl_users` ADD `is_subscription` INT(2) NOT NULL COMMENT '0 = Not S
 ALTER TABLE `tbl_transaction` ADD `deduction_percentage` VARCHAR(50) NULL AFTER `total_amount`;
 
 ALTER TABLE `tbl_transaction` ADD `user_purchase_subscription_id` INT(11) NOT NULL AFTER `order_id`;
+
+
+/**
+* 22-08-2020
+*/
+
+ALTER TABLE `tbl_users` ADD `is_subscription_expire` INT(2) NOT NULL AFTER `is_deleted`;
+
+ALTER TABLE `tbl_users` CHANGE `is_subscription_expire` `is_subscription_expire` INT(2) NOT NULL COMMENT '1 = Expired, 0=Not Expired';

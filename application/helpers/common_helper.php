@@ -69,6 +69,31 @@ function includesAll($data) {
     $ci->load->view('/web/footer', $data);
 }
 
+function includesEcommerceFrontend( $arrmixData ) {
+    $objInstance = & get_instance();
+    
+    $objInstance->load->view( '/ecommerce-frontend/includes/header', $arrmixData );
+    $objInstance->load->view( '/ecommerce-frontend/includes/menubar', $arrmixData );
+    $objInstance->load->view( '/ecommerce-frontend/' . $arrmixData['view'], $arrmixData );
+    $objInstance->load->view( '/ecommerce-frontend/includes/footer', $arrmixData );
+}
+
+function ecommerceAssetsPath() {
+    return base_url() . 'assets/ecommerce-frontend/';
+}
+
+function checkFileExist( $strFilePath ) {
+    if( !file_exists( $strFilePath ) ) {
+        return base_url() . 'assets/images/logo.png';
+    } else {
+        return $strFilePath;
+    }
+}
+
+function logoOrganicPandit() {
+    return base_url() . 'assets/images/logo.png';
+}
+
 function UserSession() {
     $ci = & get_instance();
     if ($ci->session->userdata('user_data')) {
@@ -81,8 +106,8 @@ function UserSession() {
     return $result;
 }
 
-function isArrVal( $arrData ) {
-    if ( isset( $arrData ) && !empty( $arrData ) && count( $arrData ) > 0) {
+function isArrVal( $arrmixData ) {
+    if( !empty( $arrmixData ) && is_array( $arrmixData ) && count( $arrmixData ) > 0 ) {
         return true;
     } else {
         return false;
@@ -132,4 +157,12 @@ function generateRandomAlphaNumericString( $intCount = 7 ) {
     $strAlphaNumeric = '0123456789abcdefghijklmnopqrstuvwxyz';
     
     return substr( str_shuffle( $strAlphaNumeric ), 0, $intCount );
+}
+
+function replaceDateTimeDashFormatToUnderscore( $strDateTime ) {
+    $strReplaceDateTime = preg_replace( '/\b-\b/', '_', $strDateTime );
+    $strReplaceDateTime = preg_replace( '/\b:\b/', '_', $strReplaceDateTime );
+    $strReplaceDateTime = preg_replace( '/\b \b/', '_', $strReplaceDateTime );
+    
+    return $strReplaceDateTime;
 }

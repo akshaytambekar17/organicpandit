@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<body background="<?php echo base_url(); ?>assets/images/final.jpg";>
+<body style="background-color: #edf1f1c4">
     <!-- banner -->
 <!--    <div class="container-fluid">
         <div class="row ">

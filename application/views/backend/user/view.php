@@ -481,6 +481,22 @@
                                             <span class="has-error"><?php echo form_error('status'); ?></span>
                                         </div>
                                     </div>
+                                    
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>Subscription </label>
+                                            <?php if( NOT_SUBSCRIBED == $user_details['is_subscription'] ) { ?>
+                                                <select class="form-control select2" name="is_subscription">
+                                                    <option disabled="disabled" selected="selected">Choose Option</option>
+                                                    <option value="<?= NOT_SUBSCRIBED ?>" <?= set_select( 'is_subscription', NOT_SUBSCRIBED ) ?>>Disabled Subscription</option>
+                                                    <option value="<?= SUBSCRIBED ?>" <?= set_select( 'is_subscription', SUBSCRIBED );?> >Enable Subscription</option>
+                                                </select>
+                                                <span class="has-error"><?php echo form_error( 'is_subscription' ); ?></span>
+                                            <?php } else { ?>
+                                                <h4>Already Subscribed</h4>
+                                            <?php } ?>    
+                                            </div>
+                                        </div>
                                 <?php } ?>
                                 
                             </div>

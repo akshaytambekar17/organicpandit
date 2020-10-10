@@ -59,13 +59,13 @@
                 success: function( arrmixResponseData ) {
                     if( true == arrmixResponseData.success ) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.js-alert-message').parent().after('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + arrmixResponseData.message + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.js-alert-message').html('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + arrmixResponseData.message + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });
                     } else {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        $('.js-alert-message').parent().after('<div class="alert alert-danger"><i class="fa fa-check-circle"></i>  ' + arrmixResponseData.message + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.js-alert-message').html('<div class="alert alert-danger"><i class="fa fa-check-circle"></i>  ' + arrmixResponseData.message + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(3000).fadeOut(function () {
                             $(this).remove();
                         });

@@ -36,48 +36,49 @@ class BuySellController extends MY_Controller {
         $session = UserSession();
         $arrUserSession = $session['userData'];
         $data['arrUserSessionDetails'] = $arrUserSession;
-	    if( true == $session['success'] ) {
-			$data['intUserId'] = $arrUserSession['user_id'];
-	    } else {
-		    $data['intUserId'] = '';
-	    }
-	    $data['title'] = 'Search Product to Buy';
+        if( true == $session['success'] ) {
+            $data['intUserId'] = $arrUserSession['user_id'];
+        } else {
+            $data['intUserId'] = '';
+        }
+        $data['title'] = 'Search Product to Buy';
         $data['heading'] = 'Search Buy Product';
         $data['hide_footer'] = true;
         $data['banner'] = 'farmer.jpg';
         $data['view'] = 'buy-sell/buy_product';
 
-        if ($this->input->post()) {
+        if( $this->input->post() ) {
             $arrPost = $this->input->post();
-            if (true == $this->form_validation->run('search-buy-product-form')) {
-	            $strintDeliveryLocation = '';
-	            $intProductId = '';
-	            $intCategoryId = '';
-	            $intDeliveryLocationState = '';
-	            if( true == isset( $arrPost['delivery_location'] ) && true == isArrVal( $arrPost['delivery_location'] ) ) {
-                        $strintDeliveryLocation = implode( ',', $arrPost['delivery_location'] );
-	            }
-	            if( true == isset( $arrPost['product_id'] ) ) {
-                        $intProductId = $arrPost['product_id'];
-	            }
-                    if( true == isset( $arrPost['category_id'] ) ) {
-                        $intCategoryId = $arrPost['category_id'];
-	            }
-	            if( true == isset( $arrPost['delivery_location_state'] ) ) {
-                        $intDeliveryLocationState = $arrPost['delivery_location_state'];
-	            }
+            if( true == $this->form_validation->run( 'search-buy-product-form' ) ) {
+                $strintDeliveryLocation = '';
+                $intProductId = '';
+                $intCategoryId = '';
+                $intDeliveryLocationState = '';
+                if( true == isset( $arrPost['delivery_location'] ) && true == isArrVal( $arrPost['delivery_location'] ) ) {
+                    $strintDeliveryLocation = implode( ',', $arrPost['delivery_location'] );
+                }
+                if( true == isset( $arrPost['product_id'] ) ) {
+                    $intProductId = $arrPost['product_id'];
+                }
+                if( true == isset( $arrPost['category_id'] ) ) {
+                    $intCategoryId = $arrPost['category_id'];
+                }
+                if( true == isset( $arrPost['delivery_location_state'] ) ) {
+                    $intDeliveryLocationState = $arrPost['delivery_location_state'];
+                }
                 $arrSellProductList = $this->SellProduct->getSellProductByProductIdByCategoryIdByStateIdByCity( $intProductId, $intCategoryId, $intDeliveryLocationState, $strintDeliveryLocation );
                 $data['arrSellProductList'] = $arrSellProductList;
                 $data['intProductId'] = $intProductId;
                 $data['intHiddenCityid'] = '';
-                $this->frontendLayout( $data );
+                
             } else {
+                printDie( validation_errors() );
+                $data['strErrorMessage'] = validation_errors();
                 $data['intHiddenCityid'] = $arrPost['delivery_location'];
-                $this->frontendLayout( $data );
             }
-        } else {
-            $this->frontendLayout($data);
-        }
+        } 
+        
+        $this->frontendLayout($data);
     }
 
     public function fetchSellProductById() {

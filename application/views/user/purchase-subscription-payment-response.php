@@ -5,7 +5,7 @@
         color: red;
     }
 </style>
-<body background="<?php echo base_url(); ?>assets/images/final.jpg">
+<body style="background-color: #edf1f1c4">
     <div class="container">
         <section class="content-header center">
             <h1><?= !empty($heading)?$heading:'Heading'?></h1>
@@ -31,6 +31,7 @@
                         <?php if( 'success' == $status ) { ?>
                                 <h1 class="display-3">Thank You!</h1>
                                 <p class="lead"><strong><i class="fa fa-check-circle"></i> You have successfully subscribed our services.</strong> If you want to check transaction details please visit your email/dashboard.</p>
+                                <p class="lead"><strong> We are updating our system. Please do not redirect to other page.</strong></p>
                         <?php } else if( 'failure' == $status ) { ?>    
                                 <h1 class="display-3 redirect-p">Transaction Failed!</h1>
                                 <p class="lead"><strong><i class="fa fa-ban"></i> Your transaction has been failed for amount <?= $arrmixPaymentGatewayRequestData['amount'] ?>.</strong> If you want to more details please visit your dashboard.</p>
@@ -51,7 +52,7 @@
     </div>
     <script>
         // Set the date we're counting down to
-        var intCountDownTime = 15;
+        var intCountDownTime = 10;
         
         // Update the count down every 1 second
         var objCountDownTime = setInterval(function() {

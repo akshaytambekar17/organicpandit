@@ -41,37 +41,18 @@
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-// search-detail
-$route['account/(:any)/(:any)'] = 'account/view/$1/$2';
-$route['check-username-exists/(:any)'] = 'account/check_username_exists/$1';
-$route['search-detail'] = "search_detail";
-$route['search-detail/(:any)'] = 'search_detail/view/$1';
-$route['get-detail/(:any)'] = 'search_detail/get_detail/$1';
-$route['get-profile/(:any)'] = 'search_detail/get_profile/$1';
-
-// custom url
-$route['farmer-register'] = "farmer_register";	//done
-$route['buyer-register'] = "buyer_register";	//done
-$route['fpo-register'] = "fpo_register";	//done
-$route['processor-register'] = "processor_register";	//done
-$route['trader-register'] = "trader_register";	//done
-$route['org-consultant-register'] = "org_consultant_register"; //done
-$route['org-input-register'] = "org_input_register";  //done
-$route['packing-company-register'] = "packing_company_register";   //done
-$route['farm-equip-register'] = "farm_equip_register";	//donere
-$route['exhibitor-register'] = "exhibitor_register";	//done
-$route['org-labs-register'] = "org_labs_register"; 		//done
-$route['org-shops-register'] = "org_shops_register";   //done
-$route['gov-agency-register'] = "gov_agency_register";  //done
-$route['institutions-register'] = "institutions_register";      //done
-$route['org-restaurant-register'] = "org_restaurant_register";  //done
-$route['ngo-register'] = "ngo_register";  //done
-$route['certification-register'] = "certification_register";  //done
-
-// update
-$route['farmer-register/update/(:any)/(:any)'] = 'farmer_register/update/$1/$2';
 
 /************* New Implementation **************/
+
+$route['users'] = "frontend/UsersController/actionList";  
+$route['user-details'] = "frontend/UserController/actionDetails";  
+
+
+
+/************* End Implementation **************/
+
+
+/************* Admin Lte Frontent Implementation **************/
 
 $route['user/home'] = "UserController/home";  //done
 $route['search-user'] = "UserController/searchUser";  //done
@@ -290,6 +271,16 @@ $route['api-v1/buy-sell-product/send-enquiry'] = 'api-v1/BuySellController/sendE
 
 $route['api-v1/order/add'] = 'api-v1/OrderController/actionAddOrder';
 
+$route['api-v1/organic-service-portal'] = 'api-v1/OrganicServicePortalController';
+
+
+/**
+*  Scripts
+**/
+
+$route['scripts/organic-script'] = 'scripts/OrganicScriptsController/actionIndex';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
+

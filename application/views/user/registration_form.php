@@ -17,7 +17,13 @@
                 </div>
             </div>
         <?php }?>
-        <?php if($message = $this ->session->flashdata('Error')){?>
+        <?php if( $this ->session->flashdata('Error') || true == isset( $strErrorMessage ) ) {
+                if( true == isset( $strErrorMessage ) ) {
+                    $message = $strErrorMessage;
+                } else {
+                    $message = $this ->session->flashdata('Error');
+                }
+        ?>
             <div class="col-md-12 ">
                 <div class="alert alert-dismissible alert-danger">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>

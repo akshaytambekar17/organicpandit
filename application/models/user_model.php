@@ -39,6 +39,17 @@ class user_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
+    public function getUsersByIsSubscription() {
+        $this->db->select( 'tu.*, tut.name as user_type_name, tups.subscription_plan_id, tups.purchase_subscription_number, tups.expired_at, tups.payment_status' );
+        $this->db->from( 'tbl_users tu' );
+        $this->db->join( 'tbl_user_type tut','tut.id = tu.user_type_id' );
+        $this->db->join( 'tbl_user_purchase_subscriptions tups','tu.user_id = tups.user_id' );
+        $this->db->where( 'tu.is_subscription', SUBSCRIBED );
+        $this->db->order_by( 'tu.user_id', 'desc' );
+        return $this->db->get()->result_array();
+    }
+    
+    
     public function getUsersByUserType() {
         $this->db->select( 'u.*,'
                             . 'ut.name as user_type_name,'
@@ -165,7 +176,11 @@ class user_model extends CI_Model {
         $this->db->from('tbl_users u');
         $this->db->join('tbl_users_organic_input_ecommerce uoie','uoie.user_id = u.user_id');
         $this->db->where('u.user_type_id',$arrData['user_type_id']);
-        $this->db->where('u.state_id',$arrData['state_id']);
+        
+        if( true == isset( $arrData['state_id'] ) && true == isIdVal( $arrData['state_id'] ) ){
+            $this->db->where('u.state_id',$arrData['state_id']);
+        }
+        
         if( true == isset( $arrData['city_id'] ) && true == isIdVal( $arrData['city_id'] ) ) {
             $this->db->where('u.city_id',$arrData['city_id']);
         }

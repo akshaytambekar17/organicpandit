@@ -1,0 +1,92 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+class ValidationRules {
+
+    public function rules() {
+        $arrmixConfigRules = [
+
+	    'api-paynow-form' => [ 
+                    [
+		        'field' => 'user_id',
+		        'label' => 'UserId',
+		        'rules' => 'required|numeric'
+                    ],
+                    [
+		        'field' => 'user_type_id',
+		        'label' => 'UserTypeId',
+		        'rules' => 'required|numeric'
+                    ],
+                    [
+		        'field' => 'fullname',
+		        'label' => 'Fullname',
+		        'rules' => 'required'
+                    ],
+                    [
+		        'field' => 'email_id',
+		        'label' => 'Email Id',
+		        'rules' => 'required'
+                    ],
+                    [
+		        'field' => 'mobile_no',
+		        'label' => 'Mobile Number',
+		        'rules' => 'required|numeric'
+                    ],
+                    [
+		        'field' => 'state_id',
+		        'label' => 'State',
+		        'rules' => 'required|numeric'
+                    ],
+                    [
+		        'field' => 'city_id',
+		        'label' => 'City',
+		        'rules' => 'required|numeric'
+                    ],
+                    [
+		        'field' => 'pincode',
+		        'label' => 'Pincode',
+		        'rules' => 'required|numeric'
+                    ],
+                    [
+		        'field' => 'address',
+		        'label' => 'Address',
+		        'rules' => 'required'
+                    ],
+                    [
+		        'field' => 'product_details',
+		        'label' => 'Product Details',
+		        'rules' => 'required'
+                    ],
+                    [
+		        'field' => 'payment_method',
+		        'label' => 'Payment Method',
+		        'rules' => 'required'
+                    ]
+            ]
+        ];
+        
+        return $arrmixConfigRules;
+    }
+    
+    public function run( $strRuleName ) {
+        
+        $arrmixConfigRule = $this->rules();
+        
+        if( true == isset( $arrmixConfigRule[$strRuleName] ) ) {
+            return $arrmixConfigRule[$strRuleName];
+        }
+        
+        return false;
+        
+    }
+    
+    public static function createService() {
+        return new ValidationRules();
+    }
+
+}

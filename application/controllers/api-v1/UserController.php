@@ -18,8 +18,22 @@ class UserController extends MY_Controller {
 
                 $arrUserDetails = $this->User->getUserLoginByUsernameByPasswordByUserTypeId( $arrPost['username'], $arrPost['password'], $arrPost['user_type_id'] );
                 if( true == isArrVal( $arrUserDetails ) ) {
+                    
+                    $arrmixTokenData = [
+                        'user_id' => $arrUserDetails['user_id'],
+                        'user_type_id' => $arrUserDetails['user_type_id'],
+                        'fullname' => $arrUserDetails['fullname'],
+                        'username' => $arrUserDetails['username'],
+                        'email_id' => $arrUserDetails['email_id'],
+                        'mobile_no' => $arrUserDetails['mobile_no'],
+                        'is_verified' => $arrUserDetails['is_verified'],
+                        'is_subscription' => $arrUserDetails['is_subscription'],
+                        'status' => $arrUserDetails['status']
+                    ];
+                    
                     $arrResult['success'] = true;
                     $arrResult['data'] = $arrUserDetails;
+                    $arrResult['userToken'] = getEncryptedToken( $arrmixTokenData );
                 } else{
                     $arrResult['success'] = false;
                     $arrResult['message'] = 'Invalid Username or Password or User Type.';   

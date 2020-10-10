@@ -338,7 +338,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>admin/bid">
+                        <a href="<?= base_url()?><?= ( ADMINUSERNAME != $arrUserSession['username'] && NOT_SUBSCRIBED == $arrUserSession['is_subscription'] ) ? 'admin/dashboard' : 'admin/bid'; ?>">
                             <i class="fa fa-th"></i> <span>Bids</span>
                             <?php if($arrUserSession['username'] == 'adminmaster'){ ?>
                                 <span class="pull-right-container">
@@ -350,7 +350,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>admin/post-requirement">
+                        <a href="<?= base_url()?><?= ( ADMINUSERNAME != $arrUserSession['username'] && NOT_SUBSCRIBED == $arrUserSession['is_subscription'] ) ? 'admin/dashboard' : 'admin/post-requirement'; ?>">
                             <i class="fa fa-laptop"></i> <span>Post Requirements</span>
                             <?php if($arrUserSession['username'] == 'adminmaster'){ ?>
                                 <span class="pull-right-container">
@@ -387,13 +387,13 @@
                             
                     <?php } ?>
                     <li class="<?= ( 'sell-product' == $this->uri->segment(1) ) ? 'active' : '' ?>">
-                        <a href="<?= base_url()?>sell-product">
+                        <a href="<?= base_url()?><?= ( ADMINUSERNAME != $arrUserSession['username'] && NOT_SUBSCRIBED == $arrUserSession['is_subscription'] ) ? 'admin/dashboard' : 'sell-product'; ?>">
                             <i class="fa fa-cart-arrow-down"></i> <span>Sell Product</span>
 
                         </a>
                     </li>
                     <li class="<?= ( 'orders' == $this->uri->segment(1) ) ? 'active' : '' ?>">
-                        <a href="<?= base_url() ?>orders">
+                        <a href="<?= base_url() ?><?= ( ADMINUSERNAME != $arrUserSession['username'] && NOT_SUBSCRIBED == $arrUserSession['is_subscription'] ) ? 'admin/dashboard' : 'orders'; ?>">
                             <i class="fa fa-cart-plus"></i> <span>Orders</span>
                         </a>
                     </li>
@@ -408,11 +408,12 @@
                         </a>
                     </li>
                     <li class="<?= ( 'buyer-enquiry-list' == $this->uri->segment(1) ) ? 'active' : '' ?>">
-                            <a href="<?= base_url()?>buyer-enquiry-list">
-                                    <i class="fa fa-info-circle" aria-hidden="true"></i> <span>Buyer Enquires</span>
-                            </a>
+                        <a href="<?= base_url()?><?= ( ADMINUSERNAME != $arrUserSession['username'] && NOT_SUBSCRIBED == $arrUserSession['is_subscription'] ) ? 'admin/dashboard' : 'buyer-enquiry-list'; ?>">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> <span>Buyer Enquires</span>
+                        </a>
                     </li>
-	                <li class="treeview <?= ( 'user' == $this->uri->segment(2) ) ? 'active' : '' ?> " >
+                    <?php if( ADMINUSERNAME == $arrUserSession['username'] || SUBSCRIBED == $arrUserSession['is_subscription'] ) {  ?>
+                        <li class="treeview <?= ( 'user' == $this->uri->segment(2) ) ? 'active' : '' ?> " >
                             <a href="javascript:void(0)">
                                 <i class="ion ion-person-add"></i> <span>Users</span>
                                 <span class="pull-right-container">
@@ -472,7 +473,8 @@
                                     </li>
                                 <?php } ?>       
                             </ul>
-	                </li>
+                        </li>
+                    <?php } ?>    
                     <?php if( $arrUserSession['username'] == ADMINUSERNAME ) { ?>
                         <li class="<?= ( 'blogs' == $this->uri->segment(2) ) ? 'active' : '' ?>">
                             <a href="<?= base_url()?>admin/blogs">

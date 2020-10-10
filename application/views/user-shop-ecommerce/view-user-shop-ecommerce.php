@@ -2,128 +2,119 @@
 <!DOCTYPE html>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<body background="<?php echo base_url(); ?>assets/images/final.jpg";>
-    <!-- banner -->
-    <!--    <div class="container-fluid">
-            <div class="row ">
-                <div class="banner">  <img src="<?php echo base_url(); ?>assets/images/banner/<?php echo $banner; ?>" alt="organic world" >     </div>
+<body style="background-color: #edf1f1c4">
+    <div class="container-fluid">
+        <?php if( true == isStrVal( $this ->session->flashdata( 'Message' ) ) ) { 
+                $strSuccessMessage = $this ->session->flashdata( 'Message' );
+        ?>
+            <div class="col-md-12 ">
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?= $strSuccessMessage ?>
+                </div>
             </div>
-        </div>-->
-    <div class="">
-        <div class="col-xs-12 bg-gray">
-            <h2 class="page-header center">
-                <i class="fa fa-globe"></i> <?= $strHeading ?>
-            </h2>
-        </div>
-        <div class="container-fluid">
-            <?php if( true == isStrVal( $this ->session->flashdata( 'Message' ) ) ) { 
-                    $strSuccessMessage = $this ->session->flashdata( 'Message' );
-            ?>
-                <div class="col-md-12 ">
-                    <div class="alert alert-dismissible alert-success">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?= $strSuccessMessage ?>
-                    </div>
+        <?php }?> 
+        <?php if( true == isStrVal( $this ->session->flashdata( 'Error' ) ) ) { 
+                $strErrorMessage = $this ->session->flashdata( 'Error' );
+        ?>
+            <div class="col-md-12 ">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?= $strErrorMessage ?>
                 </div>
-            <?php }?> 
-            <?php if( true == isStrVal( $this ->session->flashdata( 'Error' ) ) ) { 
-                    $strErrorMessage = $this ->session->flashdata( 'Error' );
-            ?>
-                <div class="col-md-12 ">
-                    <div class="alert alert-dismissible alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?= $strErrorMessage ?>
+            </div>
+        <?php } ?>
+        <br>
+        <div class="row">
+            <div class="col-md-12 mt-20 alert-message ">
+                <div class="box box-success js-alert-message">
+                    <div class="box-header with-border text-center">
+                        <h2 class="box-title"><i class="fa fa-globe"></i> <?= $strHeading ?></h2>
                     </div>
-                </div>
-            <?php } ?>
-            <br>
-            <div class="row">
-                <div class="col-md-12 mt-20 alert-message ">
-                    <div class="box box-success">
-                        <div class="box-header js-alert-message">
-                            <h4>User : <?= $arrUserDetails['fullname'] ?></h4>
-                        </div>
-                        <div class="box-body js-box-details">
-                            <?php
-                                if( true == isArrVal( $arrUserEcommercesList ) ) {
-                                    foreach( $arrUserEcommercesList as $arrUserEcommerceDetails ) {
-                            ?>
-                                    <div class="box js-post-panel">
+                    <div class="box-body js-box-details">
+                        <h4>User : <?= $arrUserDetails['fullname'] ?></h4><br>
+                        <?php
+                            if( true == isArrVal( $arrUserEcommercesList ) ) {
+                                foreach( $arrUserEcommercesList as $arrUserEcommerceDetails ) {
+                        ?>
+                                <div class="col-md-3">
+                                    <div class="box box-info shop-box js-post-panel">
                                         <div class="box-body">
-                                            <div class="col-md-2">
-                                                <h4>Image</h4>
-                                                <?php if( true == isStrVal( $arrUserEcommerceDetails['primary_image'] ) ) { ?>
-                                                    <img src="<?= base_url() ?>assets/images/product_images/<?= $arrUserEcommerceDetails['primary_image'] ?>" height="90px">
+                                            <?php
+                                                if( IN_STOCK == $arrUserEcommerceDetails['stock'] ) {
+                                                    echo '<span class="label label-success pull-right">In Stock</span>';
+                                                } else {
+                                                    echo '<span class="label label-danger pull-right">Out of Stock</span>';
+                                                }
+                                            ?>
+                                            <br>
+                                            <div class="ps-post__thumbnail">
+                                                <a class="ps-post__overlay" href="javascript:void(0)"></a> 
+                                                <?php if( true == isVal( $arrUserEcommerceDetails['primary_image'] ) ) { ?>
+                                                    <img src="<?= checkFileExist( './assets/images/product_images/' . $arrUserEcommerceDetails['primary_image'] ) ?>" alt="Organic Pandit" height="90px">
                                                 <?php } else { ?>
                                                     <img src="<?= base_url() ?>assets/design/img/icons-flat/shops.png" height="90px">
                                                 <?php } ?>
                                             </div>
-                                            <div class="col-md-2">
-                                                <h4>Category</h4>
-                                                <b class="fullname">
-                                                    <?= $arrUserEcommerceDetails['category_name'] ; ?>
-                                                </b>
-                                                <br>
-                                                <h4>Product Name</h4>
-                                                <b class="fullname">
-                                                    <?php echo $arrUserEcommerceDetails['product_name']; ?>
-                                                </b>
-                                                <br>
-                                            </div>
-                                            
-                                            <div class="col-md-2">
-                                                <h4>Price</h4>
-                                                <b><?= $arrUserEcommerceDetails['price']; ?></b>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4>Description</h4>
-                                                <b><?= $arrUserEcommerceDetails['description']; ?></b>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4>Stock</h4>
-                                                <?php
-                                                    if( IN_STOCK == $arrUserEcommerceDetails['stock'] ) {
-                                                        echo '<span class="label label-success">In Stock</span>';
-                                                    } else {
-                                                        echo '<span class="label label-danger">Out of Stock</span>';
-                                                    }
-                                                ?>
-                                            </div>
-                                            <?php if( IN_STOCK == $arrUserEcommerceDetails['stock'] ) { ?>
-                                                <div class="col-md-2">
-                                                    <div class="user-padding-block">
-                                                        <div class="col-md-4">
-                                                            <a href="javascript:void(0)" class="btn btn-success" data-user_id="<?= $arrUserEcommerceDetails['user_id'] ?>" data-user_ecommerce_id="<?= $arrUserEcommerceDetails['user_ecommerce_id'] ?>" data-fullname="<?= $arrUserEcommerceDetails['fullname'] ?>"  onclick="showAddToCartModal(this)" data-toggle="tooltip" title="Add to cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <br><br>
+                                            <br>
+                                            <div class="row categories-subcategory-details">
+                                                <div class="col-md-6">
+                                                    <h4>Category</h4>
+                                                    <b class="fullname">
+                                                        <?= $arrUserEcommerceDetails['category_name'] ; ?>
+                                                    </b>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <h4>Product Name</h4>
+                                                    <b class="fullname">
+                                                        <?= $arrUserEcommerceDetails['product_name']; ?>
+                                                    </b>
+                                                </div>
+                                            </div>
+
+                                            <h4>Price</h4>
+                                            <b><?= $arrUserEcommerceDetails['price']; ?></b>
+
+                                            <h4>Description</h4>
+                                            <p class="shop-description">
+                                                <b>
+                                                    <?= ( true == isVal( $arrUserEcommerceDetails['description'] ) ) ? strlen( $arrUserEcommerceDetails['description'] ) > 120 ? substr( $arrUserEcommerceDetails['description'], 0, 120 ) . '....<a href="javascript:void(0)" onclick="showShopDescriptionModel(this)" data-product_name="' . $arrUserEcommerceDetails['product_name'] . '" data-category_name="' . $arrUserEcommerceDetails['category_name'] . '" data-description="' . $arrUserEcommerceDetails['description'] . '">Read More</a>' : $arrUserEcommerceDetails['description'] : 'NA'; ?>
+                                                </b>
+                                            </p>    
+                                            <br>
+                                            <?php if( IN_STOCK == $arrUserEcommerceDetails['stock'] ) { ?>
+                                                <?php if( true == isArrVal( $arrmixUserSession ) ) { ?>
+                                                    <a href="javascript:void(0)" class="btn btn-success btn-outline-success add-to-cart-button mt-20" data-user_id="<?= $arrUserEcommerceDetails['user_id'] ?>" data-user_ecommerce_id="<?= $arrUserEcommerceDetails['user_ecommerce_id'] ?>" data-fullname="<?= $arrUserEcommerceDetails['fullname'] ?>"  onclick="showAddToCartModal(this)" data-toggle="tooltip" title="Add to cart">Add to Cart  <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                <?php } else { ?>
+                                                    <a href="javascript:void(0)" class="btn btn-success btn-outline-success add-to-cart-button mt-20 js-forcefully-login-button" data-toggle="tooltip" title="Add to cart" data-toggle="modal" data-target="#js-subscribe-modal">Add to Cart  <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                <?php } ?>       
                                             <?php } ?>
                                         </div>
                                     </div>
+                                </div>
 
-                            <?php   }
-                                } else { 
-                            ?>
-                                <div class="box">
-                                    <div class="box-body">
-                                        <div class="col-md-12 center">
-                                            No <?= $title ?> Found
-                                        </div>
+                        <?php   }
+                            } else { 
+                        ?>
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="col-md-12 center">
+                                        No <?= $title ?> Found
                                     </div>
                                 </div>
-                            <?php } ?>
-                        </div>
-                        <input type="hidden" id="user_id_hidden" value="<?= $arrUserDetails['user_id'] ?>">
+                            </div>
+                        <?php } ?>
                     </div>
-
+                    <input type="hidden" id="user_id_hidden" value="<?= $arrUserDetails['user_id'] ?>">
                 </div>
-            </div>
-            <div class="search-box" id="detail-row"></div>
 
-            <!-- footer -->
+            </div>
         </div>
+        <div class="search-box" id="detail-row"></div>
+
+        <!-- footer -->
     </div>
+    
     <!-- modal -->
     <div class="modal fade user-popup" id="js-modal-ecommerce-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -162,6 +153,25 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="js-shop-description-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><span id="js-modal-title-shop"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="js-modal-body-content-shop"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script type="text/javascript">
         function modalEcommerceDetails(ths) {
             var user_id = $(ths).data('user_id');
@@ -231,6 +241,14 @@
                     }
                 }
             });
+        }
+        
+        function showShopDescriptionModel( ths ) {
+            var strTitle = '<b>Category</b> : ' + $( ths ).data( 'category_name' ) + ' and <b>Product</b> : ' + $( ths ).data( 'product_name' );
+            
+            $( '#js-modal-title-shop' ).html( strTitle );
+            $( '#js-modal-body-content-shop' ).html( $( ths ).data( 'description' ) );
+            $( '#js-shop-description-modal' ).modal('show');
         }
     </script>
 

@@ -29,7 +29,6 @@
                             <li class="wow fadeInRight <?= (empty($this->uri->segment(1))||$this->uri->segment(1) == 'home') ? 'active':''?>" data-wow-delay="0.10s"><a href="<?= base_url() ?>">Home</a></li>
                             <li class="wow fadeInRight <?= $this->uri->segment(1) == 'search-buy-product' ? 'active':'' ?>" data-wow-delay="0.15s" ><a href="<?php echo base_url(); ?>search-buy-product">Buy Product</a></li>
                             <li class="wow fadeInRight <?= $this->uri->segment(1) == 'about' ? 'active':''?>" data-wow-delay="0.20s" ><a href="<?= base_url() ?>about">About Us</a></li>
-                            <li class="wow fadeInRight <?= $this->uri->segment(1) == 'signup' ? 'active':''?>" data-wow-delay="0.30s"><a href="<?= base_url() ?>signup">Register</a></li>
                             <li class="wow fadeInRight <?= $this->uri->segment(1) == 'contact' ? 'active':''?>" data-wow-delay="0.40s"><a href="<?= base_url() ?>contact">Contact us</a></li>
                             <li class="wow fadeInRight <?= $this->uri->segment(1) == 'login' ? 'active':''?>" data-wow-delay="0.50s"><a href="<?= base_url() ?>login">Login</a></li>
                         <?php }else{ ?>

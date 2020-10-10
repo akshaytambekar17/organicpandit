@@ -337,9 +337,13 @@ function destroyCart() {
 }
 
 function paymentGatewayEnviroment() {
-    $strBaseUrl = base_url();
     
-    if( 'http://localhost/organic-pandit/' == $strBaseUrl ) {
+    $arrmixBaseURL = [
+        'http://localhost/organic-pandit/',
+        'http://demo.organicpandit.com/'
+    ]; 
+    
+    if( true == in_array( base_url(), $arrmixBaseURL ) ) {
         return ENV_TEST;
     } else {
         return ENV_PROD;
@@ -426,4 +430,30 @@ function getCartProductDataWithBoolCartOrderType( $arrCartProductList ) {
     } else {
         return array();
     }
+}
+
+function getIgnoreSubscriptionUserTypeIds() {
+    return [ ORGANIC_INPUT, SHOPS ];
+}
+
+function getEncryptedToken( $arrmixTokenData ) {
+    
+    $objInstance = & get_instance();
+    $objInstance->encryption->create_key(16);
+    $strEncryptToken = $objInstance->encryption->encrypt( json_encode( $arrmixTokenData ) );
+    
+    return $strEncryptToken;
+}
+
+function getDecryptedToken( $strEncryptToken ) {
+    
+    $objInstance = & get_instance();
+    $strDecryptToken = $objInstance->encryption->decrypt( $strEncryptToken );
+    
+    if( true == isVal( $strDecryptToken ) ) {
+        return json_decode( $strDecryptToken, true );
+    } else {
+        return $strDecryptToken;
+    }
+    
 }

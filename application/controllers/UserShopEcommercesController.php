@@ -4,14 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class UserShopEcommercesController extends MY_Controller {
 
+    public $arrmixUserSession;
+    
     function __construct() {
         parent::__construct();
+        
         $arrSession = UserSession();
-        if( false == $arrSession['success'] ) {
-            redirect( 'home', 'refresh' );
-        } else {
-            $this->arrUserSession = $arrSession['userData'];
-        }
+        
+        $this->arrmixUserSession = [];
+        if( true == $arrSession['success'] ) {
+            $this->arrmixUserSession = $arrSession['userData'];
+        } 
     }
 
     /**
@@ -30,16 +33,24 @@ class UserShopEcommercesController extends MY_Controller {
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
     public function index() {
-        $arrGet = $this->input->get();
-        $arrUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrGet['user_id'] );
+        if( false == isArrVal( $this->arrmixUserSession ) ) {
+            $this->session->set_flashdata( 'Error', 'You have not login. Please login to see our features.');
+            redirect( 'search-user?id=' . SHOPS );
+        }
         
+        $arrGet = $this->input->get();
+        
+        $arrUserShopEcommerceList = $this->UserEcommerces->getUserEcommerceByUserId( $arrGet['user_id'] );
         if( false == isArrVal( $arrUserShopEcommerceList ) ) {
             $this->session->set_flashdata( 'Error', 'No Products are availabel' );
             return redirect( 'search-user?id=' . SHOPS, 'refresh' );
         }
-        $data['arrUserEcommercesList'] = $arrUserShopEcommerceList;
+        
         $arrUserDetails = $this->User->getUserById( $arrGet['user_id'] );
+        
+        $data['arrUserEcommercesList'] = $arrUserShopEcommerceList;
         $data['arrUserDetails'] = $arrUserDetails;
+        $data['arrmixUserSession'] = $this->arrmixUserSession;
         $data['strTitle'] = 'Shop Products ';
         $data['title'] = 'Shop Products ';
         $data['strHeading'] = 'Products of User ' . $arrUserDetails['fullname'];;
@@ -52,7 +63,8 @@ class UserShopEcommercesController extends MY_Controller {
         $arrPost = $this->input->post();
 
         $arrUserEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
-	    
+	 
+        $arrData['arrmixUserSession'] = $this->arrmixUserSession;
         $arrData['arrUserEcommerceDetails'] = $arrUserEcommerceDetails;
 
         echo $this->load->view( 'modal-box/modal-user-shop-ecommerce-add-to-cart', $arrData );
@@ -63,7 +75,7 @@ class UserShopEcommercesController extends MY_Controller {
         $arrProductCategoryList = $this->ProductCategory->getProductCategorys();
         $arrData['arrUsersList'] = $this->User->getUserByUserTypeId( SHOPS );
         $arrData['arrProductCategoryList'] = $arrProductCategoryList;
-        $arrData['arrUserSessionDetails'] = $this->arrUserSession;
+        $arrData['arrmixUserSessionDetails'] = $this->arrmixUserSession;
         $arrData['backend'] = true;
         $arrData['strTitle'] = 'Add Shop Products';
         $arrData['title'] = 'Add Shop Products';
@@ -145,7 +157,7 @@ class UserShopEcommercesController extends MY_Controller {
         $arrData['arrUsersList'] = $this->User->getUserByUserTypeId( SHOPS );
         $arrData['arrProductCategoryList'] = $arrProductCategoryList;
         $arrData['arrUserEcommerceDetails'] = $arrUserShopEcommerceDetails;
-        $arrData['arrUserSessionDetails'] = $this->arrUserSession;
+        $arrData['arrmixUserSessionDetails'] = $this->arrmixUserSession;
         $arrData['backend'] = true;
         $arrData['strTitle'] = 'Update Product ' . $arrUserShopEcommerceDetails['product_name'];
         $arrData['title'] = 'Update Product ' . $arrUserShopEcommerceDetails['product_name'];

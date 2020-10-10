@@ -1,8 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
-
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<body background="<?php echo base_url(); ?>assets/images/final.jpg";>
+<body style="background-color: #edf1f1c4">
     <!-- banner -->
 <!--    <div class="container-fluid">
         <div class="row ">
@@ -10,226 +9,237 @@
         </div>
     </div>-->
 <!--    <div id="loading" style="display: block;"> <img src="<?php echo base_url(); ?>assets/images/processing.gif" alt="organic world" > </div>-->
-    <div class="">
-        <div class="col-xs-12 bg-gray">
-            <h2 class="page-header center">
-                <i class="fa fa-globe"></i> <?= $title?>
-            </h2>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 mt-20">
-                    <form class="form-horizontal" method="post" enctype="multipart/form-data" name="search-user-form" id="search-user-form" >
-                        <div class="box box-danger">
-                            <div class="box-header">
-        <!--                        <h3 class="box-title">Data Table With Full Features</h3>-->
-                            </div>
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        <label>Select State</label>
-                                        <select class="form-control select2" name="state_id" id="state_id">
-                                            <option disabled="disabled" selected="selected">Select State</option>
-                                            <?php foreach($state_list  as $value){ ?>
-                                                    <option value="<?= $value['id']?>" <?= set_select('state_id',$value['id']);?>><?= $value['name']?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <span class="has-error"><?php echo form_error('state_id'); ?></span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Select City</label>
-                                        <select class="form-control select2" name="city_id" id="city_id">
-                                            <option selected="selected">Select City</option>
-                                        </select>
-                                        <input type="hidden" value="<?= isset( $city_id_hidden ) ? $city_id_hidden  : '' ?>" class="js-city-id-hidden" >
-                                        <span class="has-error"><?php echo form_error('city_id'); ?></span>
-                                    </div>
-<!--                                    <div class="col-md-3">
-                                        <label>Select Product</label>
-                                        <select class="form-control select2" name="product_id">
-                                            <option disabled="disabled" selected="selected" >Select Product</option>
-                                            <?php foreach($product_list  as $value){ ?>
-                                                    <option value="<?= $value['id']?>" <?= set_select('product_id',$value['id'],false);?>><?= $value['name']?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>-->
-                                    <div class="col-md-4">
-                                        <?php if( 7 == $user_type_details['id'] ) {  ?>
-                                            <label>Search by Brand</label>
-                                            <input type="text" class="form-control" name="search_brand" value="<?= isset( $search_brand ) ? $search_brand : set_value('search_brand') ?>">
-                                        <?php } else { ?>
-                                            <label>Select Certification</label>
-                                            <select class="form-control select2" name="certification_id" >
-                                                <option disabled="disabled" selected="selected">Select Certification</option>
-                                                <?php foreach (getCertifications() as $key => $value) { ?>
-                                                    <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        <?php } ?>
-                                    </div>
-
-                                </div>
-                                <input type="hidden" name="user_type_id" value="<?= $user_type_details['id']?>">
-                            </div>
-                            <div class="box-footer center">
-                                <button type="submit" class="btn btn-success" id="submit">Search Post</button>
-                            </div>
-                        </div>
-                    </form>
+    
+    <div class="container-fluid">
+        <?php if($message = $this ->session->flashdata('Message')){?>
+            <div class="col-md-12" id="alert-messge">
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=$message ?>
                 </div>
             </div>
-            <?php if($message = $this ->session->flashdata('Message')){?>
-                <div class="col-md-12" id="alert-messge">
-                    <div class="alert alert-dismissible alert-success">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?=$message ?>
-                    </div>
+        <?php }?>
+        <?php if($message = $this ->session->flashdata('Error')){?>
+            <div class="col-md-12 ">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=$message ?>
                 </div>
-            <?php }?>
-            <?php if($message = $this ->session->flashdata('Error')){?>
-                <div class="col-md-12 ">
-                    <div class="alert alert-dismissible alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?=$message ?>
-                    </div>
-                </div>
-            <?php }?>
-<!--            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8 mt-20 center">
-                    <div class="box">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Search By " onkeypress="search(this)">
-                    </div>
-                </div>
-            </div>-->
-            <?php if(empty($userSession)){ ?>
-<!--                    <p class="has-error center">Please login to apply for bid</p>-->
-            <?php } ?>
-            <div class="row">
-                <div class="col-md-12 mt-20 js-alert-message">
-                    <div class="box box-success">
-                        <div class="box-header"></div>
-                        <div class="box-body">
-                            <?php if(!empty($search_user_list)){
-                                    $boolShowUserDetails = false;
-                                    if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) { 
-                                        $boolShowUserDetails = true;
-                                    }
-                                    foreach($search_user_list as $value){
-                            ?>
-                                <div class="box box-warning post-panel">
-                                    <div class="box-body">
-                                        <div class="col-md-2">
-                                            <h4>Fullname</h4>
-                                            <b class="fullname"><?= $value['fullname']?></b><br>
-                                            <img src="<?= base_url()?>assets/images/gallery/<?= $value['profile_image']?>" height="90px">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="address-icon"><i class="fa fa-map-marker"></i></div>
-                                            <h4 class="center">
-                                                <?php
-                                                    $state_details = $this->State->getStateById($value['state_id']);
-                                                    $city_details = $this->City->getCityById($value['city_id']);
-                                                    echo $city_details['name'].",".$state_details['name'];
-                                                ?>
-
-                                            </h4>
-                                            
-                                        </div>
-                                        <?php if( true == $boolShowUserDetails ) {  ?>
-                                            <div class="col-md-2">
-                                                <h4>Email Id</h4>
-                                                <b><?= $value['email_id']; ?></b>
-                                                <h4>Mobile number</h4>
-                                                <b><?= $value['mobile_no']; ?></b>
-                                            </div>
-                                        <?php } ?>
-                                        <div class="<?= ( true == $boolShowUserDetails ) ? 'col-md-1' : 'col-md-3'  ?>">
-                                            <h4>Story</h4>
-                                            <b><?= $value['story']; ?></b>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="user-padding-block">
-                                                <?php $disabled = empty($userSession)?'disabled':'';  ?>
-                                                <?php if( !empty( $organicSettingViewDetails ) && ENABLED == $organicSettingViewDetails['value'] ){  ?>
-                                                    <div class="col-md-3">
-                                                        <a href="<?= base_url() ?>view-user-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-info" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  data-toggle="tooltip"  title="View Details" ><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                    </div>
-                                                <?php } ?>
-                                                <?php if( !empty( $organicSettingViewEnquiry ) && ENABLED == $organicSettingViewEnquiry['value'] ){  ?>
-                                                    <div class="col-md-3">
-                                                        <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  onclick="enquiryModal(this)" data-toggle="tooltip" title="View Enquiry" ><i class="fa fa-address-card" aria-hidden="true"></i></a>
-                                                    </div>
-                                                <?php } ?>
-                                                <?php if( ORGANIC_INPUT == $user_type_details['id'] ){ ?>
-                                                    <div class="col-md-3">
-                                                        <a href="<?= base_url()?>organic-input-ecommerce-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Shop Now"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
-                                                    </div>
-                                                <?php } else if( SHOPS == $user_type_details['id'] ) { ?>
-                                                    <div class="col-md-3">
-                                                        <a href="<?= base_url()?>user-shop-ecommerces?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Shop Now"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
-                                            <br><br>
-                                            <?php if($value['is_verified'] ==2){ ?>
-                                                <img src="<?= base_url()?>upload/profile/Screenshot_4.png" class="user-verified-image">
-                                            <?php }else{ ?>
-                                                <img src="<?= base_url()?>upload/profile/not_verified.png" class="user-verified-image">
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                    <?php if( ORGANIC_INPUT == $value['user_type_id'] ) {  ?>
-                                        
-                                        <div class="box-body">
-                                            <div class="col-md-2">
-                                                <h4>Category</h4>
-                                                <?php if( isVal( $value['category_id'] ) ) {  ?>
-                                                    <b><?php
-                                                            $arrCategory = getEcommerceCategory();
-                                                            echo $arrCategory[$value['category_id']];
-                                                        ?>
-                                                    </b>
-                                                <?php } ?>
-                                            </div>
-                                            <div class="col-md-4 center">
-                                                <h4>Sub Category</h4>
-                                                <?php if( isVal( $value['sub_category_id'] ) ) {  ?>
-                                                    <b><?php
-                                                            $arrSubCategory = getEcommerceSubCategory();
-                                                            echo $arrSubCategory[$value['category_id']];
-                                                        ?>
-                                                    </b>
-                                                <?php } ?>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4>Brand</h4>
-                                                <?php if( isVal( $value['ecommerce_brand_id'] ) ) {  ?>
-                                                    <b><?= $value['ecommerce_brand_id']; ?></b>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                              
-                                    <?php } ?>
-                                </div>
-
-                            <?php } }else{ ?>
-                                    <div class="box">
-                                        <div class="box-body">
-                                            <div class="col-md-12 center">
-                                                 No <?= $title?> Found
-                                            </div>
-                                        </div>
-                                    </div>
-                            <?php } ?>
+            </div>
+        <?php }?>
+        <?php if( false == isArrVal( $userSession ) ) { ?>
+            <p class="has-error center">You have not login. Please login to see our features.</p>
+        <?php } ?>
+        <div class="row">
+            <div class="col-md-3 mt-20">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data" name="search-user-form" id="search-user-form" >
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Filter</h3>
                         </div>
+                        <div class="box-body">
+                            <div class="form-group col-md-12">
+                                <label>Select State</label>
+                                <select class="form-control select2" name="state_id" id="state_id">
+                                    <option disabled="disabled" selected="selected">Select State</option>
+                                    <?php foreach($state_list  as $value){ ?>
+                                            <option value="<?= $value['id']?>" <?= set_select('state_id',$value['id']);?>><?= $value['name']?></option>
+                                    <?php } ?>
+                                </select>
+                                <span class="has-error"><?php echo form_error('state_id'); ?></span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Select City</label>
+                                <select class="form-control select2" name="city_id" id="city_id">
+                                    <option selected="selected">Select City</option>
+                                </select>
+                                <input type="hidden" value="<?= isset( $city_id_hidden ) ? $city_id_hidden  : '' ?>" class="js-city-id-hidden" >
+                                <span class="has-error"><?php echo form_error('city_id'); ?></span>
+                            </div>
+<!--                                    <div class="col-md-3">
+                                    <label>Select Product</label>
+                                    <select class="form-control select2" name="product_id">
+                                        <option disabled="disabled" selected="selected" >Select Product</option>
+                                        <?php foreach($product_list  as $value){ ?>
+                                                <option value="<?= $value['id']?>" <?= set_select('product_id',$value['id'],false);?>><?= $value['name']?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>-->
+                            <div class="form-group col-md-12">
+                                <?php if( 7 == $user_type_details['id'] ) {  ?>
+                                    <label>Search by Brand</label>
+                                    <input type="text" class="form-control" name="search_brand" value="<?= isset( $search_brand ) ? $search_brand : set_value('search_brand') ?>">
+                                <?php } else { ?>
+                                    <label>Select Certification</label>
+                                    <select class="form-control select2" name="certification_id" >
+                                        <option disabled="disabled" selected="selected">Select Certification</option>
+                                        <?php foreach (getCertifications() as $key => $value) { ?>
+                                            <option value="<?= $key ?>" <?= set_select('certification_id', $key); ?>><?= $value ?></option>
+                                        <?php } ?>
+                                    </select>
+                                <?php } ?>
+                            </div>
+
+                            <input type="hidden" name="user_type_id" value="<?= $user_type_details['id']?>">
+                        </div>
+                        <div class="box-footer center">
+                            <button type="submit" class="btn btn-success" id="submit">Search Post</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+<!--            <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 mt-20 center">
+                <div class="box">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Search By " onkeypress="search(this)">
+                </div>
+            </div>
+        </div>-->
+
+            <div class="col-md-9 mt-20 js-alert-message">
+                <div class="box box-success">
+                    <div class="box-header with-border text-center">
+                        <h2 class="box-title"><i class="fa fa-globe"></i> <?= $title?></h2>   
+                    </div>
+                    <div class="box-body">
+                        <?php if(!empty($search_user_list)){
+                                $boolShowUserDetails = false;
+                                if( true == isArrVal( $arrOrganicSettingUserDetails ) && ENABLED == $arrOrganicSettingUserDetails['value'] ) { 
+                                    $boolShowUserDetails = true;
+                                }
+                                foreach( $search_user_list as $value ) {
+                                    if( 0 != $value['user_type_id'] ) {
+                        ?>
+                                    <div class="col-md-4">
+                                        <div class="box box-warning post-panel <?= ORGANIC_INPUT == $value['user_type_id'] ? 'user-organic-list-box' : 'user-list-box '?>">
+                                            <div class="box-body">
+                                                <div class="col-md-12">
+                                                    <div class="ps-post__thumbnail">
+                                                        <a class="ps-post__overlay" href="javascript:void(0)"></a> 
+                                                        <?php if( true == isVal( $value['profile_image'] ) ) { ?>
+                                                            <img src="<?= checkFileExist( './assets/images/gallery/' . $value['profile_image'] ) ?>" alt="Organic Pandit" height="90px">
+                                                        <?php } else { ?>    
+                                                            <img src="<?= logoOrganicPandit() ?>" alt="Organic Pandit" height="90px">
+                                                        <?php } ?>    
+                                                    </div>
+                                                    <h4>Fullname</h4>
+                                                    <b class="fullname"><?= $value['fullname']?></b><br>
+
+                                                    <h4>Address</h4>
+                                                    <p>
+                                                        <?php
+                                                            $state_details = $this->State->getStateById($value['state_id']);
+                                                            $city_details = $this->City->getCityById($value['city_id']);
+                                                            echo $city_details['name'].",".$state_details['name'];
+                                                        ?>
+
+                                                    </p>
+                                                <?php if( true == $boolShowUserDetails ) {  ?>
+
+                                                    <h4>Email Id</h4>
+                                                    <b><?= $value['email_id']; ?></b>
+                                                    <h4>Mobile number</h4>
+                                                    <b><?= $value['mobile_no']; ?></b>
+
+                                                <?php } ?>
+
+                                                <h4>Story</h4>
+                                                <p class="user-list-story"><b><?= ( true == isVal( $value['story'] ) ) ? strlen( $value['story'] ) > 60 ? substr( $value['story'], 0, 60 )."..." : $value['story'] : 'NA'; ?></b></p>
+
+                                                <?php if( ORGANIC_INPUT == $value['user_type_id'] ) {  ?>
+                                                    <div class="user-organic-input-details">
+                                                        <div class="user-organic-input-category-details">
+                                                            <h4>Category</h4>
+                                                            <?php 
+                                                                if( isVal( $value['category_id'] ) ) {  ?>
+                                                                 <b><?php
+                                                                        $arrCategory = getEcommerceCategory();
+
+                                                                        echo $arrCategory[$value['category_id']];
+                                                                     ?>
+                                                                 </b>
+                                                             <?php } ?>
+                                                        </div>    
+                                                        <div class="user-organic-input-sub-category-details">
+                                                            <h4>Sub Category</h4>
+                                                            <?php if( isVal( $value['sub_category_id'] ) ) {  ?>
+                                                                <b><?php
+                                                                   $arrSubCategory = getEcommerceSubCategory();
+                                                                   echo $arrSubCategory[$value['category_id']];
+                                                                    ?>
+                                                                </b>
+                                                             <?php } ?>
+                                                        </div>        
+                                                        <h4>Brand</h4>
+                                                        <?php if( isVal( $value['ecommerce_brand_id'] ) ) {  ?>
+                                                            <b><?= $value['ecommerce_brand_id']; ?></b>
+                                                        <?php } ?>
+                                                    </div>        
+                                                <?php } ?>
+
+                                                <div class="user-padding-block">
+                                                    <?php $disabled = ( false == isArrVal( $userSession ) ) ? 'disabled' : ''; ?>
+                                                    <?php if( !empty( $organicSettingViewDetails ) && ENABLED == $organicSettingViewDetails['value'] ){ ?>
+                                                        <?php if( true == isArrVal( $userSession ) && ( true == in_array( $value['user_type_id'], getIgnoreSubscriptionUserTypeIds() ) || SUBSCRIBED == $userSession['is_subscription'] ) ) { ?>
+                                                                <a href="<?= base_url() ?>view-user-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-info" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  data-toggle="tooltip"  title="View Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                        <?php } else { ?>
+                                                        <?php if( false == in_array( $value['user_type_id'], getIgnoreSubscriptionUserTypeIds() ) ) { ?>        
+                                                                <a href="javascript:void(0)" class="btn btn-info <?= ( true == isset( $userSession['is_subscription_expire'] ) && SUBSCRIPTION_EXPIRED == $userSession['is_subscription_expire'] ) ? 'js-subscription-expired-button' : 'js-not-subscribe-button' ?>" data-toggle="tooltip" data-toggle="modal" data-target="#js-subscribe-modal" title="View Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                        <?php } else { ?>
+                                                                <a href="javascript:void(0)" class="btn btn-info js-forcefully-login-button" data-toggle="tooltip" data-toggle="modal" data-target="#js-subscribe-modal" title="View Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                        <?php } } ?>        
+                                                    <?php } ?>
+                                                    <?php if( !empty( $organicSettingViewEnquiry ) && ENABLED == $organicSettingViewEnquiry['value'] ){  ?>
+                                                            <?php if( true == isArrVal( $userSession ) && ( true == in_array( $value['user_type_id'], getIgnoreSubscriptionUserTypeIds() ) || SUBSCRIBED == $userSession['is_subscription'] ) ) { ?>
+                                                                <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>"  onclick="enquiryModal(this)" data-toggle="tooltip" title="View Enquiry" ><i class="fa fa-address-card" aria-hidden="true"></i></a>
+                                                            <?php } else { ?>    
+                                                                <?php if( false == in_array( $value['user_type_id'], getIgnoreSubscriptionUserTypeIds() ) ) { ?>            
+                                                                    <a href="javascript:void(0)" class="btn btn-warning <?= ( true == isset( $userSession['is_subscription_expire'] ) && SUBSCRIPTION_EXPIRED == $userSession['is_subscription_expire'] ) ? 'js-subscription-expired-button' : 'js-not-subscribe-button' ?>" data-toggle="tooltip" title="View Enquiry" data-toggle="modal" data-target="#js-subscribe-modal"><i class="fa fa-address-card" aria-hidden="true"></i></a>
+                                                                <?php } else { ?>            
+                                                                    <a href="javascript:void(0)" class="btn btn-warning js-forcefully-login-button" data-toggle="tooltip" title="View Enquiry" data-toggle="modal" data-target="#js-subscribe-modal"><i class="fa fa-address-card" aria-hidden="true"></i></a>
+                                                            <?php } } ?>    
+                                                    <?php } ?>
+                                                    <?php if( ORGANIC_INPUT == $user_type_details['id'] ){ ?>
+                                                            <?php if( true == isArrVal( $userSession ) ) { ?>
+                                                                <a href="<?= base_url()?>organic-input-ecommerce-details?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Shop Now"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                                            <?php } else { ?>
+                                                                <a href="javascript:void(0)" class="btn btn-success js-forcefully-login-button" data-toggle="tooltip" title="Shop Now" data-toggle="modal" data-target="#js-subscribe-modal"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                                            <?php } ?>    
+                                                    <?php } else if( SHOPS == $user_type_details['id'] ) { ?>
+                                                            <?php if( true == isArrVal( $userSession ) ) { ?>
+                                                                <a href="<?= base_url()?>user-shop-ecommerces?user_id=<?= $value['user_id']?>" target="_blank" class="btn btn-success" data-user_id="<?= $value['user_id']?>" data-fullname="<?= $value['fullname']?>" data-toggle="tooltip" title="Shop Now"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                                            <?php } else { ?>
+                                                                <a href="javascript:void(0)" class="btn btn-success js-forcefully-login-button" data-toggle="tooltip" title="Shop Now" data-toggle="modal" data-target="#js-subscribe-modal"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                                            <?php } ?>    
+                                                    <?php } ?>
+                                                     <?php if($value['is_verified'] ==2){ ?>
+                                                        <img src="<?= base_url()?>upload/profile/Screenshot_4.png" class="user-verified-image pull-right">
+                                                    <?php }else{ ?>
+                                                        <img src="<?= base_url()?>upload/profile/not_verified.png" class="user-verified-image pull-right">
+                                                    <?php } ?>       
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>        
+                    <?php } } } else{ ?>
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="col-md-12 center">
+                                         No <?= $title?> Found
+                                    </div>
+                                </div>
+                            </div>
+                    <?php } ?>
+
                     </div>
 
                 </div>
             </div>
             <div class="search-box" id="detail-row"></div>
-
-            <!-- footer -->
         </div>
     </div>
     <!-- modal -->

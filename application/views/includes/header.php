@@ -147,7 +147,6 @@
                     <li><a href="<?php echo base_url(); ?>home">Home</a></li>
                     <li><a href="<?php echo base_url(); ?>search-buy-product">Buy Product</a></li>
                     <li><a href="<?php echo base_url(); ?>about">About Us</a></li>
-                    <li><a href="<?php echo base_url(); ?>signup">Register</a></li>
                     <li><a href="<?php echo base_url(); ?>contact"> Contact US</a></li>
                     <li><a href="<?php echo base_url(); ?>login"> Login</a></li>
                 <?php } ?>

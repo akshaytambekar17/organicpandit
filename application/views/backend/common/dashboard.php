@@ -16,6 +16,21 @@
     
     <!-- Main content -->
     <section class="content">
+        <?php if( ADMINUSERNAME != $user_details['username'] && NOT_SUBSCRIBED == $user_details['is_subscription'] ) { ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="callout callout-danger">
+                        <?php if( SUBSCRIPTION_EXPIRED == $user_details['is_subscription_expire'] ) { ?>
+                            <h4><i class="icon fa fa-ban"></i> Subscription Expired....!</h4>
+                            <p>Your subscription has been expired. Please subscribed again to continue our services....!</p>
+                        <?php } else { ?>
+                            <h4><i class="icon fa fa-ban"></i> Subscription Required</h4>
+                            <p>You have not subscribed to our services. To get more excitement features please subscribed our services....!</p>
+                        <?php } ?>    
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
         <div class="row">
             <div class="col-md-3">
                 <!-- Info Boxes Style 2 -->
@@ -59,7 +74,7 @@
                     <div class="icon">
                         <i class="fa fa-th"></i>
                     </div>
-                    <a href="<?= base_url()?>admin/bid" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url() ?><?= ( ADMINUSERNAME != $user_details['username'] && NOT_SUBSCRIBED == $user_details['is_subscription'] ) ? 'admin/dashboard' : 'admin/bid'; ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -73,7 +88,7 @@
                     <div class="icon">
                         <i class="fa fa-laptop"></i>
                     </div>
-                    <a href="<?= base_url()?>admin/post-requirement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url()?><?= ( ADMINUSERNAME != $user_details['username'] && NOT_SUBSCRIBED == $user_details['is_subscription'] ) ? 'admin/dashboard' : 'admin/post-requirement'; ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <?php if(!empty($user_details['username']) && $user_details['username'] == ADMINUSERNAME){ ?>
@@ -127,7 +142,7 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="<?= base_url()?>admin/user-registration-dashboard" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url()?><?= ( ADMINUSERNAME != $user_details['username'] && NOT_SUBSCRIBED == $user_details['is_subscription'] ) ? 'admin/dashboard' : 'admin/user-registration-dashboard'; ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <?php if(!empty($user_details['username']) && $user_details['username'] == ADMINUSERNAME){ ?>

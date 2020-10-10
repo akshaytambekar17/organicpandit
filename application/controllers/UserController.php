@@ -675,15 +675,19 @@ class UserController extends MY_Controller {
                     redirect( 'validate-otp?user_id=' . $user_id );
                 } else {
                     if (!empty($error)) {
+                        $data['strErrorMessage'] = "File cannot be upload - " . $error;
                         $this->session->set_flashdata('Error', "File cannot be upload - " . $error);
                     } else if (!empty($errors)) {
+                        $data['strErrorMessage'] = "File cannot be upload - " . $errors[0];
                         $this->session->set_flashdata('Error', "File cannot be upload - " . $errors[0]);
                     } else {
+                        $data['strErrorMessage'] = validation_errors();
                         $this->session->set_flashdata('Error', 'Something Went Wrong');
                     }
                     $this->frontendLayout($data);
                 }
             } else {
+                $data['strErrorMessage'] = validation_errors();
                 $this->frontendLayout($data);
             }
         } else {
@@ -787,16 +791,26 @@ class UserController extends MY_Controller {
         $userSession = $this->session->userdata('user_data');
         $data['userSession'] = $userSession;
         $user_type_details = $this->UserType->getUserTypeById($get['id']);
+        $arrmixSearchData['user_type_id'] = $get['id'];
+        
+        if( ORGANIC_INPUT == $get['id'] ) {
+            $arrmixUserSearchList = $this->User->getUserByUserTypeIdByStateIdByCityIdByEcommerceBrand( $arrmixSearchData, LIMIT );
+        } else {
+            $arrmixUserSearchList = $this->User->getUserBysearchKey( $arrmixSearchData, LIMIT );
+        }
+        
         $data['user_type_details'] = $user_type_details;
         $data['state_list'] = $this->State->getStates();
         $data['organicSettingViewDetails'] = $this->OrganicSetting->getOrganicSettingByKey(SHOW_SEARCH_VIEW_DETAILS_KEY);
         $data['organicSettingViewEnquiry'] = $this->OrganicSetting->getOrganicSettingByKey(SHOW_SEARCH_VIEW_ENQUIRY_KEY);
         $data['arrOrganicSettingUserDetails'] = $this->OrganicSetting->getOrganicSettingByKey( SHOW_USER_DETAILS );
+        $data['search_user_list'] = $arrmixUserSearchList;
         $data['product_list'] = $this->Product->getProducts();
         $data['title'] = 'Search ' . $user_type_details['name'];
         $data['heading'] = 'Search ' . $user_type_details['name'];
         $data['hide_footer'] = true;
         $data['view'] = 'user/search_user';
+        
         if ($this->input->post()) {
             $post = $this->input->post();
             $data['search_brand'] = isset($post['search_brand']) ? $post['search_brand'] : '';
@@ -847,6 +861,10 @@ class UserController extends MY_Controller {
     public function organicInputEcommerceDetails() {
         $get = $this->input->get();
         $userSession = $this->session->userdata('user_data');
+        if( false == isArrVal( $userSession ) ) {
+            $this->session->set_flashdata( 'Error', 'You have not login. Please login to see our features.');
+            redirect( 'search-user?id=' . ORGANIC_INPUT );
+        }
         $data['userSession'] = $userSession;
         $organicInputEcommerceList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserId($get['user_id']);
         $userDetails = $this->User->getUserById($get['user_id']);
@@ -944,6 +962,7 @@ class UserController extends MY_Controller {
 
     public function filterFetchOrganicInputEcommerceDetails() {
         $post = $this->input->post();
+        $userSession = $this->session->userdata('user_data');
         $brandId = '';
         $subCategoryId = '';
         if (!empty($post['brand_id'])) {
@@ -954,6 +973,8 @@ class UserController extends MY_Controller {
         }
         $organicInputEcommerceList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceByUserIdBySubCategoryIdByBrandId($post['user_id'], $subCategoryId, $brandId);
         $userDetails = $this->User->getUserById($post['user_id']);
+        
+        $data['userSession'] = $userSession;
         $data['userDetails'] = $userDetails;
         $data['arrCategory'] = getEcommerceCategory();
         $data['arrSubCategory'] = getEcommerceSubCategory();
@@ -1059,9 +1080,11 @@ class UserController extends MY_Controller {
         
         $strCartOrderType = $arrPost['cart_order_type'];
         if( CART_ORDER_TYPE_1 == $strCartOrderType ) {
+            $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $arrPost['sell_product_id'] );
+            
             $intSellProductId = $arrPost['sell_product_id'];
             $intProductId = $arrPost['product_id'];
-            $intPrice = $arrPost['price'];
+            $intPrice = $arrSellProductDetails['price'];
             $intQuantity = CART_QUANTITY;
             $strProductName = $arrPost['product_name'];
             $intId = $intProductId . '_' .CART_ORDER_TYPE_1;
@@ -1073,10 +1096,12 @@ class UserController extends MY_Controller {
             $strCartSuccessMessage = 'Your product <b>' . $strProductName . '</b> has been added to cart.';
             $strCartFailureMessage = 'Product <b>' . $strProductName . '</b>  has already added in cart.'; 
         } else if( CART_ORDER_TYPE_2  == $strCartOrderType ) {
+            $arrUserInputOrganicEcommerceDetails = $organicInputEcommerceList = $this->UserInputOrganicEcommerce->getUsersInputOrganicEcommerceById( $arrPost['organic_input_ecommerce_id'] );
+            
             $intOrganicInputEcommerceId = $arrPost['organic_input_ecommerce_id'];
             $intId = $intOrganicInputEcommerceId  . '_' . CART_ORDER_TYPE_2;
             $intQuantity = $arrPost['qunatity'];
-            $intPrice = $arrPost['price'];
+            $intPrice = $arrUserInputOrganicEcommerceDetails['price'];
             $strProductName = $arrPost['brand'];
             $arrOptions = array(    
                                 'cart_order_type' => CART_ORDER_TYPE_2,
@@ -1090,6 +1115,7 @@ class UserController extends MY_Controller {
             $strCartFailureMessage = 'This product has already added in cart.'; 
         } else if( CART_ORDER_TYPE_3  == $strCartOrderType ) {
             $arrUserEcommerceDetails = $this->UserEcommerces->getUserEcommerceByUserEcommerceId( $arrPost['user_ecommerce_id'] );
+            
             $intUserEcommerceId = $arrPost['user_ecommerce_id'];
             $intId = $intUserEcommerceId  . '_' . CART_ORDER_TYPE_3;
             $intQuantity = $arrPost['qunatity'];
@@ -1230,113 +1256,114 @@ class UserController extends MY_Controller {
 
     public function paymentResponse() {
 
-        $arrSession = UserSession();
-        $arrUserSession = $arrSession['userData'];
+        $arrmixData['title'] = 'Payment Response';
+        $arrmixData['heading'] = 'Payment Response';
+        $arrmixData['hide_footer'] = true;
+        $arrmixData['view'] = 'user/payment_response';
+        
         $arrPost = $this->input->post();
-	    if( true == isArrVal( $arrPost ) ) {
-                    $arrPaymentGatewayConfigDetails = getPaymentGatewayConfigDetails();
-		    $easebuzzObj = new Easebuzz( $arrPaymentGatewayConfigDetails['key'], $arrPaymentGatewayConfigDetails['salt'], paymentGatewayEnviroment() );
-		    $arrResult = $easebuzzObj->easebuzzResponse( $arrPost );
-		    $arrmixResult = json_decode( $arrResult );
-		    if( isVal( $arrmixResult->status ) ) {
-		        if( 'success' ==  $arrmixResult->data->status ) {
-			        $arrOrderDetails = $this->Orders->getOrderByOrderId( $arrmixResult->data->udf1 );
-			        $arrTransactionDetails = array(
-				        'order_id'          => $arrmixResult->data->udf1,
-				        'txnid'             => $arrmixResult->data->txnid,
-				        'status'            => $arrmixResult->data->status,
-				        'error'             => isset( $arrmixResult->data->error ) ? $arrmixResult->data->error : '',
-				        'error_message'     => $arrmixResult->data->error_Message,
-				        'easepayid'         => $arrmixResult->data->easepayid,
-				        'payment_source'    => $arrmixResult->data->payment_source,
-				        'net_amount_debit'  => $arrmixResult->data->net_amount_debit,
-				        'added_on'          => $arrmixResult->data->addedon,
-				        'total_amount'      => $arrmixResult->data->amount,
-			        );
-			        $this->Transaction->insert( $arrTransactionDetails );
+        if( true == isArrVal( $arrPost ) ) {
+            
+            $arrmixPaymentGatewayConfigDetails = getPaymentGatewayConfigDetails();
+            $objEasebuzz = new Easebuzz( $arrmixPaymentGatewayConfigDetails['key'], $arrmixPaymentGatewayConfigDetails['salt'], paymentGatewayEnviroment() );
+            $arrmixEasebuzzResponse = $objEasebuzz->easebuzzResponse( $arrPost );
+            $arrmixResult = json_decode( $arrmixEasebuzzResponse );
+            if( true == isVal( $arrmixResult->status ) ) {
+                if( 'success' ==  $arrmixResult->data->status ) {
+                    $arrmixOrderDetails = $this->Orders->getOrderByOrderId( $arrmixResult->data->udf1 );
+                    
+                    $arrmixTransactionDetails = [
+                        'order_id'          => $arrmixResult->data->udf1,
+                        'txnid'             => $arrmixResult->data->txnid,
+                        'status'            => $arrmixResult->data->status,
+                        'error'             => isset( $arrmixResult->data->error ) ? $arrmixResult->data->error : '',
+                        'error_message'     => $arrmixResult->data->error_Message,
+                        'easepayid'         => $arrmixResult->data->easepayid,
+                        'payment_source'    => $arrmixResult->data->payment_source,
+                        'net_amount_debit'  => $arrmixResult->data->net_amount_debit,
+                        'added_on'          => $arrmixResult->data->addedon,
+                        'total_amount'      => $arrmixResult->data->amount,
+                    ];
+                    $this->Transaction->insert( $arrmixTransactionDetails );
 
-			        /***
-			         * To change the payment status in order table
-			         ***/
-			        $arrUpdateOrderData = array(
-				        'order_payment_status' => ORDER_PAYMENT_STATUS_COMPLETED,
-				        'order_id' => $arrmixResult->data->udf1
-			        );
-			        $this->Orders->update( $arrUpdateOrderData );
+                    /***
+                     * To change the payment status in order table
+                     ***/
+                    $arrmixUpdateOrderData = [
+                        'order_payment_status' => ORDER_PAYMENT_STATUS_COMPLETED,
+                        'order_id' => $arrmixResult->data->udf1
+                    ];
+                    $this->Orders->update( $arrmixUpdateOrderData );
 
-			        /***
-			         * Destroy all the cart product
-			         ***/
-			        destroyCart();
+                    /***
+                     * Destroy all the cart product
+                     ***/
+                    destroyCart();
 
-			        /***
-			         * To make the out of stock
-			         ***/
-			        $arrobjproductDetails = json_decode( $arrOrderDetails['product_details'] );
-                                $arrmixOrderProductName = [];
-                                foreach( $arrobjproductDetails as $objProductDetails ) {
-                                        $arrmixOrderProductName[] = $objProductDetails->name;
-                                        if( CART_ORDER_TYPE_1 == $objProductDetails->options->cart_order_type ) {
-                                            $arrSellProductData = array(
-                                                    'sell_product_id' => $objProductDetails->options->sell_product_id,
-                                                    'stock' => OUT_STOCK
-                                            );
-                                            $this->SellProduct->update( $arrSellProductData );
-                                        }
-			        }
+                    /***
+                     * To make the out of stock
+                     ***/
+                    $arrobjproductDetails = json_decode($arrmixOrderDetails['product_details']);
+                    $arrmixOrderProductName = [];
+                    foreach ($arrobjproductDetails as $objProductDetails) {
+                        $arrmixOrderProductName[] = $objProductDetails->name;
+                        if (CART_ORDER_TYPE_1 == $objProductDetails->options->cart_order_type) {
+                            $arrSellProductData = array(
+                                'sell_product_id' => $objProductDetails->options->sell_product_id,
+                                'stock' => OUT_STOCK
+                            );
+                            $this->SellProduct->update($arrSellProductData);
+                        }
+                    }
 
-			        $data['boolStatus'] = true;
-			        $data['strMessage'] = "Transaction has been done successfully.";
-			        $data['intTranscationId'] = $arrmixResult->data->txnid;
-			        $data['strOrderNo'] = $arrmixResult->data->productinfo;
-			        $data['strAddedOn'] = $arrmixResult->data->addedon;
-			        $data['arrOrderDetails'] = $arrOrderDetails;
+                    $arrmixData['boolStatus'] = true;
+                    $arrmixData['strMessage'] = "Transaction has been done successfully.";
+                    $arrmixData['intTranscationId'] = $arrmixResult->data->txnid;
+                    $arrmixData['strOrderNo'] = $arrmixResult->data->productinfo;
+                    $arrmixData['strAddedOn'] = $arrmixResult->data->addedon;
+                    $arrmixData['intTotalAmount'] = $arrmixResult->data->amount;
+                    $arrmixData['arrOrderDetails'] = $arrmixOrderDetails;
+                    
+                    if( true == isIdVal( $arrmixOrderDetails['mobile_no'] ) ) {
+                        $strMessage = 'Hi ' . $arrmixOrderDetails['fullname'] . ' your order has been placed against the product ' . implode( ',', $arrmixOrderProductName ) . ' with the amount ' . $arrmixOrderDetails['total_amount'] . ' .%0aThank you for purchasing our product.%0a%0aTeam OrganicPandit.';
+                        $this->sendSms( $arrmixOrderDetails['mobile_no'], $strMessage );
+                    }
 
-                                if( true == isIdVal( $arrOrderDetails['mobile_no]'] ) ) {
-                                    $strMessage = 'Hi ' . $arrOrderDetails['fullname'] . ' your order has been placed against the product ' . implode( ',', $arrmixOrderProductName ) . ' with the amount ' . $arrOrderDetails['total_amount'] . ' .%0aThank you for purchasing our product.%0a%0aTeam OrganicPandit.';
-                                    $this>sendSms( $arrOrderDetails['mobile_no]'], $strMessage );
-                                }
-                                
-                                $to = ADMINEMAILID;
-			        $subject = "New Order has been placed";
-			        $message = $this->load->view('Email/order_admin',$data,TRUE);
-			        $this->sendEmail($to, $subject, $message);
+                    $to = ADMINEMAILID;
+                    $subject = "New Order has been placed";
+                    $message = $this->load->view('Email/order_admin',$arrmixData,TRUE);
+                    $this->sendEmail($to, $subject, $message);
 
-			        $to = $arrOrderDetails['email_id'];
-			        $subject = "Your order has been placed successfully";
-			        $message = $this->load->view('Email/order_buyer',$data,TRUE);
-			        $this->sendEmail($to, $subject, $message);
-		        } else {
-			        if( 'userCancelled' ==  $arrmixResult->data->status ) {
-				        $arrUpdateOrderData = array(
-					        'order_payment_status' => ORDER_PAYMENT_STATUS_USER_CANCELLED,
-					        'order_id' => $arrmixResult->data->udf1
-				        );
-				        $this->Orders->update( $arrUpdateOrderData );
+                    $to = $arrmixOrderDetails['email_id'];
+                    $subject = "Your order has been placed successfully";
+                    $message = $this->load->view('Email/order_buyer',$arrmixData,TRUE);
+                    $this->sendEmail($to, $subject, $message);
+                } else {
+                    if( 'userCancelled' ==  $arrmixResult->data->status ) {
+                        $arrUpdateOrderData = array(
+                                'order_payment_status' => ORDER_PAYMENT_STATUS_USER_CANCELLED,
+                                'order_id' => $arrmixResult->data->udf1
+                        );
+                        $this->Orders->update( $arrUpdateOrderData );
 
-				        $data['boolStatus'] = false;
-				        $data['strMessage'] = 'You have cancelled the transaction of amount ' . $arrmixResult->data->amount;
-			        } else {
-				        $data['boolStatus'] = false;
-				        $data['strMessage'] = 'Something went wrong. Transaction has not proceed further. Please try again later.';
-			        }
-		        }
+                        $arrmixData['boolStatus'] = false;
+                        $arrmixData['strMessage'] = 'You have cancelled the transaction of amount ' . $arrmixResult->data->amount;
+                    } else {
+                        $arrmixData['boolStatus'] = false;
+                        $arrmixData['strMessage'] = 'Something went wrong. Transaction has not proceed further. Please try again later.';
+                    }
+                }
 
-	        } else {
-		        $data['boolStatus'] = false;
-		        $data['strMessage'] = $arrmixResult->data->error_message;
-	        }
-	        $data['boolDirectCallPaymentResponse'] = false;
+            } else {
+                    $arrmixData['boolStatus'] = false;
+                    $arrmixData['strMessage'] = $arrmixResult->data->error_message;
+            }
+            $arrmixData['boolDirectCallPaymentResponse'] = false;
         } else {
-		    $data['boolDirectCallPaymentResponse'] = true;
-	    }
+            $arrmixData['boolDirectCallPaymentResponse'] = true;
+        }
 
-        $data['title'] = 'Payment Response';
-        $data['heading'] = 'Payment Response';
-        $data['hide_footer'] = true;
-        $data['view'] = 'user/payment_response';
-
-        $this->frontendLayout($data);
+        $this->frontendLayout( $arrmixData );
 
     }
     

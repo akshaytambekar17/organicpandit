@@ -46,7 +46,7 @@ define('CURRENT_DATE',date( 'Y-m-d' ) );
 define('ADMINUSERNAME', 'adminmaster');
 define('ADMINEMAILID', 'akshaytambekar17@gmail.com');
 //define('ADMINEMAILID', 'nvsoni007@gmail.com');
-define('ADMIN_ID', 1 );
+define( 'ADMIN_ID', 1 );
 
 define( 'MAIL_USERNAME', 'support@organicpandit.com' );
 define( 'MAIL_PASSWORD', 'support@1234' );
@@ -137,6 +137,35 @@ define( 'SMS_SENDER_ID', 'Zudofs' );
 
 define( 'SUBSCRIBED',1 );
 define( 'NOT_SUBSCRIBED', 0 );
+
+define( 'SUBSCRIPTION_EXPIRED',1 );
+define( 'NOT_SUBSCRIPTION_EXPIRED', 0 );
+
+define( 'FREE_SUBSCRIPTION_MONTH', 1 );
+
+define( 'FREE_SUBSCRIPTION_PLAN_ID', 1 );
+define( 'FREE_SUBSCRIPTION_PLAN_AMOUNT', 0 );
+
+
+/**
+ * Errors  
+ **/
+
+define( 'SUCCESS', 200 );
+
+define( 'ERROR_INVALID_REQUEST', 301 );
+define( 'ERROR_INVALID_TOKEN', 302 );
+define( 'ERROR_REQUEST_PARAMETER_MISSING', 303 );
+define( 'ERROR_METHOD_NAME_NOT_FOUND', 304 );
+define( 'ERROR_INVALID_PARAMETERS', 305 );
+define( 'ERROR_OTHER', 310 );
+
+define( 'ERROR_MESSAGE_INVALID_REQUEST', 'Invalid Request' );
+define( 'ERROR_MESSAGE_INVALID_PARAMETERS', 'Invalid Parameters' );
+define( 'ERROR_MESSAGE_REQUEST_PARAMETER_MISSING', 'Request Parameter Missing' );
+define( 'ERROR_MESSAGE_INVALID_TOKEN', 'Invalid Token' );
+define( 'ERROR_MESSAGE_METHOD_NAME_NOT_FOUND', 'Invalid Method Name' );
+
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

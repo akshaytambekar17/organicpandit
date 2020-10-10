@@ -141,14 +141,40 @@ class UserController extends MY_Controller {
         if($this->input->post()){
             $arrPost = $this->input->post();
             $arrDetails = $arrPost;
+            if( true == isset( $arrPost['is_subscription'] ) && SUBSCRIBED == $arrPost['is_subscription'] ) { 
+                $arrDetails['is_subscription_expire'] = NOT_SUBSCRIPTION_EXPIRED;
+            }
             $arrDetails['updated_at'] = date('Y-m-d H:i:s');
             $result = $this->User->update($arrDetails);
             if ($result) {
+                
+                if( true == isset( $arrPost['is_subscription'] ) && SUBSCRIBED == $arrPost['is_subscription'] ) {
+                    $arrmixInsertData = [
+                        'user_id' => $arrPost['user_id'],
+                        'subscription_plan_id' => FREE_SUBSCRIPTION_PLAN_ID,
+                        'purchase_subscription_number' => 'Admin Enabled Subscription',
+                        'price' => FREE_SUBSCRIPTION_PLAN_AMOUNT,
+                        'payment_status' => ORDER_PAYMENT_STATUS_COMPLETED,
+                        'expired_at' => date( 'Y-m-d', strtotime( '+' . FREE_SUBSCRIPTION_MONTH . ' month' ) )
+                    ];
+
+                    $intUserPurchaseSubscriptionId = $this->UserPurchaseSubscriptions->insert( $arrmixInsertData );
+                    if( true == isIdVal( $intUserPurchaseSubscriptionId ) ) { 
+                        $arrUserDetails = $this->User->getUserById($arrPost['user_id']);
+                        if( true == isIdVal( $arrUserDetails['mobile_no'] ) ) {
+                            $strMessage = 'Hi ' . $arrUserDetails['fullname'] . ',%0aAdmin has apporved your subscription request. Now you can continue with our services by relogin to system.%0a%0aThank you.%0aTeam OrganicPandit.';
+                            $this->sendSms( $arrUserDetails['mobile_no'], $strMessage );
+                        }
+                    }
+                    
+                }
                 if($arrPost['is_verified'] == 2){
                     $verified = "Approve user";
                 }else{
                     $verified = "Reject user";
                 }
+                
+                
                 if($arrUserSession['username'] != ADMINUSERNAME && $arrUserSession['user_type_id'] == 16){
                     $certification_agency_details = $this->CertificationAgency->getCertificationAgencyById($arrUserSession['user_id']);
                     $data_notify = array(

@@ -1,4 +1,4 @@
-<?php if( $arrUserSession['user_id'] != $arrUserEcommerceDetails['user_id'] ) { ?>
+<?php if( $arrmixUserSession['user_id'] != $arrUserEcommerceDetails['user_id'] ) { ?>
     <div class="row">
         <div class="form-group col-md-4">
             <label class="control-label">Category</label>
@@ -27,7 +27,7 @@
 <?php } else { ?>
     <div class="row">
         <div class="form-group col-md-12">
-            <h3>You have added this product. Cannot add this to the cart. Please choose other cart</h3>
+            <h3>You have already added this product. Can't add this product again to the cart. Please choose another product.</h3>
         </div>
     </div>   
 <?php } ?>

@@ -2,122 +2,130 @@
 <!DOCTYPE html>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<body background="<?php echo base_url(); ?>assets/images/final.jpg";>
-    <!-- banner -->
-    <!--    <div class="container-fluid">
-            <div class="row ">
-                <div class="banner">  <img src="<?php echo base_url(); ?>assets/images/banner/<?php echo $banner; ?>" alt="organic world" >     </div>
+<body style="background-color: #edf1f1c4">
+    <div class="container-fluid">
+        <?php if ($message = $this->session->flashdata('Message')) { ?>
+            <div class="col-md-12" id="alert-messge">
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?= $message ?>
+                </div>
             </div>
-        </div>-->
-    <div class="">
-        <div class="col-xs-12 bg-gray">
-            <h2 class="page-header center">
-                <i class="fa fa-globe"></i> <?= $title ?>
-            </h2>
-        </div>
-        <div class="container-fluid">
-            <?php if ($message = $this->session->flashdata('Message')) { ?>
-                <div class="col-md-12" id="alert-messge">
-                    <div class="alert alert-dismissible alert-success">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?= $message ?>
-                    </div>
+        <?php } ?>
+        <?php if ($message = $this->session->flashdata('Error')) { ?>
+            <div class="col-md-12 ">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?= $message ?>
                 </div>
-            <?php } ?>
-            <?php if ($message = $this->session->flashdata('Error')) { ?>
-                <div class="col-md-12 ">
-                    <div class="alert alert-dismissible alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?= $message ?>
-                    </div>
-                </div>
-            <?php } ?>
-            <div class="row">
-                <div class="col-md-3 mt-20">
-                    <label>Filter Sub-category</label>
-                    <select class="form-control select2" name="category_id" id="js-filter-sub-category-id" onchange="filterSubCategory(this)">
-                        <option selected="selected" value="0">None</option>
-                        <?php foreach ($arrSubCategory as $key => $value) { ?>
-                            <option value="<?= $key ?>"><?= $value ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <!--	            <div class="col-md-2 mt-20">
-                                            <button class="btn btn-success" onclick="searchFilter()" id="js-search-filter" disabled >Search</button>
-                                    </div>-->
-                <div class="col-md-4 mt-20 center"></div>
-                <!--	            <div class="col-md-3 mt-20 center">
-                                    <div class="box">
-                                        <input type="text" name="search" id="js-search" class="form-control" placeholder="Search By Brand" onkeydown="search(this)">
-                                        <select class="form-control" name="brand" id="js-filter-brand-id" onchange="filterBrand(this)">
-                                            <option selected="selected" value="0">Filter Brand</option>
-                <?php //foreach( $arrBrand  as $key => $value ) { ?>
-                                                    <option value="<?php // $key ?>"><?php // $value  ?></option>
-                <?php //} ?>
-                                        </select>
-                                    </div>
-                                </div>-->
             </div>
-            <div class="row">
-                <div class="col-md-12 mt-20 alert-message js-alert-message">
-                    <div class="box box-success">
-                        <div class="box-header">
-                            <h4>User : <?= $userDetails['fullname'] ?></h4>
+        <?php } ?>
+        <div class="row">
+            <div class="col-md-3 mt-20">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Filter</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group col-md-12">
+                            <label>Filter Sub-category</label>
+                            <select class="form-control select2" name="category_id" id="js-filter-sub-category-id" onchange="filterSubCategory(this)">
+                                <option selected="selected" value="0">None</option>
+                                <?php foreach ($arrSubCategory as $key => $value) { ?>
+                                    <option value="<?= $key ?>"><?= $value ?></option>
+                                <?php } ?>
+                            </select>    
                         </div>
-                        <div class="box-body js-box-details">
+                    </div>
+                </div>
+            </div>
+            <!--	            <div class="col-md-2 mt-20">
+                                        <button class="btn btn-success" onclick="searchFilter()" id="js-search-filter" disabled >Search</button>
+                                </div>-->
+            <!--	            <div class="col-md-3 mt-20 center">
+                                <div class="box">
+                                    <input type="text" name="search" id="js-search" class="form-control" placeholder="Search By Brand" onkeydown="search(this)">
+                                    <select class="form-control" name="brand" id="js-filter-brand-id" onchange="filterBrand(this)">
+                                        <option selected="selected" value="0">Filter Brand</option>
+            <?php //foreach( $arrBrand  as $key => $value ) { ?>
+                                                <option value="<?php // $key ?>"><?php // $value  ?></option>
+            <?php //} ?>
+                                    </select>
+                                </div>
+                            </div>-->
+        
+            <div class="col-md-9 mt-20 alert-message js-alert-message">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h2 class="box-title"><i class="fa fa-globe"></i> <?= $title ?></h2>
+                    </div>
+                    <div class="box-body">
+                        <h4>User : <?= $userDetails['fullname'] ?></h4><br>
+                        <div class="js-box-details">
                             <?php
                             if (!empty($organicInputEcommerceList)) {
                                 foreach ($organicInputEcommerceList as $value) {
                                     ?>
-                                    <div class="box js-post-panel">
-                                        <div class="box-body">
-                                            <div class="col-md-3">
-                                                <h4>Category</h4>
-                                                <b class="fullname">
-                                                    <?php echo $arrCategory[$value['category_id']]; ?>
-                                                </b>
-                                                <br>
-                                                <h4 class="js-sub-category-id" data-sub_category_id="<?= $value['sub_category_id'] ?>" >Sub Category</h4>
-                                                <b class="fullname">
-                                                    <?php echo $arrSubCategory[$value['sub_category_id']]; ?>
-                                                </b>
-                                                <br>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <h4>Image</h4>
-                                                <?php if (!empty($value['images'])) { ?>
-                                                    <img src="<?= base_url() ?>assets/images/ecommerce_images/<?= $value['images'] ?>" height="90px">
-                                                <?php } else { ?>
-                                                    <b>NA</b>
-                                                <?php } ?>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4>Price</h4>
-                                                <b><?= $value['price']; ?></b>
-                                                <h4>Brand</h4>
-                                                <b class="js-brand-name">
-                                                    <?php echo $value['ecommerce_brand_id']; ?>
-                                                    <?php //echo $arrBrand[$value['ecommerce_brand_id']]; ?>
-                                                </b>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4>Weight</h4>
-                                                <b><?= $value['weight']; ?></b>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="user-padding-block">
-                                                    <div class="col-md-4">
-                                                        <a href="javascript:void(0)" class="btn btn-warning" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="modalEcommerceDetails(this)" data-toggle="tooltip" title="View Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <div class="col-md-4">
+                                        <div class="box js-post-panel">
+                                            <div class="box-body">
+                                                <div class="col-md-12">
+                                                    <?php if( true == isArrVal( $userSession ) && SUBSCRIBED == $userSession['is_subscription'] ) { ?>
+                                                        <a href="javascript:void(0)" class="btn btn-warning btn-outline-warning pull-right" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="modalEcommerceDetails(this)" data-toggle="tooltip" title="View Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <?php } else { ?>
+                                                        <a href="javascript:void(0)" class="btn btn-warning btn-outline-warning pull-right js-not-subscribe-button"  data-toggle="tooltip" title="View Details" data-toggle="modal" data-target="#js-subscribe-modal" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    <?php } ?>
+                                                    <br>    
+                                                    <div class="ps-post__thumbnail">
+                                                        <a class="ps-post__overlay" href="javascript:void(0)"></a> 
+                                                        <?php if( true == isVal( $value['images'] ) ) { ?>
+                                                            <img src="<?= checkFileExist( './assets/images/ecommerce_images/' . $value['images'] ) ?>" alt="Organic Pandit" height="90px">
+                                                        <?php } else { ?>
+                                                            <img src="<?= logoOrganicPandit() ?>" alt="Organic Pandit" height="90px">
+                                                        <?php } ?>
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <a href="javascript:void(0)" class="btn btn-success" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="showAddToCartModal(this)" data-toggle="tooltip" title="Add to cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                    <br>
+                                                    <div class="row categories-subcategory-details">
+                                                        <div class="col-md-6">
+                                                            <h4>Category</h4>
+                                                            <b class="fullname">
+                                                                <?php echo $arrCategory[$value['category_id']]; ?>
+                                                            </b>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4 class="js-sub-category-id" data-sub_category_id="<?= $value['sub_category_id'] ?>" >Sub Category</h4>
+                                                            <b class="fullname">
+                                                                <?php echo $arrSubCategory[$value['sub_category_id']]; ?>
+                                                            </b>
+                                                        </div>
                                                     </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>Price</h4>
+                                                            <b><?= $value['price']; ?></b>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4>Weight</h4>
+                                                            <b><?= $value['weight']; ?></b>
+                                                        </div>     
+                                                    </div>     
+                                                    <br>
+                                                    <h4>Brand</h4>
+                                                    <b class="js-brand-name">
+                                                        <?php echo $value['ecommerce_brand_id']; ?>
+                                                    </b>
+
+                                                    <?php if( true == isArrVal( $userSession )) { ?>
+                                                        <a href="javascript:void(0)" class="btn btn-success btn-outline-success add-to-cart-button mt-20" data-user_id="<?= $value['user_id'] ?>" data-id="<?= $value['id'] ?>" data-fullname="<?= $value['fullname'] ?>"  onclick="showAddToCartModal(this)" data-toggle="tooltip" title="Add to cart">Add to Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                    <?php } else { ?>
+                                                        <a href="javascript:void(0)" class="btn btn-success btn-outline-success add-to-cart-button mt-20 js-forcefully-login-button" data-toggle="tooltip" title="Add to cart" data-toggle="modal" data-target="#js-subscribe-modal">Add to Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                                    <?php } ?>   
+
                                                 </div>
-                                                <br><br>
                                             </div>
                                         </div>
                                     </div>
-
                                 <?php }
                             } else { ?>
                                 <div class="box">
@@ -127,18 +135,19 @@
                                         </div>
                                     </div>
                                 </div>
-<?php } ?>
+    <?php } ?>
                         </div>
                         <input type="hidden" id="user_id_hidden" value="<?= $userDetails['user_id'] ?>">
                     </div>
-
                 </div>
-            </div>
-            <div class="search-box" id="detail-row"></div>
 
-            <!-- footer -->
+            </div>
         </div>
+        <div class="search-box" id="detail-row"></div>
+
+        <!-- footer -->
     </div>
+    
     <!-- modal -->
     <div class="modal fade user-popup" id="js-modal-ecommerce-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -154,22 +163,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                     <!--                    <button type="button" class="btn btn-success" onclick="confirmationModal(this)">Apply Bid</button>-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade confirmation-popup" id="ConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <div class="text-center popup-content">
-                        <h5> By clicking on <span>"YES"</span>, Your bid will place for product <b><span id="confiramtion-product-name"></span></b>. Do you wish to proceed?</h5><br><br>
-<!--                        <input  type="hidden" name="confirmation_post_requirement_id" id="confirmation_post_requirement_id">
-                        <input  type="hidden" name="confirmation_amount" id="confirmation_amount"> -->
-                        <button type="button" id="confirm_btn" class="btn btn-success modal-box-button" >Yes</button>
-                        <button type="button" class="btn btn-danger modal-box-button" data-dismiss="modal"  >No</button>
-                    </div>
                 </div>
             </div>
         </div>

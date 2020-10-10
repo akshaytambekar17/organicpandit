@@ -3,7 +3,7 @@
                     <div class="pull-right hidden-xs">
                         <b>Version</b> 1.0
                     </div>
-                    <strong>Copyright &copy; 2018 <a href="https://adminlte.io">Organic Pandit</a>.</strong> All rights
+                    <strong>Copyright &copy; 2018 <a href="<?= base_url() ?>">Organic Pandit</a>.</strong> All rights
                     reserved.
                 </footer>
             <?php } ?>    
