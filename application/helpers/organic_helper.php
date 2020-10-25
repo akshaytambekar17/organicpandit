@@ -363,6 +363,16 @@ function getPaymentGatewayConfigDetails() {
     
 }
 
+function getPayMode() {
+
+    if( ENV_TEST == paymentGatewayEnviroment() ) {
+        return 'test';
+    } 
+    
+    return 'production';
+     
+ }
+
 function paymentGatewayResponseUrl() {
     
     $arrUrl['surl'] = base_url() . 'payment-response';

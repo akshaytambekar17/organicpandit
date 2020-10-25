@@ -31,13 +31,13 @@ class OrderController extends OrganicServicePortalController {
             $arrmixInsertData['order_payment_status'] = ORDER_PAYMENT_STATUS_PENDING;
             $arrmixInsertData['product_details'] = json_encode( $arrmixInsertData['product_details'] );
             
-            //$intCurrentInsertedOrderId = $this->Orders->insert( $arrmixInsertData );
-            $intCurrentInsertedOrderId = 1;
+            $intCurrentInsertedOrderId = $this->Orders->insert( $arrmixInsertData );
+            
             $strOrderNo = 'ORDERNO00' . $intCurrentInsertedOrderId;
             $arrUpdateData = array( 'order_id' => $intCurrentInsertedOrderId,
                                     'order_no' => $strOrderNo
                                 );
-            //$this->Orders->update( $arrUpdateData );
+            $this->Orders->update( $arrUpdateData );
             $arrstrUrl = paymentGatewayResponseUrl();
             $arrmixPaymentGatewayConfigDetails = getPaymentGatewayConfigDetails();
 
@@ -49,8 +49,8 @@ class OrderController extends OrganicServicePortalController {
                 'email'       => $arrmixRequestData['email_id'],
                 'phone'       => $arrmixRequestData['mobile_no'],
                 'productinfo' => $strOrderNo,
-                'surl'        => $arrstrUrl['surl'],
-                'furl'        => $arrstrUrl['furl'],
+                'surl'        => $arrstrUrl['surl'] . '?is_app_response=true',
+                'furl'        => $arrstrUrl['furl'] . '?is_app_response=true',
                 'udf1'        => $intCurrentInsertedOrderId,
                 'udf2'        => '',
                 'udf3'        => '',
@@ -62,12 +62,13 @@ class OrderController extends OrganicServicePortalController {
                 'state'       => '',
                 'country'     => '',
                 'zipcode'     => $arrmixRequestData['pincode'],
+                'pay_mode'    => 'test',
                 'key'         => $arrmixPaymentGatewayConfigDetails['key'],
                 'salt'        => $arrmixPaymentGatewayConfigDetails['salt'],
             ];
             
             $arrmixHashData = [
-                $arrmixPaymentGatewayConfigDetails['key'],
+                $arrmixPaymentData['key'],
                 $arrmixPaymentData['txnid'],
                 $arrmixPaymentData['amount'],
                 $arrmixPaymentData['productinfo'],
@@ -83,14 +84,12 @@ class OrderController extends OrganicServicePortalController {
                 $arrmixPaymentData['city'],
                 $arrmixPaymentData['state'],
                 $arrmixPaymentData['country'],
-                $arrmixPaymentGatewayConfigDetails['salt'],
-                $arrmixPaymentGatewayConfigDetails['key']
+                $arrmixPaymentData['salt'],
+                $arrmixPaymentData['key']
             ];
             
             $strHash = hash( "sha512", implode( '|', $arrmixHashData ) );
-//            $this->encryption->create_key(16);
-//            $strHash = $this->encryption->encrypt( implode( '|', $arrmixHashData ) );
-            
+ 
             $arrmixPaymentData['unique_id'] = $arrmixRequestData['user_id'];
             $arrmixPaymentData['payment_method'] = $arrmixRequestData['payment_method'];
             $arrmixPaymentData['hash'] = $strHash;

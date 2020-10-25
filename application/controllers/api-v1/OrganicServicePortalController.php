@@ -14,7 +14,17 @@ class OrganicServicePortalController extends ServicesController {
                 require_once __DIR__ .'/OrderController.php';
                 $arrmixResponseData = OrderController::createService()->$strMethodName();
                 break;
-            
+
+            case 'actionGetSubscriptionPlans':
+                require_once __DIR__ .'/SubscriptionController.php';
+                $arrmixResponseData = SubscriptionController::createService()->$strMethodName();
+                break;
+
+            case 'actionAddSubscriptionOrder':
+                require_once __DIR__ .'/SubscriptionController.php';
+                $arrmixResponseData = SubscriptionController::createService()->$strMethodName();
+                break;
+                
             
             default:
                 $this->generateErrorMessage( 'Method name ' . $this->getRequestMethodName() . ' not found', ERROR_METHOD_NAME_NOT_FOUND, ERROR_MESSAGE_METHOD_NAME_NOT_FOUND );

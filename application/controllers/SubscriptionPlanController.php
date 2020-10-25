@@ -120,7 +120,8 @@ class SubscriptionPlanController extends MY_Controller {
     
     public function actionPurchaseSubscriptionPaymentResponse() {
 
-        if( false == isArrVal( $this->arrmixUserSession ) ) {
+        $arrmixGetRequestData = $this->input->get();
+        if( ( false == isset( $arrmixGetRequestData['is_app_response'] ) ) && (  false == isArrVal( $this->arrmixUserSession ) ) ) {
             redirect( 'login' );
         }
         
