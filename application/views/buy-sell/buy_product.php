@@ -364,6 +364,7 @@
                 data: { 'product_id' : intProductId, 'price' : intPrice, 'product_name' : strProductName, 'sell_product_id' : intSellProductId, 'cart_order_type': cart_order_type },
                 success: function( arrmixResult ) {
                     var arrmixResult = $.parseJSON( arrmixResult );
+                    
                     $('#js-add-cart-modal').modal('hide');
                     if( true == arrmixResult['success'] ) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');

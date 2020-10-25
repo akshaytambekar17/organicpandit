@@ -56,7 +56,6 @@
                     <div class="modal-body modal-cart">
                         <div class="js-alert-message">
                             <?php $arrmixCartList = fetchCartDetails();
-                                //printDie( $arrmixCartList );
                                 if( true == isArrVal( $arrmixCartList['cart_list'] ) ) {
                             ?>
                                     <h4>Buy Product</h4>

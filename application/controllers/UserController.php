@@ -1077,7 +1077,16 @@ class UserController extends MY_Controller {
 
     public function addToCart() {
         $arrPost = $this->input->post();
-        
+        $arrSession = UserSession();
+        $arrUserSession = $arrSession['userData'];
+        if( NOT_VERIFIED == $arrUserSession['is_verified'] ) {
+            $arrResult['success'] = false;
+            $arrResult['message'] = 'You account is not verified by Admin. So not able to add in the cart.';
+
+            echo json_encode( $arrResult );
+            return false;
+        }
+
         $strCartOrderType = $arrPost['cart_order_type'];
         if( CART_ORDER_TYPE_1 == $strCartOrderType ) {
             $arrSellProductDetails = $this->SellProduct->getSellProductBySellProductId( $arrPost['sell_product_id'] );

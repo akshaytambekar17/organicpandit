@@ -24,6 +24,16 @@ class OrganicServicePortalController extends ServicesController {
                 require_once __DIR__ .'/SubscriptionController.php';
                 $arrmixResponseData = SubscriptionController::createService()->$strMethodName();
                 break;
+
+            case 'actionProductPaymentResponse':
+                require_once __DIR__ .'/PaymentResponseController.php';
+                $arrmixResponseData = PaymentResponseController::createService()->$strMethodName();
+                break;
+
+            case 'actionSubscriptionPaymentResponse':
+                require_once __DIR__ .'/PaymentResponseController.php';
+                $arrmixResponseData = PaymentResponseController::createService()->$strMethodName();
+                break;
                 
             
             default:
@@ -88,6 +98,29 @@ class OrganicServicePortalController extends ServicesController {
         
     }
     
+    public function sendSms( $intMobileNumber, $strMessage ) {
+        
+        $objCurlInit = curl_init();
+        $strUsername = SMS_USERNAME;
+        $strPassword = SMS_PASSWORD;
+        $strSenderId = SMS_SENDER_ID; 
+        
+        $strCurrentData = CURRENT_DATETIME;
+        $strPostFields = "userid=$strUsername&password=$strPassword&sender=$strSenderId&mobileno=$intMobileNumber&msg=$strMessage&msgtype=0&sendon=$strCurrentData";
+        
+        curl_setopt( $objCurlInit, CURLOPT_URL,  "http://web.sms2india.in/websms/sendsms.aspx?");
+        curl_setopt( $objCurlInit, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt( $objCurlInit, CURLOPT_POST, 1);
+        curl_setopt( $objCurlInit, CURLOPT_POSTFIELDS, $strPostFields );
+        //Ignore SSL certificate verification
+        curl_setopt( $objCurlInit, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt( $objCurlInit, CURLOPT_SSL_VERIFYPEER, 0);
+        $strResponse = curl_exec( $objCurlInit );
+        curl_close( $objCurlInit );
+        return $strResponse;
+        
+    }
+
     public function sendEmail($to,$subject,$message){
         
         $this->load->library('encrypt');

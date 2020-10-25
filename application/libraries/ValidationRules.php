@@ -105,7 +105,46 @@ class ValidationRules {
                     'label' => 'Payment Method',
                     'rules' => 'required'
                 ]
+            ],
+            
+            'api-product-payment-response' => [
+                [
+                    'field' => 'txnid',
+                    'label' => 'TranscationId',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'status',
+                    'label' => 'Status',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'error_Message',
+                    'label' => 'Error Message',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'easepayid',
+                    'label' => 'Easepay Id',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'payment_source',
+                    'label' => 'Payment Source',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'amount',
+                    'label' => 'Amount',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'addedon',
+                    'label' => 'addedon',
+                    'rules' => 'required'
+                ]
             ]
+
         ];
         
         return $arrmixConfigRules;

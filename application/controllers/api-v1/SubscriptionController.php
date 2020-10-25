@@ -29,6 +29,14 @@ class SubscriptionController extends OrganicServicePortalController {
         
         if( true == $this->validateParameters( 'api-user-subscription-form', $arrmixRequestData ) ) {
             $arrmixDecrptedTokenData = $this->getDecryptedTokenDetails();
+
+            if( false == $arrmixDecrptedTokenData['is_verified'] ) {
+                $arrmixResult['success'] = false;
+                $arrmixResult['message'] = 'You account is not verified by Admin. Please make sure your account is verified.';
+                $arrmixResult['error'] = 'You account is not verified by Admin. Please make sure your account is verified.';    
+
+                return $arrmixResult;
+            }
             
             if( true == $arrmixDecrptedTokenData['is_subscription'] ) {
                 $arrmixResult['success'] = false;

@@ -1,7 +1,7 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/subscription-stylesheet.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-<body background="<?php echo base_url(); ?>assets/images/final.jpg">
+<body style="background-color: #edf1f1c4">
     <div class="container">
         <section class="content-header center">
             <h1><?= !empty($heading)?$heading:'Heading'?></h1>

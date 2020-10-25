@@ -479,5 +479,5 @@ class UserController extends MY_Controller {
         $this->response( $arrResult );
         
     }
-    
+
 }

@@ -27,6 +27,16 @@ class OrderController extends OrganicServicePortalController {
         
         if( true == $this->validateParameters( 'api-paynow-form', $arrmixRequestData ) ) {
             
+            $arrmixDecrptedTokenData = $this->getDecryptedTokenDetails();
+            
+            if( false == $arrmixDecrptedTokenData['is_verified'] ) {
+                $arrmixResult['success'] = false;
+                $arrmixResult['message'] = 'You account is not verified by Admin. Please make sure your account is verified.';
+                $arrmixResult['error'] = 'You account is not verified by Admin. Please make sure your account is verified.';    
+
+                return $arrmixResult;
+            }
+
             $arrmixInsertData = $arrmixRequestData;
             $arrmixInsertData['order_payment_status'] = ORDER_PAYMENT_STATUS_PENDING;
             $arrmixInsertData['product_details'] = json_encode( $arrmixInsertData['product_details'] );
