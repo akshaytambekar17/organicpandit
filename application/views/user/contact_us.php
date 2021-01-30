@@ -35,8 +35,8 @@
                 </div>
             <?php }?>
         <div class="row">
-            <form id="contact-us" method="post" name="contact-us">
-                <div class="col-md-6 col-md-offset-3 col-sm-6">
+            <div class="col-md-8 col-sm-8">
+                <form id="contact-us" method="post" name="contact-us">
                     <div class="form-group">
                         <label>Enter Your Name</label>
                         <input type="text" class="form-control" name="name" placeholder="Enter Name" value="<?= set_value('name')?>">
@@ -62,24 +62,32 @@
                         <input type="submit" class="btn btn-info text-center" value="Get In Touch">
                     </div>
                     <div id="loading" style="display: none;"> <img src="<?php echo base_url(); ?>assets/images/processing.gif" alt="organic world" > </div>
-                </div>
-            </form>
-            <script>
-                function initMap() {
-                    var uluru = {lat: -25.363, lng: 131.044};
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 4,
-                        center: uluru
-                    });
-                    var marker = new google.maps.Marker({
-                        position: uluru,
-                        map: map
-                    });
-                }
-            </script>
-            <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjTlVj092XFODcKcwdq7iLxcnH39Rodtk&callback=initMap">
-            </script>
+                </form>
+               
+                <script>
+                    function initMap() {
+                        var uluru = {lat: -25.363, lng: 131.044};
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 4,
+                            center: uluru
+                        });
+                        var marker = new google.maps.Marker({
+                            position: uluru,
+                            map: map
+                        });
+                    }
+                </script>
+                <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjTlVj092XFODcKcwdq7iLxcnH39Rodtk&callback=initMap">
+                </script>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <h3>Address</h3>    
+                <p>Organic Pandit</p>
+                <p>901-AL Cazer, Supreme Pallacio, Pancard club road, Dhankude wasti, Baner, Pune – 411045.</p>
+                <p>Call us at: +91 91453 47218</p>
+                <p>Mail: support@organicpandit.com</p>
+            </div>            
         </div>
     </div>
 </section>

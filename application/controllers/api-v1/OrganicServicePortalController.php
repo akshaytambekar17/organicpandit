@@ -35,6 +35,10 @@ class OrganicServicePortalController extends ServicesController {
                 $arrmixResponseData = PaymentResponseController::createService()->$strMethodName();
                 break;
                 
+            case 'actionValidateOtp':
+                require_once __DIR__ .'/HomeServicesController.php';
+                $arrmixResponseData = HomeServicesController::createService()->$strMethodName();
+                break;    
             
             default:
                 $this->generateErrorMessage( 'Method name ' . $this->getRequestMethodName() . ' not found', ERROR_METHOD_NAME_NOT_FOUND, ERROR_MESSAGE_METHOD_NAME_NOT_FOUND );
@@ -43,60 +47,6 @@ class OrganicServicePortalController extends ServicesController {
         $this->generateSuccessMessage( $arrmixResponseData );
     }
     
-    
-    public function actionLogin() {
-        
-        $arrmixRequestParameterDetails = $this->getRequestParameterDetails();
-        
-        $arrmixResponseData = [
-            'success' => false,
-            'message' => 'Something went wrong. Please try later.'
-        ];
-        
-        if( $this->validation->run( $arrmixRequestParameterDetails, 'validateServiceLogin' ) ) {
-                
-            $arrmixUserDetails = \App\Models\UsersModel::createService()->findUserByUsername( $arrmixRequestParameterDetails['username'] );
-            
-            if( true == isArrVal( $arrmixUserDetails ) ) {
-                
-                if( $arrmixRequestParameterDetails['password'] == $this->decryptPassword( $arrmixUserDetails['password'] ) ) {
-                    
-                    if( $arrmixRequestParameterDetails['standard_id'] == $arrmixUserDetails['standard_id'] ) {
-                        $arrmixTokenData = [
-                            'user_id' => $arrmixUserDetails['user_id'],
-                            'user_type_id' => $arrmixUserDetails['user_type_id'],
-                            'student_id' => $arrmixUserDetails['student_id'],
-                            'roll_number' => $arrmixUserDetails['roll_number'],
-                            'login_at' => CURRENT_DATETIME,
-                        ];
-
-                        $strEncryptedToken = $this->encryptToken( $arrmixTokenData );
-
-                        $arrmixResponseData['success'] = true;
-                        $arrmixResponseData['message'] = 'Successfully Login.';
-                        $arrmixResponseData['user_details'] = $arrmixUserDetails;
-                        $arrmixResponseData['token'] = $strEncryptedToken;
-                    } else {
-                        $arrmixResponseData['success'] = false;
-                        $arrmixResponseData['message'] = 'You are not allowed to see other standard details. Please select your standard.';
-                    }
-                    
-                } else {
-                    $arrmixResponseData['success'] = false;
-                    $arrmixResponseData['message'] = 'Invalid Password.';
-                }
-                
-            } else {
-                $arrmixResponseData['success'] = false;
-                $arrmixResponseData['message'] = 'Invalid Username.';
-            }
-        } else {
-            $this->generateErrorMessage( implode( ',', $this->validation->getErrors() ), ERROR_INVALID_PARAMETERS, ERROR_MESSAGE_INVALID_PARAMETERS );
-        }
-        
-        $this->generateSuccessMessage( $arrmixResponseData );
-        
-    }
     
     public function sendSms( $intMobileNumber, $strMessage ) {
         

@@ -116,6 +116,16 @@ class user_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
+    public function getUserByUsernameByMobileNumber( $strUsername, $intMobileNumber ) {
+        $this->db->select( "u.*,ut.name as user_type_name" );
+        $this->db->from( 'tbl_users u' );
+        $this->db->join( 'tbl_user_type ut', 'ut.id = u.user_type_id' );
+        $this->db->where( 'u.username', $strUsername );
+        $this->db->where( 'u.mobile_no', $intMobileNumber );
+        
+        return $this->db->get()->row_array();
+    }
+
     public function getUserLoginByUsernamePassword( $username, $password ) {
         $this->db->select("u.*,ut.name as user_type_name");
         $this->db->from('tbl_users u');

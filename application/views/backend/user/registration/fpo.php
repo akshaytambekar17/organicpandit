@@ -108,8 +108,8 @@
                             <label class="control-label label-required" for="is_visit_farm">Can we visit your farm</label>
                             <select class="form-control select2" name="is_visit_farm" id="is_visit_farm">
                                 <option disabled="disabled" selected="selected">Select Options</option>
-                                <option value="2" <?= $arrUserDetails['is_visit_farm'] == 2 ?'selected="selected"':''  ?> >Yes</option>
-                                <option value="1" <?= $arrUserDetails['is_visit_farm'] == 1 ?'selected="selected"':''; ?>>No</option>
+                                <option value="2" <?= set_select('is_visit_farm', 2 ); ?> >Yes</option>
+                                <option value="1" <?= set_select('is_visit_farm', 1 );?>>No</option>
                             </select>
                             <span class="has-error"><?php echo form_error('is_visit_farm'); ?></span>
                         </div>
@@ -117,8 +117,8 @@
                             <label class="control-label label-required" for="is_test_report">Can you provide test report</label>
                             <select class="form-control select2" name="is_test_report" id="is_test_report">
                                 <option disabled="disabled" selected="selected">Select Options</option>
-                                <option value="2" <?= $arrUserDetails['is_test_report'] == 2 ?'selected="selected"':''?> >Yes</option>
-                                <option value="1" <?= $arrUserDetails['is_test_report'] == 1 ?'selected="selected"':'' ?>>No</option>
+                                <option value="2" <?= set_select('is_test_report', 2 ); ?> >Yes</option>
+                                <option value="1" <?= set_select('is_test_report', 1 ); ?>>No</option>
                             </select>
                             <span class="has-error"><?php echo form_error('is_test_report'); ?></span>
                             <br><br>

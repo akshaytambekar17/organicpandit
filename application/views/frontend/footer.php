@@ -17,17 +17,16 @@
                     <div class="col-sm-2">
                         <h5>ABOUT US</h5>
                         <ul>
-                            <li><a href="<?= base_url()?>about">Company Information</a></li>
+                            <li><a href="<?= base_url()?>about">About Us</a></li>
+                            <li><a href="<?= base_url()?>terms-conditions">Terms & Condition</a></li>
                             <li><a href="<?= base_url()?>contact">Contact us</a></li>
-                            <li><a href="#">Reviews</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-2">
-                        <h5>SUPPORT</h5>
+                        <h5>POLICIES</h5>
                         <ul>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Help desk</a></li>
-                            <li><a href="#">Forums</a></li>
+                            <li><a href="<?= base_url()?>privacy-policy">Privacy Policy</a></li>
+                            <li><a href="<?= base_url()?>refund-policy">Refund Policy</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3">
@@ -218,23 +217,27 @@
         </div>
         
         <script type="text/javascript">
-                $(document).ready(function () {
-                    $(".js-cart-button").on('click',function(){
-                        $('#js-cart-modal').modal('show');
-                    });
-                    
-                    $( ".js-not-subscribe-button" ).on( 'click',function() {
-                        $( '#js-subscribe-modal' ).modal('show');
-                    });
-                    
-                    $( ".js-subscription-expired-button" ).on( 'click',function() {
-                        $( '#js-subscription-expired-modal' ).modal('show');
-                    });
-                    
-                    $( ".js-forcefully-login-button" ).on( 'click',function() {
-                        $( '#js-forcefully-login-modal' ).modal( 'show' );
-                    });
+            $(document).ready(function () {
+                $(".js-cart-button").on('click',function(){
+                    $('#js-cart-modal').modal('show');
                 });
+                
+                $( ".js-not-subscribe-button" ).on( 'click',function() {
+                    $( '#js-subscribe-modal' ).modal('show');
+                });
+                
+                $( ".js-subscription-expired-button" ).on( 'click',function() {
+                    $( '#js-subscription-expired-modal' ).modal('show');
+                });
+                
+                $( ".js-forcefully-login-button" ).on( 'click',function() {
+                    $( '#js-forcefully-login-modal' ).modal( 'show' );
+                });
+
+                <?php if( false == isVal( $this->uri->segment(1) ) || 'home' == $this->uri->segment(1) ) { ?>
+                    //showMaintenanceNotice();
+                <?php } ?>    
+            });
 
             function validateEmail( email ) {
                 var email_format = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -286,6 +289,10 @@
 
                     }
                 });
+            }
+
+            function showMaintenanceNotice() {
+                $( '#js-maintenance-modal' ).modal( 'show' );
             }
             
         </script>

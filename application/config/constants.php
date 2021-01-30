@@ -46,6 +46,7 @@ define('CURRENT_DATE',date( 'Y-m-d' ) );
 define('ADMINUSERNAME', 'adminmaster');
 define('ADMINEMAILID', 'akshaytambekar17@gmail.com');
 //define('ADMINEMAILID', 'nvsoni007@gmail.com');
+//define( 'ADMINEMAILID', 'admin@organicpandit.com' );
 define( 'ADMIN_ID', 1 );
 
 define( 'MAIL_USERNAME', 'support@organicpandit.com' );
@@ -99,8 +100,11 @@ define('CERTIFICATION_AGENICES',16);
 define('RESTAURANTS',17);
 define('NGO',18);
 
-define('TEST_MERCHANT_KEY','O1D3HUYIC3');
-define('TEST_SALT','RGODULJ8YB');
+// define('TEST_MERCHANT_KEY','O1D3HUYIC3');
+// define('TEST_SALT','RGODULJ8YB');
+
+define('TEST_MERCHANT_KEY','2PBP7IABZ2');
+define('TEST_SALT','DAH88E3UWQ');
 
 define('MERCHANT_KEY','64KVCDORC9');
 define('SALT','F9GOZVJS1N');
@@ -131,9 +135,12 @@ define( 'ORGANIC_INPUT_ECOMMERCE_IMAGE_PATH', 'assets/images/ecommerce_images/' 
 define( 'APP_SLIDER_IMAGE_PATH', 'assets/images/app-slider-images/' );
 
 
-define( 'SMS_USERNAME', 'zudof123' );
-define( 'SMS_PASSWORD', 'zudof123' );
-define( 'SMS_SENDER_ID', 'Zudofs' );
+// define( 'SMS_USERNAME', 'zudof123' );
+// define( 'SMS_PASSWORD', 'zudof123' );
+// define( 'SMS_SENDER_ID', 'Zudofs' );
+define( 'SMS_USERNAME', 'organicpandit' );
+define( 'SMS_PASSWORD', 'organicpandit@123#' );
+define( 'SMS_SENDER_ID', 'MRKSAN' );
 
 define( 'SUBSCRIBED',1 );
 define( 'NOT_SUBSCRIBED', 0 );

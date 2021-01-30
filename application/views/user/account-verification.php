@@ -8,36 +8,45 @@
             <div class="row">
                 <div class="col-md-offset-3 col-md-6 col-md-offset-3">
                     <div class="js-alert-message">
-                        <?php if($message = $this ->session->flashdata('Message')){?>
+                        <?php if( $strMessage = $this ->session->flashdata('Message') ) {?>
                                 <div class="alert alert-dismissible alert-success">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <?=$message ?>
+                                    <?=$strMessage ?>
                                 </div>
                         <?php }?>
-                        <?php if($message = $this ->session->flashdata('Error')){ ?>
+                        <?php if( $this->session->flashdata('Error') || true == isset( $strSessionErrorMessage ) ) { 
+                                if( true == isStrVal( $strSessionErrorMessage ) ) {
+                                    $strMessage =  $strSessionErrorMessage;   
+                                } else {
+                                    $strMessage = $this->session->flashdata('Error');
+                                }
+                                
+                        ?>
                             <div class="alert alert-dismissible alert-danger">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <?= $message ?>
+                                <?= $strMessage ?>
                             </div>
                         <?php }?>
                     </div>
                     <div class="box box-success">
                         <div class="box-header"></div>
-                        <form  method="post" enctype="multipart/form-data" name="validate-otp-form" id="js-validate-otp-form" action="<?= base_url()?>validate-otp?user_id=<?= $arrmixUserDetails['user_id']; ?>">
+                        <form  method="post" enctype="multipart/form-data" name="account-verification-form" id="js-account-verification-form" action="<?= base_url()?>account-verification">
                             <div class="box-body">
                                <div class="form-group">
-                                    <label class="control-label" for="bank_name">
-                                        <p>The OTP has been sent to XXXXXXX<?= substr( $arrmixUserDetails['mobile_no'], -3 ); ?></p>
-                                        <p>Pleas enter the OTP in the below field to verify the account.</p> 
-                                    </label>
-                                    <input type="text" name="otp" class="form-control" id="js-otp" placeholder="OTP" value="<?= set_value( 'otp' ) ?>">
-                                    <span class="has-error"><?php echo form_error('otp'); ?></span>
+                                    <label class="control-label" for="username">Username</label>
+                                    <input type="text" name="username" class="form-control" id="js-username" placeholder="Username" value="<?= set_value( 'username' ) ?>">
+                                    <span class="has-error"><?php echo form_error('username'); ?></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="mobile_no">Mobile Number</label>
+                                    <input type="text" name="mobile_no" class="form-control" id="js-mobile-no" placeholder="Mobile Number" value="<?= set_value( 'mobile_no' ) ?>">
+                                    <span class="has-error"><?php echo form_error('mobile_no'); ?></span>
                                 </div>
                             </div>
-                            <input type="hidden" name="user_id" value="<?= $arrmixUserDetails['user_id'] ?>" id="js-hidden-user-id">
+                            
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-success pull-left" id="js-submit">Submit</button>
-                                <a href="javascript:void(0)" class="js-resend-otp pull-right">Resend OTP</a>
+                                <a href="<?= base_url()?>login" class="pull-right">Back to Login</a>
                             </div>
                         </form>
                     </div>

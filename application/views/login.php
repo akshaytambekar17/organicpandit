@@ -157,13 +157,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </form>
                             </div>
                             <div class="row">
-                                <p>Don't have an account? <a href="<?= base_url()?>signup">Register Here</a></p>
+                                <p>Don't have an account? <a href="<?= base_url()?>signup">Register Here</a></p> 
+                                <p>If your account not verified then <a href="<?= base_url()?>account-verification">Click Here</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
             <?php //echo $this->load->view('includes/footer'); ?>
         </section>
 
@@ -180,7 +180,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <script type="text/javascript">
             $(document).ready(function () {
-
                 $('#loginForm').formValidation({
                     framework: 'bootstrap',
                     fields: {

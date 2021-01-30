@@ -1529,9 +1529,70 @@ class UserController extends MY_Controller {
         $this->response( $arrmixResponseData );
     }
     
+    public function actionAccountVerification() {
+        
+        if( true == isArrVal( $this->arrmixUserSession ) ) {
+            redirect( 'home' );
+        }
+        
+        $arrmixData = [];
+        
+        $arrmixData['title'] = 'Account Verification';
+        $arrmixData['heading'] = 'Account Verification';
+        $arrmixData['hide_footer'] = true;
+        $arrmixData['view'] = 'user/account-verification';
+        
+        if( $this->input->post() ) {
+            $arrmixRequestData = $this->input->post();
+            
+            $this->form_validation->set_rules('username', 'Username', 'trim|required');
+            $this->form_validation->set_rules('mobile_no', 'Mobile number', 'trim|required|numeric|exact_length[10]');
+
+            if( true == $this->form_validation->run() ) {
+                
+                $arrmixUserDetails = $this->User->getUserByUsernameByMobileNumber( $arrmixRequestData['username'], $arrmixRequestData['mobile_no'] );
+                
+                if( true == isArrVal( $arrmixUserDetails ) ) {
+
+                    if( true == $arrmixUserDetails['is_validate_otp'] ) {
+                        $this->session->set_flashdata( 'Error', 'Your account is already validated. Please continue with the login.');
+                        redirect( 'login' );
+                    }
+
+                    $intOTP = $this->generateOTP();
+                    
+                    $arrmixUpdateData = [
+                        'user_id' => $arrmixUserDetails['user_id'],
+                        'updated_by' => $arrmixUserDetails['user_id'],
+                        'otp' => $intOTP
+                    ];
+                    $this->User->update( $arrmixUpdateData );
+
+                    if( true == isIdVal( $arrmixUserDetails['mobile_no'] ) ) {
+                        $strMessage = 'Hello ' . $arrmixUserDetails['fullname'] . ',%0aThank you for registration, to complete the process use the below OTP. %0aYour OTP is ' . $intOTP . '.%0a%0aThank you.%0aTeam Organic Pandit.';
+                        $this->sendSms( $arrmixUserDetails['mobile_no'], $strMessage );
+                    }
+                    
+                    $this->session->set_flashdata('Message', 'OTP has been sent to your registered mobile number. Please enter the OTP to complete the registration process.');
+                    redirect( 'validate-otp?user_id=' . $arrmixUserDetails['user_id'] );
+                } else {
+                    $arrmixData['strSessionErrorMessage'] = 'Invalid Username or Mobile number. Please enter the valid details.';
+                    $this->session->set_flashdata( 'Error', 'Invalid Username or Mobile number. Please enter the valid details.');
+                }
+            } else {
+                $arrmixData['strSessionErrorMessage'] = 'Validation Errors. Please see below errors.';
+            }
+        }
+        
+        $this->frontendLayout( $arrmixData );
+        
+    }
+
     public function actionLogout() {
         $this->session->unset_userdata('user_data');
         return redirect( 'login' );
     }
     
+
+
 }

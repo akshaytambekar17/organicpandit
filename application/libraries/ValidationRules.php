@@ -143,6 +143,19 @@ class ValidationRules {
                     'label' => 'addedon',
                     'rules' => 'required'
                 ]
+            ],
+            'validate-otp-form' => [
+                [
+                    'field' => 'user_id',
+                    'label' => 'User Id',
+                    'rules' => 'required'     
+                ],
+                [
+                    'field' => 'otp',
+                    'label' => 'OTP',
+                    'rules' => 'required'     
+                ],
+                
             ]
 
         ];

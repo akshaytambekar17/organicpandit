@@ -16,14 +16,13 @@ class Login extends MY_Controller {
             redirect('home');
         }
         
-        $data['title'] = 'Registration';
-        $data['heading'] = 'Register With Us';
+        $data['title'] = 'Login';
+        $data['heading'] = 'Login';
         $data['hide_footer'] = true;
         $data['view'] = 'login';
         $data['user_type_list'] = $this->UserType->getUserTypes();
         $data['userSession'] = $userSession;
         $this->frontendFooterLayout($data);
-        //$this->load->view('login',$data);
     }
 
     function login_validation() {

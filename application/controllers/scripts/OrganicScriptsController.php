@@ -10,6 +10,11 @@ class OrganicScriptsController extends MY_Controller {
         
         $arrmixUserList = $this->User->getUsersByIsSubscription();
         
+        $strFileName = 'logs/scripts/testing_scripts_' . replaceDateTimeDashFormatToUnderscore( CURRENT_DATE ) . '.txt';
+        $objFileHandleList = fopen( $strFileName, 'a' );
+        $strMessage = PHP_EOL . PHP_EOL ." Cron run at "  . CURRENT_DATETIME;
+        fwrite( $objFileHandleList, $strMessage );
+        
         if( true == isArrVal( $arrmixUserList ) ) {
             
             $strFileName = 'logs/scripts/organic_scripts_' . replaceDateTimeDashFormatToUnderscore( CURRENT_DATE ) . '.txt';

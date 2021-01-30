@@ -18,7 +18,8 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	define( 'ENVIRONMENT', 'development' );
+	define( 'ON_MAINTENANCE', false );
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -44,6 +45,11 @@ if (defined('ENVIRONMENT'))
 		default:
 			exit('The application environment is not set correctly.');
 	}
+}
+
+if( true == ON_MAINTENANCE ) {
+	include_once "maintenance.html";	
+	exit;
 }
 
 /*

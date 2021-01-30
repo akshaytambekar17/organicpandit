@@ -13,27 +13,34 @@ class UserController extends MY_Controller {
         $arrPost = $this->input->post();
 	
         if( true == isset( $arrPost['user_type_id'] ) ) {
-            
+        
             if( true == isset( $arrPost['username'] ) && true == isset( $arrPost['password'] ) ) {
-
+                
                 $arrUserDetails = $this->User->getUserLoginByUsernameByPasswordByUserTypeId( $arrPost['username'], $arrPost['password'], $arrPost['user_type_id'] );
                 if( true == isArrVal( $arrUserDetails ) ) {
+
+                    if( true == $arrUserDetails['is_validate_otp'] ) { 
+                        
+                        $arrmixTokenData = [
+                            'user_id' => $arrUserDetails['user_id'],
+                            'user_type_id' => $arrUserDetails['user_type_id'],
+                            'fullname' => $arrUserDetails['fullname'],
+                            'username' => $arrUserDetails['username'],
+                            'email_id' => $arrUserDetails['email_id'],
+                            'mobile_no' => $arrUserDetails['mobile_no'],
+                            'is_verified' => $arrUserDetails['is_verified'],
+                            'is_subscription' => $arrUserDetails['is_subscription'],
+                            'status' => $arrUserDetails['status']
+                        ];
+                        
+                        $arrResult['success'] = true;
+                        $arrResult['data'] = $arrUserDetails;
+                        $arrResult['userToken'] = getEncryptedToken( $arrmixTokenData );
+                    } else {
+                        $arrResult['success'] = false;
+                        $arrResult['message'] = 'Your account has been not validate. Please verify your account from Webiste Login screen.';
+                    }
                     
-                    $arrmixTokenData = [
-                        'user_id' => $arrUserDetails['user_id'],
-                        'user_type_id' => $arrUserDetails['user_type_id'],
-                        'fullname' => $arrUserDetails['fullname'],
-                        'username' => $arrUserDetails['username'],
-                        'email_id' => $arrUserDetails['email_id'],
-                        'mobile_no' => $arrUserDetails['mobile_no'],
-                        'is_verified' => $arrUserDetails['is_verified'],
-                        'is_subscription' => $arrUserDetails['is_subscription'],
-                        'status' => $arrUserDetails['status']
-                    ];
-                    
-                    $arrResult['success'] = true;
-                    $arrResult['data'] = $arrUserDetails;
-                    $arrResult['userToken'] = getEncryptedToken( $arrmixTokenData );
                 } else{
                     $arrResult['success'] = false;
                     $arrResult['message'] = 'Invalid Username or Password or User Type.';   
@@ -90,14 +97,17 @@ class UserController extends MY_Controller {
                 $strError = '';
             }
             if( false == isStrVal( $strError ) ) {
-                
+                $intOTP = $this->generateOTP();
+
                 unset( $arrDetails['confirm_password'] );
                 unset( $arrDetails['certification_id'] );
                 $arrDetails['profile_image'] = $strProfileImage;
                 $arrDetails['status'] = ENABLED;
                 $arrDetails['password'] = md5( $arrDetails['password'] );
+                $arrDetails['otp'] = $intOTP;
                 
                 $intUserId = $this->User->insert( $arrDetails );
+
                 if( true == isIdVal( $intUserId ) ) {
                     $arrmixUserCertificationData = [];
                     if( true == isVal( $arrPost['certification_id'] ) ) {
@@ -128,8 +138,22 @@ class UserController extends MY_Controller {
                     ];
 
                     $this->Notifications->insert( $arrNotificationInsertData );
+                    
+                    if( true == isIdVal( $arrDetails['mobile_no'] ) ) {
+                        $strMessage = 'Hello ' . $arrDetails['fullname'] . ',%0aThank you for registration, to complete the process use the below OTP. %0aYour OTP is ' . $intOTP . '.%0a%0aThank you.%0aTeam Organic Pandit.';
+                        $this->sendSms( $arrDetails['mobile_no'], $strMessage );
+                    }
+
+                    $arrmixResponseData = [
+                        'user_id' => $intUserId,
+                        'mobile_no' => $arrDetails['mobile_no'],
+                        'username' => $arrDetails['username'],
+                        'fullname' => $arrDetails['fullname']
+                    ];
+
                     $arrResult['success'] = true;
-                    $arrResult['message'] = 'Registration has been done successfully. Please continue with login.';
+                    $arrResult['message'] = 'To complete the registration process we have sent OTP on your mobile number. Please verify your account.';
+                    $arrResult['data'] = $arrmixResponseData;
                 } else {
                     $arrResult['success'] = false;
                     $arrResult['message'] = 'Registration has been failed. Pleaes try again later';

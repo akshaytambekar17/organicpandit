@@ -18,11 +18,11 @@
             </div>
         </div>
     <?php }?>
-    <?php if( true == isStrVal( $this ->session->flashdata( 'Error' ) ) || ( true == isset( $strValidationErrorMessage ) && true == isStrVal( strValidationErrorMessage ) ) ) {
+    <?php if( true == isStrVal( $this ->session->flashdata( 'Error' ) ) || ( true == isset( $strValidationErrorMessage ) && true == isStrVal( $strValidationErrorMessage ) ) ) {
             if( true == isStrVal( $this ->session->flashdata( 'Error' ) ) ) {
                 $strErrorMessage = $this ->session->flashdata( 'Error' );
             } else {
-                if( true == isset( $strValidationErrorMessage ) && true == isStrVal( strValidationErrorMessage ) ) {
+                if( true == isset( $strValidationErrorMessage ) && true == isStrVal( $strValidationErrorMessage ) ) {
                     $strErrorMessage = $strValidationErrorMessage;
                 }
             }

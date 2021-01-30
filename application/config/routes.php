@@ -73,6 +73,7 @@ $route['bid/create'] = "BidController/create";
 
 $route['signup'] = "UserController/signup";
 $route['registration'] = "UserController/registration";
+$route['account-verification'] = "UserController/actionAccountVerification";
 $route['validate-otp'] = "UserController/actionValidateOtp";
 $route['resend-otp'] = "UserController/actionResendOtp";
 $route['registration-certification-agency'] = "UserController/registrationCertificationAgency";
@@ -115,6 +116,10 @@ $route['blogs'] = "BlogController";
 $route['blog-details'] = "BlogController/blogDetails";
 
 $route['lab-report-details'] = "LabReportController/view";
+
+$route['terms-conditions'] = "HomeController/actionTermsConditions";
+$route['privacy-policy'] = "HomeController/actionPrivacyPolicy";
+$route['refund-policy'] = "HomeController/actionRefundPolicy";
 
 /************* New Implementation Admin Panel **************/
 

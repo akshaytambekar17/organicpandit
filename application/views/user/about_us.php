@@ -31,6 +31,7 @@
                     <p>
                         We are small but robust group founded by Prashanth Patil, everyone with different sector but with same goal and passion driven to work in Organic Food Industry. 
                         At Organic Pandit, the team had been intensely studying and working in the Organic Food sector since 3 years with different stake holders in this chain, beginning from the Organic farmers, FPOs, Agri i/ps, agri o/ps, traders, processors, consultants, retailers, brands, exporters and newcomers in this field.
+                        Organic Pandit is a part of ISEJA TECHNOLOGY SOLUTIONS founded in 2020.
                     </p>
                 </div>
             </div>
