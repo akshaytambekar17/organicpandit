@@ -156,6 +156,65 @@ class ValidationRules {
                     'rules' => 'required'     
                 ],
                 
+            ],
+            'product-by-category-form' => [
+                [
+                    'field' => 'category_id',
+                    'label' => 'Category Id',
+                    'rules' => 'required'     
+                ]                                
+            ],
+            'add-user-product-form' => [
+                [
+                    'field' => 'user_id',
+                    'label' => 'User Id',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'user_type_id',
+                    'label' => 'User Type Id',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'product_id',
+                    'label' => 'Product Id',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'name',
+                    'label' => 'Product Name',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'description',
+                    'label' => 'Description',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'from_date',
+                    'label' => 'From Date',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'to_date',
+                    'label' => 'To Date',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'quantity_id',
+                    'label' => 'Quantity',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'quality',
+                    'label' => 'Quality',
+                    'rules' => 'required'     
+                ],                                
+                [
+                    'field' => 'price',
+                    'label' => 'Price',
+                    'rules' => 'required'     
+                ]                                
             ]
 
         ];

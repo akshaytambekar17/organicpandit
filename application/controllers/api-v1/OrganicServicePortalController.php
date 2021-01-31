@@ -14,27 +14,21 @@ class OrganicServicePortalController extends ServicesController {
                 require_once __DIR__ .'/OrderController.php';
                 $arrmixResponseData = OrderController::createService()->$strMethodName();
                 break;
-
+            
+            case 'actionAddSubscriptionOrder':
             case 'actionGetSubscriptionPlans':
                 require_once __DIR__ .'/SubscriptionController.php';
                 $arrmixResponseData = SubscriptionController::createService()->$strMethodName();
                 break;
 
-            case 'actionAddSubscriptionOrder':
-                require_once __DIR__ .'/SubscriptionController.php';
-                $arrmixResponseData = SubscriptionController::createService()->$strMethodName();
-                break;
-
+            case 'actionSubscriptionPaymentResponse':
             case 'actionProductPaymentResponse':
                 require_once __DIR__ .'/PaymentResponseController.php';
                 $arrmixResponseData = PaymentResponseController::createService()->$strMethodName();
                 break;
 
-            case 'actionSubscriptionPaymentResponse':
-                require_once __DIR__ .'/PaymentResponseController.php';
-                $arrmixResponseData = PaymentResponseController::createService()->$strMethodName();
-                break;
-                
+            case 'actionAddUserProduct':
+            case 'actionFetchProductByCategory':
             case 'actionValidateOtp':
                 require_once __DIR__ .'/HomeServicesController.php';
                 $arrmixResponseData = HomeServicesController::createService()->$strMethodName();

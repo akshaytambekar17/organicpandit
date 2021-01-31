@@ -14,15 +14,15 @@ class OrganicController extends MY_Controller {
         $arrUserTypeList = $this->UserType->getUserTypes();
         
         if( true == isArrVal( $arrUserTypeList ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Data found for User Types';
-            $arrResult['data'] = $arrUserTypeList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Data found for User Types';
+            $arrmixResponseData['data'] = $arrUserTypeList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchCountries(){
@@ -30,15 +30,15 @@ class OrganicController extends MY_Controller {
         $arrCountriesList = $this->Country->getCountries();
         
         if( true == isArrVal( $arrCountriesList ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Data found for Countries';
-            $arrResult['data'] = $arrCountriesList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Data found for Countries';
+            $arrmixResponseData['data'] = $arrCountriesList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No Country data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No Country data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchStates(){
@@ -51,15 +51,15 @@ class OrganicController extends MY_Controller {
         }
         
         if( true == isArrVal( $arrStatesList ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Data found for States';
-            $arrResult['data'] = $arrStatesList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Data found for States';
+            $arrmixResponseData['data'] = $arrStatesList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No States data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No States data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchCities(){
@@ -72,29 +72,29 @@ class OrganicController extends MY_Controller {
         }
         
         if( true == isArrVal( $arrCitiesList ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Data found for Cities';
-            $arrResult['data'] = $arrCitiesList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Data found for Cities';
+            $arrmixResponseData['data'] = $arrCitiesList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No Cities data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No Cities data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchCertifications(){
         
         if( true == isArrVal( getCertifications() ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Data found for Certfications';
-            $arrResult['data'] = getCertifications();
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Data found for Certfications';
+            $arrmixResponseData['data'] = getCertifications();
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No Certifiations data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No Certifiations data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchCertificationAgencies(){
@@ -102,15 +102,15 @@ class OrganicController extends MY_Controller {
         $arrCertificationAgencies = $this->CertificationAgency->getCertificationAgenciesVerified();
 
         if( true == isArrVal( $arrCertificationAgencies ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Data found for Certfication Agenices';
-            $arrResult['data'] = $arrCertificationAgencies;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Data found for Certfication Agenices';
+            $arrmixResponseData['data'] = $arrCertificationAgencies;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No Certifiations data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No Certifiations data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchCategories() {
@@ -118,15 +118,15 @@ class OrganicController extends MY_Controller {
         $arrProductCategoriesList = $this->ProductCategory->getActiveProductCategorys();
 
         if( true == isArrVal( $arrProductCategoriesList ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Successfully fetch categories list data';
-            $arrResult['data'] = $arrProductCategoriesList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Successfully fetch categories list data';
+            $arrmixResponseData['data'] = $arrProductCategoriesList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
     public function fetchProducts() {
@@ -134,17 +134,17 @@ class OrganicController extends MY_Controller {
         $arrProductList = $this->Product->getActiveProducts();
 
         if( true == isArrVal( $arrProductList ) ) {
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Successfully fetch product list data';
-            $arrResult['data'] = $arrProductList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Successfully fetch product list data';
+            $arrmixResponseData['data'] = $arrProductList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
-    
+
     public function fetchAppSliderImages() {
         
         $arrAppSliderImagesList = $this->AppSliderImages->getAppSliderImages();
@@ -154,15 +154,15 @@ class OrganicController extends MY_Controller {
                 $arrmixAppSliderImagesList[] = $arrAppSliderImagesDetails;
             }
         
-            $arrResult['success'] = true;
-            $arrResult['message'] = 'Successfully fetch slider image list data';
-            $arrResult['data'] = $arrmixAppSliderImagesList;
+            $arrmixResponseData['success'] = true;
+            $arrmixResponseData['message'] = 'Successfully fetch slider image list data';
+            $arrmixResponseData['data'] = $arrmixAppSliderImagesList;
         }else{
-            $arrResult['success'] = false;
-            $arrResult['message'] = 'No data found';
+            $arrmixResponseData['success'] = false;
+            $arrmixResponseData['message'] = 'No data found';
         }
         
-        $this->response( $arrResult );
+        $this->response( $arrmixResponseData );
     }
     
 }
